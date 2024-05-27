@@ -10,20 +10,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.0
   flutter_riverpod: ^2.5.1
   iconoir_flutter: ^7.7.0
   intl: ^0.19.0
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
   riverpod_annotation: ^2.3.5
-  supabase_flutter: ^2.5.3
 
 dev_dependencies:
   build_runner: ^2.4.9
   custom_lint: ^0.6.4
   flutter_test:
     sdk: flutter
+  isar_generator: ^3.1.0+1
   riverpod_generator: ^2.4.0
   riverpod_lint: ^2.3.10
   very_good_analysis: ^5.1.0
+
+dependency_overrides:
+  analyzer: ^6.3.0 # For isar_generator
 
 flutter:
   uses-material-design: true
