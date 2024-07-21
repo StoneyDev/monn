@@ -8,7 +8,10 @@ environment:
   sdk: ">=3.3.4 <4.0.0"
 
 dependencies:
+  easy_localization: ^3.0.7
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.4.0
   flutter_riverpod: ^2.5.1
@@ -39,6 +42,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/translations/
   fonts:
     - family: DMSans
       fonts:

@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:monn/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:monn/features/dashboard/presentation/dashboard_screen/dashboard_screen.dart';
+import 'package:monn/utils/global_theme_data.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,11 +10,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Monn',
-      theme: ThemeData(
-        fontFamily: 'DMSans',
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
-      ),
+      theme: GlobalThemeData.light,
+      darkTheme: GlobalThemeData.dark,
+      themeMode: ThemeMode.light,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       home: const DashboardScreen(),
     );
   }
