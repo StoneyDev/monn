@@ -1,0 +1,38 @@
+// ignore_for_file: invalid_annotation_target
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:isar/isar.dart';
+
+part 'savings.freezed.dart';
+part 'savings.g.dart';
+
+@freezed
+@Collection(ignore: {'copyWith'})
+class Savings with _$Savings {
+  const factory Savings({
+    @enumerated required SavingsType type,
+    @Default(0) double startAmount,
+    @Default(0) double income,
+    @Default(Isar.autoIncrement) int id,
+  }) = _Savings;
+
+  @override
+  Id get id;
+}
+
+enum SavingsType {
+  bookletA('Livret A'),
+  bookletSSD('LDDS'),
+  crowdfunding('Crowdfunding Immobilier'),
+  cryptocurrency('Cryptomonnaie'),
+  csknives('Couteaux CS'),
+  cto('CTO'),
+  lifeInsurance('Assurance-vie'),
+  pea('PEA'),
+  reit('SCPI'),
+  rip('PER');
+
+  const SavingsType(this.label);
+
+  final String label;
+}

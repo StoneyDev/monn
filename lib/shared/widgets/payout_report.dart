@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:monn/shared/widgets/moon_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class PayoutReport extends StatelessWidget {
@@ -19,15 +19,15 @@ class PayoutReport extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Card(title: 'Plus-value', value: capitalGain),
+          child: _Card(title: 'Plus-value', amount: capitalGain),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Card(title: 'Taxe', value: -tax),
+          child: _Card(title: 'Taxe', amount: -tax),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Card(title: 'Perte', value: -loss),
+          child: _Card(title: 'Perte', amount: -loss),
         ),
       ],
     );
@@ -35,42 +35,24 @@ class PayoutReport extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.title, required this.value});
+  const _Card({required this.title, required this.amount});
 
   final String title;
-  final double value;
+  final double amount;
 
   @override
   Widget build(BuildContext context) {
-    final currency = NumberFormat.compactSimpleCurrency(locale: 'fr');
-
-    return Container(
-      padding: const EdgeInsets.all(10),
+    return DecoratedBox(
       decoration: const BoxDecoration(
         color: AppColors.extraExtraLightGray,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.lightGray,
-                ),
-          ),
-          Text(
-            currency.format(value),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.darkGray,
-                ),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: MoonFinancialInfo(
+          title: title,
+          amount: amount,
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class GlobalThemeData {
@@ -33,5 +34,15 @@ class GlobalThemeData {
     onError: AppColors.white,
     onPrimary: AppColors.white,
     onSecondary: AppColors.white,
+  );
+
+  static const SystemUiOverlayStyle systemUi = SystemUiOverlayStyle(
+    // Android
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    // iOS
+    statusBarBrightness: Brightness.dark,
   );
 }

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/app.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/global_theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,16 +42,7 @@ void _systemChrome() {
   ]);
 
   // Setting overlay
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      // Android
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      // iOS
-      statusBarBrightness: Brightness.dark,
-    ),
-  );
+  SystemChrome.setSystemUIOverlayStyle(GlobalThemeData.systemUi);
 }
 
 void _registerErrorHandlers() {
