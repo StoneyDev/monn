@@ -4,13 +4,13 @@ import 'package:monn/utils/app_colors.dart';
 
 class PayoutReport extends StatelessWidget {
   const PayoutReport({
-    this.capitalGain = 0,
+    this.netProfit = 0,
     this.tax = 0,
     this.loss = 0,
     super.key,
   });
 
-  final double capitalGain;
+  final double netProfit;
   final double tax;
   final double loss;
 
@@ -19,7 +19,7 @@ class PayoutReport extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Card(title: 'Plus-value', amount: capitalGain),
+          child: _Card(title: 'Plus-value', amount: netProfit),
         ),
         const SizedBox(width: 10),
         Expanded(

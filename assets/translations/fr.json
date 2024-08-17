@@ -1,1 +1,13 @@
-{}
+{
+  "button": {
+    "validate": "Valider",
+    "save": "Sauvegarder"
+  },
+  "input": {
+    "error": {
+      "empty": "Le champ est requis",
+      "wrong_data": "Le champ comporte une erreur"
+    }
+  },
+  "start_amount": "Montant investi"
+}
