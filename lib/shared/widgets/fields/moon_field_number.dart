@@ -52,6 +52,8 @@ class MoonFieldNumber extends StatelessWidget {
                   return context.tr('input.error.empty');
                 } else if (amount == null) {
                   return context.tr('input.error.wrong_data');
+                } else if (amount > 100 && suffix == '%') {
+                  return context.tr('input.error.wrong_percentage');
                 }
 
                 return null;
