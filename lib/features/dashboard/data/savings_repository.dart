@@ -15,7 +15,12 @@ class SavingsRepository {
     return query.watch(fireImmediately: true);
   }
 
-  Future<void> updateSaving(Savings newSaving) {
+  Stream<Savings> watchSaving(SavingsType type) {
+    final query = _localDB.savings.filter().typeEqualTo(type).build();
+    return query.watch(fireImmediately: true).expand((e) => e);
+  }
+
+  Future<void> editSaving(Savings newSaving) {
     return _localDB.writeTxn<void>(() async {
       await _localDB.savings.put(newSaving);
     });
@@ -28,10 +33,16 @@ SavingsRepository savingsRepository(SavingsRepositoryRef ref) {
 }
 
 @riverpod
-Stream<List<Savings>> watchSavings(WatchSavingsRef ref) async* {
+Stream<List<Savings>> watchSavings(WatchSavingsRef ref) {
   final repository = ref.watch(savingsRepositoryProvider);
+  return repository.watchSavings();
+}
 
-  await for (final results in repository.watchSavings()) {
-    yield results.isNotEmpty ? results : [];
-  }
+@riverpod
+Stream<Savings> watchSaving(
+  WatchSavingRef ref, {
+  required SavingsType type,
+}) {
+  final repository = ref.watch(savingsRepositoryProvider);
+  return repository.watchSaving(type);
 }

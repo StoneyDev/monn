@@ -27,7 +27,7 @@ class PayoutReport extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: _Card(title: 'Perte', amount: -loss),
+          child: _Card(title: 'Perte', amount: loss),
         ),
       ],
     );

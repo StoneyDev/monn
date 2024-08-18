@@ -19,7 +19,6 @@ mixin _$Savings {
   @enumerated
   SavingsType get type => throw _privateConstructorUsedError;
   double get startAmount => throw _privateConstructorUsedError;
-  double get income => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,11 +30,7 @@ abstract class $SavingsCopyWith<$Res> {
   factory $SavingsCopyWith(Savings value, $Res Function(Savings) then) =
       _$SavingsCopyWithImpl<$Res, Savings>;
   @useResult
-  $Res call(
-      {@enumerated SavingsType type,
-      double startAmount,
-      double income,
-      int id});
+  $Res call({@enumerated SavingsType type, double startAmount, int id});
 }
 
 /// @nodoc
@@ -53,7 +48,6 @@ class _$SavingsCopyWithImpl<$Res, $Val extends Savings>
   $Res call({
     Object? type = null,
     Object? startAmount = null,
-    Object? income = null,
     Object? id = null,
   }) {
     return _then(_value.copyWith(
@@ -64,10 +58,6 @@ class _$SavingsCopyWithImpl<$Res, $Val extends Savings>
       startAmount: null == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
               as double,
       id: null == id
           ? _value.id
@@ -84,11 +74,7 @@ abstract class _$$SavingsImplCopyWith<$Res> implements $SavingsCopyWith<$Res> {
       __$$SavingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@enumerated SavingsType type,
-      double startAmount,
-      double income,
-      int id});
+  $Res call({@enumerated SavingsType type, double startAmount, int id});
 }
 
 /// @nodoc
@@ -104,7 +90,6 @@ class __$$SavingsImplCopyWithImpl<$Res>
   $Res call({
     Object? type = null,
     Object? startAmount = null,
-    Object? income = null,
     Object? id = null,
   }) {
     return _then(_$SavingsImpl(
@@ -115,10 +100,6 @@ class __$$SavingsImplCopyWithImpl<$Res>
       startAmount: null == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
               as double,
       id: null == id
           ? _value.id
@@ -133,8 +114,7 @@ class __$$SavingsImplCopyWithImpl<$Res>
 class _$SavingsImpl implements _Savings {
   const _$SavingsImpl(
       {@enumerated required this.type,
-      this.startAmount = 0,
-      this.income = 0,
+      this.startAmount = 0.0,
       this.id = Isar.autoIncrement});
 
   @override
@@ -145,14 +125,11 @@ class _$SavingsImpl implements _Savings {
   final double startAmount;
   @override
   @JsonKey()
-  final double income;
-  @override
-  @JsonKey()
   final int id;
 
   @override
   String toString() {
-    return 'Savings(type: $type, startAmount: $startAmount, income: $income, id: $id)';
+    return 'Savings(type: $type, startAmount: $startAmount, id: $id)';
   }
 
   @override
@@ -163,12 +140,11 @@ class _$SavingsImpl implements _Savings {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.startAmount, startAmount) ||
                 other.startAmount == startAmount) &&
-            (identical(other.income, income) || other.income == income) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, type, startAmount, income, id);
+  int get hashCode => Object.hash(runtimeType, type, startAmount, id);
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +157,6 @@ abstract class _Savings implements Savings {
   const factory _Savings(
       {@enumerated required final SavingsType type,
       final double startAmount,
-      final double income,
       final int id}) = _$SavingsImpl;
 
   @override
@@ -189,8 +164,6 @@ abstract class _Savings implements Savings {
   SavingsType get type;
   @override
   double get startAmount;
-  @override
-  double get income;
   @override
   int get id;
   @override

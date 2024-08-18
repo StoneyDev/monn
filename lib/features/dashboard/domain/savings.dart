@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
 
@@ -11,9 +9,8 @@ part 'savings.g.dart';
 class Savings with _$Savings {
   const factory Savings({
     @enumerated required SavingsType type,
-    @Default(0) double startAmount,
-    @Default(0) double income,
-    @Default(Isar.autoIncrement) int id,
+    @Default(0.0) double startAmount,
+    @Default(Isar.autoIncrement) Id id,
   }) = _Savings;
 
   @override

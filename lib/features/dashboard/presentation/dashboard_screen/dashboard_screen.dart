@@ -4,8 +4,8 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/presentation/add_saving_screen/add_saving_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/extensions/savings_type_ui.dart';
 import 'package:monn/shared/widgets/moon_card.dart';
-import 'package:monn/shared/widgets/moon_financial_info.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -29,6 +29,7 @@ class DashboardScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
+            const SizedBox(height: 20),
             Text(
               'Valeur totale',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -42,7 +43,7 @@ class DashboardScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w900,
                   ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 14),
             const Padding(
               padding: EdgeInsets.all(16),
               child: PayoutReport(), // TODO
@@ -57,27 +58,20 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                     itemBuilder: (context, index) {
                       final item = value[index];
+                      final reportData = item.type.getReport(ref);
 
                       return MoonCard(
                         title: item.type.label,
-                        totalAmount: 0, // TODO
-                        children: [
-                          Expanded(
-                            child: MoonFinancialInfo(
-                              title: 'Vers. ini.',
-                              amount: item.startAmount,
-                            ),
+                        totalAmount: reportData?.finalAmount ?? 0,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (context) => item.type.route(),
                           ),
-                          Expanded(
-                            child: MoonFinancialInfo(
-                              title: 'Intérêts totaux',
-                              amount: item.income,
-                            ),
-                          ),
-                        ],
+                        ),
                       );
                     },
-                    separatorBuilder: (_, __) => const SizedBox(height: 16),
+                    separatorBuilder: (_, __) => const SizedBox(height: 8),
                     itemCount: value.length,
                   ),
                 ),

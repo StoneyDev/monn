@@ -17,18 +17,13 @@ const SavingsSchema = CollectionSchema(
   name: r'Savings',
   id: 792239108590555903,
   properties: {
-    r'income': PropertySchema(
-      id: 0,
-      name: r'income',
-      type: IsarType.double,
-    ),
     r'startAmount': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'startAmount',
       type: IsarType.double,
     ),
     r'type': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'type',
       type: IsarType.byte,
       enumMap: _SavingstypeEnumValueMap,
@@ -63,9 +58,8 @@ void _savingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.income);
-  writer.writeDouble(offsets[1], object.startAmount);
-  writer.writeByte(offsets[2], object.type.index);
+  writer.writeDouble(offsets[0], object.startAmount);
+  writer.writeByte(offsets[1], object.type.index);
 }
 
 Savings _savingsDeserialize(
@@ -76,9 +70,8 @@ Savings _savingsDeserialize(
 ) {
   final object = Savings(
     id: id,
-    income: reader.readDouble(offsets[0]),
-    startAmount: reader.readDouble(offsets[1]),
-    type: _SavingstypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
+    startAmount: reader.readDouble(offsets[0]),
+    type: _SavingstypeValueEnumMap[reader.readByteOrNull(offsets[1])] ??
         SavingsType.bookletA,
   );
   return object;
@@ -94,8 +87,6 @@ P _savingsDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (reader.readDouble(offset)) as P;
-    case 2:
       return (_SavingstypeValueEnumMap[reader.readByteOrNull(offset)] ??
           SavingsType.bookletA) as P;
     default:
@@ -267,68 +258,6 @@ extension SavingsQueryFilter
     });
   }
 
-  QueryBuilder<Savings, Savings, QAfterFilterCondition> incomeEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'income',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Savings, Savings, QAfterFilterCondition> incomeGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'income',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Savings, Savings, QAfterFilterCondition> incomeLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'income',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Savings, Savings, QAfterFilterCondition> incomeBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'income',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
   QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -452,18 +381,6 @@ extension SavingsQueryLinks
     on QueryBuilder<Savings, Savings, QFilterCondition> {}
 
 extension SavingsQuerySortBy on QueryBuilder<Savings, Savings, QSortBy> {
-  QueryBuilder<Savings, Savings, QAfterSortBy> sortByIncome() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'income', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Savings, Savings, QAfterSortBy> sortByIncomeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'income', Sort.desc);
-    });
-  }
-
   QueryBuilder<Savings, Savings, QAfterSortBy> sortByStartAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAmount', Sort.asc);
@@ -503,18 +420,6 @@ extension SavingsQuerySortThenBy
     });
   }
 
-  QueryBuilder<Savings, Savings, QAfterSortBy> thenByIncome() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'income', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Savings, Savings, QAfterSortBy> thenByIncomeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'income', Sort.desc);
-    });
-  }
-
   QueryBuilder<Savings, Savings, QAfterSortBy> thenByStartAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startAmount', Sort.asc);
@@ -542,12 +447,6 @@ extension SavingsQuerySortThenBy
 
 extension SavingsQueryWhereDistinct
     on QueryBuilder<Savings, Savings, QDistinct> {
-  QueryBuilder<Savings, Savings, QDistinct> distinctByIncome() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'income');
-    });
-  }
-
   QueryBuilder<Savings, Savings, QDistinct> distinctByStartAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startAmount');
@@ -566,12 +465,6 @@ extension SavingsQueryProperty
   QueryBuilder<Savings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<Savings, double, QQueryOperations> incomeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'income');
     });
   }
 

@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_saving_screen/controllers/add_saving_controller.dart';
+import 'package:monn/features/dashboard/presentation/add_saving_screen/controllers/edit_saving_controller.dart';
 import 'package:monn/shared/widgets/moon_app_bar.dart';
+import 'package:monn/shared/widgets/moon_button.dart';
 import 'package:monn/utils/app_colors.dart';
 
 final _savingsProvider = StateProvider.autoDispose<SavingsType?>((_) => null);
@@ -13,7 +15,7 @@ class AddSavingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(addSavingControllerProvider);
+    final state = ref.watch(editSavingControllerProvider);
     final selectedItem = ref.watch(_savingsProvider);
     final savingsType = ref.watch(
       watchSavingsProvider.select(
@@ -51,25 +53,19 @@ class AddSavingScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: ElevatedButton(
+        child: MoonButton(
+          text: context.tr('button.validate'),
           onPressed: selectedItem == null || state.isLoading
               ? null
               : () async {
                   final success = await ref
-                      .read(addSavingControllerProvider.notifier)
-                      .submit(selectedItem);
+                      .read(editSavingControllerProvider.notifier)
+                      .submit(Savings(type: selectedItem));
 
                   if (!context.mounted || !success) return;
 
                   Navigator.pop(context);
                 },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-          child: const Text(
-            'Valider',
-            style: TextStyle(color: AppColors.white),
-          ),
         ),
       ),
     );

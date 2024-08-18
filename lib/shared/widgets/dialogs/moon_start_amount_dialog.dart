@@ -10,8 +10,9 @@ class MoonDialog {
 
   static WoltModalSheetPage startAmount({
     required BuildContext context,
-    required TextEditingController startAmountController,
     required GlobalKey<FormState> formKey,
+    String? initialValue,
+    void Function(String)? onChanged,
     void Function()? onSubmit,
   }) {
     return WoltModalSheetPage(
@@ -38,7 +39,7 @@ class MoonDialog {
             Form(
               key: formKey,
               child: TextFormField(
-                controller: startAmountController,
+                initialValue: initialValue,
                 decoration: const InputDecoration(
                   errorMaxLines: 2,
                 ),
@@ -54,6 +55,7 @@ class MoonDialog {
 
                   return null;
                 },
+                onChanged: onChanged,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: AppColors.darkGray,
                       fontWeight: FontWeight.w900,
