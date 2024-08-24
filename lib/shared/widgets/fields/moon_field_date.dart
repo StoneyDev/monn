@@ -5,12 +5,12 @@ import 'package:monn/utils/app_colors.dart';
 class MoonFieldDate extends StatefulWidget {
   const MoonFieldDate({
     required this.label,
-    this.onChanged,
+    required this.onChanged,
     super.key,
   });
 
   final String label;
-  final void Function(DateTime)? onChanged;
+  final void Function(DateTime) onChanged;
 
   @override
   State<MoonFieldDate> createState() => _MoonFieldDateState();
@@ -25,7 +25,7 @@ class _MoonFieldDateState extends State<MoonFieldDate> {
 
     final now = DateTime.now();
     controller.text = now.slashFormat();
-    widget.onChanged!(now);
+    widget.onChanged(now);
   }
 
   @override
@@ -66,7 +66,7 @@ class _MoonFieldDateState extends State<MoonFieldDate> {
 
                 if (result != null) {
                   controller.text = result.slashFormat();
-                  widget.onChanged!(result);
+                  widget.onChanged(result);
                 }
               },
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
