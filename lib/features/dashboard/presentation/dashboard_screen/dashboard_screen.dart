@@ -29,7 +29,7 @@ class DashboardScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 32),
             Text(
               'Valeur totale',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -43,11 +43,12 @@ class DashboardScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w900,
                   ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 32),
             const Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: PayoutReport(), // TODO
             ),
+            const SizedBox(height: 16),
             switch (savings) {
               AsyncData(:final value) => Expanded(
                   child: ListView.separated(
@@ -61,8 +62,22 @@ class DashboardScreen extends ConsumerWidget {
                       final reportData = item.type.getReport(ref);
 
                       return MoonCard(
-                        title: item.type.label,
-                        totalAmount: reportData?.finalAmount ?? 0,
+                        title: Text(
+                          item.type.label,
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    color: AppColors.lightGray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        amount: Text(
+                          (reportData?.finalAmount ?? 0).simpleCurrency(),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                        ),
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<void>(
@@ -71,7 +86,7 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) => const SizedBox(height: 16),
                     itemCount: value.length,
                   ),
                 ),

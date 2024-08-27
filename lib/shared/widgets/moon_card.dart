@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class MoonCard extends StatelessWidget {
   const MoonCard({
     required this.title,
-    required this.totalAmount,
+    required this.amount,
     this.children = const [],
     this.onTap,
     super.key,
   });
 
-  final String title;
-  final double totalAmount;
+  final Widget title;
+  final Widget amount;
   final List<Widget> children;
   final void Function()? onTap;
 
@@ -23,6 +22,7 @@ class MoonCard extends StatelessWidget {
         side: BorderSide(color: AppColors.extraLightGray),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
+      margin: EdgeInsets.zero,
       child: InkWell(
         highlightColor: AppColors.extraExtraLightGray,
         splashColor: AppColors.extraExtraLightGray,
@@ -32,25 +32,13 @@ class MoonCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: AppColors.lightGray,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    totalAmount.simpleCurrency(),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                  ),
+                  title,
+                  const SizedBox(height: 16),
+                  amount,
                 ],
               ),
             ),
@@ -60,7 +48,7 @@ class MoonCard extends StatelessWidget {
                 height: 0,
               ),
               Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(16),
                 child: Row(children: children),
               ),
             ],

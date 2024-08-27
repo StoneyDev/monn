@@ -21,11 +21,11 @@ class PayoutReport extends StatelessWidget {
         Expanded(
           child: _Card(title: 'Plus-value', amount: netProfit),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: _Card(title: 'Taxe', amount: -tax),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: _Card(title: 'Perte', amount: loss),
         ),
@@ -48,7 +48,7 @@ class _Card extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
         child: MoonFinancialInfo(
           title: title,
           amount: amount,
