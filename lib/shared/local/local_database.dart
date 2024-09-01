@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,7 +10,12 @@ class LocalDatabase {
   Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
     _database = await Isar.open(
-      [SavingsSchema, CrowdfundingSchema],
+      [
+        SavingsSchema,
+        CrowdfundingSchema,
+        CryptocurrencySchema,
+        CryptocurrencyTransactionSchema,
+      ],
       directory: dir.path,
     );
   }
