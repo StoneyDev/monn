@@ -12,12 +12,10 @@ class Crowdfunding with _$Crowdfunding {
     @Default(0.0) double brutProfit,
     @Default(0.0) double taxProfit,
     @Default(0.0) double taxPercentage,
-    @Default('Inconnue') String platform,
-    DateTime? receiveAt,
+    @Default('Inconnue') String platformName,
+    DateTime? receivedAt,
     @Default(Isar.autoIncrement) Id id,
   }) = _Crowdfunding;
-
-  const Crowdfunding._();
 
   @override
   Id get id;

@@ -27,14 +27,14 @@ const CrowdfundingSchema = CollectionSchema(
       name: r'netProfit',
       type: IsarType.double,
     ),
-    r'platform': PropertySchema(
+    r'platformName': PropertySchema(
       id: 2,
-      name: r'platform',
+      name: r'platformName',
       type: IsarType.string,
     ),
-    r'receiveAt': PropertySchema(
+    r'receivedAt': PropertySchema(
       id: 3,
-      name: r'receiveAt',
+      name: r'receivedAt',
       type: IsarType.dateTime,
     ),
     r'taxPercentage': PropertySchema(
@@ -68,7 +68,7 @@ int _crowdfundingEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.platform.length * 3;
+  bytesCount += 3 + object.platformName.length * 3;
   return bytesCount;
 }
 
@@ -80,8 +80,8 @@ void _crowdfundingSerialize(
 ) {
   writer.writeDouble(offsets[0], object.brutProfit);
   writer.writeDouble(offsets[1], object.netProfit);
-  writer.writeString(offsets[2], object.platform);
-  writer.writeDateTime(offsets[3], object.receiveAt);
+  writer.writeString(offsets[2], object.platformName);
+  writer.writeDateTime(offsets[3], object.receivedAt);
   writer.writeDouble(offsets[4], object.taxPercentage);
   writer.writeDouble(offsets[5], object.taxProfit);
 }
@@ -96,8 +96,8 @@ Crowdfunding _crowdfundingDeserialize(
     brutProfit: reader.readDouble(offsets[0]),
     id: id,
     netProfit: reader.readDouble(offsets[1]),
-    platform: reader.readString(offsets[2]),
-    receiveAt: reader.readDateTimeOrNull(offsets[3]),
+    platformName: reader.readString(offsets[2]),
+    receivedAt: reader.readDateTimeOrNull(offsets[3]),
     taxPercentage: reader.readDouble(offsets[4]),
     taxProfit: reader.readDouble(offsets[5]),
   );
@@ -406,13 +406,13 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformEqualTo(
+      platformNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -420,7 +420,7 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformGreaterThan(
+      platformNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -428,7 +428,7 @@ extension CrowdfundingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -436,7 +436,7 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformLessThan(
+      platformNameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -444,7 +444,7 @@ extension CrowdfundingQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -452,7 +452,7 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformBetween(
+      platformNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -461,7 +461,7 @@ extension CrowdfundingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'platform',
+        property: r'platformName',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -472,13 +472,13 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformStartsWith(
+      platformNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -486,13 +486,13 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformEndsWith(
+      platformNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -500,10 +500,10 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformContains(String value, {bool caseSensitive = true}) {
+      platformNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'platform',
+        property: r'platformName',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -511,10 +511,10 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformMatches(String pattern, {bool caseSensitive = true}) {
+      platformNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'platform',
+        property: r'platformName',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -522,83 +522,83 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformIsEmpty() {
+      platformNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'platform',
+        property: r'platformName',
         value: '',
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformIsNotEmpty() {
+      platformNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'platform',
+        property: r'platformName',
         value: '',
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtIsNull() {
+      receivedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'receiveAt',
+        property: r'receivedAt',
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtIsNotNull() {
+      receivedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'receiveAt',
+        property: r'receivedAt',
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtEqualTo(DateTime? value) {
+      receivedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'receiveAt',
+        property: r'receivedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtGreaterThan(
+      receivedAtGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'receiveAt',
+        property: r'receivedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtLessThan(
+      receivedAtLessThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'receiveAt',
+        property: r'receivedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receiveAtBetween(
+      receivedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -606,7 +606,7 @@ extension CrowdfundingQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'receiveAt',
+        property: r'receivedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -781,27 +781,29 @@ extension CrowdfundingQuerySortBy
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByPlatform() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByPlatformName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'platform', Sort.asc);
+      return query.addSortBy(r'platformName', Sort.asc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByPlatformDesc() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
+      sortByPlatformNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'platform', Sort.desc);
+      return query.addSortBy(r'platformName', Sort.desc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByReceiveAt() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByReceivedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'receiveAt', Sort.asc);
+      return query.addSortBy(r'receivedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> sortByReceiveAtDesc() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
+      sortByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'receiveAt', Sort.desc);
+      return query.addSortBy(r'receivedAt', Sort.desc);
     });
   }
 
@@ -870,27 +872,29 @@ extension CrowdfundingQuerySortThenBy
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByPlatform() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByPlatformName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'platform', Sort.asc);
+      return query.addSortBy(r'platformName', Sort.asc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByPlatformDesc() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
+      thenByPlatformNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'platform', Sort.desc);
+      return query.addSortBy(r'platformName', Sort.desc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByReceiveAt() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByReceivedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'receiveAt', Sort.asc);
+      return query.addSortBy(r'receivedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy> thenByReceiveAtDesc() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
+      thenByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'receiveAt', Sort.desc);
+      return query.addSortBy(r'receivedAt', Sort.desc);
     });
   }
 
@@ -934,16 +938,16 @@ extension CrowdfundingQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByPlatform(
+  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByPlatformName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'platform', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'platformName', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByReceiveAt() {
+  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByReceivedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'receiveAt');
+      return query.addDistinctBy(r'receivedAt');
     });
   }
 
@@ -981,15 +985,15 @@ extension CrowdfundingQueryProperty
     });
   }
 
-  QueryBuilder<Crowdfunding, String, QQueryOperations> platformProperty() {
+  QueryBuilder<Crowdfunding, String, QQueryOperations> platformNameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'platform');
+      return query.addPropertyName(r'platformName');
     });
   }
 
-  QueryBuilder<Crowdfunding, DateTime?, QQueryOperations> receiveAtProperty() {
+  QueryBuilder<Crowdfunding, DateTime?, QQueryOperations> receivedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'receiveAt');
+      return query.addPropertyName(r'receivedAt');
     });
   }
 

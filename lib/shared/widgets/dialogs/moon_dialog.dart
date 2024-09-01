@@ -19,8 +19,8 @@ class MoonDialog {
       trailingNavBarWidget: Padding(
         padding: const EdgeInsetsDirectional.only(end: 16),
         child: IconButton(
-          onPressed: Navigator.of(context).pop,
           icon: const iconoir.Xmark(),
+          onPressed: Navigator.of(context).pop,
         ),
       ),
       pageTitle: Padding(

@@ -9,13 +9,13 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_saving_screen/controllers/edit_saving_controller.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/dialogs/moon_start_amount_dialog.dart';
+import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
 import 'package:monn/shared/widgets/moon_app_bar.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-final _startAmountProvider = StateProvider.autoDispose<String?>((_) => null);
+final _startAmountProvider = StateProvider<String?>((_) => null);
 
 class CrowdfundingScreen extends ConsumerWidget {
   const CrowdfundingScreen({super.key});
@@ -30,8 +30,6 @@ class CrowdfundingScreen extends ConsumerWidget {
     final report = ref.watch(
       watchPayoutReportCrowdfundingProvider.select((data) => data.valueOrNull),
     );
-
-    ref.listen(_startAmountProvider, (_, __) {});
 
     return Scaffold(
       appBar: MoonAppBar(title: SavingsType.crowdfunding.label),
@@ -82,6 +80,7 @@ class CrowdfundingScreen extends ConsumerWidget {
                       if (!context.mounted || !success) return;
                     }
 
+                    ref.invalidate(_startAmountProvider);
                     Navigator.pop(context);
                   },
                 ),
@@ -156,7 +155,7 @@ class _RefundTransaction extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                data.platform,
+                data.platformName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -164,7 +163,7 @@ class _RefundTransaction extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Text(data.receiveAt!.slashFormat()),
+              Text(data.receivedAt!.slashFormat()),
             ],
           ),
         ),

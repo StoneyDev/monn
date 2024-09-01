@@ -20,8 +20,8 @@ mixin _$Crowdfunding {
   double get brutProfit => throw _privateConstructorUsedError;
   double get taxProfit => throw _privateConstructorUsedError;
   double get taxPercentage => throw _privateConstructorUsedError;
-  String get platform => throw _privateConstructorUsedError;
-  DateTime? get receiveAt => throw _privateConstructorUsedError;
+  String get platformName => throw _privateConstructorUsedError;
+  DateTime? get receivedAt => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,8 +40,8 @@ abstract class $CrowdfundingCopyWith<$Res> {
       double brutProfit,
       double taxProfit,
       double taxPercentage,
-      String platform,
-      DateTime? receiveAt,
+      String platformName,
+      DateTime? receivedAt,
       int id});
 }
 
@@ -62,8 +62,8 @@ class _$CrowdfundingCopyWithImpl<$Res, $Val extends Crowdfunding>
     Object? brutProfit = null,
     Object? taxProfit = null,
     Object? taxPercentage = null,
-    Object? platform = null,
-    Object? receiveAt = freezed,
+    Object? platformName = null,
+    Object? receivedAt = freezed,
     Object? id = null,
   }) {
     return _then(_value.copyWith(
@@ -83,13 +83,13 @@ class _$CrowdfundingCopyWithImpl<$Res, $Val extends Crowdfunding>
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
               as double,
-      platform: null == platform
-          ? _value.platform
-          : platform // ignore: cast_nullable_to_non_nullable
+      platformName: null == platformName
+          ? _value.platformName
+          : platformName // ignore: cast_nullable_to_non_nullable
               as String,
-      receiveAt: freezed == receiveAt
-          ? _value.receiveAt
-          : receiveAt // ignore: cast_nullable_to_non_nullable
+      receivedAt: freezed == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       id: null == id
           ? _value.id
@@ -112,8 +112,8 @@ abstract class _$$CrowdfundingImplCopyWith<$Res>
       double brutProfit,
       double taxProfit,
       double taxPercentage,
-      String platform,
-      DateTime? receiveAt,
+      String platformName,
+      DateTime? receivedAt,
       int id});
 }
 
@@ -132,8 +132,8 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
     Object? brutProfit = null,
     Object? taxProfit = null,
     Object? taxPercentage = null,
-    Object? platform = null,
-    Object? receiveAt = freezed,
+    Object? platformName = null,
+    Object? receivedAt = freezed,
     Object? id = null,
   }) {
     return _then(_$CrowdfundingImpl(
@@ -153,13 +153,13 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
               as double,
-      platform: null == platform
-          ? _value.platform
-          : platform // ignore: cast_nullable_to_non_nullable
+      platformName: null == platformName
+          ? _value.platformName
+          : platformName // ignore: cast_nullable_to_non_nullable
               as String,
-      receiveAt: freezed == receiveAt
-          ? _value.receiveAt
-          : receiveAt // ignore: cast_nullable_to_non_nullable
+      receivedAt: freezed == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       id: null == id
           ? _value.id
@@ -171,16 +171,15 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CrowdfundingImpl extends _Crowdfunding {
+class _$CrowdfundingImpl implements _Crowdfunding {
   const _$CrowdfundingImpl(
       {this.netProfit = 0.0,
       this.brutProfit = 0.0,
       this.taxProfit = 0.0,
       this.taxPercentage = 0.0,
-      this.platform = 'Inconnue',
-      this.receiveAt,
-      this.id = Isar.autoIncrement})
-      : super._();
+      this.platformName = 'Inconnue',
+      this.receivedAt,
+      this.id = Isar.autoIncrement});
 
   @override
   @JsonKey()
@@ -196,16 +195,16 @@ class _$CrowdfundingImpl extends _Crowdfunding {
   final double taxPercentage;
   @override
   @JsonKey()
-  final String platform;
+  final String platformName;
   @override
-  final DateTime? receiveAt;
+  final DateTime? receivedAt;
   @override
   @JsonKey()
   final int id;
 
   @override
   String toString() {
-    return 'Crowdfunding(netProfit: $netProfit, brutProfit: $brutProfit, taxProfit: $taxProfit, taxPercentage: $taxPercentage, platform: $platform, receiveAt: $receiveAt, id: $id)';
+    return 'Crowdfunding(netProfit: $netProfit, brutProfit: $brutProfit, taxProfit: $taxProfit, taxPercentage: $taxPercentage, platformName: $platformName, receivedAt: $receivedAt, id: $id)';
   }
 
   @override
@@ -221,16 +220,16 @@ class _$CrowdfundingImpl extends _Crowdfunding {
                 other.taxProfit == taxProfit) &&
             (identical(other.taxPercentage, taxPercentage) ||
                 other.taxPercentage == taxPercentage) &&
-            (identical(other.platform, platform) ||
-                other.platform == platform) &&
-            (identical(other.receiveAt, receiveAt) ||
-                other.receiveAt == receiveAt) &&
+            (identical(other.platformName, platformName) ||
+                other.platformName == platformName) &&
+            (identical(other.receivedAt, receivedAt) ||
+                other.receivedAt == receivedAt) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, netProfit, brutProfit, taxProfit,
-      taxPercentage, platform, receiveAt, id);
+      taxPercentage, platformName, receivedAt, id);
 
   @JsonKey(ignore: true)
   @override
@@ -239,16 +238,15 @@ class _$CrowdfundingImpl extends _Crowdfunding {
       __$$CrowdfundingImplCopyWithImpl<_$CrowdfundingImpl>(this, _$identity);
 }
 
-abstract class _Crowdfunding extends Crowdfunding {
+abstract class _Crowdfunding implements Crowdfunding {
   const factory _Crowdfunding(
       {final double netProfit,
       final double brutProfit,
       final double taxProfit,
       final double taxPercentage,
-      final String platform,
-      final DateTime? receiveAt,
+      final String platformName,
+      final DateTime? receivedAt,
       final int id}) = _$CrowdfundingImpl;
-  const _Crowdfunding._() : super._();
 
   @override
   double get netProfit;
@@ -259,9 +257,9 @@ abstract class _Crowdfunding extends Crowdfunding {
   @override
   double get taxPercentage;
   @override
-  String get platform;
+  String get platformName;
   @override
-  DateTime? get receiveAt;
+  DateTime? get receivedAt;
   @override
   int get id;
   @override

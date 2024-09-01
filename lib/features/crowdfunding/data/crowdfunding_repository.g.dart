@@ -24,7 +24,7 @@ final crowndfundingRepositoryProvider =
 
 typedef CrowndfundingRepositoryRef = ProviderRef<CrowndfundingRepository>;
 String _$watchCrowdfundingsHash() =>
-    r'894a23c225c32eeb81b2cbb5d4b65b28cc8ebbe1';
+    r'daad7192c946326022b23db7d5ef123affd2a5f3';
 
 /// See also [watchCrowdfundings].
 @ProviderFor(watchCrowdfundings)
