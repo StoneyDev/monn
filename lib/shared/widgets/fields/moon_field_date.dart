@@ -1,36 +1,42 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 
-class MoonFieldDate extends StatefulWidget {
+class MoonFieldDate extends ConsumerStatefulWidget {
   const MoonFieldDate({
     required this.label,
     required this.onChanged,
+    this.required = false,
+    this.initialValue,
     super.key,
   });
 
   final String label;
+  final DateTime? initialValue;
+  final bool required;
   final void Function(DateTime) onChanged;
 
   @override
-  State<MoonFieldDate> createState() => _MoonFieldDateState();
+  ConsumerState<MoonFieldDate> createState() => _MoonFieldDateState();
 }
 
-class _MoonFieldDateState extends State<MoonFieldDate> {
-  final TextEditingController controller = TextEditingController();
+class _MoonFieldDateState extends ConsumerState<MoonFieldDate> {
+  late final TextEditingController _dateController;
 
   @override
   void initState() {
     super.initState();
 
-    final now = DateTime.now();
-    controller.text = now.slashFormat();
-    widget.onChanged(now);
+    _dateController = TextEditingController(
+      text: widget.initialValue?.slashFormat(),
+    );
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _dateController.dispose();
 
     super.dispose();
   }
@@ -55,20 +61,30 @@ class _MoonFieldDateState extends State<MoonFieldDate> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              controller: controller,
+              controller: _dateController,
               readOnly: true,
               onTap: () async {
                 final result = await showDatePicker(
                   context: context,
                   firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year + 1, 12, 31),
+                  initialDate: DateTime.now(),
+                  lastDate: DateTime(DateTime.now().year + 2),
                 );
 
                 if (result != null) {
-                  controller.text = result.slashFormat();
+                  _dateController.text = result.slashFormat();
                   widget.onChanged(result);
                 }
               },
+              validator: widget.required
+                  ? (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.tr('input.error.empty');
+                      }
+
+                      return null;
+                    }
+                  : null,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.darkGray,
                     fontWeight: FontWeight.w900,

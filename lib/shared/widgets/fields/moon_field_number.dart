@@ -6,12 +6,16 @@ class MoonFieldNumber extends StatelessWidget {
   const MoonFieldNumber({
     required this.label,
     required this.suffix,
+    this.required = false,
+    this.initialValue,
     this.onChanged,
     super.key,
   });
 
   final String label;
   final String suffix;
+  final bool required;
+  final String? initialValue;
   final void Function(String)? onChanged;
 
   @override
@@ -34,6 +38,7 @@ class MoonFieldNumber extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              initialValue: initialValue,
               decoration: InputDecoration(
                 errorMaxLines: 2,
                 suffix: Text(
@@ -45,19 +50,21 @@ class MoonFieldNumber extends StatelessWidget {
                 ),
               ),
               keyboardType: TextInputType.number,
-              validator: (value) {
-                final amount = double.tryParse(value ?? '');
+              validator: required
+                  ? (value) {
+                      final amount = double.tryParse(value ?? '');
 
-                if (value == null || value.isEmpty) {
-                  return context.tr('input.error.empty');
-                } else if (amount == null) {
-                  return context.tr('input.error.wrong_data');
-                } else if (amount > 100 && suffix == '%') {
-                  return context.tr('input.error.wrong_percentage');
-                }
+                      if (value == null || value.isEmpty) {
+                        return context.tr('input.error.empty');
+                      } else if (amount == null) {
+                        return context.tr('input.error.wrong_data');
+                      } else if (amount > 100 && suffix == '%') {
+                        return context.tr('input.error.wrong_percentage');
+                      }
 
-                return null;
-              },
+                      return null;
+                    }
+                  : null,
               onChanged: onChanged,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.darkGray,

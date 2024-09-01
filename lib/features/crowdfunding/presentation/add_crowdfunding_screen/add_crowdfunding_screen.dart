@@ -39,18 +39,21 @@ class AddCrowdfundingScreen extends ConsumerWidget {
               MoonFieldNumber(
                 label: 'Gain',
                 suffix: '€',
+                required: true,
                 onChanged: (value) => brutProfit = double.tryParse(value) ?? 0,
               ),
               const SizedBox(height: 16),
               MoonFieldNumber(
                 label: 'Taxe',
                 suffix: '%',
+                required: true,
                 onChanged: (value) =>
                     taxPercentage = double.tryParse(value) ?? 0,
               ),
               const SizedBox(height: 16),
               MoonFieldDate(
                 label: 'Reçu le',
+                required: true,
                 onChanged: (value) => receiveAt = value,
               ),
             ],

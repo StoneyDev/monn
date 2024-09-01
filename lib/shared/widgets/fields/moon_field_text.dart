@@ -6,12 +6,14 @@ class MoonFieldText extends StatelessWidget {
   const MoonFieldText({
     required this.label,
     this.required = false,
+    this.initialValue,
     this.onChanged,
     super.key,
   });
 
   final String label;
   final bool required;
+  final String? initialValue;
   final void Function(String)? onChanged;
 
   @override
