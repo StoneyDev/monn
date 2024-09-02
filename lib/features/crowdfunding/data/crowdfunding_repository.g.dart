@@ -6,25 +6,25 @@ part of 'crowdfunding_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$crowndfundingRepositoryHash() =>
-    r'b1cffbb2b6a2f17a118909e012d0e5fe49116dd4';
+String _$crowdfundingRepositoryHash() =>
+    r'7e516e1152f5eee26354959a9d2a75ad454f8029';
 
-/// See also [crowndfundingRepository].
-@ProviderFor(crowndfundingRepository)
-final crowndfundingRepositoryProvider =
-    Provider<CrowndfundingRepository>.internal(
-  crowndfundingRepository,
-  name: r'crowndfundingRepositoryProvider',
+/// See also [crowdfundingRepository].
+@ProviderFor(crowdfundingRepository)
+final crowdfundingRepositoryProvider =
+    Provider<CrowdfundingRepository>.internal(
+  crowdfundingRepository,
+  name: r'crowdfundingRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$crowndfundingRepositoryHash,
+      : _$crowdfundingRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef CrowndfundingRepositoryRef = ProviderRef<CrowndfundingRepository>;
+typedef CrowdfundingRepositoryRef = ProviderRef<CrowdfundingRepository>;
 String _$watchCrowdfundingsHash() =>
-    r'daad7192c946326022b23db7d5ef123affd2a5f3';
+    r'ced066c6a1638529e2086d3fb6f7d73938da92fa';
 
 /// See also [watchCrowdfundings].
 @ProviderFor(watchCrowdfundings)
@@ -42,7 +42,7 @@ final watchCrowdfundingsProvider =
 typedef WatchCrowdfundingsRef
     = AutoDisposeStreamProviderRef<List<Crowdfunding>>;
 String _$watchPayoutReportCrowdfundingHash() =>
-    r'3ec9f0baa2be72f5c40c447ba14f341145e9f0c0';
+    r'18075c7bec83a2dbadcf9d288c6398a74de2e0ac';
 
 /// See also [watchPayoutReportCrowdfunding].
 @ProviderFor(watchPayoutReportCrowdfunding)

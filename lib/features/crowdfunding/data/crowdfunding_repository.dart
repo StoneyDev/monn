@@ -8,8 +8,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_repository.g.dart';
 
-class CrowndfundingRepository {
-  const CrowndfundingRepository(this._localDB);
+class CrowdfundingRepository {
+  const CrowdfundingRepository(this._localDB);
 
   final Isar _localDB;
 
@@ -26,21 +26,21 @@ class CrowndfundingRepository {
 }
 
 @Riverpod(keepAlive: true)
-CrowndfundingRepository crowndfundingRepository(
-  CrowndfundingRepositoryRef ref,
+CrowdfundingRepository crowdfundingRepository(
+  CrowdfundingRepositoryRef ref,
 ) {
-  return CrowndfundingRepository(LocalDatabase().database);
+  return CrowdfundingRepository(LocalDatabase().database);
 }
 
 @riverpod
 Stream<List<Crowdfunding>> watchCrowdfundings(
   WatchCrowdfundingsRef ref,
 ) async* {
-  final repository = ref.watch(crowndfundingRepositoryProvider);
+  final repository = ref.watch(crowdfundingRepositoryProvider);
 
   await for (final results in repository.watchCrowdfundings()) {
     results.sort((a, b) => b.receivedAt!.compareTo(a.receivedAt!));
-    yield results.isNotEmpty ? results : [];
+    yield results;
   }
 }
 
@@ -48,7 +48,7 @@ Stream<List<Crowdfunding>> watchCrowdfundings(
 Stream<PayoutReportData> watchPayoutReportCrowdfunding(
   WatchPayoutReportCrowdfundingRef ref,
 ) async* {
-  final repository = ref.watch(crowndfundingRepositoryProvider);
+  final repository = ref.watch(crowdfundingRepositoryProvider);
   final crowdfundingData = await ref.watch(
     watchSavingProvider(type: SavingsType.crowdfunding).future,
   );

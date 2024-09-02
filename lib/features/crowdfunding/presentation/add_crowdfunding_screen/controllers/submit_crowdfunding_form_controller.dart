@@ -14,7 +14,7 @@ class SubmitCrowdfundingFormController
   Future<bool> submit() async {
     state = const AsyncLoading();
 
-    final repository = ref.read(crowndfundingRepositoryProvider);
+    final repository = ref.read(crowdfundingRepositoryProvider);
     final formData = ref.read(crowdfundingFormControllerProvider);
 
     final platformName = formData.platformName!;
