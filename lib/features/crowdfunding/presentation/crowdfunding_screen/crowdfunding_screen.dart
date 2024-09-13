@@ -6,7 +6,7 @@ import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/add_crowdfunding_screen/add_crowdfunding_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_saving_screen/controllers/edit_saving_controller.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
@@ -75,7 +75,7 @@ class CrowdfundingScreen extends ConsumerWidget {
                       );
 
                       final success = await ref
-                          .read(editSavingControllerProvider.notifier)
+                          .read(editSavingsControllerProvider.notifier)
                           .submit(newSaving);
                       if (!context.mounted || !success) return;
                     }

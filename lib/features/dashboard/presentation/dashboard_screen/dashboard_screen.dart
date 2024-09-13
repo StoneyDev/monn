@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/presentation/add_saving_screen/add_saving_screen.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/savings_type_ui.dart';
 import 'package:monn/shared/widgets/moon_card.dart';
@@ -22,7 +22,7 @@ class DashboardScreen extends ConsumerWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (_) => const AddSavingScreen(),
+            builder: (_) => const AddSavingsScreen(),
           ),
         ),
       ),

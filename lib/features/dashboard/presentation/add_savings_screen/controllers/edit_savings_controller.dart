@@ -4,10 +4,10 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'edit_saving_controller.g.dart';
+part 'edit_savings_controller.g.dart';
 
 @riverpod
-class EditSavingController extends _$EditSavingController {
+class EditSavingsController extends _$EditSavingsController {
   @override
   FutureOr<void> build() async {}
 

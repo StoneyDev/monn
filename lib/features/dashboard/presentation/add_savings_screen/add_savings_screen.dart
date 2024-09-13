@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_saving_screen/controllers/edit_saving_controller.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/widgets/moon_app_bar.dart';
 import 'package:monn/shared/widgets/moon_button.dart';
 import 'package:monn/utils/app_colors.dart';
 
 final _savingsProvider = StateProvider.autoDispose<SavingsType?>((_) => null);
 
-class AddSavingScreen extends ConsumerWidget {
-  const AddSavingScreen({super.key});
+class AddSavingsScreen extends ConsumerWidget {
+  const AddSavingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(editSavingControllerProvider);
+    final state = ref.watch(editSavingsControllerProvider);
     final selectedItem = ref.watch(_savingsProvider);
     final savingsType = ref.watch(
       watchSavingsProvider.select(
@@ -59,7 +59,7 @@ class AddSavingScreen extends ConsumerWidget {
               ? null
               : () async {
                   final success = await ref
-                      .read(editSavingControllerProvider.notifier)
+                      .read(editSavingsControllerProvider.notifier)
                       .submit(Savings(type: selectedItem));
 
                   if (!context.mounted || !success) return;
