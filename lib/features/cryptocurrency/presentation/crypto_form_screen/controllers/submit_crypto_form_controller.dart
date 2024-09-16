@@ -18,7 +18,9 @@ class SubmitCryptoFormController extends _$SubmitCryptoFormController {
 
     state = await AsyncValue.guard(
       () => repository.editCryptocurrency(
-        crypto: formData.crypto!,
+        crypto: formData.crypto!
+          ..totalFiat += formData.fiat!
+          ..totalCrypto += formData.amount!,
         transaction: CryptocurrencyTransaction()
           ..amount = formData.amount!
           ..fiat = formData.fiat!

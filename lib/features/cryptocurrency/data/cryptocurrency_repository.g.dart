@@ -41,7 +41,7 @@ final watchCryptocurrenciesProvider =
 
 typedef WatchCryptocurrenciesRef
     = AutoDisposeStreamProviderRef<List<Cryptocurrency>>;
-String _$watchCryptoChartHash() => r'06d3ad9bee0b909d86e134c0eb6c38540ce566e5';
+String _$watchCryptoChartHash() => r'2f6d6a06c23818cf69b1e7e218c9478c2c430a40';
 
 /// See also [watchCryptoChart].
 @ProviderFor(watchCryptoChart)

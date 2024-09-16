@@ -13,27 +13,9 @@ class CryptocurrencyRepository {
 
   final Isar _localDB;
 
-  Stream<List<Cryptocurrency>> watchCryptocurrencies() async* {
+  Stream<List<Cryptocurrency>> watchCryptocurrencies() {
     final query = _localDB.cryptocurrencys.where().build();
-    final result = query.watch(fireImmediately: true);
-
-    await for (final value in result) {
-      final newCryptocurrencies = value.map((crypto) {
-        var totalFiat = 0.0;
-        var totalCrypto = 0.0;
-
-        for (final transaction in crypto.transactions) {
-          totalFiat += transaction.fiat;
-          totalCrypto += transaction.amount;
-        }
-
-        return crypto
-          ..totalCrypto = totalCrypto
-          ..totalFiat = totalFiat;
-      }).toList();
-
-      yield newCryptocurrencies;
-    }
+    return query.watch(fireImmediately: true);
   }
 
   Future<void> editCryptocurrency({
@@ -80,7 +62,10 @@ Stream<Chart> watchCryptoChart(WatchCryptoChartRef ref) async* {
             final total = totalAmount == 0 ? 1 : totalAmount;
             final portion = (crypto.totalFiat * 100) / total;
 
-            return ChartData(portion: portion, color: crypto.type.color);
+            return ChartData(
+              portion: double.parse(portion.toStringAsFixed(2)),
+              color: crypto.type.color,
+            );
           }).toList();
 
     yield Chart(totalAmount: totalAmount, data: data);

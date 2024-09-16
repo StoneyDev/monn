@@ -17,8 +17,18 @@ const CryptocurrencySchema = CollectionSchema(
   name: r'Cryptocurrency',
   id: 5620952694823968014,
   properties: {
-    r'type': PropertySchema(
+    r'totalCrypto': PropertySchema(
       id: 0,
+      name: r'totalCrypto',
+      type: IsarType.double,
+    ),
+    r'totalFiat': PropertySchema(
+      id: 1,
+      name: r'totalFiat',
+      type: IsarType.double,
+    ),
+    r'type': PropertySchema(
+      id: 2,
       name: r'type',
       type: IsarType.byte,
       enumMap: _CryptocurrencytypeEnumValueMap,
@@ -60,7 +70,9 @@ void _cryptocurrencySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeByte(offsets[0], object.type.index);
+  writer.writeDouble(offsets[0], object.totalCrypto);
+  writer.writeDouble(offsets[1], object.totalFiat);
+  writer.writeByte(offsets[2], object.type.index);
 }
 
 Cryptocurrency _cryptocurrencyDeserialize(
@@ -71,8 +83,10 @@ Cryptocurrency _cryptocurrencyDeserialize(
 ) {
   final object = Cryptocurrency();
   object.id = id;
+  object.totalCrypto = reader.readDouble(offsets[0]);
+  object.totalFiat = reader.readDouble(offsets[1]);
   object.type =
-      _CryptocurrencytypeValueEnumMap[reader.readByteOrNull(offsets[0])] ??
+      _CryptocurrencytypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
           CryptoType.bitcoin;
   return object;
 }
@@ -85,6 +99,10 @@ P _cryptocurrencyDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readDouble(offset)) as P;
+    case 1:
+      return (reader.readDouble(offset)) as P;
+    case 2:
       return (_CryptocurrencytypeValueEnumMap[reader.readByteOrNull(offset)] ??
           CryptoType.bitcoin) as P;
     default:
@@ -279,6 +297,138 @@ extension CryptocurrencyQueryFilter
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalCryptoEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totalCrypto',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalCryptoGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'totalCrypto',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalCryptoLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'totalCrypto',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalCryptoBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'totalCrypto',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalFiatEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totalFiat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalFiatGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'totalFiat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalFiatLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'totalFiat',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      totalFiatBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'totalFiat',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
       typeEqualTo(CryptoType value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -404,6 +554,33 @@ extension CryptocurrencyQueryLinks
 
 extension CryptocurrencyQuerySortBy
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QSortBy> {
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      sortByTotalCrypto() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalCrypto', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      sortByTotalCryptoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalCrypto', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy> sortByTotalFiat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalFiat', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      sortByTotalFiatDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalFiat', Sort.desc);
+    });
+  }
+
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy> sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
@@ -431,6 +608,33 @@ extension CryptocurrencyQuerySortThenBy
     });
   }
 
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      thenByTotalCrypto() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalCrypto', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      thenByTotalCryptoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalCrypto', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy> thenByTotalFiat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalFiat', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
+      thenByTotalFiatDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalFiat', Sort.desc);
+    });
+  }
+
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy> thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
@@ -446,6 +650,20 @@ extension CryptocurrencyQuerySortThenBy
 
 extension CryptocurrencyQueryWhereDistinct
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> {
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct>
+      distinctByTotalCrypto() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'totalCrypto');
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct>
+      distinctByTotalFiat() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'totalFiat');
+    });
+  }
+
   QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> distinctByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type');
@@ -458,6 +676,18 @@ extension CryptocurrencyQueryProperty
   QueryBuilder<Cryptocurrency, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, double, QQueryOperations> totalCryptoProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'totalCrypto');
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, double, QQueryOperations> totalFiatProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'totalFiat');
     });
   }
 

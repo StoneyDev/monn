@@ -10,10 +10,8 @@ class Cryptocurrency {
   Id? id;
   @enumerated
   late CryptoType type;
-  @ignore
-  late double totalFiat;
-  @ignore
-  late double totalCrypto;
+  double totalFiat = 0;
+  double totalCrypto = 0;
 
   final transactions = IsarLinks<CryptocurrencyTransaction>();
 }
