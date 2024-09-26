@@ -9,6 +9,9 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart'
     as _i2;
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart' as _i4;
+import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart'
+    as _i7;
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i8;
 import 'package:monn/features/dashboard/data/savings_repository.dart' as _i5;
 import 'package:monn/features/dashboard/domain/savings.dart' as _i6;
 
@@ -83,6 +86,41 @@ class MockSavingsRepository extends _i1.Mock implements _i5.SavingsRepository {
         Invocation.method(
           #editSaving,
           [newSaving],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+}
+
+/// A class which mocks [CryptocurrencyRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCryptocurrencyRepository extends _i1.Mock
+    implements _i7.CryptocurrencyRepository {
+  @override
+  _i3.Stream<List<_i8.Cryptocurrency>> watchCryptocurrencies() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #watchCryptocurrencies,
+          [],
+        ),
+        returnValue: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+        returnValueForMissingStub: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+      ) as _i3.Stream<List<_i8.Cryptocurrency>>);
+
+  @override
+  _i3.Future<void> editCryptocurrency({
+    required _i8.Cryptocurrency? crypto,
+    required _i8.CryptocurrencyTransaction? transaction,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #editCryptocurrency,
+          [],
+          {
+            #crypto: crypto,
+            #transaction: transaction,
+          },
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),

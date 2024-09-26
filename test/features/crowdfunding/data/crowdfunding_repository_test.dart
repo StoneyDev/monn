@@ -44,6 +44,7 @@ void main() {
           crowdfundingRepositoryProvider.overrideWithValue(repository),
         ],
       );
+
       when(repository.watchCrowdfundings()).thenAnswer(
         (_) => Stream.value(crowdfundings),
       );
@@ -55,6 +56,7 @@ void main() {
         listener.call,
         fireImmediately: true,
       );
+
       final results = await container.read(watchCrowdfundingsProvider.future);
 
       // Assert
@@ -102,6 +104,7 @@ void main() {
           listener.call,
           fireImmediately: true,
         );
+
         final results = await container.read(watchCrowdfundingsProvider.future);
 
         // Assert
