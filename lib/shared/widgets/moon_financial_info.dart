@@ -5,15 +5,20 @@ import 'package:monn/utils/app_colors.dart';
 class MoonFinancialInfo extends StatelessWidget {
   const MoonFinancialInfo({
     required this.title,
-    required this.amount,
+    required this.data,
     super.key,
   });
 
   final String title;
-  final double amount;
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
+    final formattedData = switch (data.runtimeType) {
+      double => (data as double).simpleCurrency(),
+      _ => '$data',
+    };
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,7 +28,7 @@ class MoonFinancialInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          amount.simpleCurrency(),
+          formattedData,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(

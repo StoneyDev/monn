@@ -62,7 +62,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                       onTap: () => WoltModalSheet.show<void>(
                         context: context,
                         pageListBuilder: (context) => [
-                          MoonBottomSheet.details(
+                          MoonBottomSheet.cryptoDetails(
                             context: context,
                             crypto: crypto,
                           ),

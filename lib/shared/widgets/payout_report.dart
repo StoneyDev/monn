@@ -51,7 +51,7 @@ class _Card extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: MoonFinancialInfo(
           title: title,
-          amount: amount,
+          data: amount,
         ),
       ),
     );
