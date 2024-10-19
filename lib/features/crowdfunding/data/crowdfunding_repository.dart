@@ -49,7 +49,7 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(
   WatchPayoutReportCrowdfundingRef ref,
 ) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
-  final crowdfundingData = await ref.read(
+  final crowdfundingData = await ref.watch(
     watchSavingProvider(type: SavingsType.crowdfunding).future,
   );
 
