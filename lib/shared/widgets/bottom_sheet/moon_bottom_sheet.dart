@@ -105,15 +105,15 @@ class MoonBottomSheet {
 
               return ListTile(
                 title: Text(
-                  item.amount.simpleCurrency(),
-                  style: const TextStyle(
-                    color: AppColors.darkGray,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                trailing: Text(
                   item.receivedAt.slashFormat(),
                   style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                trailing: Text(
+                  item.amount.simpleCurrency(),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.darkGray,
+                        fontWeight: FontWeight.w900,
+                      ),
                 ),
               );
             },
