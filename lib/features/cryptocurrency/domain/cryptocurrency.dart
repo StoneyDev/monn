@@ -8,7 +8,7 @@ part 'cryptocurrency.g.dart';
 @collection
 class Cryptocurrency {
   Id? id;
-  @enumerated
+  @Enumerated(EnumType.name)
   late CryptoType type;
   double totalFiat = 0;
   double totalCrypto = 0;

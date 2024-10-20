@@ -11,7 +11,7 @@ void main() {
   group('editSavingController', () {
     test('should return true when the update is successful', () async {
       // Arrange
-      const saving = Savings(type: SavingsType.bookletA);
+      const saving = Savings(type: SavingsType.booklet);
 
       final repository = MockSavingsRepository();
       final container = createContainer(
@@ -34,7 +34,7 @@ void main() {
 
     test('should return false when the update is unsuccessful', () async {
       // Arrange
-      const saving = Savings(type: SavingsType.bookletA);
+      const saving = Savings(type: SavingsType.booklet);
       final error = Exception();
 
       final repository = MockSavingsRepository();

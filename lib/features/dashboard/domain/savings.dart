@@ -8,7 +8,7 @@ part 'savings.g.dart';
 @Collection(ignore: {'copyWith'})
 class Savings with _$Savings {
   const factory Savings({
-    @enumerated required SavingsType type,
+    @Enumerated(EnumType.name) required SavingsType type,
     @Default(0.0) double startAmount,
     @Default(Isar.autoIncrement) Id id,
   }) = _Savings;
@@ -18,8 +18,7 @@ class Savings with _$Savings {
 }
 
 enum SavingsType {
-  bookletA('Livret A'),
-  bookletSSD('LDDS'),
+  booklet('Livret'),
   crowdfunding('Crowdfunding Immobilier'),
   cryptocurrency('Cryptomonnaie'),
   csknives('Couteaux CS'),

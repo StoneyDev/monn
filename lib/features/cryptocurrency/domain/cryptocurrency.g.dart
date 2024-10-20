@@ -30,7 +30,7 @@ const CryptocurrencySchema = CollectionSchema(
     r'type': PropertySchema(
       id: 2,
       name: r'type',
-      type: IsarType.byte,
+      type: IsarType.string,
       enumMap: _CryptocurrencytypeEnumValueMap,
     )
   },
@@ -61,6 +61,7 @@ int _cryptocurrencyEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.type.name.length * 3;
   return bytesCount;
 }
 
@@ -72,7 +73,7 @@ void _cryptocurrencySerialize(
 ) {
   writer.writeDouble(offsets[0], object.totalCrypto);
   writer.writeDouble(offsets[1], object.totalFiat);
-  writer.writeByte(offsets[2], object.type.index);
+  writer.writeString(offsets[2], object.type.name);
 }
 
 Cryptocurrency _cryptocurrencyDeserialize(
@@ -86,7 +87,7 @@ Cryptocurrency _cryptocurrencyDeserialize(
   object.totalCrypto = reader.readDouble(offsets[0]);
   object.totalFiat = reader.readDouble(offsets[1]);
   object.type =
-      _CryptocurrencytypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
+      _CryptocurrencytypeValueEnumMap[reader.readStringOrNull(offsets[2])] ??
           CryptoType.bitcoin;
   return object;
 }
@@ -103,7 +104,8 @@ P _cryptocurrencyDeserializeProp<P>(
     case 1:
       return (reader.readDouble(offset)) as P;
     case 2:
-      return (_CryptocurrencytypeValueEnumMap[reader.readByteOrNull(offset)] ??
+      return (_CryptocurrencytypeValueEnumMap[
+              reader.readStringOrNull(offset)] ??
           CryptoType.bitcoin) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -111,18 +113,18 @@ P _cryptocurrencyDeserializeProp<P>(
 }
 
 const _CryptocurrencytypeEnumValueMap = {
-  'bitcoin': 0,
-  'ethereum': 1,
-  'chainlink': 2,
-  'tether': 3,
-  'usdCoin': 4,
+  r'bitcoin': r'bitcoin',
+  r'ethereum': r'ethereum',
+  r'chainlink': r'chainlink',
+  r'tether': r'tether',
+  r'usdCoin': r'usdCoin',
 };
 const _CryptocurrencytypeValueEnumMap = {
-  0: CryptoType.bitcoin,
-  1: CryptoType.ethereum,
-  2: CryptoType.chainlink,
-  3: CryptoType.tether,
-  4: CryptoType.usdCoin,
+  r'bitcoin': CryptoType.bitcoin,
+  r'ethereum': CryptoType.ethereum,
+  r'chainlink': CryptoType.chainlink,
+  r'tether': CryptoType.tether,
+  r'usdCoin': CryptoType.usdCoin,
 };
 
 Id _cryptocurrencyGetId(Cryptocurrency object) {
@@ -429,11 +431,15 @@ extension CryptocurrencyQueryFilter
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeEqualTo(CryptoType value) {
+      typeEqualTo(
+    CryptoType value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -442,12 +448,14 @@ extension CryptocurrencyQueryFilter
       typeGreaterThan(
     CryptoType value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -456,12 +464,14 @@ extension CryptocurrencyQueryFilter
       typeLessThan(
     CryptoType value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -472,6 +482,7 @@ extension CryptocurrencyQueryFilter
     CryptoType upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -480,6 +491,77 @@ extension CryptocurrencyQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'type',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+      typeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'type',
+        value: '',
       ));
     });
   }
@@ -664,9 +746,10 @@ extension CryptocurrencyQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> distinctByType() {
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> distinctByType(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'type');
+      return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
     });
   }
 }

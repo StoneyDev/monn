@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Savings {
-  @enumerated
+  @Enumerated(EnumType.name)
   SavingsType get type => throw _privateConstructorUsedError;
   double get startAmount => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
@@ -30,7 +30,10 @@ abstract class $SavingsCopyWith<$Res> {
   factory $SavingsCopyWith(Savings value, $Res Function(Savings) then) =
       _$SavingsCopyWithImpl<$Res, Savings>;
   @useResult
-  $Res call({@enumerated SavingsType type, double startAmount, int id});
+  $Res call(
+      {@Enumerated(EnumType.name) SavingsType type,
+      double startAmount,
+      int id});
 }
 
 /// @nodoc
@@ -74,7 +77,10 @@ abstract class _$$SavingsImplCopyWith<$Res> implements $SavingsCopyWith<$Res> {
       __$$SavingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@enumerated SavingsType type, double startAmount, int id});
+  $Res call(
+      {@Enumerated(EnumType.name) SavingsType type,
+      double startAmount,
+      int id});
 }
 
 /// @nodoc
@@ -113,12 +119,12 @@ class __$$SavingsImplCopyWithImpl<$Res>
 
 class _$SavingsImpl implements _Savings {
   const _$SavingsImpl(
-      {@enumerated required this.type,
+      {@Enumerated(EnumType.name) required this.type,
       this.startAmount = 0.0,
       this.id = Isar.autoIncrement});
 
   @override
-  @enumerated
+  @Enumerated(EnumType.name)
   final SavingsType type;
   @override
   @JsonKey()
@@ -155,12 +161,12 @@ class _$SavingsImpl implements _Savings {
 
 abstract class _Savings implements Savings {
   const factory _Savings(
-      {@enumerated required final SavingsType type,
+      {@Enumerated(EnumType.name) required final SavingsType type,
       final double startAmount,
       final int id}) = _$SavingsImpl;
 
   @override
-  @enumerated
+  @Enumerated(EnumType.name)
   SavingsType get type;
   @override
   double get startAmount;

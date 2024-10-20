@@ -12,8 +12,7 @@ import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
 extension SavingsTypeUI on SavingsType {
   PayoutReportData? getReport(WidgetRef ref) {
     return switch (this) {
-      SavingsType.bookletA => null,
-      SavingsType.bookletSSD => null,
+      SavingsType.booklet => null,
       SavingsType.crowdfunding =>
         ref.watch(watchPayoutReportCrowdfundingProvider).valueOrNull,
       SavingsType.cryptocurrency =>
@@ -29,8 +28,7 @@ extension SavingsTypeUI on SavingsType {
 
   Widget route() {
     return switch (this) {
-      SavingsType.bookletA => const Placeholder(),
-      SavingsType.bookletSSD => const Placeholder(),
+      SavingsType.booklet => const Placeholder(),
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
       SavingsType.csknives => const Placeholder(),

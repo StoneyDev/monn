@@ -25,7 +25,7 @@ const SavingsSchema = CollectionSchema(
     r'type': PropertySchema(
       id: 1,
       name: r'type',
-      type: IsarType.byte,
+      type: IsarType.string,
       enumMap: _SavingstypeEnumValueMap,
     )
   },
@@ -49,6 +49,7 @@ int _savingsEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.type.name.length * 3;
   return bytesCount;
 }
 
@@ -59,7 +60,7 @@ void _savingsSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDouble(offsets[0], object.startAmount);
-  writer.writeByte(offsets[1], object.type.index);
+  writer.writeString(offsets[1], object.type.name);
 }
 
 Savings _savingsDeserialize(
@@ -71,8 +72,8 @@ Savings _savingsDeserialize(
   final object = Savings(
     id: id,
     startAmount: reader.readDouble(offsets[0]),
-    type: _SavingstypeValueEnumMap[reader.readByteOrNull(offsets[1])] ??
-        SavingsType.bookletA,
+    type: _SavingstypeValueEnumMap[reader.readStringOrNull(offsets[1])] ??
+        SavingsType.booklet,
   );
   return object;
 }
@@ -87,36 +88,34 @@ P _savingsDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (_SavingstypeValueEnumMap[reader.readByteOrNull(offset)] ??
-          SavingsType.bookletA) as P;
+      return (_SavingstypeValueEnumMap[reader.readStringOrNull(offset)] ??
+          SavingsType.booklet) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 const _SavingstypeEnumValueMap = {
-  'bookletA': 0,
-  'bookletSSD': 1,
-  'crowdfunding': 2,
-  'cryptocurrency': 3,
-  'csknives': 4,
-  'cto': 5,
-  'lifeInsurance': 6,
-  'pea': 7,
-  'reit': 8,
-  'rip': 9,
+  r'booklet': r'booklet',
+  r'crowdfunding': r'crowdfunding',
+  r'cryptocurrency': r'cryptocurrency',
+  r'csknives': r'csknives',
+  r'cto': r'cto',
+  r'lifeInsurance': r'lifeInsurance',
+  r'pea': r'pea',
+  r'reit': r'reit',
+  r'rip': r'rip',
 };
 const _SavingstypeValueEnumMap = {
-  0: SavingsType.bookletA,
-  1: SavingsType.bookletSSD,
-  2: SavingsType.crowdfunding,
-  3: SavingsType.cryptocurrency,
-  4: SavingsType.csknives,
-  5: SavingsType.cto,
-  6: SavingsType.lifeInsurance,
-  7: SavingsType.pea,
-  8: SavingsType.reit,
-  9: SavingsType.rip,
+  r'booklet': SavingsType.booklet,
+  r'crowdfunding': SavingsType.crowdfunding,
+  r'cryptocurrency': SavingsType.cryptocurrency,
+  r'csknives': SavingsType.csknives,
+  r'cto': SavingsType.cto,
+  r'lifeInsurance': SavingsType.lifeInsurance,
+  r'pea': SavingsType.pea,
+  r'reit': SavingsType.reit,
+  r'rip': SavingsType.rip,
 };
 
 Id _savingsGetId(Savings object) {
@@ -321,11 +320,14 @@ extension SavingsQueryFilter
   }
 
   QueryBuilder<Savings, Savings, QAfterFilterCondition> typeEqualTo(
-      SavingsType value) {
+    SavingsType value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -333,12 +335,14 @@ extension SavingsQueryFilter
   QueryBuilder<Savings, Savings, QAfterFilterCondition> typeGreaterThan(
     SavingsType value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -346,12 +350,14 @@ extension SavingsQueryFilter
   QueryBuilder<Savings, Savings, QAfterFilterCondition> typeLessThan(
     SavingsType value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'type',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
@@ -361,6 +367,7 @@ extension SavingsQueryFilter
     SavingsType upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -369,6 +376,75 @@ extension SavingsQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'type',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> typeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'type',
+        value: '',
       ));
     });
   }
@@ -453,9 +529,10 @@ extension SavingsQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Savings, Savings, QDistinct> distinctByType() {
+  QueryBuilder<Savings, Savings, QDistinct> distinctByType(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'type');
+      return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
     });
   }
 }
