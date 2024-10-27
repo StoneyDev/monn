@@ -18,7 +18,7 @@ class Savings with _$Savings {
 }
 
 enum SavingsType {
-  booklet('Livret'),
+  savingsBook('Livret'),
   crowdfunding('Crowdfunding Immobilier'),
   cryptocurrency('Cryptomonnaie'),
   csknives('Couteaux CS'),

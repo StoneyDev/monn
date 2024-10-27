@@ -73,7 +73,7 @@ Savings _savingsDeserialize(
     id: id,
     startAmount: reader.readDouble(offsets[0]),
     type: _SavingstypeValueEnumMap[reader.readStringOrNull(offsets[1])] ??
-        SavingsType.booklet,
+        SavingsType.savingsBook,
   );
   return object;
 }
@@ -89,14 +89,14 @@ P _savingsDeserializeProp<P>(
       return (reader.readDouble(offset)) as P;
     case 1:
       return (_SavingstypeValueEnumMap[reader.readStringOrNull(offset)] ??
-          SavingsType.booklet) as P;
+          SavingsType.savingsBook) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 const _SavingstypeEnumValueMap = {
-  r'booklet': r'booklet',
+  r'savingsBook': r'savingsBook',
   r'crowdfunding': r'crowdfunding',
   r'cryptocurrency': r'cryptocurrency',
   r'csknives': r'csknives',
@@ -107,7 +107,7 @@ const _SavingstypeEnumValueMap = {
   r'rip': r'rip',
 };
 const _SavingstypeValueEnumMap = {
-  r'booklet': SavingsType.booklet,
+  r'savingsBook': SavingsType.savingsBook,
   r'crowdfunding': SavingsType.crowdfunding,
   r'cryptocurrency': SavingsType.cryptocurrency,
   r'csknives': SavingsType.csknives,
