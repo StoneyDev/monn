@@ -4,8 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/features/savings_book/data/savings_book_repository.dart';
+import 'package:monn/features/savings_book/domain/savings_book.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../test.dart';
@@ -19,35 +19,29 @@ void main() {
     await Isar.initializeIsarCore(download: true);
 
     isar = await Isar.open(
-      [ReitSchema, ReitDividendSchema],
+      [SavingsBookSchema],
       directory: '.',
     );
 
     await isar.writeTxn(() async {
-      await isar.reits.clear();
-      await isar.reitDividends.clear();
+      await isar.savingsBooks.clear();
     });
 
-    final dividends = [
-      ReitDividend()
-        ..receivedAt = DateTime(2010)
-        ..amount = 89.21,
-      ReitDividend()
-        ..receivedAt = DateTime(2012)
-        ..amount = 45.67,
+    final data = [
+      SavingsBook()
+        ..name = 'Livret 1'
+        ..interests = 800
+        ..withdrawal = 100
+        ..startAmount = 1000,
+      SavingsBook()
+        ..name = 'Livret 2'
+        ..interests = 100
+        ..withdrawal = 200
+        ..startAmount = 2000,
     ];
 
-    final reit = Reit()
-      ..name = 'Random SCPI'
-      ..boughtOn = DateTime.now()
-      ..price = 567
-      ..shares = 10
-      ..dividends.addAll(dividends);
-
     await isar.writeTxn(() async {
-      await isar.reits.put(reit);
-      await isar.reitDividends.putAll(dividends);
-      await reit.dividends.save();
+      await isar.savingsBooks.putAll(data);
     });
   });
 
@@ -55,49 +49,49 @@ void main() {
     await isar.close(deleteFromDisk: true);
   });
 
-  group('reitRepository', () {
+  group('cryptocurrencyRepository', () {
     test('should return ReitRepository when a call is made', () {
       // Arrange
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
         ],
       );
 
       // Act
-      final controller = container.read(reitRepositoryProvider);
+      final controller = container.read(savingsBookRepositoryProvider);
 
       // Assert
-      expect(controller, isA<ReitRepository>());
+      expect(controller, isA<SavingsBookRepository>());
     });
   });
 
-  group('watchReits', () {
+  group('watchSavingsBooks', () {
     test('should return empty list when no data is found', () async {
       // Arrange
-      const reits = <Reit>[];
+      const savingsBooks = <SavingsBook>[];
 
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
         ],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
+      when(repository.watchSavingsBooks()).thenAnswer(
+        (_) => Stream.value(savingsBooks),
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Reit>>>();
+      final listener = MockListener<AsyncValue<List<SavingsBook>>>();
       container.listen(
-        watchReitsProvider,
+        watchSavingsBooksProvider,
         listener.call,
         fireImmediately: true,
       );
 
-      final results = await container.read(watchReitsProvider.future);
+      final results = await container.read(watchSavingsBooksProvider.future);
 
       // Assert
       verifyInOrder([
@@ -110,28 +104,28 @@ void main() {
 
     test('should return data from database', () async {
       // Arrange
-      final reits = await isar.reits.where().findAll();
+      final savingsBooks = await isar.savingsBooks.where().findAll();
 
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
         ],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
+      when(repository.watchSavingsBooks()).thenAnswer(
+        (_) => Stream.value(savingsBooks),
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Reit>>>();
+      final listener = MockListener<AsyncValue<List<SavingsBook>>>();
       container.listen(
-        watchReitsProvider,
+        watchSavingsBooksProvider,
         listener.call,
         fireImmediately: true,
       );
 
-      final results = await container.read(watchReitsProvider.future);
+      final results = await container.read(watchSavingsBooksProvider.future);
 
       // Assert
       verifyInOrder([
@@ -139,52 +133,52 @@ void main() {
         listener(const AsyncLoading(), AsyncData(results)),
       ]);
       verifyNoMoreInteractions(listener);
-      expect(results, reits);
+      expect(results, savingsBooks);
     });
 
     test('should return error when repository throws exception', () async {
       // Arrange
       final error = Exception();
 
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
         ],
       );
 
-      when(repository.watchReits()).thenThrow(error);
+      when(repository.watchSavingsBooks()).thenThrow(error);
 
       // Act
-      final controller = container.read(watchReitsProvider.future);
+      final controller = container.read(watchSavingsBooksProvider.future);
 
       // Assert
       await expectLater(controller, throwsA(error));
     });
   });
 
-  group('watchPayoutReportReit', () {
+  group('watchPayoutReportSavingsBook', () {
     test('should return the total amount invested', () async {
       // Arrange
-      const finalAmount = 2134.88;
-      final reits = await isar.reits.where().findAll();
+      const finalAmount = 3600;
+      final savingsBooks = await isar.savingsBooks.where().findAll();
 
       const savings = Savings(
-        type: SavingsType.reit,
-        startAmount: 2000,
+        type: SavingsType.savingsBook,
+        startAmount: 3000,
       );
 
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final savingRepository = MockSavingsRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
           savingsRepositoryProvider.overrideWithValue(savingRepository),
         ],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
+      when(repository.watchSavingsBooks()).thenAnswer(
+        (_) => Stream.value(savingsBooks),
       );
 
       when(savingRepository.watchSaving(any)).thenAnswer(
@@ -194,13 +188,13 @@ void main() {
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();
       container.listen(
-        watchPayoutReportReitProvider,
+        watchPayoutReportSavingsBookProvider,
         listener.call,
         fireImmediately: true,
       );
 
       final results = await container.read(
-        watchPayoutReportReitProvider.future,
+        watchPayoutReportSavingsBookProvider.future,
       );
 
       // Assert
@@ -216,21 +210,22 @@ void main() {
       // Arrange
       final error = Exception();
 
-      final repository = MockReitRepository();
+      final repository = MockSavingsBookRepository();
       final savingRepository = MockSavingsRepository();
       final container = createContainer(
         overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
+          savingsBookRepositoryProvider.overrideWithValue(repository),
           savingsRepositoryProvider.overrideWithValue(savingRepository),
         ],
       );
 
-      when(repository.watchReits()).thenThrow(error);
+      when(repository.watchSavingsBooks()).thenThrow(error);
 
       when(savingRepository.watchSaving(any)).thenThrow(error);
 
       // Act
-      final controller = container.read(watchPayoutReportReitProvider.future);
+      final controller =
+          container.read(watchPayoutReportSavingsBookProvider.future);
 
       // Assert
       await expectLater(controller, throwsA(error));
