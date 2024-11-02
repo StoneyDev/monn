@@ -3,6 +3,7 @@ import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/features/savings_book/domain/savings_book.dart';
 import 'package:path_provider/path_provider.dart';
 
 late Isar _database;
@@ -18,6 +19,7 @@ class LocalDatabase {
         CryptocurrencyTransactionSchema,
         ReitSchema,
         ReitDividendSchema,
+        SavingsBookSchema,
       ],
       directory: dir.path,
     );

@@ -8,7 +8,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class MoonDialog {
   const MoonDialog._();
 
-  static WoltModalSheetPage startAmount({
+  static WoltModalSheetPage amount({
     required BuildContext context,
     required GlobalKey<FormState> formKey,
     String? initialValue,
@@ -28,7 +28,7 @@ class MoonDialog {
         child: Column(
           children: [
             Text(
-              context.tr('start_amount'),
+              'Montant',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppColors.lightGray,
@@ -39,6 +39,7 @@ class MoonDialog {
             Form(
               key: formKey,
               child: TextFormField(
+                autofocus: true,
                 initialValue: initialValue,
                 decoration: const InputDecoration(
                   errorMaxLines: 2,

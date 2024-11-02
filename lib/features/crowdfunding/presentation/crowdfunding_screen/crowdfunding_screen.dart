@@ -58,7 +58,7 @@ class CrowdfundingScreen extends ConsumerWidget {
               barrierDismissible: true,
               modalTypeBuilder: (_) => WoltModalType.dialog(),
               pageListBuilder: (context) => [
-                MoonDialog.startAmount(
+                MoonDialog.amount(
                   context: context,
                   formKey: formKey,
                   initialValue: crowdfundingData?.startAmount.toString(),

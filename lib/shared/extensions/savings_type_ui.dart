@@ -8,11 +8,14 @@ import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
+import 'package:monn/features/savings_book/data/savings_book_repository.dart';
+import 'package:monn/features/savings_book/presentation/savings_book_screen/savings_book_screen.dart';
 
 extension SavingsTypeUI on SavingsType {
   PayoutReportData? getReport(WidgetRef ref) {
     return switch (this) {
-      SavingsType.booklet => null,
+      SavingsType.savingsBook =>
+        ref.watch(watchPayoutReportSavingsBookProvider).valueOrNull,
       SavingsType.crowdfunding =>
         ref.watch(watchPayoutReportCrowdfundingProvider).valueOrNull,
       SavingsType.cryptocurrency =>
@@ -28,7 +31,7 @@ extension SavingsTypeUI on SavingsType {
 
   Widget route() {
     return switch (this) {
-      SavingsType.booklet => const Placeholder(),
+      SavingsType.savingsBook => const SavingsBookScreen(),
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
       SavingsType.csknives => const Placeholder(),
