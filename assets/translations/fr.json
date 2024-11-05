@@ -1,0 +1,14 @@
+{
+  "button": {
+    "validate": "Valider",
+    "save": "Sauvegarder"
+  },
+  "input": {
+    "error": {
+      "empty": "Le champ est requis",
+      "wrong_data": "Le champ comporte une erreur",
+      "wrong_percentage": "Le pourcentage ne peut pas être supérieur à 100"
+    }
+  },
+  "start_amount": "Montant investi"
+}
