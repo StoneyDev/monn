@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:monn/utils/app_colors.dart';
 
-class MoonButton extends StatelessWidget {
-  const MoonButton({
+class MonnButton extends StatelessWidget {
+  const MonnButton({
     required this.text,
     this.onPressed,
     super.key,

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/crypto_form_controller.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/submit_crypto_form_controller.dart';
-import 'package:monn/shared/widgets/fields/moon_field_date.dart';
-import 'package:monn/shared/widgets/fields/moon_field_number.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_button.dart';
+import 'package:monn/shared/widgets/fields/monn_field_date.dart';
+import 'package:monn/shared/widgets/fields/monn_field_number.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 
 class CryptoFormStepTwoScreen extends ConsumerWidget {
   const CryptoFormStepTwoScreen({super.key});
@@ -17,14 +17,14 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
     final formData = ref.read(cryptoFormControllerProvider);
 
     return Scaffold(
-      appBar: const MoonAppBar(title: 'Suivi des gains'),
+      appBar: const MonnAppBar(title: 'Suivi des gains'),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              MoonFieldNumber(
+              MonnFieldNumber(
                 label: 'Montant en fiat',
                 suffix: '€',
                 initialValue: formData.fiat?.toString(),
@@ -34,7 +34,7 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
                     .edit(fiat: value),
               ),
               const SizedBox(height: 16),
-              MoonFieldNumber(
+              MonnFieldNumber(
                 label: 'Montant en crypto',
                 suffix: formData.crypto?.type.symbol ?? '',
                 initialValue: formData.amount?.toString(),
@@ -44,7 +44,7 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
                     .edit(amount: value),
               ),
               const SizedBox(height: 16),
-              MoonFieldDate(
+              MonnFieldDate(
                 label: 'Acheté le',
                 required: true,
                 initialValue: formData.boughtOn,
@@ -58,7 +58,7 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: MoonButton(
+        child: MonnButton(
           text: context.tr('button.validate'),
           onPressed: () async {
             if (!formKey.currentState!.validate()) return;

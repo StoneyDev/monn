@@ -8,7 +8,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/moon_bottom_sheet.dart';
 import 'package:monn/shared/widgets/charts/moon_donut_chart.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -21,7 +21,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
     final chart = ref.watch(watchCryptoChartProvider);
 
     return Scaffold(
-      appBar: MoonAppBar(title: SavingsType.cryptocurrency.label),
+      appBar: MonnAppBar(title: SavingsType.cryptocurrency.label),
       floatingActionButton: IconButton.filled(
         icon: const iconoir.Plus(color: AppColors.white),
         onPressed: () => Navigator.push(

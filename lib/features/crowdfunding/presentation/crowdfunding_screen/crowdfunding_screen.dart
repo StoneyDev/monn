@@ -10,7 +10,7 @@ import 'package:monn/features/dashboard/presentation/add_savings_screen/controll
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -23,16 +23,18 @@ class CrowdfundingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
-    final crowdfundingData = ref
-        .watch(watchSavingProvider(type: SavingsType.crowdfunding))
-        .valueOrNull;
+    final crowdfundingData = ref.watch(
+      getSavingsProvider(type: SavingsType.crowdfunding).select(
+        (data) => data.valueOrNull,
+      ),
+    );
     final crowdfundings = ref.watch(watchCrowdfundingsProvider);
     final report = ref.watch(
       watchPayoutReportCrowdfundingProvider.select((data) => data.valueOrNull),
     );
 
     return Scaffold(
-      appBar: MoonAppBar(title: SavingsType.crowdfunding.label),
+      appBar: MonnAppBar(title: SavingsType.crowdfunding.label),
       floatingActionButton: IconButton.filled(
         icon: const iconoir.Plus(color: AppColors.white),
         onPressed: () => Navigator.push(
@@ -58,7 +60,7 @@ class CrowdfundingScreen extends ConsumerWidget {
               barrierDismissible: true,
               modalTypeBuilder: (_) => WoltModalType.dialog(),
               pageListBuilder: (context) => [
-                MoonDialog.amount(
+                MonnDialog.amount(
                   context: context,
                   formKey: formKey,
                   initialValue: crowdfundingData?.startAmount.toString(),
@@ -80,7 +82,10 @@ class CrowdfundingScreen extends ConsumerWidget {
                       if (!context.mounted || !success) return;
                     }
 
-                    ref.invalidate(_startAmountProvider);
+                    ref
+                      ..invalidate(_startAmountProvider)
+                      ..invalidate(watchPayoutReportCrowdfundingProvider)
+                      ..invalidate(getSavingsProvider);
                     Navigator.pop(context);
                   },
                 ),

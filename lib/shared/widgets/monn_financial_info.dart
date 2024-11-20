@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 
-class MoonFinancialInfo extends StatelessWidget {
-  const MoonFinancialInfo({
+class MonnFinancialInfo extends StatelessWidget {
+  const MonnFinancialInfo({
     required this.title,
     required this.data,
     super.key,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monn/shared/widgets/moon_financial_info.dart';
+import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class PayoutReport extends StatelessWidget {
@@ -49,7 +49,7 @@ class _Card extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: MoonFinancialInfo(
+        child: MonnFinancialInfo(
           title: title,
           data: amount,
         ),

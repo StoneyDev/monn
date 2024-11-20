@@ -3,8 +3,8 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
-class MoonAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MoonAppBar({required this.title, this.onBack, super.key});
+class MonnAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MonnAppBar({required this.title, this.onBack, super.key});
 
   final String title;
   final VoidCallback? onBack;

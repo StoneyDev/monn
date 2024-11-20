@@ -49,8 +49,10 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(
   WatchPayoutReportCrowdfundingRef ref,
 ) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
-  final crowdfundingData = await ref.watch(
-    watchSavingProvider(type: SavingsType.crowdfunding).future,
+  final startAmount = await ref.watch(
+    getSavingsProvider(type: SavingsType.crowdfunding).selectAsync(
+      (data) => data?.startAmount ?? 0,
+    ),
   );
 
   await for (final results in repository.watchCrowdfundings()) {
@@ -64,7 +66,7 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(
       ),
     );
 
-    final totalAmount = crowdfundingData.startAmount + totalNetProfit;
+    final totalAmount = startAmount + totalNetProfit;
     final finalAmount = totalAmount - totalLoss.abs();
 
     yield PayoutReportData(

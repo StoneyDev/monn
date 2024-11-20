@@ -5,8 +5,7 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/savings_type_ui.dart';
-import 'package:monn/shared/widgets/moon_card.dart';
-import 'package:monn/shared/widgets/payout_report.dart';
+import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class DashboardScreen extends ConsumerWidget {
@@ -15,6 +14,11 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final savings = ref.watch(watchSavingsProvider);
+    final report = ref.watch(
+      watchPayoutReportSavingsProvider.select(
+        (value) => value.valueOrNull ?? 0,
+      ),
+    );
 
     return Scaffold(
       floatingActionButton: IconButton.filled(
@@ -37,16 +41,11 @@ class DashboardScreen extends ConsumerWidget {
                   ),
             ),
             Text(
-              0.0.simpleCurrency(), // TODO
+              report.simpleCurrency(),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.darkGray,
                     fontWeight: FontWeight.w900,
                   ),
-            ),
-            const SizedBox(height: 32),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: PayoutReport(), // TODO
             ),
             const SizedBox(height: 16),
             switch (savings) {
@@ -61,7 +60,7 @@ class DashboardScreen extends ConsumerWidget {
                       final item = value[index];
                       final reportData = item.type.getReport(ref);
 
-                      return MoonCard(
+                      return MonnCard(
                         title: Text(
                           item.type.label,
                           style:
@@ -91,8 +90,10 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 ),
               AsyncError(:final error) => Text('error: $error'),
-              _ => const RepaintBoundary(
-                  child: CircularProgressIndicator(),
+              _ => const Center(
+                  child: RepaintBoundary(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
             },
           ],

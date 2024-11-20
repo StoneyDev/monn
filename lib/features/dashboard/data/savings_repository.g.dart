@@ -35,7 +35,7 @@ final watchSavingsProvider = AutoDisposeStreamProvider<List<Savings>>.internal(
 );
 
 typedef WatchSavingsRef = AutoDisposeStreamProviderRef<List<Savings>>;
-String _$watchSavingHash() => r'4021856427d209d442067cf339da7e7a91f70cb9';
+String _$getSavingsHash() => r'63c15b702d07bcdd68fcc04f494fab2491bcb0d1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -58,27 +58,27 @@ class _SystemHash {
   }
 }
 
-/// See also [watchSaving].
-@ProviderFor(watchSaving)
-const watchSavingProvider = WatchSavingFamily();
+/// See also [getSavings].
+@ProviderFor(getSavings)
+const getSavingsProvider = GetSavingsFamily();
 
-/// See also [watchSaving].
-class WatchSavingFamily extends Family<AsyncValue<Savings>> {
-  /// See also [watchSaving].
-  const WatchSavingFamily();
+/// See also [getSavings].
+class GetSavingsFamily extends Family<AsyncValue<Savings?>> {
+  /// See also [getSavings].
+  const GetSavingsFamily();
 
-  /// See also [watchSaving].
-  WatchSavingProvider call({
+  /// See also [getSavings].
+  GetSavingsProvider call({
     required SavingsType type,
   }) {
-    return WatchSavingProvider(
+    return GetSavingsProvider(
       type: type,
     );
   }
 
   @override
-  WatchSavingProvider getProviderOverride(
-    covariant WatchSavingProvider provider,
+  GetSavingsProvider getProviderOverride(
+    covariant GetSavingsProvider provider,
   ) {
     return call(
       type: provider.type,
@@ -97,32 +97,32 @@ class WatchSavingFamily extends Family<AsyncValue<Savings>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'watchSavingProvider';
+  String? get name => r'getSavingsProvider';
 }
 
-/// See also [watchSaving].
-class WatchSavingProvider extends AutoDisposeStreamProvider<Savings> {
-  /// See also [watchSaving].
-  WatchSavingProvider({
+/// See also [getSavings].
+class GetSavingsProvider extends AutoDisposeFutureProvider<Savings?> {
+  /// See also [getSavings].
+  GetSavingsProvider({
     required SavingsType type,
   }) : this._internal(
-          (ref) => watchSaving(
-            ref as WatchSavingRef,
+          (ref) => getSavings(
+            ref as GetSavingsRef,
             type: type,
           ),
-          from: watchSavingProvider,
-          name: r'watchSavingProvider',
+          from: getSavingsProvider,
+          name: r'getSavingsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$watchSavingHash,
-          dependencies: WatchSavingFamily._dependencies,
+                  : _$getSavingsHash,
+          dependencies: GetSavingsFamily._dependencies,
           allTransitiveDependencies:
-              WatchSavingFamily._allTransitiveDependencies,
+              GetSavingsFamily._allTransitiveDependencies,
           type: type,
         );
 
-  WatchSavingProvider._internal(
+  GetSavingsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -136,12 +136,12 @@ class WatchSavingProvider extends AutoDisposeStreamProvider<Savings> {
 
   @override
   Override overrideWith(
-    Stream<Savings> Function(WatchSavingRef provider) create,
+    FutureOr<Savings?> Function(GetSavingsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: WatchSavingProvider._internal(
-        (ref) => create(ref as WatchSavingRef),
+      override: GetSavingsProvider._internal(
+        (ref) => create(ref as GetSavingsRef),
         from: from,
         name: null,
         dependencies: null,
@@ -153,13 +153,13 @@ class WatchSavingProvider extends AutoDisposeStreamProvider<Savings> {
   }
 
   @override
-  AutoDisposeStreamProviderElement<Savings> createElement() {
-    return _WatchSavingProviderElement(this);
+  AutoDisposeFutureProviderElement<Savings?> createElement() {
+    return _GetSavingsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is WatchSavingProvider && other.type == type;
+    return other is GetSavingsProvider && other.type == type;
   }
 
   @override
@@ -171,17 +171,35 @@ class WatchSavingProvider extends AutoDisposeStreamProvider<Savings> {
   }
 }
 
-mixin WatchSavingRef on AutoDisposeStreamProviderRef<Savings> {
+mixin GetSavingsRef on AutoDisposeFutureProviderRef<Savings?> {
   /// The parameter `type` of this provider.
   SavingsType get type;
 }
 
-class _WatchSavingProviderElement
-    extends AutoDisposeStreamProviderElement<Savings> with WatchSavingRef {
-  _WatchSavingProviderElement(super.provider);
+class _GetSavingsProviderElement
+    extends AutoDisposeFutureProviderElement<Savings?> with GetSavingsRef {
+  _GetSavingsProviderElement(super.provider);
 
   @override
-  SavingsType get type => (origin as WatchSavingProvider).type;
+  SavingsType get type => (origin as GetSavingsProvider).type;
 }
+
+String _$watchPayoutReportSavingsHash() =>
+    r'd53de9ebd11ebdc32e6c487de9687cf01c498ff6';
+
+/// See also [watchPayoutReportSavings].
+@ProviderFor(watchPayoutReportSavings)
+final watchPayoutReportSavingsProvider =
+    AutoDisposeFutureProvider<double>.internal(
+  watchPayoutReportSavings,
+  name: r'watchPayoutReportSavingsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$watchPayoutReportSavingsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef WatchPayoutReportSavingsRef = AutoDisposeFutureProviderRef<double>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

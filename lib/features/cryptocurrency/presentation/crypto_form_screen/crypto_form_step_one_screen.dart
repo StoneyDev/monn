@@ -6,8 +6,8 @@ import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/crypto_form_controller.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/crypto_form_step_two_screen.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_button.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 import 'package:monn/utils/app_colors.dart';
 
 final _selectedCryptoProvider = StateProvider.autoDispose<CryptoType?>(
@@ -24,7 +24,7 @@ class CryptoFormStepOneScreen extends ConsumerWidget {
         ref.watch(watchCryptocurrenciesProvider).valueOrNull?.toList();
 
     return Scaffold(
-      appBar: MoonAppBar(
+      appBar: MonnAppBar(
         title: 'Sélectionnez une crypto',
         onBack: () => ref.invalidate(cryptoFormControllerProvider),
       ),
@@ -53,7 +53,7 @@ class CryptoFormStepOneScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: MoonButton(
+        child: MonnButton(
           text: context.tr('button.validate'),
           onPressed: selectedCryptoType != null
               ? () {

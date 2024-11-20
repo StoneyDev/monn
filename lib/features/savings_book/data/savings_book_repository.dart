@@ -41,8 +41,10 @@ Stream<PayoutReportData> watchPayoutReportSavingsBook(
   WatchPayoutReportSavingsBookRef ref,
 ) async* {
   final repository = ref.watch(savingsBookRepositoryProvider);
-  final data = await ref.watch(
-    watchSavingProvider(type: SavingsType.savingsBook).future,
+  final startAmount = await ref.watch(
+    getSavingsProvider(type: SavingsType.savingsBook).selectAsync(
+      (data) => data?.startAmount ?? 0,
+    ),
   );
 
   await for (final results in repository.watchSavingsBooks()) {
@@ -51,7 +53,7 @@ Stream<PayoutReportData> watchPayoutReportSavingsBook(
       (total, e) => (total + e.interests) - e.withdrawal,
     );
 
-    final finalAmount = totalInterests + data.startAmount;
+    final finalAmount = totalInterests + startAmount;
 
     yield PayoutReportData(finalAmount: finalAmount);
   }

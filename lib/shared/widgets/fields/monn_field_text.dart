@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/utils/app_colors.dart';
 
-class MoonFieldText extends StatelessWidget {
-  const MoonFieldText({
+class MonnFieldText extends StatelessWidget {
+  const MonnFieldText({
     required this.label,
     this.required = false,
     this.initialValue,

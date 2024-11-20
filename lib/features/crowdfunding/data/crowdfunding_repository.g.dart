@@ -42,7 +42,7 @@ final watchCrowdfundingsProvider =
 typedef WatchCrowdfundingsRef
     = AutoDisposeStreamProviderRef<List<Crowdfunding>>;
 String _$watchPayoutReportCrowdfundingHash() =>
-    r'a9dd9456d42515467c1ebde63b6188bad247c41a';
+    r'9b5d0810cb06619a64fcad5c3a96f2ed83310b49';
 
 /// See also [watchPayoutReportCrowdfunding].
 @ProviderFor(watchPayoutReportCrowdfunding)

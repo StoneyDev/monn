@@ -7,9 +7,9 @@ import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/moon_bottom_sheet.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_card.dart';
-import 'package:monn/shared/widgets/moon_financial_info.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -18,15 +18,20 @@ class ReitScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final reitData =
-        ref.watch(watchSavingProvider(type: SavingsType.reit)).valueOrNull;
+    final startAmount = ref.watch(
+      getSavingsProvider(type: SavingsType.reit).select(
+        (value) => value.valueOrNull?.startAmount ?? 0,
+      ),
+    );
     final reits = ref.watch(watchReitsProvider);
-    final report = ref.watch(
-      watchPayoutReportReitProvider.select((data) => data.valueOrNull),
+    final finalAmount = ref.watch(
+      watchPayoutReportReitProvider.select(
+        (data) => data.valueOrNull?.finalAmount ?? 0,
+      ),
     );
 
     return Scaffold(
-      appBar: MoonAppBar(title: SavingsType.reit.label),
+      appBar: MonnAppBar(title: SavingsType.reit.label),
       floatingActionButton: IconButton.filled(
         icon: const iconoir.Plus(color: AppColors.white),
         onPressed: () => Navigator.push(
@@ -40,14 +45,14 @@ class ReitScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(),
+            finalAmount.simpleCurrency(),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: AppColors.darkGray,
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            (reitData?.startAmount ?? 0).simpleCurrency(),
+            startAmount.simpleCurrency(),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -66,7 +71,7 @@ class ReitScreen extends ConsumerWidget {
                     final amount = item.dividends
                         .fold<double>(0, (total, div) => total + div.amount);
 
-                    return MoonCard(
+                    return MonnCard(
                       title: Text(
                         item.name.toUpperCase(),
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -82,17 +87,17 @@ class ReitScreen extends ConsumerWidget {
                             ),
                       ),
                       children: [
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Vers. ini.',
                           data: item.shares * item.price,
                         ),
                         const SizedBox(width: 24),
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Part',
                           data: item.shares.toStringAsFixed(0),
                         ),
                         const SizedBox(width: 24),
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Valeur',
                           data: item.price,
                         ),

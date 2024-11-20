@@ -4,25 +4,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/submit_savings_book_form_controller.dart';
-import 'package:monn/shared/widgets/fields/moon_field_number.dart';
-import 'package:monn/shared/widgets/fields/moon_field_text.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_button.dart';
+import 'package:monn/shared/widgets/fields/monn_field_number.dart';
+import 'package:monn/shared/widgets/fields/monn_field_text.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 
 class SavingsBookFormScreen extends ConsumerWidget {
   const SavingsBookFormScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref
-        .watch(watchSavingProvider(type: SavingsType.savingsBook))
-        .valueOrNull;
+    final savingsBookData = ref.watch(
+      getSavingsProvider(type: SavingsType.savingsBook).select(
+        (savings) => savings.valueOrNull,
+      ),
+    );
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: const MoonAppBar(
+      appBar: const MonnAppBar(
         title: 'Ajouter un livret',
       ),
       body: SingleChildScrollView(
@@ -31,7 +34,7 @@ class SavingsBookFormScreen extends ConsumerWidget {
           key: formKey,
           child: Column(
             children: [
-              MoonFieldText(
+              MonnFieldText(
                 label: 'Nom du livret',
                 required: true,
                 onChanged: (value) => ref
@@ -39,7 +42,7 @@ class SavingsBookFormScreen extends ConsumerWidget {
                     .edit(name: value),
               ),
               const SizedBox(height: 16),
-              MoonFieldNumber(
+              MonnFieldNumber(
                 label: 'Montant initial',
                 suffix: '€',
                 required: true,
@@ -53,7 +56,7 @@ class SavingsBookFormScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: MoonButton(
+        child: MonnButton(
           text: context.tr('button.validate'),
           onPressed: () async {
             if (!formKey.currentState!.validate()) return;
@@ -64,17 +67,20 @@ class SavingsBookFormScreen extends ConsumerWidget {
 
             final formData = ref.read(savingsBookFormControllerProvider);
 
-            final newSaving = data!.copyWith(
-              startAmount: data.startAmount + formData.startAmount!,
+            final newSaving = savingsBookData?.copyWith(
+              startAmount: savingsBookData.startAmount + formData.startAmount!,
             );
 
             final updated = await ref
                 .read(editSavingsControllerProvider.notifier)
-                .submit(newSaving);
+                .submit(newSaving!);
 
             if (!context.mounted || !success || !updated) return;
 
-            ref.invalidate(submitSavingsBookFormControllerProvider);
+            ref
+              ..invalidate(submitSavingsBookFormControllerProvider)
+              ..invalidate(watchPayoutReportSavingsBookProvider)
+              ..invalidate(getSavingsProvider);
             Navigator.pop(context);
           },
         ),

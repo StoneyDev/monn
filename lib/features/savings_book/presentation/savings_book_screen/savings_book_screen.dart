@@ -10,9 +10,9 @@ import 'package:monn/features/savings_book/presentation/savings_book_form_screen
 import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_card.dart';
-import 'package:monn/shared/widgets/moon_financial_info.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -24,16 +24,18 @@ class SavingsBookScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
-    final savingsBookData = ref
-        .watch(watchSavingProvider(type: SavingsType.savingsBook))
-        .valueOrNull;
+    final startAmount = ref.watch(
+      getSavingsProvider(type: SavingsType.savingsBook).select(
+        (savings) => savings.valueOrNull?.startAmount ?? 0,
+      ),
+    );
     final savingsBooks = ref.watch(watchSavingsBooksProvider);
     final report = ref.watch(
       watchPayoutReportSavingsBookProvider.select((data) => data.valueOrNull),
     );
 
     return Scaffold(
-      appBar: MoonAppBar(title: SavingsType.savingsBook.label),
+      appBar: MonnAppBar(title: SavingsType.savingsBook.label),
       floatingActionButton: IconButton.filled(
         icon: const iconoir.Plus(color: AppColors.white),
         onPressed: () => Navigator.push(
@@ -54,7 +56,7 @@ class SavingsBookScreen extends ConsumerWidget {
                 ),
           ),
           Text(
-            (savingsBookData?.startAmount ?? 0).simpleCurrency(),
+            startAmount.simpleCurrency(),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -71,7 +73,7 @@ class SavingsBookScreen extends ConsumerWidget {
                   itemBuilder: (_, index) {
                     final item = value[index];
 
-                    return MoonCard(
+                    return MonnCard(
                       title: Text(
                         item.name.toUpperCase(),
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -88,17 +90,17 @@ class SavingsBookScreen extends ConsumerWidget {
                             ),
                       ),
                       children: [
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Vers. ini.',
                           data: item.startAmount,
                         ),
                         const SizedBox(width: 24),
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Intérêts totaux',
                           data: item.interests,
                         ),
                         const SizedBox(width: 24),
-                        MoonFinancialInfo(
+                        MonnFinancialInfo(
                           title: 'Retrait',
                           data: item.withdrawal,
                         ),
@@ -108,7 +110,7 @@ class SavingsBookScreen extends ConsumerWidget {
                         barrierDismissible: true,
                         modalTypeBuilder: (_) => WoltModalType.dialog(),
                         pageListBuilder: (context) => [
-                          MoonDialog.amount(
+                          MonnDialog.amount(
                             context: context,
                             formKey: formKey,
                             onChanged: (value) {

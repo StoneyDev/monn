@@ -54,8 +54,10 @@ Stream<PayoutReportData> watchPayoutReportReit(
   WatchPayoutReportReitRef ref,
 ) async* {
   final repository = ref.watch(reitRepositoryProvider);
-  final reitData = await ref.watch(
-    watchSavingProvider(type: SavingsType.reit).future,
+  final startAmount = await ref.watch(
+    getSavingsProvider(type: SavingsType.reit).selectAsync(
+      (savings) => savings?.startAmount ?? 0,
+    ),
   );
 
   await for (final results in repository.watchReits()) {
@@ -71,7 +73,7 @@ Stream<PayoutReportData> watchPayoutReportReit(
       },
     );
 
-    final finalAmount = totalDividends + reitData.startAmount;
+    final finalAmount = totalDividends + startAmount;
 
     yield PayoutReportData(finalAmount: finalAmount);
   }

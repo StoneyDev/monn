@@ -1,5 +1,9 @@
 import 'package:isar/isar.dart';
+import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
+import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/reit/data/reit_repository.dart';
+import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,9 +19,9 @@ class SavingsRepository {
     return query.watch(fireImmediately: true);
   }
 
-  Stream<Savings> watchSaving(SavingsType type) {
+  Future<Savings?> getSavings(SavingsType type) {
     final query = _localDB.savings.filter().typeEqualTo(type).build();
-    return query.watch(fireImmediately: true).expand((e) => e);
+    return query.findFirst();
   }
 
   Future<void> editSaving(Savings newSaving) {
@@ -39,10 +43,40 @@ Stream<List<Savings>> watchSavings(WatchSavingsRef ref) {
 }
 
 @riverpod
-Stream<Savings> watchSaving(
-  WatchSavingRef ref, {
+Future<Savings?> getSavings(
+  GetSavingsRef ref, {
   required SavingsType type,
 }) {
   final repository = ref.watch(savingsRepositoryProvider);
-  return repository.watchSaving(type);
+  return repository.getSavings(type);
+}
+
+@riverpod
+Future<double> watchPayoutReportSavings(WatchPayoutReportSavingsRef ref) async {
+  final report = await Future.wait([
+    ref.watch(
+      watchPayoutReportCrowdfundingProvider.selectAsync(
+        (crowdfunding) => crowdfunding.finalAmount,
+      ),
+    ),
+    ref.watch(
+      watchPayoutReportCryptoProvider.selectAsync(
+        (crypto) => crypto.finalAmount,
+      ),
+    ),
+    ref.watch(
+      watchPayoutReportSavingsBookProvider.selectAsync(
+        (savingsBook) => savingsBook.finalAmount,
+      ),
+    ),
+    ref.watch(
+      watchPayoutReportReitProvider.selectAsync(
+        (reit) => reit.finalAmount,
+      ),
+    ),
+  ]);
+
+  final total = report.fold<double>(0, (total, value) => total + value);
+
+  return total;
 }

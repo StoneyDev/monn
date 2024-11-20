@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:monn/utils/app_colors.dart';
 
-class MoonCard extends StatelessWidget {
-  const MoonCard({
+class MonnCard extends StatelessWidget {
+  const MonnCard({
     required this.title,
     required this.amount,
     this.children = const [],

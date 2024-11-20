@@ -185,8 +185,8 @@ void main() {
         (_) => Stream.value(crowdfundings),
       );
 
-      when(savingRepository.watchSaving(any)).thenAnswer(
-        (_) => Stream.value(savings),
+      when(savingRepository.getSavings(any)).thenAnswer(
+        (_) => Future.value(savings),
       );
 
       // Act
@@ -260,8 +260,8 @@ void main() {
         (_) => Stream.value(crowdfundings),
       );
 
-      when(savingRepository.watchSaving(any)).thenAnswer(
-        (_) => Stream.value(savings),
+      when(savingRepository.getSavings(any)).thenAnswer(
+        (_) => Future.value(savings),
       );
 
       // Act

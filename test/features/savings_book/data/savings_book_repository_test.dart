@@ -181,8 +181,8 @@ void main() {
         (_) => Stream.value(savingsBooks),
       );
 
-      when(savingRepository.watchSaving(any)).thenAnswer(
-        (_) => Stream.value(savings),
+      when(savingRepository.getSavings(any)).thenAnswer(
+        (_) => Future.value(savings),
       );
 
       // Act
@@ -221,7 +221,7 @@ void main() {
 
       when(repository.watchSavingsBooks()).thenThrow(error);
 
-      when(savingRepository.watchSaving(any)).thenThrow(error);
+      when(savingRepository.getSavings(any)).thenThrow(error);
 
       // Act
       final controller =

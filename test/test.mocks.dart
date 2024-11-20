@@ -76,15 +76,15 @@ class MockSavingsRepository extends _i1.Mock implements _i5.SavingsRepository {
       ) as _i3.Stream<List<_i6.Savings>>);
 
   @override
-  _i3.Stream<_i6.Savings> watchSaving(_i6.SavingsType? type) =>
+  _i3.Future<_i6.Savings?> getSavings(_i6.SavingsType? type) =>
       (super.noSuchMethod(
         Invocation.method(
-          #watchSaving,
+          #getSavings,
           [type],
         ),
-        returnValue: _i3.Stream<_i6.Savings>.empty(),
-        returnValueForMissingStub: _i3.Stream<_i6.Savings>.empty(),
-      ) as _i3.Stream<_i6.Savings>);
+        returnValue: _i3.Future<_i6.Savings?>.value(),
+        returnValueForMissingStub: _i3.Future<_i6.Savings?>.value(),
+      ) as _i3.Future<_i6.Savings?>);
 
   @override
   _i3.Future<void> editSaving(_i6.Savings? newSaving) => (super.noSuchMethod(
