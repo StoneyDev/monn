@@ -58,7 +58,7 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                     itemBuilder: (context, index) {
                       final item = value[index];
-                      final reportData = item.type.getReport(ref);
+                      final finalAmount = item.type.getReport(ref);
 
                       return MonnCard(
                         title: Text(
@@ -70,7 +70,7 @@ class DashboardScreen extends ConsumerWidget {
                                   ),
                         ),
                         amount: Text(
-                          (reportData?.finalAmount ?? 0).simpleCurrency(),
+                          finalAmount.simpleCurrency(),
                           style:
                               Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w900,

@@ -72,13 +72,13 @@ class CrowdfundingScreen extends ConsumerWidget {
                     final newValue = ref.read(_startAmountProvider);
 
                     if (formKey.currentState!.validate() && newValue != null) {
-                      final newSaving = crowdfundingData!.copyWith(
+                      final newSaving = crowdfundingData?.copyWith(
                         startAmount: double.parse(newValue),
                       );
 
                       final success = await ref
                           .read(editSavingsControllerProvider.notifier)
-                          .submit(newSaving);
+                          .submit(newSaving!);
                       if (!context.mounted || !success) return;
                     }
 

@@ -185,7 +185,7 @@ class _GetSavingsProviderElement
 }
 
 String _$watchPayoutReportSavingsHash() =>
-    r'd53de9ebd11ebdc32e6c487de9687cf01c498ff6';
+    r'40c63473c2e92edfe81924863766e5f7d2b4ac91';
 
 /// See also [watchPayoutReportSavings].
 @ProviderFor(watchPayoutReportSavings)

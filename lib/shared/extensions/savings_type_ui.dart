@@ -4,28 +4,46 @@ import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_screen.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/cryptocurrency_screen.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/pea/presentation/data/pea_repository.dart';
+import 'package:monn/features/pea/presentation/pea_screen/pea_screen.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/savings_book_screen.dart';
 
 extension SavingsTypeUI on SavingsType {
-  PayoutReportData? getReport(WidgetRef ref) {
+  double getReport(WidgetRef ref) {
     return switch (this) {
-      SavingsType.savingsBook =>
-        ref.watch(watchPayoutReportSavingsBookProvider).valueOrNull,
-      SavingsType.crowdfunding =>
-        ref.watch(watchPayoutReportCrowdfundingProvider).valueOrNull,
-      SavingsType.cryptocurrency =>
-        ref.watch(watchPayoutReportCryptoProvider).valueOrNull,
-      SavingsType.csknives => null,
-      SavingsType.cto => null,
-      SavingsType.lifeInsurance => null,
-      SavingsType.pea => null,
-      SavingsType.reit => ref.watch(watchPayoutReportReitProvider).valueOrNull,
-      SavingsType.rip => null,
+      SavingsType.savingsBook => ref.watch(
+          watchPayoutReportSavingsBookProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
+      SavingsType.crowdfunding => ref.watch(
+          watchPayoutReportCrowdfundingProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
+      SavingsType.cryptocurrency => ref.watch(
+          watchPayoutReportCryptoProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
+      SavingsType.csknives => 0,
+      SavingsType.cto => 0,
+      SavingsType.lifeInsurance => 0,
+      SavingsType.pea => ref.watch(
+          getPayoutReportPeaProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
+      SavingsType.reit => ref.watch(
+          watchPayoutReportReitProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
+      SavingsType.rip => 0,
     };
   }
 
@@ -37,7 +55,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.csknives => const Placeholder(),
       SavingsType.cto => const Placeholder(),
       SavingsType.lifeInsurance => const Placeholder(),
-      SavingsType.pea => const Placeholder(),
+      SavingsType.pea => const PeaScreen(),
       SavingsType.reit => const ReitScreen(),
       SavingsType.rip => const Placeholder(),
     };
