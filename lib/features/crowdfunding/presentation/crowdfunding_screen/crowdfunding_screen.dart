@@ -9,7 +9,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
+import 'package:monn/shared/widgets/dialogs/monn_dialog.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';

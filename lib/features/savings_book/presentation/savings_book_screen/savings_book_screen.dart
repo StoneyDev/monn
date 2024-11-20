@@ -9,7 +9,7 @@ import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/savings_book_form_screen.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/dialogs/moon_dialog.dart';
+import 'package:monn/shared/widgets/dialogs/monn_dialog.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
