@@ -2,7 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/pea/presentation/data/pea_repository.dart';
+import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/shared/local/local_database.dart';

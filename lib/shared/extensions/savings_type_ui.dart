@@ -5,7 +5,7 @@ import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crow
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/cryptocurrency_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/pea/presentation/data/pea_repository.dart';
+import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_screen/pea_screen.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
