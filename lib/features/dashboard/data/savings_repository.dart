@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
@@ -78,6 +79,11 @@ Future<double> watchPayoutReportSavings(WatchPayoutReportSavingsRef ref) async {
     ref.watch(
       getPayoutReportPeaProvider.selectAsync(
         (pea) => pea.finalAmount,
+      ),
+    ),
+    ref.watch(
+      watchPayoutReportCounterStrikeProvider.selectAsync(
+        (cs) => cs.finalAmount,
       ),
     ),
   ]);

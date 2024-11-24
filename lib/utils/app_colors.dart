@@ -9,7 +9,8 @@ class AppColors {
   static const Color extraExtraLightGray = Color(0xfffafafa);
   static const Color white = Color(0xffffffff);
 
-  static const Color error = Color(0xffff5d5c);
+  static const Color success = Color(0xff12753e);
+  static const Color error = Color(0xffc63740);
   static const Color lightError = Color(0xffffe1e1);
 
   // Crypto color

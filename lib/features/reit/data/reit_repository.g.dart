@@ -36,7 +36,7 @@ final watchReitsProvider = AutoDisposeStreamProvider<List<Reit>>.internal(
 
 typedef WatchReitsRef = AutoDisposeStreamProviderRef<List<Reit>>;
 String _$watchPayoutReportReitHash() =>
-    r'055538f053447c023bdf7b3c5e74ddaf22356de2';
+    r'ea20ecec60298d8b963754f76614678cdf7b553b';
 
 /// See also [watchPayoutReportReit].
 @ProviderFor(watchPayoutReportReit)

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
+import 'package:monn/features/counter_strike/presentation/counter_strike_screen/counter_strike_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_screen.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
@@ -30,7 +32,11 @@ extension SavingsTypeUI on SavingsType {
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
         ),
-      SavingsType.csknives => 0,
+      SavingsType.csknives => ref.watch(
+          watchPayoutReportCounterStrikeProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
       SavingsType.cto => 0,
       SavingsType.lifeInsurance => 0,
       SavingsType.pea => ref.watch(
@@ -52,7 +58,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.savingsBook => const SavingsBookScreen(),
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
-      SavingsType.csknives => const Placeholder(),
+      SavingsType.csknives => const CounterStrikeScreen(),
       SavingsType.cto => const Placeholder(),
       SavingsType.lifeInsurance => const Placeholder(),
       SavingsType.pea => const PeaScreen(),
