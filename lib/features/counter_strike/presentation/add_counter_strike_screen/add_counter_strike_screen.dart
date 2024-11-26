@@ -55,6 +55,7 @@ class AddCounterStrikeScreen extends ConsumerWidget {
               MonnFieldNumber(
                 label: 'Prix actuelle',
                 suffix: '€',
+                required: true,
                 onChanged: (value) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .edit(currentValue: value.isEmpty ? '0' : value),
@@ -70,16 +71,17 @@ class AddCounterStrikeScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               MonnFieldNumber(
                 label: 'Quantité',
-                initialValue: '1',
+                required: true,
                 suffix: '',
                 onChanged: (value) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .edit(quantity: value.isEmpty ? '0' : value),
               ),
               const SizedBox(height: 16),
-              MonnFieldText(
-                label: "Url de l'image",
+              MonnFieldNumber(
+                label: "ID de l'image",
                 required: true,
+                suffix: '',
                 onChanged: (value) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .edit(imageId: value),

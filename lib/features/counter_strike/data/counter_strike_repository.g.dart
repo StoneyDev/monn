@@ -42,7 +42,7 @@ final watchCounterStrikesProvider =
 typedef WatchCounterStrikesRef
     = AutoDisposeStreamProviderRef<List<CounterStrike>>;
 String _$watchPayoutReportCounterStrikeHash() =>
-    r'7514223a29b9555132f9429de4a0ce17869a5249';
+    r'39d1a8a9dbf137545551147ec40fab87a9434395';
 
 /// See also [watchPayoutReportCounterStrike].
 @ProviderFor(watchPayoutReportCounterStrike)

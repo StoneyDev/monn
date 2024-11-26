@@ -12,10 +12,10 @@ class CounterStrike with _$CounterStrike {
     required DateTime boughtAt,
     required DateTime lastUpdate,
     required String imageId,
+    required double purchaseValue,
+    required double currentValue,
     String? wear,
     @Default(1) int quantity,
-    @Default(0.0) double purchaseValue,
-    @Default(0.0) double currentValue,
     @Default(Isar.autoIncrement) Id id,
   }) = _CounterStrike;
 

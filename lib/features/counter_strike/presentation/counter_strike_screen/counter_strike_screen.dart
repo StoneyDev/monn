@@ -71,8 +71,10 @@ class CounterStrikeScreen extends ConsumerWidget {
                 ),
               ),
             AsyncError(:final error) => Text('error: $error'),
-            _ => const RepaintBoundary(
-                child: CircularProgressIndicator(),
+            _ => const Center(
+                child: RepaintBoundary(
+                  child: CircularProgressIndicator(),
+                ),
               ),
           },
         ],
@@ -152,6 +154,10 @@ class _CounterStrikeItem extends ConsumerWidget {
                           padding: const EdgeInsets.all(8),
                           child: Image.network(
                             'https://community.cloudflare.steamstatic.com/economy/image/class/730/${data.imageId}/256x128',
+                            errorBuilder: (_, __, ___) =>
+                                const iconoir.MediaImageXmark(width: 80),
+                            height: 64,
+                            width: 80,
                           ),
                         ),
                       ),
@@ -184,7 +190,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                                     fontWeight: FontWeight.w900,
                                   ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 4),
                             if (data.currentValue > data.purchaseValue)
                               const iconoir.ArrowUpCircleSolid(
                                 color: AppColors.success,
@@ -197,6 +203,8 @@ class _CounterStrikeItem extends ConsumerWidget {
                                 height: 16,
                                 width: 16,
                               ),
+                            const SizedBox(width: 4),
+                            percentageValue(),
                           ],
                         ),
                       ],
@@ -206,7 +214,7 @@ class _CounterStrikeItem extends ConsumerWidget {
               ),
               const Divider(color: AppColors.extraLightGray),
               Text(
-                '${data.currentValue.simpleCurrency()} le ${data.lastUpdate.slashFormat()}',
+                'Prix actuel: ${data.currentValue.simpleCurrency()} le ${data.lastUpdate.slashFormat()}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -217,6 +225,20 @@ class _CounterStrikeItem extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget percentageValue() {
+    final purchaseValue = data.purchaseValue;
+    final currentValue = data.currentValue;
+    final change = ((purchaseValue - currentValue) / purchaseValue) * 100;
+
+    return Text(
+      '${change.abs().toStringAsFixed(2)}%',
+      style: TextStyle(
+        color: change.isNegative ? AppColors.success : AppColors.error,
+        fontWeight: FontWeight.bold,
       ),
     );
   }

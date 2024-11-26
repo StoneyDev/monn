@@ -20,10 +20,10 @@ mixin _$CounterStrike {
   DateTime get boughtAt => throw _privateConstructorUsedError;
   DateTime get lastUpdate => throw _privateConstructorUsedError;
   String get imageId => throw _privateConstructorUsedError;
-  String? get wear => throw _privateConstructorUsedError;
-  int get quantity => throw _privateConstructorUsedError;
   double get purchaseValue => throw _privateConstructorUsedError;
   double get currentValue => throw _privateConstructorUsedError;
+  String? get wear => throw _privateConstructorUsedError;
+  int get quantity => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,10 +42,10 @@ abstract class $CounterStrikeCopyWith<$Res> {
       DateTime boughtAt,
       DateTime lastUpdate,
       String imageId,
-      String? wear,
-      int quantity,
       double purchaseValue,
       double currentValue,
+      String? wear,
+      int quantity,
       int id});
 }
 
@@ -66,10 +66,10 @@ class _$CounterStrikeCopyWithImpl<$Res, $Val extends CounterStrike>
     Object? boughtAt = null,
     Object? lastUpdate = null,
     Object? imageId = null,
-    Object? wear = freezed,
-    Object? quantity = null,
     Object? purchaseValue = null,
     Object? currentValue = null,
+    Object? wear = freezed,
+    Object? quantity = null,
     Object? id = null,
   }) {
     return _then(_value.copyWith(
@@ -89,14 +89,6 @@ class _$CounterStrikeCopyWithImpl<$Res, $Val extends CounterStrike>
           ? _value.imageId
           : imageId // ignore: cast_nullable_to_non_nullable
               as String,
-      wear: freezed == wear
-          ? _value.wear
-          : wear // ignore: cast_nullable_to_non_nullable
-              as String?,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
       purchaseValue: null == purchaseValue
           ? _value.purchaseValue
           : purchaseValue // ignore: cast_nullable_to_non_nullable
@@ -105,6 +97,14 @@ class _$CounterStrikeCopyWithImpl<$Res, $Val extends CounterStrike>
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
               as double,
+      wear: freezed == wear
+          ? _value.wear
+          : wear // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -126,10 +126,10 @@ abstract class _$$CounterStrikeImplCopyWith<$Res>
       DateTime boughtAt,
       DateTime lastUpdate,
       String imageId,
-      String? wear,
-      int quantity,
       double purchaseValue,
       double currentValue,
+      String? wear,
+      int quantity,
       int id});
 }
 
@@ -148,10 +148,10 @@ class __$$CounterStrikeImplCopyWithImpl<$Res>
     Object? boughtAt = null,
     Object? lastUpdate = null,
     Object? imageId = null,
-    Object? wear = freezed,
-    Object? quantity = null,
     Object? purchaseValue = null,
     Object? currentValue = null,
+    Object? wear = freezed,
+    Object? quantity = null,
     Object? id = null,
   }) {
     return _then(_$CounterStrikeImpl(
@@ -171,14 +171,6 @@ class __$$CounterStrikeImplCopyWithImpl<$Res>
           ? _value.imageId
           : imageId // ignore: cast_nullable_to_non_nullable
               as String,
-      wear: freezed == wear
-          ? _value.wear
-          : wear // ignore: cast_nullable_to_non_nullable
-              as String?,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
       purchaseValue: null == purchaseValue
           ? _value.purchaseValue
           : purchaseValue // ignore: cast_nullable_to_non_nullable
@@ -187,6 +179,14 @@ class __$$CounterStrikeImplCopyWithImpl<$Res>
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
               as double,
+      wear: freezed == wear
+          ? _value.wear
+          : wear // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -203,10 +203,10 @@ class _$CounterStrikeImpl implements _CounterStrike {
       required this.boughtAt,
       required this.lastUpdate,
       required this.imageId,
+      required this.purchaseValue,
+      required this.currentValue,
       this.wear,
       this.quantity = 1,
-      this.purchaseValue = 0.0,
-      this.currentValue = 0.0,
       this.id = Isar.autoIncrement});
 
   @override
@@ -218,23 +218,21 @@ class _$CounterStrikeImpl implements _CounterStrike {
   @override
   final String imageId;
   @override
+  final double purchaseValue;
+  @override
+  final double currentValue;
+  @override
   final String? wear;
   @override
   @JsonKey()
   final int quantity;
   @override
   @JsonKey()
-  final double purchaseValue;
-  @override
-  @JsonKey()
-  final double currentValue;
-  @override
-  @JsonKey()
   final int id;
 
   @override
   String toString() {
-    return 'CounterStrike(name: $name, boughtAt: $boughtAt, lastUpdate: $lastUpdate, imageId: $imageId, wear: $wear, quantity: $quantity, purchaseValue: $purchaseValue, currentValue: $currentValue, id: $id)';
+    return 'CounterStrike(name: $name, boughtAt: $boughtAt, lastUpdate: $lastUpdate, imageId: $imageId, purchaseValue: $purchaseValue, currentValue: $currentValue, wear: $wear, quantity: $quantity, id: $id)';
   }
 
   @override
@@ -248,19 +246,19 @@ class _$CounterStrikeImpl implements _CounterStrike {
             (identical(other.lastUpdate, lastUpdate) ||
                 other.lastUpdate == lastUpdate) &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
-            (identical(other.wear, wear) || other.wear == wear) &&
-            (identical(other.quantity, quantity) ||
-                other.quantity == quantity) &&
             (identical(other.purchaseValue, purchaseValue) ||
                 other.purchaseValue == purchaseValue) &&
             (identical(other.currentValue, currentValue) ||
                 other.currentValue == currentValue) &&
+            (identical(other.wear, wear) || other.wear == wear) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, name, boughtAt, lastUpdate,
-      imageId, wear, quantity, purchaseValue, currentValue, id);
+      imageId, purchaseValue, currentValue, wear, quantity, id);
 
   @JsonKey(ignore: true)
   @override
@@ -275,10 +273,10 @@ abstract class _CounterStrike implements CounterStrike {
       required final DateTime boughtAt,
       required final DateTime lastUpdate,
       required final String imageId,
+      required final double purchaseValue,
+      required final double currentValue,
       final String? wear,
       final int quantity,
-      final double purchaseValue,
-      final double currentValue,
       final int id}) = _$CounterStrikeImpl;
 
   @override
@@ -290,13 +288,13 @@ abstract class _CounterStrike implements CounterStrike {
   @override
   String get imageId;
   @override
-  String? get wear;
-  @override
-  int get quantity;
-  @override
   double get purchaseValue;
   @override
   double get currentValue;
+  @override
+  String? get wear;
+  @override
+  int get quantity;
   @override
   int get id;
   @override

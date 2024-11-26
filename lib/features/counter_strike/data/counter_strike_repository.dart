@@ -12,7 +12,8 @@ class CounterStrikeRepository {
   final Isar _localDB;
 
   Stream<List<CounterStrike>> watchCounterStrikes() {
-    final query = _localDB.counterStrikes.where().build();
+    final query =
+        _localDB.counterStrikes.where().sortByPurchaseValueDesc().build();
     return query.watch(fireImmediately: true);
   }
 
