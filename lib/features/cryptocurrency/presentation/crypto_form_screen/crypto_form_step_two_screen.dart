@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/crypto_form_controller.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/submit_crypto_form_controller.dart';
+import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -15,6 +18,11 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final formData = ref.read(cryptoFormControllerProvider);
+    final cryptoData = ref.watch(
+      getSavingsProvider(type: SavingsType.cryptocurrency).select(
+        (data) => data.valueOrNull,
+      ),
+    );
 
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
@@ -67,10 +75,19 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
                 .read(submitCryptoFormControllerProvider.notifier)
                 .submit();
 
-            if (!context.mounted || !success) return;
+            final formData = ref.read(cryptoFormControllerProvider);
+
+            final newSaving = cryptoData?.copyWith(
+              startAmount: cryptoData.startAmount + formData.fiat!,
+            );
+
+            final upadated = await ref
+                .read(editSavingsControllerProvider.notifier)
+                .submit(newSaving!);
+
+            if (!context.mounted || !success || !upadated) return;
 
             ref.invalidate(cryptoFormControllerProvider);
-            // TODO: Implement code to update start amount
 
             Navigator.of(context)
               ..pop()

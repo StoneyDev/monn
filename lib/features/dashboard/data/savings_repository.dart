@@ -17,7 +17,7 @@ class SavingsRepository {
   final Isar _localDB;
 
   Stream<List<Savings>> watchSavings() {
-    final query = _localDB.savings.where().build();
+    final query = _localDB.savings.where().sortByStartAmountDesc().build();
     return query.watch(fireImmediately: true);
   }
 
