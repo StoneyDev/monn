@@ -16,7 +16,7 @@ class DashboardScreen extends ConsumerWidget {
     final savings = ref.watch(watchSavingsProvider);
     final report = ref.watch(
       watchPayoutReportSavingsProvider.select(
-        (value) => value.valueOrNull ?? 0,
+        (data) => data.valueOrNull ?? 0,
       ),
     );
 
@@ -80,7 +80,7 @@ class DashboardScreen extends ConsumerWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (context) => item.type.route(),
+                            builder: (_) => item.type.route(),
                           ),
                         ),
                       );

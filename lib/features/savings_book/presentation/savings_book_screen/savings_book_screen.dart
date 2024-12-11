@@ -148,8 +148,10 @@ class SavingsBookScreen extends ConsumerWidget {
                 ),
               ),
             AsyncError(:final error) => Text('error: $error'),
-            _ => const RepaintBoundary(
-                child: CircularProgressIndicator(),
+            _ => const Center(
+                child: RepaintBoundary(
+                  child: CircularProgressIndicator(),
+                ),
               ),
           },
         ],

@@ -88,7 +88,6 @@ class CryptoFormStepTwoScreen extends ConsumerWidget {
             if (!context.mounted || !success || !upadated) return;
 
             ref.invalidate(cryptoFormControllerProvider);
-
             Navigator.of(context)
               ..pop()
               ..pop();

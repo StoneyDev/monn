@@ -84,8 +84,8 @@ class CrowdfundingScreen extends ConsumerWidget {
 
                     ref
                       ..invalidate(_startAmountProvider)
-                      ..invalidate(watchPayoutReportCrowdfundingProvider)
-                      ..invalidate(getSavingsProvider);
+                      // Refresh finalAmount
+                      ..invalidate(watchPayoutReportCrowdfundingProvider);
                     Navigator.pop(context);
                   },
                 ),
@@ -131,8 +131,10 @@ class CrowdfundingScreen extends ConsumerWidget {
                 ),
               ),
             AsyncError(:final error) => Text('error: $error'),
-            _ => const RepaintBoundary(
-                child: CircularProgressIndicator(),
+            _ => const Center(
+                child: RepaintBoundary(
+                  child: CircularProgressIndicator(),
+                ),
               ),
           },
         ],

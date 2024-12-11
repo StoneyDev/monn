@@ -39,7 +39,7 @@ final watchSavingsBooksProvider =
 
 typedef WatchSavingsBooksRef = AutoDisposeStreamProviderRef<List<SavingsBook>>;
 String _$watchPayoutReportSavingsBookHash() =>
-    r'5916a1e0df9890798c2b4895dd450cdc78a69e11';
+    r'409f0f8b1aac65e888192c1dc8b5f9103c5100c8';
 
 /// See also [watchPayoutReportSavingsBook].
 @ProviderFor(watchPayoutReportSavingsBook)

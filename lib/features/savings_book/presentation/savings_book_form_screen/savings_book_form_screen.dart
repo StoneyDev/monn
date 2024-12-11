@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
-import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/submit_savings_book_form_controller.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -17,12 +16,12 @@ class SavingsBookFormScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
     final savingsBookData = ref.watch(
       getSavingsProvider(type: SavingsType.savingsBook).select(
         (savings) => savings.valueOrNull,
       ),
     );
-    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: const MonnAppBar(
@@ -78,8 +77,7 @@ class SavingsBookFormScreen extends ConsumerWidget {
             if (!context.mounted || !success || !updated) return;
 
             ref
-              ..invalidate(submitSavingsBookFormControllerProvider)
-              ..invalidate(watchPayoutReportSavingsBookProvider)
+              ..invalidate(savingsBookFormControllerProvider)
               ..invalidate(getSavingsProvider);
             Navigator.pop(context);
           },
