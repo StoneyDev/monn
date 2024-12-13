@@ -44,7 +44,6 @@ class MonnFieldNumber extends StatelessWidget {
                 suffix: Text(
                   suffix,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: AppColors.darkGray,
                         fontWeight: FontWeight.w900,
                       ),
                 ),
@@ -67,7 +66,6 @@ class MonnFieldNumber extends StatelessWidget {
                   : null,
               onChanged: onChanged,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.darkGray,
                     fontWeight: FontWeight.w900,
                   ),
             ),

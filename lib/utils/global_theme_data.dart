@@ -18,31 +18,38 @@ class GlobalThemeData {
 
   static const ColorScheme lightColorScheme = ColorScheme.light(
     primary: AppColors.darkGray,
-    onPrimary: Colors.black,
+    onPrimary: AppColors.extraExtraLightGray,
     secondary: AppColors.extraExtraLightGray,
-    onSecondary: AppColors.lightGray,
+    tertiary: AppColors.darkGray,
     error: AppColors.error,
-    onSurface: AppColors.lightGray,
   );
 
-  // TODO: darkMode
   static const ColorScheme darkColorScheme = ColorScheme.dark(
-    primary: AppColors.white,
-    secondary: AppColors.white,
-    surface: AppColors.white,
-    error: AppColors.white,
-    onError: AppColors.white,
-    onPrimary: AppColors.white,
-    onSecondary: AppColors.white,
+    primary: AppColors.extraExtraLightGray,
+    onPrimary: AppColors.darkGray,
+    secondary: AppColors.lightGray,
+    tertiary: AppColors.lightGray,
+    error: AppColors.error,
+    surface: AppColors.darkBackground,
   );
 
-  static const SystemUiOverlayStyle systemUi = SystemUiOverlayStyle(
+  static const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
+    // Android
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: AppColors.darkBackground,
+    systemNavigationBarIconBrightness: Brightness.light,
+    // iOS
+    statusBarBrightness: Brightness.dark,
+  );
+
+  static const SystemUiOverlayStyle darkSystemUi = SystemUiOverlayStyle(
     // Android
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.light,
     // iOS
-    statusBarBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
   );
 }

@@ -32,7 +32,7 @@ class CounterStrikeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: MonnAppBar(title: SavingsType.csknives.label),
       floatingActionButton: IconButton.filled(
-        icon: const iconoir.Plus(color: AppColors.white),
+        icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(

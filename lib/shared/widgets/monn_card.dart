@@ -24,8 +24,8 @@ class MonnCard extends StatelessWidget {
       ),
       margin: EdgeInsets.zero,
       child: InkWell(
-        highlightColor: AppColors.extraExtraLightGray,
-        splashColor: AppColors.extraExtraLightGray,
+        highlightColor: Theme.of(context).colorScheme.onPrimary,
+        splashColor: Theme.of(context).colorScheme.onPrimary,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         onTap: onTap,
         child: Column(

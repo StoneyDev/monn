@@ -67,7 +67,9 @@ class ReitFormStepOneScreen extends ConsumerWidget {
                   builder: (_) => const ReitFormScreen(),
                 ),
               ),
-              icon: const iconoir.Plus(),
+              icon: iconoir.Plus(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             const SizedBox(width: 8),
             Expanded(

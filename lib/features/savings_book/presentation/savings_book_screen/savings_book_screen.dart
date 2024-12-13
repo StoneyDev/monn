@@ -37,7 +37,7 @@ class SavingsBookScreen extends ConsumerWidget {
     return Scaffold(
       appBar: MonnAppBar(title: SavingsType.savingsBook.label),
       floatingActionButton: IconButton.filled(
-        icon: const iconoir.Plus(color: AppColors.white),
+        icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
@@ -51,7 +51,6 @@ class SavingsBookScreen extends ConsumerWidget {
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.darkGray,
                   fontWeight: FontWeight.w900,
                 ),
           ),
@@ -86,7 +85,6 @@ class SavingsBookScreen extends ConsumerWidget {
                             .simpleCurrency(),
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w900,
-                              color: Theme.of(context).primaryColor,
                             ),
                       ),
                       children: [

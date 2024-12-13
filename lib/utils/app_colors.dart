@@ -13,6 +13,9 @@ class AppColors {
   static const Color error = Color(0xffc63740);
   static const Color lightError = Color(0xffffe1e1);
 
+  // Dark mode
+  static const Color darkBackground = Color(0xff111111);
+
   // Crypto color
   static const Color btc = Color(0xffef8e19);
   static const Color eth = Color(0xffa4a5fe);

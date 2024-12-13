@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:monn/utils/app_colors.dart';
 
 class MonnButton extends StatelessWidget {
   const MonnButton({
@@ -16,11 +15,14 @@ class MonnButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       child: Text(
         text,
-        style: const TextStyle(color: AppColors.white),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onPrimary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

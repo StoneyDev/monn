@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
+import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/savings_type_ui.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -21,8 +22,26 @@ class DashboardScreen extends ConsumerWidget {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: IconButton(
+              icon: iconoir.Settings(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const SettingsScreen(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: IconButton.filled(
-        icon: const iconoir.Plus(color: AppColors.white),
+        icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
@@ -43,7 +62,6 @@ class DashboardScreen extends ConsumerWidget {
             Text(
               report.simpleCurrency(),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.darkGray,
                     fontWeight: FontWeight.w900,
                   ),
             ),
@@ -74,7 +92,6 @@ class DashboardScreen extends ConsumerWidget {
                           style:
                               Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w900,
-                                    color: Theme.of(context).primaryColor,
                                   ),
                         ),
                         onTap: () => Navigator.push(

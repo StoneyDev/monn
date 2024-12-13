@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -26,13 +26,16 @@ class MonnFinancialInfo extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            color: AppColors.lightGray,
+          ),
         ),
         Text(
           formattedData,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: AppColors.darkGray,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
           ),
         ),
