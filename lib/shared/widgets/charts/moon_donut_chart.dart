@@ -64,7 +64,7 @@ class _DonutPainter extends CustomPainter {
 
     final textPainter = TextPainter(
       text: TextSpan(
-        text: chart.totalAmount.simpleCurrency(),
+        text: chart.totalAmount.simpleCurrency(context),
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.darkGray,

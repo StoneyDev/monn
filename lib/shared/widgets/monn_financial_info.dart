@@ -15,7 +15,7 @@ class MonnFinancialInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formattedData = switch (data.runtimeType) {
-      double => (data as double).simpleCurrency(),
+      double => (data as double).simpleCurrency(context),
       _ => '$data',
     };
 

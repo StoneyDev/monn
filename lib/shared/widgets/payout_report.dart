@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -19,15 +20,15 @@ class PayoutReport extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Card(title: 'Plus-value', amount: netProfit),
+          child: _Card(title: context.tr('net_profit'), amount: netProfit),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: _Card(title: 'Taxe', amount: -tax),
+          child: _Card(title: context.tr('tax'), amount: -tax),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: _Card(title: 'Perte', amount: loss),
+          child: _Card(title: context.tr('loss'), amount: loss),
         ),
       ],
     );

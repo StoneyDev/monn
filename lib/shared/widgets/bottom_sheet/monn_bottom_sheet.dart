@@ -8,8 +8,8 @@ import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class MoonBottomSheet {
-  const MoonBottomSheet._();
+class MonnBottomSheet {
+  const MonnBottomSheet._();
 
   static SliverWoltModalSheetPage cryptoDetails({
     required BuildContext context,
@@ -25,7 +25,6 @@ class MoonBottomSheet {
       topBarTitle: Text(
         'Historique (${crypto.type.label})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: AppColors.darkGray,
               fontWeight: FontWeight.w900,
             ),
       ),
@@ -47,7 +46,7 @@ class MoonBottomSheet {
 
               return ListTile(
                 title: Text(
-                  item.fiat.simpleCurrency(),
+                  item.fiat.simpleCurrency(context),
                   style: const TextStyle(
                     color: AppColors.darkGray,
                     fontWeight: FontWeight.w900,
@@ -83,7 +82,6 @@ class MoonBottomSheet {
       topBarTitle: Text(
         'Dividandes (${reit.name.toUpperCase()})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: AppColors.darkGray,
               fontWeight: FontWeight.w900,
             ),
       ),
@@ -109,7 +107,7 @@ class MoonBottomSheet {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 trailing: Text(
-                  item.amount.simpleCurrency(),
+                  item.amount.simpleCurrency(context),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.darkGray,
                         fontWeight: FontWeight.w900,
@@ -119,6 +117,39 @@ class MoonBottomSheet {
             },
             childCount: dividends.length,
           ),
+        ),
+      ],
+    );
+  }
+
+  static SliverWoltModalSheetPage itemList({
+    required BuildContext context,
+    required SliverChildBuilderDelegate builder,
+    required String title,
+  }) {
+    return SliverWoltModalSheetPage(
+      surfaceTintColor: AppColors.white,
+      topBarTitle: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
+      ),
+      isTopBarLayerAlwaysVisible: true,
+      trailingNavBarWidget: Padding(
+        padding: const EdgeInsetsDirectional.only(end: 16),
+        child: IconButton(
+          icon: iconoir.Xmark(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onPressed: Navigator.of(context).pop,
+        ),
+      ),
+      mainContentSliversBuilder: (_) => [
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 16),
+          sliver: SliverList(delegate: builder),
         ),
       ],
     );

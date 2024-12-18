@@ -49,13 +49,13 @@ class SavingsBookScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(),
+            (report?.finalAmount ?? 0).simpleCurrency(context),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            startAmount.simpleCurrency(),
+            startAmount.simpleCurrency(context),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -82,7 +82,7 @@ class SavingsBookScreen extends ConsumerWidget {
                       ),
                       amount: Text(
                         ((item.startAmount + item.interests) - item.withdrawal)
-                            .simpleCurrency(),
+                            .simpleCurrency(context),
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w900,
                             ),

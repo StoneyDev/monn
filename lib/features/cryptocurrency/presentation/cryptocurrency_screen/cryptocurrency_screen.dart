@@ -6,7 +6,7 @@ import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/crypto_form_step_one_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/bottom_sheet/moon_bottom_sheet.dart';
+import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/charts/moon_donut_chart.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -62,7 +62,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                       onTap: () => WoltModalSheet.show<void>(
                         context: context,
                         pageListBuilder: (context) => [
-                          MoonBottomSheet.cryptoDetails(
+                          MonnBottomSheet.cryptoDetails(
                             context: context,
                             crypto: crypto,
                           ),
@@ -125,7 +125,7 @@ class _CryptoCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Text(crypto.totalFiat.simpleCurrency()),
+                  Text(crypto.totalFiat.simpleCurrency(context)),
                 ],
               ),
               Text(

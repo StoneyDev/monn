@@ -44,14 +44,14 @@ class CounterStrikeScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(),
+            (report?.finalAmount ?? 0).simpleCurrency(context),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: AppColors.darkGray,
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            (report?.totalNetProfit ?? 0).simpleCurrency(),
+            (report?.totalNetProfit ?? 0).simpleCurrency(context),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -181,7 +181,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                         Row(
                           children: [
                             Text(
-                              data.purchaseValue.simpleCurrency(),
+                              data.purchaseValue.simpleCurrency(context),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
@@ -214,7 +214,7 @@ class _CounterStrikeItem extends ConsumerWidget {
               ),
               const Divider(color: AppColors.extraLightGray),
               Text(
-                'Prix actuel: ${data.currentValue.simpleCurrency()} le ${data.lastUpdate.slashFormat()}',
+                'Prix actuel: ${data.currentValue.simpleCurrency(context)} le ${data.lastUpdate.slashFormat()}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(

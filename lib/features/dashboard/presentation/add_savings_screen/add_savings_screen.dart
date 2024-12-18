@@ -24,7 +24,7 @@ class AddSavingsScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: const MonnAppBar(title: 'Ajouter une categorie'),
+      appBar: MonnAppBar(title: context.tr('add.savings')),
       body: ListView.builder(
         itemCount: SavingsType.values.length,
         itemBuilder: (context, index) {

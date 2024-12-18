@@ -1,8 +1,11 @@
-import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 extension DoubleUI on double {
-  String simpleCurrency() {
-    final format = NumberFormat.simpleCurrency().format(this);
+  String simpleCurrency(BuildContext context) {
+    final format =
+        NumberFormat.simpleCurrency(locale: context.locale.toString())
+            .format(this);
     return format.replaceAll(RegExp(r'.00$'), '');
   }
 }

@@ -6,7 +6,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/bottom_sheet/moon_bottom_sheet.dart';
+import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
@@ -45,14 +45,14 @@ class ReitScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            finalAmount.simpleCurrency(),
+            finalAmount.simpleCurrency(context),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: AppColors.darkGray,
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            startAmount.simpleCurrency(),
+            startAmount.simpleCurrency(context),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -80,7 +80,7 @@ class ReitScreen extends ConsumerWidget {
                             ),
                       ),
                       amount: Text(
-                        amount.simpleCurrency(),
+                        amount.simpleCurrency(context),
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w900,
                               color: Theme.of(context).primaryColor,
@@ -105,7 +105,7 @@ class ReitScreen extends ConsumerWidget {
                       onTap: () => WoltModalSheet.show<void>(
                         context: context,
                         pageListBuilder: (context) => [
-                          MoonBottomSheet.reitDetails(
+                          MonnBottomSheet.reitDetails(
                             context: context,
                             reit: item,
                           ),

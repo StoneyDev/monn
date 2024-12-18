@@ -48,7 +48,7 @@ class CrowdfundingScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(),
+            (report?.finalAmount ?? 0).simpleCurrency(context),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
@@ -94,7 +94,7 @@ class CrowdfundingScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  (crowdfundingData?.startAmount ?? 0).simpleCurrency(),
+                  (crowdfundingData?.startAmount ?? 0).simpleCurrency(context),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.lightGray,
                       ),
@@ -176,7 +176,7 @@ class _RefundTransaction extends StatelessWidget {
         const SizedBox(width: 10),
         if (data.brutProfit.isNegative)
           Text(
-            data.brutProfit.simpleCurrency(),
+            data.brutProfit.simpleCurrency(context),
             style: const TextStyle(
               color: AppColors.error,
               fontWeight: FontWeight.bold,
@@ -187,7 +187,7 @@ class _RefundTransaction extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                data.netProfit.simpleCurrency(),
+                data.netProfit.simpleCurrency(context),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.darkGray,
                       fontWeight: FontWeight.bold,

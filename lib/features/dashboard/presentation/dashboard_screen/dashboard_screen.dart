@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -54,13 +55,13 @@ class DashboardScreen extends ConsumerWidget {
           children: [
             const SizedBox(height: 32),
             Text(
-              'Valeur totale',
+              context.tr('net_worth'),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppColors.lightGray,
                   ),
             ),
             Text(
-              report.simpleCurrency(),
+              report.simpleCurrency(context),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w900,
                   ),
@@ -88,7 +89,7 @@ class DashboardScreen extends ConsumerWidget {
                                   ),
                         ),
                         amount: Text(
-                          finalAmount.simpleCurrency(),
+                          finalAmount.simpleCurrency(context),
                           style:
                               Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w900,
