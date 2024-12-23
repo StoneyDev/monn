@@ -6,6 +6,6 @@ extension DoubleUI on double {
     final format =
         NumberFormat.simpleCurrency(locale: context.locale.toString())
             .format(this);
-    return format.replaceAll(RegExp(r'.00$'), '');
+    return format.replaceAll(RegExp('[.,]00'), '');
   }
 }
