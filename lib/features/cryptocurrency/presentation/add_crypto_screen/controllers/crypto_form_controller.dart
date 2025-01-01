@@ -11,15 +11,13 @@ class CryptoFormController extends _$CryptoFormController {
 
   void edit({
     Cryptocurrency? crypto,
-    String? fiat,
     String? amount,
-    DateTime? boughtOn,
+    DateTime? date,
   }) {
     state = state.copyWith(
       crypto: crypto ?? state.crypto,
-      fiat: double.tryParse(fiat ?? '') ?? state.fiat,
       amount: double.tryParse(amount ?? '') ?? state.amount,
-      boughtOn: boughtOn ?? state.boughtOn,
+      date: date ?? state.date,
     );
   }
 }

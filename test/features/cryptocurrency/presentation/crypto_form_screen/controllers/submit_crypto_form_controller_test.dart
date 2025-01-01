@@ -5,8 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/crypto_form.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
-import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/crypto_form_controller.dart';
-import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/controllers/submit_crypto_form_controller.dart';
+import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/crypto_form_controller.dart';
+import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/submit_crypto_form_controller.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
@@ -22,8 +22,7 @@ void main() {
         final formData = CryptoForm(
           crypto: crypto,
           amount: 20,
-          boughtOn: DateTime.now(),
-          fiat: 600,
+          date: DateTime.now(),
         );
 
         final repository = MockCryptocurrencyRepository();
@@ -52,25 +51,20 @@ void main() {
         // Arrange
         final crypto = Cryptocurrency()
           ..type = CryptoType.bitcoin
-          ..totalCrypto = 22
-          ..totalFiat = 30;
+          ..totalCrypto = 22;
 
         final formData = CryptoForm(
           crypto: crypto,
           amount: 20,
-          boughtOn: DateTime.now(),
-          fiat: 100,
+          date: DateTime.now(),
         );
 
         final cryptoTransaction = CryptocurrencyTransaction()
           ..amount = formData.amount!
-          ..fiat = formData.fiat!
-          ..boughtOn = formData.boughtOn!;
+          ..date = formData.date!;
 
         const expectedAmount = 20;
-        const expectedFiat = 100;
         const expectedTotalCrypto = 42;
-        const expectedTotalFiat = 130;
 
         final repository = MockCryptocurrencyRepository();
         final container = createContainer(
@@ -99,17 +93,13 @@ void main() {
           repository.editCryptocurrency(
             crypto: argThat(
               predicate<Cryptocurrency>(
-                (predic) =>
-                    predic.totalCrypto == expectedTotalCrypto &&
-                    predic.totalFiat == expectedTotalFiat,
+                (predic) => predic.totalCrypto == expectedTotalCrypto,
               ),
               named: 'crypto',
             ),
             transaction: argThat(
               predicate<CryptocurrencyTransaction>(
-                (predic) =>
-                    predic.amount == expectedAmount &&
-                    predic.fiat == expectedFiat,
+                (predic) => predic.amount == expectedAmount,
               ),
               named: 'transaction',
             ),

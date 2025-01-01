@@ -114,9 +114,20 @@ class MockCryptocurrencyRepository extends _i1.Mock
       ) as _i3.Stream<List<_i8.Cryptocurrency>>);
 
   @override
+  _i3.Future<_i8.Cryptocurrency?> getCryptocurrency(_i8.CryptoType? type) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCryptocurrency,
+          [type],
+        ),
+        returnValue: _i3.Future<_i8.Cryptocurrency?>.value(),
+        returnValueForMissingStub: _i3.Future<_i8.Cryptocurrency?>.value(),
+      ) as _i3.Future<_i8.Cryptocurrency?>);
+
+  @override
   _i3.Future<void> editCryptocurrency({
     required _i8.Cryptocurrency? crypto,
-    required _i8.CryptocurrencyTransaction? transaction,
+    _i8.CryptocurrencyTransaction? transaction,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

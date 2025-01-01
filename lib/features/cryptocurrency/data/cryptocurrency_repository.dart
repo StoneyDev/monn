@@ -1,6 +1,10 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -14,21 +18,33 @@ class CryptocurrencyRepository {
   final Isar _localDB;
 
   Stream<List<Cryptocurrency>> watchCryptocurrencies() {
-    final query = _localDB.cryptocurrencys.where().build();
+    final query =
+        _localDB.cryptocurrencys.filter().totalCryptoGreaterThan(0).build();
     return query.watch(fireImmediately: true);
+  }
+
+  Future<Cryptocurrency?> getCryptocurrency(CryptoType type) {
+    final query = _localDB.cryptocurrencys.filter().typeEqualTo(type).build();
+    return query.findFirst();
   }
 
   Future<void> editCryptocurrency({
     required Cryptocurrency crypto,
-    required CryptocurrencyTransaction transaction,
+    CryptocurrencyTransaction? transaction,
   }) async {
-    crypto.transactions.add(transaction);
+    if (transaction == null) {
+      await _localDB.writeTxn<void>(() async {
+        await _localDB.cryptocurrencys.put(crypto);
+      });
+    } else {
+      crypto.transactions.add(transaction);
 
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.cryptocurrencys.put(crypto);
-      await _localDB.cryptocurrencyTransactions.put(transaction);
-      await crypto.transactions.save();
-    });
+      await _localDB.writeTxn<void>(() async {
+        await _localDB.cryptocurrencys.put(crypto);
+        await _localDB.cryptocurrencyTransactions.put(transaction);
+        await crypto.transactions.save();
+      });
+    }
   }
 }
 
@@ -48,27 +64,56 @@ Stream<List<Cryptocurrency>> watchCryptocurrencies(
 }
 
 @riverpod
+Future<Cryptocurrency> getCryptocurrency(
+  GetCryptocurrencyRef ref,
+  CryptoType type,
+) async {
+  final repository = ref.watch(cryptocurrencyRepositoryProvider);
+  final crypto = await repository.getCryptocurrency(type);
+
+  return crypto ?? Cryptocurrency()
+    ..type = type;
+}
+
+@riverpod
 Stream<Chart> watchCryptoChart(WatchCryptoChartRef ref) async* {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
+  final theme = await ref.watch(
+    themeSwitchControllerProvider.selectAsync((theme) => theme),
+  );
 
   await for (final results in repository.watchCryptocurrencies()) {
-    final totalAmount = results.isEmpty
-        ? 0.0
-        : results.fold<double>(0, (total, crypto) => total + crypto.totalFiat);
+    final (totalCryptoValue, totalLog) = results.fold<(double, double)>(
+      (0, 0),
+      (totals, crypto) => (
+        totals.$1 + (crypto.totalCrypto * crypto.priceMarket),
+        totals.$2 + log(crypto.totalCrypto),
+      ),
+    );
 
-    final data = results.isEmpty
-        ? [const ChartData(portion: 1, color: AppColors.extraLightGray)]
-        : results.map((crypto) {
-            final total = totalAmount == 0 ? 1 : totalAmount;
-            final portion = (crypto.totalFiat * 100) / total;
+    final data = totalCryptoValue > 0
+        ? results.map((crypto) {
+            final logValue = log(crypto.totalCrypto);
+            final portion = (logValue * 100) / totalLog;
 
             return ChartData(
               portion: double.parse(portion.toStringAsFixed(2)),
               color: crypto.type.color,
             );
-          }).toList();
+          }).toList()
+        : [
+            ChartData(
+              portion: 100,
+              color: theme == ThemeMode.dark
+                  ? AppColors.gray300
+                  : AppColors.white600,
+            ),
+          ];
 
-    yield Chart(totalAmount: totalAmount, data: data);
+    yield Chart(
+      totalAmount: double.parse(totalCryptoValue.toStringAsFixed(2)),
+      data: data,
+    );
   }
 }
 
@@ -79,9 +124,13 @@ Stream<PayoutReportData> watchPayoutReportCrypto(
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
 
   await for (final results in repository.watchCryptocurrencies()) {
-    final finalAmount =
-        results.fold<double>(0, (total, crypto) => total + crypto.totalFiat);
+    final finalAmount = results.fold<double>(
+      0,
+      (total, crypto) => total + (crypto.totalCrypto * crypto.priceMarket),
+    );
 
-    yield PayoutReportData(finalAmount: finalAmount);
+    yield PayoutReportData(
+      finalAmount: double.parse(finalAmount.toStringAsFixed(2)),
+    );
   }
 }

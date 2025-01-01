@@ -7,6 +7,7 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -32,34 +33,30 @@ void main() {
 
     final bitcoinTransactions = [
       CryptocurrencyTransaction()
-        ..boughtOn = DateTime(2010)
-        ..amount = 0.5
-        ..fiat = 500,
+        ..date = DateTime(2010)
+        ..amount = 0.5,
       CryptocurrencyTransaction()
-        ..boughtOn = DateTime(2012)
-        ..amount = 1.222
-        ..fiat = 864.45,
+        ..date = DateTime(2012)
+        ..amount = 1.222,
     ];
     final bitcoin = Cryptocurrency()
       ..type = CryptoType.bitcoin
       ..totalCrypto = 1.722
-      ..totalFiat = 1364.45
+      ..priceMarket = 98512.66
       ..transactions.addAll(bitcoinTransactions);
 
     final ethereumTransactions = [
       CryptocurrencyTransaction()
-        ..boughtOn = DateTime(2019)
-        ..amount = 0.984
-        ..fiat = 1000,
+        ..date = DateTime(2019)
+        ..amount = 0.984,
       CryptocurrencyTransaction()
-        ..boughtOn = DateTime(2022)
-        ..amount = 6.423
-        ..fiat = 120.45,
+        ..date = DateTime(2022)
+        ..amount = 6.423,
     ];
     final ethereum = Cryptocurrency()
       ..type = CryptoType.ethereum
       ..totalCrypto = 7.407
-      ..totalFiat = 1120.45
+      ..priceMarket = 3254.12
       ..transactions.addAll(ethereumTransactions);
 
     await isar.writeTxn(() async {
@@ -160,13 +157,16 @@ void main() {
         const cryptocurrencies = <Cryptocurrency>[];
         const chart = Chart(
           totalAmount: 0,
-          data: [ChartData(portion: 1, color: AppColors.extraLightGray)],
+          data: [ChartData(portion: 100, color: AppColors.gray300)],
         );
 
         final repository = MockCryptocurrencyRepository();
         final container = createContainer(
           overrides: [
             cryptocurrencyRepositoryProvider.overrideWithValue(repository),
+            themeSwitchControllerProvider.overrideWith(
+              ThemeSwitchControllerMock.new,
+            ),
           ],
         );
 
@@ -197,10 +197,10 @@ void main() {
     test('should return the data to build the graph', () async {
       // Arrange
       const chart = Chart(
-        totalAmount: 2484.90,
+        totalAmount: 193742.07,
         data: [
-          ChartData(portion: 54.91, color: AppColors.btc),
-          ChartData(portion: 45.09, color: AppColors.eth),
+          ChartData(portion: 21.35, color: AppColors.btc),
+          ChartData(portion: 78.65, color: AppColors.eth),
         ],
       );
 
@@ -210,6 +210,9 @@ void main() {
       final container = createContainer(
         overrides: [
           cryptocurrencyRepositoryProvider.overrideWithValue(repository),
+          themeSwitchControllerProvider.overrideWith(
+            ThemeSwitchControllerMock.new,
+          ),
         ],
       );
 
@@ -244,6 +247,9 @@ void main() {
       final container = createContainer(
         overrides: [
           cryptocurrencyRepositoryProvider.overrideWithValue(repository),
+          themeSwitchControllerProvider.overrideWith(
+            ThemeSwitchControllerMock.new,
+          ),
         ],
       );
 
@@ -260,7 +266,7 @@ void main() {
   group('watchPayoutReportCrypto', () {
     test('should return the total amount invested', () async {
       // Arrange
-      const finalAmount = 2484.9;
+      const finalAmount = 193742.07;
       final cryptocurrencies = await isar.cryptocurrencys.where().findAll();
 
       final repository = MockCryptocurrencyRepository();

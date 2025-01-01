@@ -17,9 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CryptoForm {
   Cryptocurrency? get crypto => throw _privateConstructorUsedError;
-  double? get fiat => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
-  DateTime? get boughtOn => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CryptoFormCopyWith<CryptoForm> get copyWith =>
@@ -32,11 +31,7 @@ abstract class $CryptoFormCopyWith<$Res> {
           CryptoForm value, $Res Function(CryptoForm) then) =
       _$CryptoFormCopyWithImpl<$Res, CryptoForm>;
   @useResult
-  $Res call(
-      {Cryptocurrency? crypto,
-      double? fiat,
-      double? amount,
-      DateTime? boughtOn});
+  $Res call({Cryptocurrency? crypto, double? amount, DateTime? date});
 }
 
 /// @nodoc
@@ -53,26 +48,21 @@ class _$CryptoFormCopyWithImpl<$Res, $Val extends CryptoForm>
   @override
   $Res call({
     Object? crypto = freezed,
-    Object? fiat = freezed,
     Object? amount = freezed,
-    Object? boughtOn = freezed,
+    Object? date = freezed,
   }) {
     return _then(_value.copyWith(
       crypto: freezed == crypto
           ? _value.crypto
           : crypto // ignore: cast_nullable_to_non_nullable
               as Cryptocurrency?,
-      fiat: freezed == fiat
-          ? _value.fiat
-          : fiat // ignore: cast_nullable_to_non_nullable
-              as double?,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double?,
-      boughtOn: freezed == boughtOn
-          ? _value.boughtOn
-          : boughtOn // ignore: cast_nullable_to_non_nullable
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -86,11 +76,7 @@ abstract class _$$CryptoFormImplCopyWith<$Res>
       __$$CryptoFormImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Cryptocurrency? crypto,
-      double? fiat,
-      double? amount,
-      DateTime? boughtOn});
+  $Res call({Cryptocurrency? crypto, double? amount, DateTime? date});
 }
 
 /// @nodoc
@@ -105,26 +91,21 @@ class __$$CryptoFormImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? crypto = freezed,
-    Object? fiat = freezed,
     Object? amount = freezed,
-    Object? boughtOn = freezed,
+    Object? date = freezed,
   }) {
     return _then(_$CryptoFormImpl(
       crypto: freezed == crypto
           ? _value.crypto
           : crypto // ignore: cast_nullable_to_non_nullable
               as Cryptocurrency?,
-      fiat: freezed == fiat
-          ? _value.fiat
-          : fiat // ignore: cast_nullable_to_non_nullable
-              as double?,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double?,
-      boughtOn: freezed == boughtOn
-          ? _value.boughtOn
-          : boughtOn // ignore: cast_nullable_to_non_nullable
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -133,20 +114,18 @@ class __$$CryptoFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CryptoFormImpl implements _CryptoForm {
-  const _$CryptoFormImpl({this.crypto, this.fiat, this.amount, this.boughtOn});
+  const _$CryptoFormImpl({this.crypto, this.amount, this.date});
 
   @override
   final Cryptocurrency? crypto;
   @override
-  final double? fiat;
-  @override
   final double? amount;
   @override
-  final DateTime? boughtOn;
+  final DateTime? date;
 
   @override
   String toString() {
-    return 'CryptoForm(crypto: $crypto, fiat: $fiat, amount: $amount, boughtOn: $boughtOn)';
+    return 'CryptoForm(crypto: $crypto, amount: $amount, date: $date)';
   }
 
   @override
@@ -155,14 +134,12 @@ class _$CryptoFormImpl implements _CryptoForm {
         (other.runtimeType == runtimeType &&
             other is _$CryptoFormImpl &&
             (identical(other.crypto, crypto) || other.crypto == crypto) &&
-            (identical(other.fiat, fiat) || other.fiat == fiat) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.boughtOn, boughtOn) ||
-                other.boughtOn == boughtOn));
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, crypto, fiat, amount, boughtOn);
+  int get hashCode => Object.hash(runtimeType, crypto, amount, date);
 
   @JsonKey(ignore: true)
   @override
@@ -174,18 +151,15 @@ class _$CryptoFormImpl implements _CryptoForm {
 abstract class _CryptoForm implements CryptoForm {
   const factory _CryptoForm(
       {final Cryptocurrency? crypto,
-      final double? fiat,
       final double? amount,
-      final DateTime? boughtOn}) = _$CryptoFormImpl;
+      final DateTime? date}) = _$CryptoFormImpl;
 
   @override
   Cryptocurrency? get crypto;
   @override
-  double? get fiat;
-  @override
   double? get amount;
   @override
-  DateTime? get boughtOn;
+  DateTime? get date;
   @override
   @JsonKey(ignore: true)
   _$$CryptoFormImplCopyWith<_$CryptoFormImpl> get copyWith =>

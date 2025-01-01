@@ -10,4 +10,29 @@ extension ContextUi on BuildContext {
 
     return isDark;
   }
+
+  Future<void> push(Widget page) {
+    return Navigator.push(
+      this,
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => page,
+        transitionsBuilder: (_, animation, __, child) {
+          final slideAnimation = Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOutExpo,
+            ),
+          );
+
+          return SlideTransition(
+            position: slideAnimation,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 }

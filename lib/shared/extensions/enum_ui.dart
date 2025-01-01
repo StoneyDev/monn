@@ -5,6 +5,7 @@ import 'package:monn/features/counter_strike/presentation/counter_strike_screen/
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_screen.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/cryptocurrency_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
@@ -13,6 +14,7 @@ import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/savings_book_screen.dart';
+import 'package:monn/utils/assets.gen.dart';
 
 extension SavingsTypeUI on SavingsType {
   double getReport(WidgetRef ref) {
@@ -64,6 +66,18 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.pea => const PeaScreen(),
       SavingsType.reit => const ReitScreen(),
       SavingsType.rip => const Placeholder(),
+    };
+  }
+}
+
+extension CryptoTypeUI on CryptoType {
+  ImageProvider<Object> logo() {
+    return switch (this) {
+      CryptoType.bitcoin => MonnAssets.images.crypto.bitcoin.provider(),
+      CryptoType.ethereum => MonnAssets.images.crypto.ethereum.provider(),
+      CryptoType.chainlink => MonnAssets.images.crypto.chainlink.provider(),
+      CryptoType.tether => MonnAssets.images.crypto.tether.provider(),
+      CryptoType.usdCoin => MonnAssets.images.crypto.usdCoin.provider(),
     };
   }
 }
