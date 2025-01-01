@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -22,6 +23,7 @@ class CounterStrikeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final crowdfundings = ref.watch(watchCounterStrikesProvider);
     final report = ref.watch(
       watchPayoutReportCounterStrikeProvider.select(
@@ -44,14 +46,14 @@ class CounterStrikeScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(context),
+            (report?.finalAmount ?? 0).simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.darkGray,
+                  color: AppColors.gray700,
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            (report?.totalNetProfit ?? 0).simpleCurrency(context),
+            (report?.totalNetProfit ?? 0).simpleCurrency(locale),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -91,6 +93,7 @@ class _CounterStrikeItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
+    final locale = context.locale.toString();
 
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -131,7 +134,7 @@ class _CounterStrikeItem extends ConsumerWidget {
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.extraLightGray),
+          border: Border.all(color: AppColors.lightGray),
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Padding(
@@ -142,12 +145,11 @@ class _CounterStrikeItem extends ConsumerWidget {
                 children: [
                   Badge.count(
                     count: data.quantity,
-                    backgroundColor: AppColors.darkGray,
+                    backgroundColor: AppColors.gray700,
                     child: SizedBox(
                       height: 64,
                       child: DecoratedBox(
                         decoration: const BoxDecoration(
-                          color: AppColors.extraExtraLightGray,
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: Padding(
@@ -181,25 +183,25 @@ class _CounterStrikeItem extends ConsumerWidget {
                         Row(
                           children: [
                             Text(
-                              data.purchaseValue.simpleCurrency(context),
+                              data.purchaseValue.simpleCurrency(locale),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
                                   ?.copyWith(
-                                    color: AppColors.darkGray,
+                                    color: AppColors.gray700,
                                     fontWeight: FontWeight.w900,
                                   ),
                             ),
                             const SizedBox(width: 4),
                             if (data.currentValue > data.purchaseValue)
                               const iconoir.ArrowUpCircleSolid(
-                                color: AppColors.success,
+                                color: AppColors.green,
                                 height: 16,
                                 width: 16,
                               )
                             else if (data.currentValue < data.purchaseValue)
                               const iconoir.ArrowDownCircleSolid(
-                                color: AppColors.error,
+                                color: AppColors.red,
                                 height: 16,
                                 width: 16,
                               ),
@@ -212,9 +214,9 @@ class _CounterStrikeItem extends ConsumerWidget {
                   ),
                 ],
               ),
-              const Divider(color: AppColors.extraLightGray),
+              const Divider(color: AppColors.lightGray),
               Text(
-                'Prix actuel: ${data.currentValue.simpleCurrency(context)} le ${data.lastUpdate.slashFormat()}',
+                'Prix actuel: ${data.currentValue.simpleCurrency(locale)} le ${data.lastUpdate.slashFormat(locale)}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -237,7 +239,7 @@ class _CounterStrikeItem extends ConsumerWidget {
     return Text(
       '${change.abs().toStringAsFixed(2)}%',
       style: TextStyle(
-        color: change.isNegative ? AppColors.success : AppColors.error,
+        color: change.isNegative ? AppColors.green : AppColors.red,
         fontWeight: FontWeight.bold,
       ),
     );

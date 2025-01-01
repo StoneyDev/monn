@@ -1,5 +1,5 @@
-import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 extension DateUI on DateTime {
-  String slashFormat() => DateFormat.yMd().format(this);
+  String slashFormat(String locale) => DateFormat.yMd(locale).format(this);
 }

@@ -41,7 +41,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
                   item.name,
                   style: selectedReit?.id == item.id
                       ? const TextStyle(
-                          color: AppColors.darkGray,
+                          color: AppColors.gray700,
                           fontWeight: FontWeight.w900,
                         )
                       : null,

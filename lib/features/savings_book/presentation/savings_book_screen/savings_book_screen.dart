@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -23,6 +24,7 @@ class SavingsBookScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final formKey = GlobalKey<FormState>();
     final startAmount = ref.watch(
       getSavingsProvider(type: SavingsType.savingsBook).select(
@@ -49,13 +51,13 @@ class SavingsBookScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(context),
+            (report?.finalAmount ?? 0).simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            startAmount.simpleCurrency(context),
+            startAmount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -71,38 +73,51 @@ class SavingsBookScreen extends ConsumerWidget {
                   ),
                   itemBuilder: (_, index) {
                     final item = value[index];
+                    final netValue =
+                        (item.startAmount + item.interests) - item.withdrawal;
 
                     return MonnCard(
-                      title: Text(
-                        item.name.toUpperCase(),
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: AppColors.lightGray,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.name.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                  color: AppColors.lightGray,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          Text(
+                            netValue.simpleCurrency(locale),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.w900),
+                          ),
+                          const Divider(),
+                          Row(
+                            children: [
+                              MonnFinancialInfo(
+                                title: 'Vers. ini.',
+                                data: item.startAmount,
+                              ),
+                              const SizedBox(width: 24),
+                              MonnFinancialInfo(
+                                title: 'Intérêts totaux',
+                                data: item.interests,
+                              ),
+                              const SizedBox(width: 24),
+                              MonnFinancialInfo(
+                                title: 'Retrait',
+                                data: item.withdrawal,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      amount: Text(
-                        ((item.startAmount + item.interests) - item.withdrawal)
-                            .simpleCurrency(context),
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w900,
-                            ),
-                      ),
-                      children: [
-                        MonnFinancialInfo(
-                          title: 'Vers. ini.',
-                          data: item.startAmount,
-                        ),
-                        const SizedBox(width: 24),
-                        MonnFinancialInfo(
-                          title: 'Intérêts totaux',
-                          data: item.interests,
-                        ),
-                        const SizedBox(width: 24),
-                        MonnFinancialInfo(
-                          title: 'Retrait',
-                          data: item.withdrawal,
-                        ),
-                      ],
                       onTap: () => WoltModalSheet.show<void>(
                         context: context,
                         barrierDismissible: true,

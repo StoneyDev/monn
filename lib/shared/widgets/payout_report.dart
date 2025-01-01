@@ -45,7 +45,7 @@ class _Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: const BoxDecoration(
-        color: AppColors.extraExtraLightGray,
+        color: AppColors.white500,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(

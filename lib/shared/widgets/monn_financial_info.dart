@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -14,8 +15,9 @@ class MonnFinancialInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale.toString();
     final formattedData = switch (data.runtimeType) {
-      double => (data as double).simpleCurrency(context),
+      double => (data as double).simpleCurrency(locale),
       _ => '$data',
     };
 

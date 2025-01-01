@@ -18,12 +18,13 @@ class ReitFormScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
+    final formKey = GlobalKey<FormState>();
     final reitData = ref.watch(
       getSavingsProvider(type: SavingsType.reit).select(
         (savings) => savings.valueOrNull,
       ),
     );
-    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: const MonnAppBar(
@@ -64,6 +65,7 @@ class ReitFormScreen extends ConsumerWidget {
               MonnFieldDate(
                 label: 'Acheté le',
                 required: true,
+                locale: locale,
                 onChanged: (value) => ref
                     .read(reitFormControllerProvider.notifier)
                     .edit(boughtOn: value),

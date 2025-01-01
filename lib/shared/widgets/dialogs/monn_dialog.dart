@@ -58,7 +58,7 @@ class MonnDialog {
                 },
                 onChanged: onChanged,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: AppColors.darkGray,
+                      color: AppColors.gray700,
                       fontWeight: FontWeight.w900,
                     ),
               ),

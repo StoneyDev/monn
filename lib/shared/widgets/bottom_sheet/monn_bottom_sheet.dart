@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
@@ -33,7 +34,7 @@ class MonnBottomSheet {
         child: IconButton(
           icon: const iconoir.Xmark(),
           style: IconButton.styleFrom(
-            backgroundColor: AppColors.extraLightGray,
+            backgroundColor: AppColors.white600,
           ),
           onPressed: Navigator.of(context).pop,
         ),
@@ -48,7 +49,7 @@ class MonnBottomSheet {
                 title: Text(
                   item.fiat.simpleCurrency(context),
                   style: const TextStyle(
-                    color: AppColors.darkGray,
+                    color: AppColors.gray,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -90,7 +91,7 @@ class MonnBottomSheet {
         child: IconButton(
           icon: const iconoir.Xmark(),
           style: IconButton.styleFrom(
-            backgroundColor: AppColors.extraLightGray,
+            backgroundColor: AppColors.white500,
           ),
           onPressed: Navigator.of(context).pop,
         ),
@@ -100,16 +101,17 @@ class MonnBottomSheet {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               final item = dividends[index];
+              final locale = context.locale.toString();
 
               return ListTile(
                 title: Text(
-                  item.receivedAt.slashFormat(),
+                  item.receivedAt.slashFormat(locale),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 trailing: Text(
-                  item.amount.simpleCurrency(context),
+                  item.amount.simpleCurrency(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.darkGray,
+                        color: AppColors.gray700,
                         fontWeight: FontWeight.w900,
                       ),
                 ),

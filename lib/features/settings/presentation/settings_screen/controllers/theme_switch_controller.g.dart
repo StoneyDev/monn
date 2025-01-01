@@ -7,7 +7,7 @@ part of 'theme_switch_controller.dart';
 // **************************************************************************
 
 String _$themeSwitchControllerHash() =>
-    r'a718e3d2ff422f28f7bd4ee400e0b02f36179d12';
+    r'a34984b3d743a48cadcac8c728332469dddb1fb3';
 
 /// See also [ThemeSwitchController].
 @ProviderFor(ThemeSwitchController)

@@ -8,12 +8,14 @@ class MonnFieldDate extends ConsumerStatefulWidget {
   const MonnFieldDate({
     required this.label,
     required this.onChanged,
+    required this.locale,
     this.required = false,
     this.initialValue,
     super.key,
   });
 
   final String label;
+  final String locale;
   final DateTime? initialValue;
   final bool required;
   final void Function(DateTime) onChanged;
@@ -30,7 +32,7 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
     super.initState();
 
     _dateController = TextEditingController(
-      text: widget.initialValue?.slashFormat(),
+      text: widget.initialValue?.slashFormat(widget.locale),
     );
   }
 
@@ -45,7 +47,7 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.extraLightGray),
+        border: Border.all(color: AppColors.gray300),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(
@@ -72,7 +74,7 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
                 );
 
                 if (result != null) {
-                  _dateController.text = result.slashFormat();
+                  _dateController.text = result.slashFormat(widget.locale);
                   widget.onChanged(result);
                 }
               },

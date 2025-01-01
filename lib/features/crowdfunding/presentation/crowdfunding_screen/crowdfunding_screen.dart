@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -23,6 +24,7 @@ class CrowdfundingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
+    final locale = context.locale.toString();
     final crowdfundingData = ref.watch(
       getSavingsProvider(type: SavingsType.crowdfunding).select(
         (data) => data.valueOrNull,
@@ -48,7 +50,7 @@ class CrowdfundingScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            (report?.finalAmount ?? 0).simpleCurrency(context),
+            (report?.finalAmount ?? 0).simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
@@ -94,7 +96,7 @@ class CrowdfundingScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  (crowdfundingData?.startAmount ?? 0).simpleCurrency(context),
+                  (crowdfundingData?.startAmount ?? 0).simpleCurrency(locale),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.lightGray,
                       ),
@@ -149,10 +151,12 @@ class _RefundTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale.toString();
+
     return Row(
       children: [
         const CircleAvatar(
-          backgroundColor: AppColors.extraExtraLightGray,
+          backgroundColor: AppColors.white,
           child: iconoir.Coins(),
         ),
         const SizedBox(width: 10),
@@ -165,20 +169,20 @@ class _RefundTransaction extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: AppColors.darkGray,
+                  color: AppColors.gray700,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Text(data.receivedAt!.slashFormat()),
+              Text(data.receivedAt!.slashFormat(locale)),
             ],
           ),
         ),
         const SizedBox(width: 10),
         if (data.brutProfit.isNegative)
           Text(
-            data.brutProfit.simpleCurrency(context),
+            data.brutProfit.simpleCurrency(locale),
             style: const TextStyle(
-              color: AppColors.error,
+              color: AppColors.red,
               fontWeight: FontWeight.bold,
             ),
           )
@@ -187,9 +191,9 @@ class _RefundTransaction extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                data.netProfit.simpleCurrency(context),
+                data.netProfit.simpleCurrency(locale),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.darkGray,
+                      color: AppColors.gray700,
                       fontWeight: FontWeight.bold,
                     ),
               ),

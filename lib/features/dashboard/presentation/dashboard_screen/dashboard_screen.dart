@@ -6,7 +6,7 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/extensions/savings_type_ui.dart';
+import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -15,6 +15,7 @@ class DashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final savings = ref.watch(watchSavingsProvider);
     final report = ref.watch(
       watchPayoutReportSavingsProvider.select(
@@ -61,7 +62,7 @@ class DashboardScreen extends ConsumerWidget {
                   ),
             ),
             Text(
-              report.simpleCurrency(context),
+              report.simpleCurrency(locale),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w900,
                   ),
@@ -71,35 +72,44 @@ class DashboardScreen extends ConsumerWidget {
               AsyncData(:final value) => Expanded(
                   child: ListView.separated(
                     padding: const EdgeInsets.only(
+                      top: 24,
                       left: 16,
                       right: 16,
-                      bottom: 32,
                     ),
                     itemBuilder: (context, index) {
                       final item = value[index];
                       final finalAmount = item.type.getReport(ref);
 
                       return MonnCard(
-                        title: Text(
-                          item.type.label,
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    color: AppColors.lightGray,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                        amount: Text(
-                          finalAmount.simpleCurrency(context),
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                        ),
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<void>(
                             builder: (_) => item.type.route(),
                           ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.type.label,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(
+                                    color: AppColors.lightGray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Text(
+                              finalAmount.simpleCurrency(locale),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                            ),
+                          ],
                         ),
                       );
                     },

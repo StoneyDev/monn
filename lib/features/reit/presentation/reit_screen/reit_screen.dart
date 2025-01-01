@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
@@ -18,6 +19,7 @@ class ReitScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final startAmount = ref.watch(
       getSavingsProvider(type: SavingsType.reit).select(
         (value) => value.valueOrNull?.startAmount ?? 0,
@@ -45,14 +47,14 @@ class ReitScreen extends ConsumerWidget {
         children: [
           const SizedBox(height: 20),
           Text(
-            finalAmount.simpleCurrency(context),
+            finalAmount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.darkGray,
+                  color: AppColors.gray700,
                   fontWeight: FontWeight.w900,
                 ),
           ),
           Text(
-            startAmount.simpleCurrency(context),
+            startAmount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                 ),
@@ -72,36 +74,50 @@ class ReitScreen extends ConsumerWidget {
                         .fold<double>(0, (total, div) => total + div.amount);
 
                     return MonnCard(
-                      title: Text(
-                        item.name.toUpperCase(),
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: AppColors.lightGray,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.name.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                  color: AppColors.lightGray,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          Text(
+                            amount.simpleCurrency(locale),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                          ),
+                          const Divider(),
+                          Row(
+                            children: [
+                              MonnFinancialInfo(
+                                title: 'Vers. ini.',
+                                data: item.shares * item.price,
+                              ),
+                              const SizedBox(width: 24),
+                              MonnFinancialInfo(
+                                title: 'Part',
+                                data: item.shares.toStringAsFixed(0),
+                              ),
+                              const SizedBox(width: 24),
+                              MonnFinancialInfo(
+                                title: 'Valeur',
+                                data: item.price,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      amount: Text(
-                        amount.simpleCurrency(context),
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w900,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                      ),
-                      children: [
-                        MonnFinancialInfo(
-                          title: 'Vers. ini.',
-                          data: item.shares * item.price,
-                        ),
-                        const SizedBox(width: 24),
-                        MonnFinancialInfo(
-                          title: 'Part',
-                          data: item.shares.toStringAsFixed(0),
-                        ),
-                        const SizedBox(width: 24),
-                        MonnFinancialInfo(
-                          title: 'Valeur',
-                          data: item.price,
-                        ),
-                      ],
                       onTap: () => WoltModalSheet.show<void>(
                         context: context,
                         pageListBuilder: (context) => [

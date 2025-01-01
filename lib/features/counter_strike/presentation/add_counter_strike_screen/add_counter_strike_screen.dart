@@ -14,6 +14,7 @@ class AddCounterStrikeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
@@ -64,6 +65,7 @@ class AddCounterStrikeScreen extends ConsumerWidget {
               MonnFieldDate(
                 label: 'Acheté le',
                 required: true,
+                locale: locale,
                 onChanged: (value) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .edit(boughtAt: value),

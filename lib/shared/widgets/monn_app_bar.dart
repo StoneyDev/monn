@@ -21,16 +21,21 @@ class MonnAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: true,
       backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
       systemOverlayStyle: context.isDarkTheme(theme)
           ? GlobalThemeData.lightSystemUi
           : GlobalThemeData.darkSystemUi,
-      leading: IconButton(
-        onPressed: () {
-          onBack?.call();
-          Navigator.maybePop(context);
-        },
-        icon: const iconoir.ArrowLeft(
-          color: AppColors.lightGray,
+      leading: Padding(
+        padding: const EdgeInsets.all(12),
+        child: IconButton.filled(
+          onPressed: () {
+            onBack?.call();
+            Navigator.maybePop(context);
+          },
+          style: IconButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.outline,
+          ),
+          icon: const iconoir.ArrowLeft(color: AppColors.lightGray),
         ),
       ),
       title: Text(

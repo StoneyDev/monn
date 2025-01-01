@@ -14,6 +14,7 @@ class AddCrowdfundingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
@@ -74,6 +75,7 @@ class AddCrowdfundingScreen extends ConsumerWidget {
               MonnFieldDate(
                 label: 'Reçu le',
                 required: true,
+                locale: locale,
                 onChanged: (value) => ref
                     .read(crowdfundingFormControllerProvider.notifier)
                     .edit(receivedAt: value),

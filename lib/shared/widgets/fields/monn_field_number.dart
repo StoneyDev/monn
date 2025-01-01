@@ -22,7 +22,7 @@ class MonnFieldNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.extraLightGray),
+        border: Border.all(color: AppColors.gray300),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(

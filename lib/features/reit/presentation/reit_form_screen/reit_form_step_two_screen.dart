@@ -13,6 +13,7 @@ class ReitFormStepTwoScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
     final formKey = GlobalKey<FormState>();
     final formData = ref.read(reitDividendFormControllerProvider);
 
@@ -37,6 +38,7 @@ class ReitFormStepTwoScreen extends ConsumerWidget {
               MonnFieldDate(
                 label: 'Reçu le',
                 required: true,
+                locale: locale,
                 initialValue: formData.receivedAt,
                 onChanged: (value) => ref
                     .read(reitDividendFormControllerProvider.notifier)
