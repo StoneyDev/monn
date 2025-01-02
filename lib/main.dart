@@ -59,14 +59,14 @@ void _registerErrorHandlers() {
       body: SafeArea(
         child: DecoratedBox(
           decoration: const BoxDecoration(
-            color: AppColors.lightError,
+            color: AppColors.red,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
               'Error widget : ${error.exceptionAsString()}',
-              style: const TextStyle(color: AppColors.error),
+              style: const TextStyle(color: AppColors.red),
             ),
           ),
         ),
