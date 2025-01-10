@@ -48,12 +48,12 @@ void main() {
       // Act
       final listener = MockListener<AsyncValue<List<Savings>>>();
       container.listen(
-        watchSavingsProvider,
+        watchSavingsProvider(),
         listener.call,
         fireImmediately: true,
       );
 
-      await container.read(watchSavingsProvider.future);
+      await container.read(watchSavingsProvider().future);
 
       // Assert
       verifyInOrder([
@@ -75,7 +75,7 @@ void main() {
       when(repository.watchSavings()).thenThrow(error);
 
       // Act
-      final controller = container.read(watchSavingsProvider.future);
+      final controller = container.read(watchSavingsProvider().future);
 
       // Assert
       await expectLater(controller, throwsA(error));

@@ -23,7 +23,7 @@ extension ContextUi on BuildContext {
           ).animate(
             CurvedAnimation(
               parent: animation,
-              curve: Curves.easeInOutExpo,
+              curve: Curves.easeOutExpo,
             ),
           );
 

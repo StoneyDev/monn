@@ -40,7 +40,7 @@ const SavingsSchema = CollectionSchema(
   getId: _savingsGetId,
   getLinks: _savingsGetLinks,
   attach: _savingsAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _savingsEstimateSize(

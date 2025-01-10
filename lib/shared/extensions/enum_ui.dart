@@ -68,6 +68,20 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.rip => const Placeholder(),
     };
   }
+
+  ImageProvider<Object> icon() {
+    return switch (this) {
+      SavingsType.savingsBook => MonnAssets.images.icon.locker.provider(),
+      SavingsType.crowdfunding => MonnAssets.images.icon.moneyBag.provider(),
+      SavingsType.cryptocurrency => MonnAssets.images.icon.ethCoin.provider(),
+      SavingsType.csknives => MonnAssets.images.icon.crown.provider(),
+      SavingsType.cto => MonnAssets.images.icon.bag.provider(),
+      SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
+      SavingsType.pea => MonnAssets.images.icon.bag.provider(),
+      SavingsType.reit => MonnAssets.images.icon.folder.provider(),
+      SavingsType.rip => MonnAssets.images.icon.calendar.provider(),
+    };
+  }
 }
 
 extension CryptoTypeUI on CryptoType {

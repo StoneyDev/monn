@@ -59,7 +59,7 @@ void _registerErrorHandlers() {
       body: SafeArea(
         child: DecoratedBox(
           decoration: const BoxDecoration(
-            color: AppColors.red,
+            color: AppColors.red50,
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           child: Padding(

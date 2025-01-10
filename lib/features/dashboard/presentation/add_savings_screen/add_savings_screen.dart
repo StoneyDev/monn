@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
@@ -17,7 +18,7 @@ class AddSavingsScreen extends ConsumerWidget {
     final state = ref.watch(editSavingsControllerProvider);
     final selectedItem = ref.watch(_savingsProvider);
     final savingsType = ref.watch(
-      watchSavingsProvider.select(
+      watchSavingsProvider().select(
         (value) => value.valueOrNull?.map((saving) => saving.type) ?? [],
       ),
     );
@@ -25,6 +26,7 @@ class AddSavingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: MonnAppBar(title: context.tr('add.savings')),
       body: ListView.builder(
+        physics: const ClampingScrollPhysics(),
         itemCount: SavingsType.values.length,
         itemBuilder: (context, index) {
           final saving = SavingsType.values[index];
@@ -36,7 +38,18 @@ class AddSavingsScreen extends ConsumerWidget {
             onChanged: isExist
                 ? null
                 : (value) => ref.read(_savingsProvider.notifier).state = value,
-            title: Text(saving.label),
+            title: Row(
+              children: [
+                Image(
+                  image: saving.icon(),
+                  height: 48,
+                  width: 48,
+                  opacity: AlwaysStoppedAnimation(isExist ? 0.4 : 1),
+                ),
+                const SizedBox(width: 16),
+                Text(saving.label),
+              ],
+            ),
           );
         },
       ),

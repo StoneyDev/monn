@@ -21,7 +21,9 @@ mixin _$Savings {
   double get startAmount => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Savings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SavingsCopyWith<Savings> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +48,8 @@ class _$SavingsCopyWithImpl<$Res, $Val extends Savings>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Savings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +95,8 @@ class __$$SavingsImplCopyWithImpl<$Res>
       _$SavingsImpl _value, $Res Function(_$SavingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Savings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -152,7 +158,9 @@ class _$SavingsImpl implements _Savings {
   @override
   int get hashCode => Object.hash(runtimeType, type, startAmount, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Savings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SavingsImplCopyWith<_$SavingsImpl> get copyWith =>
@@ -172,8 +180,11 @@ abstract class _Savings implements Savings {
   double get startAmount;
   @override
   int get id;
+
+  /// Create a copy of Savings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SavingsImplCopyWith<_$SavingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

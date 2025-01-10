@@ -14,6 +14,9 @@ class $AssetsImagesGen {
 
   /// Directory path: assets/images/crypto
   $AssetsImagesCryptoGen get crypto => const $AssetsImagesCryptoGen();
+
+  /// Directory path: assets/images/icon
+  $AssetsImagesIconGen get icon => const $AssetsImagesIconGen();
 }
 
 class $AssetsImagesCryptoGen {
@@ -42,6 +45,45 @@ class $AssetsImagesCryptoGen {
   /// List of all assets
   List<AssetGenImage> get values =>
       [bitcoin, chainlink, ethereum, tether, usdCoin];
+}
+
+class $AssetsImagesIconGen {
+  const $AssetsImagesIconGen();
+
+  /// File path: assets/images/icon/bag.png
+  AssetGenImage get bag => const AssetGenImage('assets/images/icon/bag.png');
+
+  /// File path: assets/images/icon/calendar.png
+  AssetGenImage get calendar =>
+      const AssetGenImage('assets/images/icon/calendar.png');
+
+  /// File path: assets/images/icon/crown.png
+  AssetGenImage get crown =>
+      const AssetGenImage('assets/images/icon/crown.png');
+
+  /// File path: assets/images/icon/eth_coin.png
+  AssetGenImage get ethCoin =>
+      const AssetGenImage('assets/images/icon/eth_coin.png');
+
+  /// File path: assets/images/icon/folder.png
+  AssetGenImage get folder =>
+      const AssetGenImage('assets/images/icon/folder.png');
+
+  /// File path: assets/images/icon/locker.png
+  AssetGenImage get locker =>
+      const AssetGenImage('assets/images/icon/locker.png');
+
+  /// File path: assets/images/icon/money_bag.png
+  AssetGenImage get moneyBag =>
+      const AssetGenImage('assets/images/icon/money_bag.png');
+
+  /// File path: assets/images/icon/umbrella.png
+  AssetGenImage get umbrella =>
+      const AssetGenImage('assets/images/icon/umbrella.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [bag, calendar, crown, ethCoin, folder, locker, moneyBag, umbrella];
 }
 
 class MonnAssets {

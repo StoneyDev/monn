@@ -7,6 +7,7 @@ import 'package:retrofit/retrofit.dart';
 part 'coin_cap_api.g.dart';
 
 @RestApi(baseUrl: 'https://api.coincap.io/v2/')
+// ignore: one_member_abstracts (Remove when there are more api calls)
 abstract class CoinCapApi {
   factory CoinCapApi(Dio dio) = _CoinCapApi;
 

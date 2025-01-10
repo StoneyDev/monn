@@ -20,22 +20,10 @@ final savingsRepositoryProvider = Provider<SavingsRepository>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef SavingsRepositoryRef = ProviderRef<SavingsRepository>;
-String _$watchSavingsHash() => r'24038eee6db3df114aade09cf710bf3c00466f46';
-
-/// See also [watchSavings].
-@ProviderFor(watchSavings)
-final watchSavingsProvider = AutoDisposeStreamProvider<List<Savings>>.internal(
-  watchSavings,
-  name: r'watchSavingsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$watchSavingsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef WatchSavingsRef = AutoDisposeStreamProviderRef<List<Savings>>;
-String _$getSavingsHash() => r'63c15b702d07bcdd68fcc04f494fab2491bcb0d1';
+String _$watchSavingsHash() => r'717521b1be13771c35baa927e00e6ff3b1c93760';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -57,6 +45,137 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [watchSavings].
+@ProviderFor(watchSavings)
+const watchSavingsProvider = WatchSavingsFamily();
+
+/// See also [watchSavings].
+class WatchSavingsFamily extends Family<AsyncValue<List<Savings>>> {
+  /// See also [watchSavings].
+  const WatchSavingsFamily();
+
+  /// See also [watchSavings].
+  WatchSavingsProvider call({
+    SavingsFilter? filter,
+  }) {
+    return WatchSavingsProvider(
+      filter: filter,
+    );
+  }
+
+  @override
+  WatchSavingsProvider getProviderOverride(
+    covariant WatchSavingsProvider provider,
+  ) {
+    return call(
+      filter: provider.filter,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'watchSavingsProvider';
+}
+
+/// See also [watchSavings].
+class WatchSavingsProvider extends AutoDisposeStreamProvider<List<Savings>> {
+  /// See also [watchSavings].
+  WatchSavingsProvider({
+    SavingsFilter? filter,
+  }) : this._internal(
+          (ref) => watchSavings(
+            ref as WatchSavingsRef,
+            filter: filter,
+          ),
+          from: watchSavingsProvider,
+          name: r'watchSavingsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$watchSavingsHash,
+          dependencies: WatchSavingsFamily._dependencies,
+          allTransitiveDependencies:
+              WatchSavingsFamily._allTransitiveDependencies,
+          filter: filter,
+        );
+
+  WatchSavingsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.filter,
+  }) : super.internal();
+
+  final SavingsFilter? filter;
+
+  @override
+  Override overrideWith(
+    Stream<List<Savings>> Function(WatchSavingsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: WatchSavingsProvider._internal(
+        (ref) => create(ref as WatchSavingsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        filter: filter,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<List<Savings>> createElement() {
+    return _WatchSavingsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is WatchSavingsProvider && other.filter == filter;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, filter.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin WatchSavingsRef on AutoDisposeStreamProviderRef<List<Savings>> {
+  /// The parameter `filter` of this provider.
+  SavingsFilter? get filter;
+}
+
+class _WatchSavingsProviderElement
+    extends AutoDisposeStreamProviderElement<List<Savings>>
+    with WatchSavingsRef {
+  _WatchSavingsProviderElement(super.provider);
+
+  @override
+  SavingsFilter? get filter => (origin as WatchSavingsProvider).filter;
+}
+
+String _$getSavingsHash() => r'63c15b702d07bcdd68fcc04f494fab2491bcb0d1';
 
 /// See also [getSavings].
 @ProviderFor(getSavings)
@@ -171,6 +290,8 @@ class GetSavingsProvider extends AutoDisposeFutureProvider<Savings?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetSavingsRef on AutoDisposeFutureProviderRef<Savings?> {
   /// The parameter `type` of this provider.
   SavingsType get type;
@@ -200,6 +321,8 @@ final watchPayoutReportSavingsProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchPayoutReportSavingsRef = AutoDisposeFutureProviderRef<double>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

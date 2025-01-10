@@ -16,8 +16,13 @@ class SavingsRepository {
 
   final Isar _localDB;
 
-  Stream<List<Savings>> watchSavings() {
-    final query = _localDB.savings.where().sortByStartAmountDesc().build();
+  Stream<List<Savings>> watchSavings({SavingsFilter? filter}) {
+    final query = switch (filter) {
+      SavingsFilter.sortByStartAmountAsc =>
+        _localDB.savings.where().sortByStartAmount().build(),
+      _ => _localDB.savings.where().sortByStartAmountDesc().build(),
+    };
+
     return query.watch(fireImmediately: true);
   }
 
@@ -39,9 +44,12 @@ SavingsRepository savingsRepository(SavingsRepositoryRef ref) {
 }
 
 @riverpod
-Stream<List<Savings>> watchSavings(WatchSavingsRef ref) {
+Stream<List<Savings>> watchSavings(
+  WatchSavingsRef ref, {
+  SavingsFilter? filter,
+}) {
   final repository = ref.watch(savingsRepositoryProvider);
-  return repository.watchSavings();
+  return repository.watchSavings(filter: filter);
 }
 
 @riverpod

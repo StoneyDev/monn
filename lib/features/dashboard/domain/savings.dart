@@ -32,3 +32,10 @@ enum SavingsType {
 
   final String label;
 }
+
+enum SavingsFilter {
+  sortByStartAmountDesc,
+  sortByStartAmountAsc,
+  // sortByFinalAmountDesc, // TODO(yann): Need refactor for this
+  // sortByFinalAmountAsc,
+}
