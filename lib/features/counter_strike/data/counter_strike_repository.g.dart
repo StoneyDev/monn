@@ -7,7 +7,7 @@ part of 'counter_strike_repository.dart';
 // **************************************************************************
 
 String _$counterStrikeRepositoryHash() =>
-    r'670116348d99247f99c81ce8d68804ffabe934a0';
+    r'e648adf8fb332485d0a64152b76cf79655ad7c20';
 
 /// See also [counterStrikeRepository].
 @ProviderFor(counterStrikeRepository)
@@ -22,9 +22,11 @@ final counterStrikeRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CounterStrikeRepositoryRef = ProviderRef<CounterStrikeRepository>;
 String _$watchCounterStrikesHash() =>
-    r'b75151e1f9bdbda42fc51b6e08c0b47c5362e82e';
+    r'523856e5651eceea82b3c2d66fb0ebc80b6b91b2';
 
 /// See also [watchCounterStrikes].
 @ProviderFor(watchCounterStrikes)
@@ -39,10 +41,12 @@ final watchCounterStrikesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchCounterStrikesRef
     = AutoDisposeStreamProviderRef<List<CounterStrike>>;
 String _$watchPayoutReportCounterStrikeHash() =>
-    r'6c9f630895d1e3169e22e3119567db70b0a857e4';
+    r'07b85248c9b352b8d155d48ddc5fb73cb3611408';
 
 /// See also [watchPayoutReportCounterStrike].
 @ProviderFor(watchPayoutReportCounterStrike)
@@ -57,7 +61,9 @@ final watchPayoutReportCounterStrikeProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchPayoutReportCounterStrikeRef
     = AutoDisposeStreamProviderRef<PayoutReportData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

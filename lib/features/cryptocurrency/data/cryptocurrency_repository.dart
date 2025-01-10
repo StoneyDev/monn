@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
@@ -49,23 +50,19 @@ class CryptocurrencyRepository {
 }
 
 @Riverpod(keepAlive: true)
-CryptocurrencyRepository cryptocurrencyRepository(
-  CryptocurrencyRepositoryRef ref,
-) {
+CryptocurrencyRepository cryptocurrencyRepository(Ref ref) {
   return CryptocurrencyRepository(LocalDatabase().database);
 }
 
 @riverpod
-Stream<List<Cryptocurrency>> watchCryptocurrencies(
-  WatchCryptocurrenciesRef ref,
-) {
+Stream<List<Cryptocurrency>> watchCryptocurrencies(Ref ref) {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
   return repository.watchCryptocurrencies();
 }
 
 @riverpod
 Future<Cryptocurrency> getCryptocurrency(
-  GetCryptocurrencyRef ref,
+  Ref ref,
   CryptoType type,
 ) async {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
@@ -76,7 +73,7 @@ Future<Cryptocurrency> getCryptocurrency(
 }
 
 @riverpod
-Stream<Chart> watchCryptoChart(WatchCryptoChartRef ref) async* {
+Stream<Chart> watchCryptoChart(Ref ref) async* {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
   final theme = await ref.watch(
     themeSwitchControllerProvider.selectAsync((theme) => theme),
@@ -118,9 +115,7 @@ Stream<Chart> watchCryptoChart(WatchCryptoChartRef ref) async* {
 }
 
 @riverpod
-Stream<PayoutReportData> watchPayoutReportCrypto(
-  WatchPayoutReportCryptoRef ref,
-) async* {
+Stream<PayoutReportData> watchPayoutReportCrypto(Ref ref) async* {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
 
   await for (final results in repository.watchCryptocurrencies()) {

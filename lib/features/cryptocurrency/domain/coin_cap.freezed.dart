@@ -22,8 +22,12 @@ CoinCapResponse _$CoinCapResponseFromJson(Map<String, dynamic> json) {
 mixin _$CoinCapResponse {
   CoinCap get data => throw _privateConstructorUsedError;
 
+  /// Serializes this CoinCapResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CoinCapResponseCopyWith<CoinCapResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$CoinCapResponseCopyWithImpl<$Res, $Val extends CoinCapResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -62,6 +68,8 @@ class _$CoinCapResponseCopyWithImpl<$Res, $Val extends CoinCapResponse>
     ) as $Val);
   }
 
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CoinCapCopyWith<$Res> get data {
@@ -93,6 +101,8 @@ class __$$CoinCapResponseImplCopyWithImpl<$Res>
       _$CoinCapResponseImpl _value, $Res Function(_$CoinCapResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -131,11 +141,13 @@ class _$CoinCapResponseImpl implements _CoinCapResponse {
             (identical(other.data, data) || other.data == data));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, data);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CoinCapResponseImplCopyWith<_$CoinCapResponseImpl> get copyWith =>
@@ -159,8 +171,11 @@ abstract class _CoinCapResponse implements CoinCapResponse {
 
   @override
   CoinCap get data;
+
+  /// Create a copy of CoinCapResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CoinCapResponseImplCopyWith<_$CoinCapResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -174,8 +189,12 @@ mixin _$CoinCap {
   @JsonKey(fromJson: double.parse)
   double get priceUsd => throw _privateConstructorUsedError;
 
+  /// Serializes this CoinCap to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoinCap
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CoinCapCopyWith<CoinCap> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -197,6 +216,8 @@ class _$CoinCapCopyWithImpl<$Res, $Val extends CoinCap>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CoinCap
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -229,6 +250,8 @@ class __$$CoinCapImplCopyWithImpl<$Res>
       _$CoinCapImpl _value, $Res Function(_$CoinCapImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoinCap
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -269,11 +292,13 @@ class _$CoinCapImpl implements _CoinCap {
                 other.priceUsd == priceUsd));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, priceUsd);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoinCap
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CoinCapImplCopyWith<_$CoinCapImpl> get copyWith =>
@@ -297,8 +322,11 @@ abstract class _CoinCap implements CoinCap {
   @override
   @JsonKey(fromJson: double.parse)
   double get priceUsd;
+
+  /// Create a copy of CoinCap
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CoinCapImplCopyWith<_$CoinCapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

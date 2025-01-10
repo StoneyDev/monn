@@ -21,7 +21,8 @@ class AddCryptoScreen extends ConsumerWidget {
     return Scaffold(
       appBar: MonnAppBar(title: context.tr('tracking_earnings')),
       body: Form(
-        onPopInvoked: (_) => ref.invalidate(cryptoFormControllerProvider),
+        onPopInvokedWithResult: (_, __) =>
+            ref.invalidate(cryptoFormControllerProvider),
         key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -46,7 +47,7 @@ class AddCryptoScreen extends ConsumerWidget {
 
                   return MonnFieldDate(
                     label: context.tr(
-                      // ignore: lines_longer_than_80_chars
+                      // ignore: lines_longer_than_80_chars .
                       'input.label.${cryptoAmount.isNegative ? 'sold_on' : 'bought_on'}',
                     ),
                     required: true,

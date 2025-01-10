@@ -57,12 +57,11 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           ),
                           content: RichText(
                             text: TextSpan(
-                              text: context.tr('total_amount_invested'),
+                              text: '${context.tr('total_amount_invested')}:',
                               children: [
                                 TextSpan(
-                                  text:
-                                      // ignore: lines_longer_than_80_chars
-                                      ': ${cryptoData?.startAmount.simpleCurrency(locale)}',
+                                  text: cryptoData?.startAmount
+                                      .simpleCurrency(locale),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -140,10 +139,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
             sliver: SliverList.separated(
               itemBuilder: (context, index) {
                 final cryptoType = CryptoType.values[index];
@@ -177,7 +173,7 @@ class _CryptoCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final cryptocurrency = ref.watch(
+    final crypto = ref.watch(
       getCryptocurrencyProvider(cryptoType).select(
         (crypto) => crypto.valueOrNull,
       ),
@@ -185,7 +181,7 @@ class _CryptoCard extends ConsumerWidget {
     final priceMarket = ref.watch(
       getCryptoPriceMarketProvider(
         id: MonnTools.toKebabCase(cryptoType.name),
-        crypto: cryptocurrency,
+        crypto: crypto,
       ),
     );
 
@@ -223,18 +219,16 @@ class _CryptoCard extends ConsumerWidget {
               )
           },
           trailing: Text(
-            // ignore: lines_longer_than_80_chars
-            '${cryptocurrency?.totalCrypto.toDecimal(locale)} ${cryptoType.symbol}',
+            '${crypto?.totalCrypto.toDecimal(locale)} ${cryptoType.symbol}',
             style: TextStyle(
               fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
-          subTrailing: (cryptocurrency?.totalCrypto ?? 0) > 0
+          subTrailing: (crypto?.totalCrypto ?? 0) > 0
               ? switch (priceMarket) {
                   AsyncData(:final value) => Text(
-                      (value * cryptocurrency!.totalCrypto)
-                          .simpleCurrency('en'),
+                      (value * crypto!.totalCrypto).simpleCurrency('en'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(color: AppColors.lightGray),

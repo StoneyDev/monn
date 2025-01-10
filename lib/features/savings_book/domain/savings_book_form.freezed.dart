@@ -20,7 +20,9 @@ mixin _$SavingsBookForm {
   double? get startAmount => throw _privateConstructorUsedError;
   double? get withdrawal => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SavingsBookForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SavingsBookFormCopyWith<SavingsBookForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$SavingsBookFormCopyWithImpl<$Res, $Val extends SavingsBookForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SavingsBookForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$SavingsBookFormImplCopyWithImpl<$Res>
       _$SavingsBookFormImpl _value, $Res Function(_$SavingsBookFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SavingsBookForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,7 +149,9 @@ class _$SavingsBookFormImpl implements _SavingsBookForm {
   @override
   int get hashCode => Object.hash(runtimeType, name, startAmount, withdrawal);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SavingsBookForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SavingsBookFormImplCopyWith<_$SavingsBookFormImpl> get copyWith =>
@@ -163,8 +171,11 @@ abstract class _SavingsBookForm implements SavingsBookForm {
   double? get startAmount;
   @override
   double? get withdrawal;
+
+  /// Create a copy of SavingsBookForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SavingsBookFormImplCopyWith<_$SavingsBookFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

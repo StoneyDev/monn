@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, lines_longer_than_80_chars
+// ignore_for_file: cascade_invocations, lines_longer_than_80_chars .
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding_form.dart';

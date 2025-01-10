@@ -1,4 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars .
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

@@ -7,7 +7,7 @@ part of 'pea_repository.dart';
 // **************************************************************************
 
 String _$getPayoutReportPeaHash() =>
-    r'3a132ef8ef6c0f8e8ea25ada3e5b775520052131';
+    r'71750023ad7bedc5c604576dc140cdd058bfa00d';
 
 /// See also [getPayoutReportPea].
 @ProviderFor(getPayoutReportPea)
@@ -22,6 +22,8 @@ final getPayoutReportPeaProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef GetPayoutReportPeaRef = AutoDisposeFutureProviderRef<PayoutReportData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

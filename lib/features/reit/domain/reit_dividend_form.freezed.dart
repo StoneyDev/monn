@@ -20,7 +20,9 @@ mixin _$ReitDividendForm {
   DateTime? get receivedAt => throw _privateConstructorUsedError;
   double? get amount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitDividendForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ReitDividendFormCopyWith<ReitDividendForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$ReitDividendFormCopyWithImpl<$Res, $Val extends ReitDividendForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ReitDividendForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$ReitDividendFormImplCopyWithImpl<$Res>
       $Res Function(_$ReitDividendFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ReitDividendForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,7 +148,9 @@ class _$ReitDividendFormImpl implements _ReitDividendForm {
   @override
   int get hashCode => Object.hash(runtimeType, reit, receivedAt, amount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitDividendForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReitDividendFormImplCopyWith<_$ReitDividendFormImpl> get copyWith =>
@@ -162,8 +170,11 @@ abstract class _ReitDividendForm implements ReitDividendForm {
   DateTime? get receivedAt;
   @override
   double? get amount;
+
+  /// Create a copy of ReitDividendForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReitDividendFormImplCopyWith<_$ReitDividendFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

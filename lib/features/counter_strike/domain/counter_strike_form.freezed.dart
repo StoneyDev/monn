@@ -24,7 +24,9 @@ mixin _$CounterStrikeForm {
   int? get quantity => throw _privateConstructorUsedError;
   String? get imageId => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CounterStrikeForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CounterStrikeFormCopyWith<CounterStrikeForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +57,8 @@ class _$CounterStrikeFormCopyWithImpl<$Res, $Val extends CounterStrikeForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CounterStrikeForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,6 +129,8 @@ class __$$CounterStrikeFormImplCopyWithImpl<$Res>
       $Res Function(_$CounterStrikeFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CounterStrikeForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -223,7 +229,9 @@ class _$CounterStrikeFormImpl implements _CounterStrikeForm {
   int get hashCode => Object.hash(runtimeType, name, wear, purchaseValue,
       currentValue, boughtAt, quantity, imageId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CounterStrikeForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CounterStrikeFormImplCopyWith<_$CounterStrikeFormImpl> get copyWith =>
@@ -255,8 +263,11 @@ abstract class _CounterStrikeForm implements CounterStrikeForm {
   int? get quantity;
   @override
   String? get imageId;
+
+  /// Create a copy of CounterStrikeForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CounterStrikeFormImplCopyWith<_$CounterStrikeFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

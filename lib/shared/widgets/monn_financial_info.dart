@@ -17,7 +17,7 @@ class MonnFinancialInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = context.locale.toString();
     final formattedData = switch (data.runtimeType) {
-      double => (data as double).simpleCurrency(locale),
+      const (double) => (data as double).simpleCurrency(locale),
       _ => '$data',
     };
 

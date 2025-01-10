@@ -6,7 +6,7 @@ part of 'coin_cap_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinCapRepositoryHash() => r'09ae481cd5e3d4fb7d25c7db586d5e9e71b73f14';
+String _$coinCapRepositoryHash() => r'e8995699f26a6e6862138cc1fdf99f5bfc78ad9d';
 
 /// See also [coinCapRepository].
 @ProviderFor(coinCapRepository)
@@ -20,9 +20,11 @@ final coinCapRepositoryProvider = Provider<CoinCapRepository>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CoinCapRepositoryRef = ProviderRef<CoinCapRepository>;
 String _$getCryptoPriceMarketHash() =>
-    r'682e6ac04e6fc7b444129ce2cf80c8757e0fe422';
+    r'3218f74789eafe057be3813b1ed99bdae41c3cef';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -170,6 +172,8 @@ class GetCryptoPriceMarketProvider extends AutoDisposeFutureProvider<double> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetCryptoPriceMarketRef on AutoDisposeFutureProviderRef<double> {
   /// The parameter `id` of this provider.
   String get id;
@@ -189,4 +193,4 @@ class _GetCryptoPriceMarketProviderElement
   Cryptocurrency? get crypto => (origin as GetCryptoPriceMarketProvider).crypto;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

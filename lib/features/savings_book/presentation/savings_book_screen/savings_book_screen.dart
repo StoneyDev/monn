@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,6 +134,7 @@ class SavingsBookScreen extends ConsumerWidget {
 
                               final success = await ref
                                   .read(
+                                    // ignore: lines_longer_than_80_chars .
                                     submitSavingsBookInterestFormControllerProvider
                                         .notifier,
                                   )

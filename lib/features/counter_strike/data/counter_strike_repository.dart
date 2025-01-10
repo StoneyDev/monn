@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
@@ -25,24 +26,18 @@ class CounterStrikeRepository {
 }
 
 @Riverpod(keepAlive: true)
-CounterStrikeRepository counterStrikeRepository(
-  CounterStrikeRepositoryRef ref,
-) {
+CounterStrikeRepository counterStrikeRepository(Ref ref) {
   return CounterStrikeRepository(LocalDatabase().database);
 }
 
 @riverpod
-Stream<List<CounterStrike>> watchCounterStrikes(
-  WatchCounterStrikesRef ref,
-) {
+Stream<List<CounterStrike>> watchCounterStrikes(Ref ref) {
   final repository = ref.watch(counterStrikeRepositoryProvider);
   return repository.watchCounterStrikes();
 }
 
 @riverpod
-Stream<PayoutReportData> watchPayoutReportCounterStrike(
-  WatchPayoutReportCounterStrikeRef ref,
-) async* {
+Stream<PayoutReportData> watchPayoutReportCounterStrike(Ref ref) async* {
   final repository = ref.watch(counterStrikeRepositoryProvider);
 
   await for (final results in repository.watchCounterStrikes()) {

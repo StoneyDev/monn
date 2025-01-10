@@ -20,7 +20,9 @@ mixin _$CryptoForm {
   double? get amount => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CryptoForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CryptoFormCopyWith<CryptoForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$CryptoFormCopyWithImpl<$Res, $Val extends CryptoForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CryptoForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$CryptoFormImplCopyWithImpl<$Res>
       _$CryptoFormImpl _value, $Res Function(_$CryptoFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CryptoForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -141,7 +147,9 @@ class _$CryptoFormImpl implements _CryptoForm {
   @override
   int get hashCode => Object.hash(runtimeType, crypto, amount, date);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CryptoForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CryptoFormImplCopyWith<_$CryptoFormImpl> get copyWith =>
@@ -160,8 +168,11 @@ abstract class _CryptoForm implements CryptoForm {
   double? get amount;
   @override
   DateTime? get date;
+
+  /// Create a copy of CryptoForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CryptoFormImplCopyWith<_$CryptoFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

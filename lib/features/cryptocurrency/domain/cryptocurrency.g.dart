@@ -57,7 +57,7 @@ const CryptocurrencySchema = CollectionSchema(
   getId: _cryptocurrencyGetId,
   getLinks: _cryptocurrencyGetLinks,
   attach: _cryptocurrencyAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _cryptocurrencyEstimateSize(
@@ -942,7 +942,7 @@ const CryptocurrencyTransactionSchema = CollectionSchema(
   getId: _cryptocurrencyTransactionGetId,
   getLinks: _cryptocurrencyTransactionGetLinks,
   attach: _cryptocurrencyTransactionAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _cryptocurrencyTransactionEstimateSize(

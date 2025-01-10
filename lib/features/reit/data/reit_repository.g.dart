@@ -6,7 +6,7 @@ part of 'reit_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reitRepositoryHash() => r'5d8c7c0cf12738a2a0ba7ea1b0e1439e310156b7';
+String _$reitRepositoryHash() => r'875422e2e78d82bb0680a7a7ff72315de6a22bd0';
 
 /// See also [reitRepository].
 @ProviderFor(reitRepository)
@@ -20,8 +20,10 @@ final reitRepositoryProvider = Provider<ReitRepository>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ReitRepositoryRef = ProviderRef<ReitRepository>;
-String _$watchReitsHash() => r'0528a69ce04ad222bd46fb5bf7135dc18645b11a';
+String _$watchReitsHash() => r'dc0ffb32bab22fa8dfb5ed25d502775b10f7443f';
 
 /// See also [watchReits].
 @ProviderFor(watchReits)
@@ -34,9 +36,11 @@ final watchReitsProvider = AutoDisposeStreamProvider<List<Reit>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchReitsRef = AutoDisposeStreamProviderRef<List<Reit>>;
 String _$watchPayoutReportReitHash() =>
-    r'ea20ecec60298d8b963754f76614678cdf7b553b';
+    r'fbf8b0068cf70656341875348185f05293b6defd';
 
 /// See also [watchPayoutReportReit].
 @ProviderFor(watchPayoutReportReit)
@@ -51,7 +55,9 @@ final watchPayoutReportReitProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchPayoutReportReitRef
     = AutoDisposeStreamProviderRef<PayoutReportData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

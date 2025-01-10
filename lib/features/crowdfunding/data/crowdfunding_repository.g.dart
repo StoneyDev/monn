@@ -7,7 +7,7 @@ part of 'crowdfunding_repository.dart';
 // **************************************************************************
 
 String _$crowdfundingRepositoryHash() =>
-    r'7e516e1152f5eee26354959a9d2a75ad454f8029';
+    r'b03231041718953e8cf9a85f2c9675487a59d7a4';
 
 /// See also [crowdfundingRepository].
 @ProviderFor(crowdfundingRepository)
@@ -22,9 +22,11 @@ final crowdfundingRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CrowdfundingRepositoryRef = ProviderRef<CrowdfundingRepository>;
 String _$watchCrowdfundingsHash() =>
-    r'ced066c6a1638529e2086d3fb6f7d73938da92fa';
+    r'2fd175ef4d7195f1faf7553291e9b59adddb7bbb';
 
 /// See also [watchCrowdfundings].
 @ProviderFor(watchCrowdfundings)
@@ -39,10 +41,12 @@ final watchCrowdfundingsProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchCrowdfundingsRef
     = AutoDisposeStreamProviderRef<List<Crowdfunding>>;
 String _$watchPayoutReportCrowdfundingHash() =>
-    r'0163602ba508bb2f2eb66b24cb18bbb74d0007b0';
+    r'ccfb40d2c5278832b85ddfdf8ca4f59a53424b8d';
 
 /// See also [watchPayoutReportCrowdfunding].
 @ProviderFor(watchPayoutReportCrowdfunding)
@@ -57,7 +61,9 @@ final watchPayoutReportCrowdfundingProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchPayoutReportCrowdfundingRef
     = AutoDisposeStreamProviderRef<PayoutReportData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -21,7 +21,9 @@ mixin _$CrowdfundingForm {
   double? get taxPercentage => throw _privateConstructorUsedError;
   double? get brutProfit => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CrowdfundingFormCopyWith<CrowdfundingForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +51,8 @@ class _$CrowdfundingFormCopyWithImpl<$Res, $Val extends CrowdfundingForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +105,8 @@ class __$$CrowdfundingFormImplCopyWithImpl<$Res>
       $Res Function(_$CrowdfundingFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -172,7 +178,9 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
   int get hashCode => Object.hash(
       runtimeType, platformName, receivedAt, taxPercentage, brutProfit);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrowdfundingFormImplCopyWith<_$CrowdfundingFormImpl> get copyWith =>
@@ -195,8 +203,11 @@ abstract class _CrowdfundingForm implements CrowdfundingForm {
   double? get taxPercentage;
   @override
   double? get brutProfit;
+
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrowdfundingFormImplCopyWith<_$CrowdfundingFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

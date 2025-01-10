@@ -7,7 +7,7 @@ part of 'cryptocurrency_repository.dart';
 // **************************************************************************
 
 String _$cryptocurrencyRepositoryHash() =>
-    r'0f08e7cb4d08d964a8823684beb310dccc2d5bd1';
+    r'1b02d44b0048a8fe0e6d9186929203ace4b6e43f';
 
 /// See also [cryptocurrencyRepository].
 @ProviderFor(cryptocurrencyRepository)
@@ -22,9 +22,11 @@ final cryptocurrencyRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef CryptocurrencyRepositoryRef = ProviderRef<CryptocurrencyRepository>;
 String _$watchCryptocurrenciesHash() =>
-    r'2452c3e060f043f196b0127d35e2c429969befb9';
+    r'7d3db601fd12d61dd01ab55609cf157ee9010f6a';
 
 /// See also [watchCryptocurrencies].
 @ProviderFor(watchCryptocurrencies)
@@ -39,9 +41,11 @@ final watchCryptocurrenciesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchCryptocurrenciesRef
     = AutoDisposeStreamProviderRef<List<Cryptocurrency>>;
-String _$getCryptocurrencyHash() => r'4bba44e9d79718c0e1d4288e3fbb6cec4d589360';
+String _$getCryptocurrencyHash() => r'21b065fd53f7814b6e0d77b3b19cf1847edc3709';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -178,6 +182,8 @@ class GetCryptocurrencyProvider
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetCryptocurrencyRef on AutoDisposeFutureProviderRef<Cryptocurrency> {
   /// The parameter `type` of this provider.
   CryptoType get type;
@@ -192,7 +198,7 @@ class _GetCryptocurrencyProviderElement
   CryptoType get type => (origin as GetCryptocurrencyProvider).type;
 }
 
-String _$watchCryptoChartHash() => r'a93e313f611fd6d4cc34dea026f25deb788c8b9c';
+String _$watchCryptoChartHash() => r'47fdd704400194c013a05996bfa7b3a5fa2ee0e1';
 
 /// See also [watchCryptoChart].
 @ProviderFor(watchCryptoChart)
@@ -206,9 +212,11 @@ final watchCryptoChartProvider = AutoDisposeStreamProvider<Chart>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchCryptoChartRef = AutoDisposeStreamProviderRef<Chart>;
 String _$watchPayoutReportCryptoHash() =>
-    r'761ddff56c68e747b44cca0f99271d4f09f8c4cc';
+    r'32747a4a42720493cfbdd8ecc4fe87d3918dd310';
 
 /// See also [watchPayoutReportCrypto].
 @ProviderFor(watchPayoutReportCrypto)
@@ -223,7 +231,9 @@ final watchPayoutReportCryptoProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef WatchPayoutReportCryptoRef
     = AutoDisposeStreamProviderRef<PayoutReportData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

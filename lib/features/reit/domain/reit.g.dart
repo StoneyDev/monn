@@ -56,7 +56,7 @@ const ReitSchema = CollectionSchema(
   getId: _reitGetId,
   getLinks: _reitGetLinks,
   attach: _reitAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _reitEstimateSize(
@@ -844,7 +844,7 @@ const ReitDividendSchema = CollectionSchema(
   getId: _reitDividendGetId,
   getLinks: _reitDividendGetLinks,
   attach: _reitDividendAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _reitDividendEstimateSize(

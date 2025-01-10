@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
@@ -39,13 +40,13 @@ class SavingsRepository {
 }
 
 @Riverpod(keepAlive: true)
-SavingsRepository savingsRepository(SavingsRepositoryRef ref) {
+SavingsRepository savingsRepository(Ref ref) {
   return SavingsRepository(LocalDatabase().database);
 }
 
 @riverpod
 Stream<List<Savings>> watchSavings(
-  WatchSavingsRef ref, {
+  Ref ref, {
   SavingsFilter? filter,
 }) {
   final repository = ref.watch(savingsRepositoryProvider);
@@ -53,16 +54,13 @@ Stream<List<Savings>> watchSavings(
 }
 
 @riverpod
-Future<Savings?> getSavings(
-  GetSavingsRef ref, {
-  required SavingsType type,
-}) {
+Future<Savings?> getSavings(Ref ref, {required SavingsType type}) {
   final repository = ref.watch(savingsRepositoryProvider);
   return repository.getSavings(type);
 }
 
 @riverpod
-Future<double> watchPayoutReportSavings(WatchPayoutReportSavingsRef ref) async {
+Future<double> watchPayoutReportSavings(Ref ref) async {
   final report = await Future.wait([
     ref.watch(
       watchPayoutReportCrowdfundingProvider.selectAsync(

@@ -24,7 +24,9 @@ mixin _$Crowdfunding {
   DateTime? get receivedAt => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CrowdfundingCopyWith<Crowdfunding> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +57,8 @@ class _$CrowdfundingCopyWithImpl<$Res, $Val extends Crowdfunding>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,6 +129,8 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
       _$CrowdfundingImpl _value, $Res Function(_$CrowdfundingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -231,7 +237,9 @@ class _$CrowdfundingImpl implements _Crowdfunding {
   int get hashCode => Object.hash(runtimeType, netProfit, brutProfit, taxProfit,
       taxPercentage, platformName, receivedAt, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrowdfundingImplCopyWith<_$CrowdfundingImpl> get copyWith =>
@@ -262,8 +270,11 @@ abstract class _Crowdfunding implements Crowdfunding {
   DateTime? get receivedAt;
   @override
   int get id;
+
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrowdfundingImplCopyWith<_$CrowdfundingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

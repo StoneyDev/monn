@@ -69,7 +69,7 @@ const CounterStrikeSchema = CollectionSchema(
   getId: _counterStrikeGetId,
   getLinks: _counterStrikeGetLinks,
   attach: _counterStrikeAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _counterStrikeEstimateSize(

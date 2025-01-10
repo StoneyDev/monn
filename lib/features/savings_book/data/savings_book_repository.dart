@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/savings_book/domain/savings_book.dart';
@@ -24,20 +25,18 @@ class SavingsBookRepository {
 }
 
 @Riverpod(keepAlive: true)
-SavingsBookRepository savingsBookRepository(SavingsBookRepositoryRef ref) {
+SavingsBookRepository savingsBookRepository(Ref ref) {
   return SavingsBookRepository(LocalDatabase().database);
 }
 
 @riverpod
-Stream<List<SavingsBook>> watchSavingsBooks(WatchSavingsBooksRef ref) {
+Stream<List<SavingsBook>> watchSavingsBooks(Ref ref) {
   final repository = ref.watch(savingsBookRepositoryProvider);
   return repository.watchSavingsBooks();
 }
 
 @riverpod
-Stream<PayoutReportData> watchPayoutReportSavingsBook(
-  WatchPayoutReportSavingsBookRef ref,
-) async* {
+Stream<PayoutReportData> watchPayoutReportSavingsBook(Ref ref) async* {
   final repository = ref.watch(savingsBookRepositoryProvider);
 
   await for (final results in repository.watchSavingsBooks()) {

@@ -6,7 +6,7 @@ part of 'savings_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$savingsRepositoryHash() => r'925c78b80d718ddda9c437808af6a585a16ed1ae';
+String _$savingsRepositoryHash() => r'f91e71a5fba2ff21e67786f0b95fc4a3a6631b2d';
 
 /// See also [savingsRepository].
 @ProviderFor(savingsRepository)
@@ -23,7 +23,7 @@ final savingsRepositoryProvider = Provider<SavingsRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SavingsRepositoryRef = ProviderRef<SavingsRepository>;
-String _$watchSavingsHash() => r'717521b1be13771c35baa927e00e6ff3b1c93760';
+String _$watchSavingsHash() => r'd167f759454c535778290c332f82dbac2388f3c4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -175,7 +175,7 @@ class _WatchSavingsProviderElement
   SavingsFilter? get filter => (origin as WatchSavingsProvider).filter;
 }
 
-String _$getSavingsHash() => r'63c15b702d07bcdd68fcc04f494fab2491bcb0d1';
+String _$getSavingsHash() => r'ed5d6e5976aaed5e202ea478abc353b3ade330ae';
 
 /// See also [getSavings].
 @ProviderFor(getSavings)
@@ -306,7 +306,7 @@ class _GetSavingsProviderElement
 }
 
 String _$watchPayoutReportSavingsHash() =>
-    r'4b5f270daa4e332480976348afe8ddd796095dce';
+    r'18634b2cfbfbd66a2346ac4b53e1ab9754779383';
 
 /// See also [watchPayoutReportSavings].
 @ProviderFor(watchPayoutReportSavings)

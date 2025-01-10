@@ -21,7 +21,9 @@ mixin _$ReitForm {
   double? get shares => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ReitFormCopyWith<ReitForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,6 +47,8 @@ class _$ReitFormCopyWithImpl<$Res, $Val extends ReitForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -94,6 +98,8 @@ class __$$ReitFormImplCopyWithImpl<$Res>
       _$ReitFormImpl _value, $Res Function(_$ReitFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,7 +165,9 @@ class _$ReitFormImpl implements _ReitForm {
   int get hashCode =>
       Object.hash(runtimeType, reitName, boughtOn, shares, price);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReitFormImplCopyWith<_$ReitFormImpl> get copyWith =>
@@ -181,8 +189,11 @@ abstract class _ReitForm implements ReitForm {
   double? get shares;
   @override
   double? get price;
+
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReitFormImplCopyWith<_$ReitFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

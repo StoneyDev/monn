@@ -19,7 +19,9 @@ mixin _$Chart {
   double get totalAmount => throw _privateConstructorUsedError;
   List<ChartData> get data => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Chart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ChartCopyWith<Chart> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -41,6 +43,8 @@ class _$ChartCopyWithImpl<$Res, $Val extends Chart>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Chart
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -78,6 +82,8 @@ class __$$ChartImplCopyWithImpl<$Res>
       _$ChartImpl _value, $Res Function(_$ChartImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Chart
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,7 +139,9 @@ class _$ChartImpl implements _Chart {
   int get hashCode => Object.hash(
       runtimeType, totalAmount, const DeepCollectionEquality().hash(_data));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Chart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChartImplCopyWith<_$ChartImpl> get copyWith =>
@@ -149,8 +157,11 @@ abstract class _Chart implements Chart {
   double get totalAmount;
   @override
   List<ChartData> get data;
+
+  /// Create a copy of Chart
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChartImplCopyWith<_$ChartImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -160,7 +171,9 @@ mixin _$ChartData {
   double get portion => throw _privateConstructorUsedError;
   Color get color => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChartData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ChartDataCopyWith<ChartData> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -183,6 +196,8 @@ class _$ChartDataCopyWithImpl<$Res, $Val extends ChartData>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ChartData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -221,6 +236,8 @@ class __$$ChartDataImplCopyWithImpl<$Res>
       _$ChartDataImpl _value, $Res Function(_$ChartDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChartData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -267,7 +284,9 @@ class _$ChartDataImpl implements _ChartData {
   @override
   int get hashCode => Object.hash(runtimeType, portion, color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChartData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChartDataImplCopyWith<_$ChartDataImpl> get copyWith =>
@@ -283,8 +302,11 @@ abstract class _ChartData implements ChartData {
   double get portion;
   @override
   Color get color;
+
+  /// Create a copy of ChartData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChartDataImplCopyWith<_$ChartDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

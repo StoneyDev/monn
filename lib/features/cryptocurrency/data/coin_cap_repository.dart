@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/data/coin_cap_api.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
@@ -18,13 +19,13 @@ class CoinCapRepository {
 }
 
 @Riverpod(keepAlive: true)
-CoinCapRepository coinCapRepository(CoinCapRepositoryRef ref) {
+CoinCapRepository coinCapRepository(Ref ref) {
   return CoinCapRepository(CoinCapApi(Dio()));
 }
 
 @riverpod
 Future<double> getCryptoPriceMarket(
-  GetCryptoPriceMarketRef ref, {
+  Ref ref, {
   required String id,
   Cryptocurrency? crypto,
 }) async {

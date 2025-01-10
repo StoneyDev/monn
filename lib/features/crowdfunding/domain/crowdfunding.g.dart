@@ -59,7 +59,7 @@ const CrowdfundingSchema = CollectionSchema(
   getId: _crowdfundingGetId,
   getLinks: _crowdfundingGetLinks,
   attach: _crowdfundingAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _crowdfundingEstimateSize(
