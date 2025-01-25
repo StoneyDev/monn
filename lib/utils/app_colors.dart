@@ -22,17 +22,4 @@ class AppColors {
   static const Color link = Color(0xff2957d3);
   static const Color usdc = Color(0xff2671c4);
   static const Color usdt = Color(0xff21a27c);
-
-  static const List<BoxShadow> shadow = [
-    BoxShadow(
-      color: Color(0x1A0C0C0D),
-      offset: Offset(0, 1),
-      blurRadius: 4,
-    ),
-    BoxShadow(
-      color: Color(0x0D0C0C0D),
-      offset: Offset(0, 1),
-      blurRadius: 4,
-    ),
-  ];
 }

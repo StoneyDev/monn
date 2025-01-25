@@ -14,6 +14,7 @@ import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/global_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 final _filterProvider = StateProvider.autoDispose<SavingsFilter>(
@@ -185,7 +186,7 @@ class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 60),
       decoration: BoxDecoration(
-        boxShadow: AppColors.shadow,
+        boxShadow: GlobalThemeData.shadow,
         color: Theme.of(context).colorScheme.surface,
       ),
       child: Column(

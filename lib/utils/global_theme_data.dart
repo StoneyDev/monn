@@ -12,15 +12,13 @@ class GlobalThemeData {
         fontFamily: 'DMSans',
         useMaterial3: true,
         colorScheme: colorScheme,
-        canvasColor: colorScheme.surface,
-        scaffoldBackgroundColor: colorScheme.surface,
       );
 
   static const ColorScheme lightColorScheme = ColorScheme.light(
     primary: AppColors.gray700,
     onPrimary: AppColors.white500,
     primaryContainer: AppColors.gray300,
-    onPrimaryContainer: AppColors.white500,
+    onPrimaryContainer: AppColors.white,
     secondary: AppColors.blue,
     tertiary: AppColors.gray700,
     tertiaryContainer: AppColors.gray700,
@@ -69,4 +67,44 @@ class GlobalThemeData {
     // iOS
     statusBarBrightness: Brightness.light,
   );
+
+  static const List<BoxShadow> shadow = [
+    BoxShadow(
+      color: Color(0x1A0C0C0D),
+      offset: Offset(0, 1),
+      blurRadius: 4,
+    ),
+    BoxShadow(
+      color: Color(0x0D0C0C0D),
+      offset: Offset(0, 1),
+      blurRadius: 4,
+    ),
+  ];
+
+  static InputDecoration inputDecoration(BuildContext context) {
+    final inputBorder = OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.outline,
+        width: 2,
+      ),
+    );
+
+    final inputBorderError = inputBorder.copyWith(
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.error,
+        width: 2,
+      ),
+    );
+
+    return InputDecoration(
+      filled: true,
+      fillColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      focusedBorder: inputBorder,
+      enabledBorder: inputBorder,
+      disabledBorder: inputBorder,
+      focusedErrorBorder: inputBorderError,
+      errorBorder: inputBorderError,
+    );
+  }
 }

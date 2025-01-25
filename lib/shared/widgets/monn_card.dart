@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
-import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/global_theme_data.dart';
 
 class MonnCard extends ConsumerStatefulWidget {
   const MonnCard({
@@ -54,7 +54,7 @@ class _MonnCardState extends ConsumerState<MonnCard> {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           color: Theme.of(context).colorScheme.onPrimaryContainer,
-          boxShadow: AppColors.shadow,
+          boxShadow: GlobalThemeData.shadow,
         ),
         child: widget.child,
       ),
