@@ -22,11 +22,11 @@ enum SavingsType {
   crowdfunding('Crowdfunding Immobilier'),
   cryptocurrency('Cryptomonnaie'),
   csknives('Couteaux CS'),
-  cto('CTO'),
-  lifeInsurance('Assurance-vie'),
+  // cto('CTO'),
+  // lifeInsurance('Assurance-vie'),
   pea('PEA'),
-  reit('SCPI'),
-  rip('PER');
+  reit('SCPI');
+  // rip('PER')
 
   const SavingsType(this.label);
 

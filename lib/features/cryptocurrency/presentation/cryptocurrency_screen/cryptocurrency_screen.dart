@@ -57,7 +57,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           ),
                           content: RichText(
                             text: TextSpan(
-                              text: '${context.tr('total_amount_invested')}:',
+                              text: '${context.tr('total_amount_invested')}: ',
                               children: [
                                 TextSpan(
                                   text: cryptoData?.startAmount

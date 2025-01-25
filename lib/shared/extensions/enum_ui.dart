@@ -39,8 +39,8 @@ extension SavingsTypeUI on SavingsType {
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
         ),
-      SavingsType.cto => 0,
-      SavingsType.lifeInsurance => 0,
+      // SavingsType.cto => 0,
+      // SavingsType.lifeInsurance => 0,
       SavingsType.pea => ref.watch(
           getPayoutReportPeaProvider.select(
             (value) => value.valueOrNull?.finalAmount ?? 0,
@@ -51,7 +51,7 @@ extension SavingsTypeUI on SavingsType {
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
         ),
-      SavingsType.rip => 0,
+      // SavingsType.rip => 0,
     };
   }
 
@@ -61,11 +61,11 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
       SavingsType.csknives => const CounterStrikeScreen(),
-      SavingsType.cto => const Placeholder(),
-      SavingsType.lifeInsurance => const Placeholder(),
+      // SavingsType.cto => const MonnWip(),
+      // SavingsType.lifeInsurance => const MonnWip(),
       SavingsType.pea => const PeaScreen(),
       SavingsType.reit => const ReitScreen(),
-      SavingsType.rip => const Placeholder(),
+      // SavingsType.rip => const MonnWip(),
     };
   }
 
@@ -75,11 +75,11 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.crowdfunding => MonnAssets.images.icon.moneyBag.provider(),
       SavingsType.cryptocurrency => MonnAssets.images.icon.ethCoin.provider(),
       SavingsType.csknives => MonnAssets.images.icon.crown.provider(),
-      SavingsType.cto => MonnAssets.images.icon.bag.provider(),
-      SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
+      // SavingsType.cto => MonnAssets.images.icon.bag.provider(),
+      // SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
       SavingsType.pea => MonnAssets.images.icon.bag.provider(),
       SavingsType.reit => MonnAssets.images.icon.folder.provider(),
-      SavingsType.rip => MonnAssets.images.icon.calendar.provider(),
+      // SavingsType.rip => MonnAssets.images.icon.calendar.provider(),
     };
   }
 }

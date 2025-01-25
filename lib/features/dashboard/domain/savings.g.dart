@@ -100,22 +100,16 @@ const _SavingstypeEnumValueMap = {
   r'crowdfunding': r'crowdfunding',
   r'cryptocurrency': r'cryptocurrency',
   r'csknives': r'csknives',
-  r'cto': r'cto',
-  r'lifeInsurance': r'lifeInsurance',
   r'pea': r'pea',
   r'reit': r'reit',
-  r'rip': r'rip',
 };
 const _SavingstypeValueEnumMap = {
   r'savingsBook': SavingsType.savingsBook,
   r'crowdfunding': SavingsType.crowdfunding,
   r'cryptocurrency': SavingsType.cryptocurrency,
   r'csknives': SavingsType.csknives,
-  r'cto': SavingsType.cto,
-  r'lifeInsurance': SavingsType.lifeInsurance,
   r'pea': SavingsType.pea,
   r'reit': SavingsType.reit,
-  r'rip': SavingsType.rip,
 };
 
 Id _savingsGetId(Savings object) {

@@ -105,6 +105,7 @@ class GlobalThemeData {
       disabledBorder: inputBorder,
       focusedErrorBorder: inputBorderError,
       errorBorder: inputBorderError,
+      errorMaxLines: 2,
     );
   }
 }
