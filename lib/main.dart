@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/app.dart';
+import 'package:monn/debug_observer.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -18,6 +19,7 @@ void main() async {
 
   runApp(
     ProviderScope(
+      observers: kDebugMode ? [DebugObserver()] : null,
       child: EasyLocalization(
         path: 'assets/translations',
         supportedLocales: const [Locale('fr'), Locale('en')],

@@ -14,25 +14,7 @@ extension ContextUi on BuildContext {
   Future<void> push(Widget page) {
     return Navigator.push(
       this,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => page,
-        transitionsBuilder: (_, animation, __, child) {
-          final slideAnimation = Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOutExpo,
-            ),
-          );
-
-          return SlideTransition(
-            position: slideAnimation,
-            child: child,
-          );
-        },
-      ),
+      MaterialPageRoute<void>(builder: (_) => page),
     );
   }
 }

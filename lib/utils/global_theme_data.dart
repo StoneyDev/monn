@@ -12,6 +12,11 @@ class GlobalThemeData {
         fontFamily: 'DMSans',
         useMaterial3: true,
         colorScheme: colorScheme,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       );
 
   static const ColorScheme lightColorScheme = ColorScheme.light(

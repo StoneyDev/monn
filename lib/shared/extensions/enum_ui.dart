@@ -76,6 +76,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.cryptocurrency => MonnAssets.images.icon.ethCoin.provider(),
       SavingsType.csknives => MonnAssets.images.icon.crown.provider(),
       // SavingsType.cto => MonnAssets.images.icon.bag.provider(),
+      // ignore: lines_longer_than_80_chars
       // SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
       SavingsType.pea => MonnAssets.images.icon.bag.provider(),
       SavingsType.reit => MonnAssets.images.icon.folder.provider(),
