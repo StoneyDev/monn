@@ -5,7 +5,8 @@ part 'pea_form.freezed.dart';
 @freezed
 class PeaForm with _$PeaForm {
   const factory PeaForm({
-    int? equity,
-    double? costAverage,
+    required String equity,
+    required String costAverage,
+    @Default(false) bool isDirty,
   }) = _PeaForm;
 }

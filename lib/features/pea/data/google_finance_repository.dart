@@ -48,5 +48,5 @@ Future<double> getEtfPriceMarket(Ref ref, {required String stock}) async {
     );
   }
 
-  return priceMarket ?? pea!.lastPrice;
+  return priceMarket ?? pea?.lastPrice ?? 0;
 }

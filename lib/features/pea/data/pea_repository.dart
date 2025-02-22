@@ -52,8 +52,9 @@ Future<PayoutReportData> getPayoutReportPea(Ref ref) async {
 
   if (pea == null) return PayoutReportData(finalAmount: startAmount);
 
-  final currentValue = pea.lastPrice * pea.equity;
-  final latentValue = currentValue - (pea.costAverage * pea.equity);
+  final currentValue = (pea.lastPrice ?? 0) * (pea.equity ?? 0);
+  final latentValue =
+      currentValue - ((pea.costAverage ?? 0) * (pea.equity ?? 0));
 
   return PayoutReportData(
     finalAmount: startAmount + latentValue,

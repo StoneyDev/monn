@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/app.dart';
 import 'package:monn/debug_observer.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/utils/app_colors.dart';
+import 'package:monn/shared/widgets/monn_error.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,18 +59,8 @@ void _registerErrorHandlers() {
   ErrorWidget.builder = (error) {
     return Scaffold(
       body: SafeArea(
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            color: AppColors.red50,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Error widget : ${error.exceptionAsString()}',
-              style: const TextStyle(color: AppColors.red),
-            ),
-          ),
+        child: MonnError(
+          message: error.exceptionAsString(),
         ),
       ),
     );

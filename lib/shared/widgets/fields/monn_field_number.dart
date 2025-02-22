@@ -1,14 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
-class MonnFieldNumber extends StatelessWidget {
+class MonnFieldNumber<T> extends ConsumerStatefulWidget {
   const MonnFieldNumber({
     required this.label,
+    required this.provider,
     this.suffix,
     this.required = false,
-    this.initialValue,
+    this.autofocus = false,
     this.onChanged,
     super.key,
   });
@@ -16,11 +18,35 @@ class MonnFieldNumber extends StatelessWidget {
   final String label;
   final String? suffix;
   final bool required;
-  final String? initialValue;
+  final bool autofocus;
+  final ProviderListenable<String?> provider;
   final void Function(String)? onChanged;
 
   @override
+  ConsumerState<MonnFieldNumber<T>> createState() => _MonnFieldNumberState<T>();
+}
+
+class _MonnFieldNumberState<T> extends ConsumerState<MonnFieldNumber<T>> {
+  late final TextEditingController _controller;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _controller = TextEditingController(text: ref.read(widget.provider));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ref.listen<String?>(widget.provider, (_, next) {
+      _controller.text = next.toString();
+    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -28,7 +54,7 @@ class MonnFieldNumber extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Text(
-            label,
+            widget.label,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.lightGray,
                   fontWeight: FontWeight.w600,
@@ -37,20 +63,20 @@ class MonnFieldNumber extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          initialValue: initialValue,
+          controller: _controller,
+          autofocus: widget.autofocus,
           decoration: GlobalThemeData.inputDecoration(context).copyWith(
-            errorMaxLines: 2,
-            suffix: suffix != null
+            suffix: widget.suffix != null
                 ? Text(
-                    suffix!,
+                    widget.suffix!,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
                   )
                 : null,
           ),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          validator: required
+          keyboardType: TextInputType.numberWithOptions(decimal: T == double),
+          validator: widget.required
               ? (value) {
                   final amount = double.tryParse(value ?? '');
 
@@ -58,14 +84,16 @@ class MonnFieldNumber extends StatelessWidget {
                     return context.tr('input.error.empty');
                   } else if (amount == null) {
                     return context.tr('input.error.wrong_data');
-                  } else if (amount > 100 && suffix == '%') {
+                  } else if (amount <= 0) {
+                    return context.tr('input.error.superior');
+                  } else if (amount > 100 && widget.suffix == '%') {
                     return context.tr('input.error.wrong_percentage');
                   }
 
                   return null;
                 }
               : null,
-          onChanged: onChanged,
+          onChanged: widget.onChanged,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w900,
               ),

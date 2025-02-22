@@ -9,7 +9,7 @@ part 'savings.g.dart';
 class Savings with _$Savings {
   const factory Savings({
     @Enumerated(EnumType.name) required SavingsType type,
-    @Default(0.0) double startAmount,
+    double? startAmount,
     @Default(Isar.autoIncrement) Id id,
   }) = _Savings;
 

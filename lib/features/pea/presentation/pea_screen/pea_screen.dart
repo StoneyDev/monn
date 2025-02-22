@@ -2,26 +2,30 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/pea/data/google_finance_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
-import 'package:monn/features/pea/presentation/pea_form_screen/controllers/pea_form_controller.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/pea_form_screen.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/dialogs/monn_dialog.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 import 'package:monn/shared/widgets/monn_line.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-final _startAmountProvider = StateProvider<String?>((_) => null);
+final _startAmountProvider = StateProvider.autoDispose<String?>(
+  (ref) {
+    final pea =
+        ref.refresh(getSavingsProvider(type: SavingsType.pea)).valueOrNull;
+    return (pea?.startAmount ?? '').toString();
+  },
+);
 
 class PeaScreen extends ConsumerWidget {
   const PeaScreen({super.key});
@@ -29,19 +33,12 @@ class PeaScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final formKey = GlobalKey<FormState>();
     final openingDate = DateTime(2024, 3, 26);
     final eligibility = openingDate.numberYears() >= 5;
     final peaData = ref.watch(getPeaProvider);
     final etfPrice = ref.watch(getEtfPriceMarketProvider(stock: 'ESE:EPA'));
-    final savingsPea = ref.watch(
-      getSavingsProvider(type: SavingsType.pea).select(
-        (data) => data.valueOrNull,
-      ),
-    );
-    final report = ref.watch(
-      getPayoutReportPeaProvider.select((data) => data.valueOrNull),
-    );
+    final savingsPea = ref.read(getSavingsProvider(type: SavingsType.pea));
+    final report = ref.watch(getPayoutReportPeaProvider).valueOrNull;
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -52,16 +49,20 @@ class PeaScreen extends ConsumerWidget {
             child: Tooltip(
               message: context.tr(
                 'opening_account',
-                args: ['${openingDate.numberYears()}'],
+                args: [
+                  '${openingDate.numberYears()}',
+                  if (eligibility) '17,2%' else '30%',
+                ],
               ),
               triggerMode: TooltipTriggerMode.tap,
               textStyle: const TextStyle(color: AppColors.blue),
-              exitDuration: const Duration(seconds: 5),
+              showDuration: const Duration(seconds: 3),
               decoration: const BoxDecoration(
                 color: AppColors.blue50,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Row(
+                spacing: 8,
                 children: [
                   Text(
                     context.tr('taxation'),
@@ -70,7 +71,6 @@ class PeaScreen extends ConsumerWidget {
                       color: eligibility ? AppColors.green : AppColors.red,
                     ),
                   ),
-                  const SizedBox(width: 8),
                   if (eligibility)
                     const iconoir.CheckCircleSolid(color: AppColors.green)
                   else
@@ -86,18 +86,7 @@ class PeaScreen extends ConsumerWidget {
         width: MediaQuery.sizeOf(context).width - 32,
         child: MonnButton(
           text: context.tr('update_data'),
-          onPressed: peaData.isLoading
-              ? null
-              : () {
-                  final pea = peaData.valueOrNull;
-                  ref.read(peaFormControllerProvider.notifier).update(
-                        (form) => form.copyWith(
-                          equity: pea?.equity,
-                          costAverage: pea?.costAverage,
-                        ),
-                      );
-                  context.push(const PeaFormScreen());
-                },
+          onPressed: () => context.push(const PeaFormScreen()),
         ),
       ),
       body: MonnScrollView(
@@ -112,64 +101,49 @@ class PeaScreen extends ConsumerWidget {
                         fontWeight: FontWeight.w900,
                       ),
                 ),
-                GestureDetector(
-                  onTap: () => WoltModalSheet.show<void>(
-                    context: context,
-                    barrierDismissible: true,
-                    modalTypeBuilder: (_) => WoltModalType.dialog(),
-                    pageListBuilder: (context) => [
-                      MonnDialog.amount(
-                        context: context,
-                        formKey: formKey,
-                        initialValue: savingsPea?.startAmount.toString(),
-                        onChanged: (value) {
-                          if (value.isEmpty) return;
-                          ref.read(_startAmountProvider.notifier).state = value;
-                        },
-                        onSubmit: () async {
-                          final newValue = ref.read(_startAmountProvider);
-
-                          if (formKey.currentState!.validate() &&
-                              newValue != null) {
-                            final newSaving = savingsPea?.copyWith(
-                              startAmount: double.parse(newValue),
-                            );
-
-                            final success = await ref
-                                .read(editSavingsControllerProvider.notifier)
-                                .submit(newSaving!);
-                            if (!context.mounted || !success) return;
-                          }
-
-                          ref
-                            ..invalidate(_startAmountProvider)
-                            ..invalidate(
-                              getSavingsProvider(type: SavingsType.pea),
-                            );
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 4,
-                    children: [
-                      Text(
-                        (savingsPea?.startAmount ?? 0).simpleCurrency(locale),
+                switch (savingsPea) {
+                  AsyncData(:final value) => OutlinedButton(
+                      child: Text(
+                        (value?.startAmount ?? 0).simpleCurrency(locale),
                         style:
                             Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: AppColors.lightGray,
                                 ),
                       ),
-                      const iconoir.EditPencil(
-                        color: AppColors.lightGray,
-                        width: 20,
-                        height: 20,
+                      onPressed: () => context.push(
+                        fullscreenDialog: true,
+                        AmountScreen(
+                          provider: _startAmountProvider,
+                          initialValue: value?.startAmount ?? 0,
+                          savingsType: SavingsType.pea,
+                          onChanged: (value) => ref
+                              .read(_startAmountProvider.notifier)
+                              .state = value,
+                          onSubmit: () async {
+                            final newValue = ref.read(_startAmountProvider);
+                            final newSaving = value?.copyWith(
+                              startAmount: double.parse(newValue!),
+                            );
+
+                            final success = await ref
+                                .read(
+                                  editSavingsControllerProvider.notifier,
+                                )
+                                .submit(newSaving!);
+                            if (!context.mounted || !success) return;
+
+                            ref
+                              ..invalidate(_startAmountProvider)
+                              ..invalidate(
+                                getSavingsProvider(type: SavingsType.pea),
+                              );
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  _ => const SizedBox.shrink(),
+                },
                 const SizedBox(height: 32),
                 PayoutReport(
                   netProfit: report?.totalNetProfit ?? 0,
@@ -194,10 +168,10 @@ class PeaScreen extends ConsumerWidget {
                         value: Text(
                           'BNP Paribas Easy S&P 500',
                           textAlign: TextAlign.right,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                       MonnLine(
@@ -205,10 +179,10 @@ class PeaScreen extends ConsumerWidget {
                         value: Text(
                           'FR0011550185',
                           textAlign: TextAlign.right,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                       MonnLine(
@@ -216,10 +190,10 @@ class PeaScreen extends ConsumerWidget {
                         value: Text(
                           '${value?.equity ?? 0}',
                           textAlign: TextAlign.right,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                       MonnLine(
@@ -227,10 +201,10 @@ class PeaScreen extends ConsumerWidget {
                         value: Text(
                           (value?.costAverage ?? 0).simpleCurrency(locale),
                           textAlign: TextAlign.right,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                       MonnLine(
@@ -276,10 +250,10 @@ class PeaScreen extends ConsumerWidget {
                                   withHour: true,
                                 ),
                           textAlign: TextAlign.right,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                     ],

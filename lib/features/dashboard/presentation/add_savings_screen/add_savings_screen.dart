@@ -29,11 +29,11 @@ class AddSavingsScreen extends ConsumerWidget {
         physics: const ClampingScrollPhysics(),
         itemCount: SavingsType.values.length,
         itemBuilder: (context, index) {
-          final saving = SavingsType.values[index];
-          final isExist = savingsType.contains(saving);
+          final savings = SavingsType.values[index];
+          final isExist = savingsType.contains(savings);
 
           return RadioListTile<SavingsType>(
-            value: saving,
+            value: savings,
             groupValue: selectedItem,
             onChanged: isExist
                 ? null
@@ -41,33 +41,34 @@ class AddSavingsScreen extends ConsumerWidget {
             title: Row(
               children: [
                 Image(
-                  image: saving.icon(),
+                  image: savings.icon(),
                   height: 48,
                   width: 48,
                   opacity: AlwaysStoppedAnimation(isExist ? 0.4 : 1),
                 ),
                 const SizedBox(width: 16),
-                Text(saving.label),
+                Text(savings.label),
               ],
             ),
           );
         },
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: MonnButton(
-          text: context.tr('button.validate'),
-          onPressed: selectedItem == null || state.isLoading
-              ? null
-              : () async {
-                  final success = await ref
-                      .read(editSavingsControllerProvider.notifier)
-                      .submit(Savings(type: selectedItem));
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          child: MonnButton(
+            text: context.tr('button.validate'),
+            onPressed: selectedItem == null || state.isLoading
+                ? null
+                : () async {
+                    final success = await ref
+                        .read(editSavingsControllerProvider.notifier)
+                        .submit(Savings(type: selectedItem));
 
-                  if (!context.mounted || !success) return;
-
-                  Navigator.pop(context);
-                },
+                    if (!context.mounted || !success) return;
+                    Navigator.pop(context);
+                  },
+          ),
         ),
       ),
     );
