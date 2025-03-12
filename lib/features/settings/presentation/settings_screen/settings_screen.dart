@@ -33,26 +33,30 @@ class SettingsScreen extends ConsumerWidget {
                     MonnBottomSheet.itemList(
                       context: context,
                       title: context.tr('theme'),
-                      builder: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final item = ThemeMode.values[index];
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final item = ThemeMode.values[index];
 
-                          return RadioListTile<ThemeMode>(
-                            value: item,
-                            groupValue: theme,
-                            title: Text(
-                              context.tr('theme_mode.${item.name}'),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            onChanged: (newTheme) {
-                              ref
-                                  .read(themeSwitchControllerProvider.notifier)
-                                  .toggle(newTheme!);
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                        childCount: ThemeMode.values.length,
+                            return RadioListTile<ThemeMode>(
+                              value: item,
+                              groupValue: theme,
+                              title: Text(
+                                context.tr('theme_mode.${item.name}'),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              onChanged: (newTheme) {
+                                ref
+                                    .read(
+                                      themeSwitchControllerProvider.notifier,
+                                    )
+                                    .toggle(newTheme!);
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                          childCount: ThemeMode.values.length,
+                        ),
                       ),
                     ),
                   ],
@@ -94,24 +98,26 @@ class SettingsScreen extends ConsumerWidget {
                     MonnBottomSheet.itemList(
                       context: context,
                       title: context.tr('language'),
-                      builder: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final item = context.supportedLocales[index];
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final item = context.supportedLocales[index];
 
-                          return RadioListTile<Locale>(
-                            value: item,
-                            groupValue: context.locale,
-                            title: Text(
-                              context.tr('languages.$item'),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            onChanged: (newLang) {
-                              context.setLocale(newLang!);
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                        childCount: context.supportedLocales.length,
+                            return RadioListTile<Locale>(
+                              value: item,
+                              groupValue: context.locale,
+                              title: Text(
+                                context.tr('languages.$item'),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              onChanged: (newLang) {
+                                context.setLocale(newLang!);
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                          childCount: context.supportedLocales.length,
+                        ),
                       ),
                     ),
                   ],

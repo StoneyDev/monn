@@ -48,27 +48,29 @@ class DashboardScreen extends ConsumerWidget {
                 MonnBottomSheet.itemList(
                   context: context,
                   title: context.tr('filter'),
-                  builder: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final item = SavingsFilter.values[index];
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final item = SavingsFilter.values[index];
 
-                      return Consumer(
-                        builder: (context, ref, _) {
-                          return RadioListTile<SavingsFilter>(
-                            value: item,
-                            groupValue: ref.watch(_filterProvider),
-                            title: Text(
-                              context.tr('filters.${item.name}'),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            onChanged: (newFilter) => ref
-                                .read(_filterProvider.notifier)
-                                .state = newFilter!,
-                          );
-                        },
-                      );
-                    },
-                    childCount: SavingsFilter.values.length,
+                        return Consumer(
+                          builder: (context, ref, _) {
+                            return RadioListTile<SavingsFilter>(
+                              value: item,
+                              groupValue: ref.watch(_filterProvider),
+                              title: Text(
+                                context.tr('filters.${item.name}'),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              onChanged: (newFilter) => ref
+                                  .read(_filterProvider.notifier)
+                                  .state = newFilter!,
+                            );
+                          },
+                        );
+                      },
+                      childCount: SavingsFilter.values.length,
+                    ),
                   ),
                 ),
               ],

@@ -7,18 +7,21 @@
     {
       "name": "monn",
       "request": "launch",
+      "args": ["--track-widget-creation"],
       "type": "dart"
     },
     {
       "name": "monn (profile mode)",
       "request": "launch",
       "type": "dart",
+      "args": ["--track-widget-creation"],
       "flutterMode": "profile"
     },
     {
       "name": "monn (release mode)",
       "request": "launch",
       "type": "dart",
+      "args": ["--track-widget-creation"],
       "flutterMode": "release"
     }
   ]

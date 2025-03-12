@@ -12,6 +12,7 @@ class MonnFieldNumber<T> extends ConsumerStatefulWidget {
     this.required = false,
     this.autofocus = false,
     this.onChanged,
+    this.textInputAction,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class MonnFieldNumber<T> extends ConsumerStatefulWidget {
   final bool autofocus;
   final ProviderListenable<String?> provider;
   final void Function(String)? onChanged;
+  final TextInputAction? textInputAction;
 
   @override
   ConsumerState<MonnFieldNumber<T>> createState() => _MonnFieldNumberState<T>();
@@ -65,6 +67,9 @@ class _MonnFieldNumberState<T> extends ConsumerState<MonnFieldNumber<T>> {
         TextFormField(
           controller: _controller,
           autofocus: widget.autofocus,
+          autovalidateMode:
+              widget.required ? AutovalidateMode.onUserInteraction : null,
+          textInputAction: widget.textInputAction,
           decoration: GlobalThemeData.inputDecoration(context).copyWith(
             suffix: widget.suffix != null
                 ? Text(

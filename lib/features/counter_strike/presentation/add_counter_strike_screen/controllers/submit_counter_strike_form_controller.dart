@@ -20,12 +20,11 @@ class SubmitCounterStrikeFormController
     state = await AsyncValue.guard(
       () => repository.editCounterStrike(
         CounterStrike(
-          name: formData.name!,
-          wear: formData.wear,
-          quantity: formData.quantity!,
-          currentValue: formData.currentValue!,
-          purchaseValue: formData.purchaseValue!,
-          boughtAt: formData.boughtAt!,
+          wear: double.tryParse(formData.wear ?? ''),
+          quantity: int.parse(formData.quantity),
+          currentValue: double.parse(formData.currentValue),
+          purchaseValue: double.parse(formData.purchaseValue),
+          boughtAt: formData.boughtAt,
           lastUpdate: DateTime.now(),
           imageId: formData.imageId!,
         ),

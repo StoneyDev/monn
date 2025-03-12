@@ -12,11 +12,113 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// Directory path: assets/images/counter_strike
+  $AssetsImagesCounterStrikeGen get counterStrike =>
+      const $AssetsImagesCounterStrikeGen();
+
   /// Directory path: assets/images/crypto
   $AssetsImagesCryptoGen get crypto => const $AssetsImagesCryptoGen();
 
   /// Directory path: assets/images/icon
   $AssetsImagesIconGen get icon => const $AssetsImagesIconGen();
+}
+
+class $AssetsImagesCounterStrikeGen {
+  const $AssetsImagesCounterStrikeGen();
+
+  /// File path: assets/images/counter_strike/ak_47_bloodsport.png
+  AssetGenImage get ak47Bloodsport =>
+      const AssetGenImage('assets/images/counter_strike/ak_47_bloodsport.png');
+
+  /// File path: assets/images/counter_strike/ak_47_leet_museo.png
+  AssetGenImage get ak47LeetMuseo =>
+      const AssetGenImage('assets/images/counter_strike/ak_47_leet_museo.png');
+
+  /// File path: assets/images/counter_strike/ak_47_legion_of_anubis.png
+  AssetGenImage get ak47LegionOfAnubis => const AssetGenImage(
+      'assets/images/counter_strike/ak_47_legion_of_anubis.png');
+
+  /// File path: assets/images/counter_strike/bayonet_tiger_tooth.png
+  AssetGenImage get bayonetTigerTooth => const AssetGenImage(
+      'assets/images/counter_strike/bayonet_tiger_tooth.png');
+
+  /// File path: assets/images/counter_strike/falchion_case.png
+  AssetGenImage get falchionCase =>
+      const AssetGenImage('assets/images/counter_strike/falchion_case.png');
+
+  /// File path: assets/images/counter_strike/gamma_case.png
+  AssetGenImage get gammaCase =>
+      const AssetGenImage('assets/images/counter_strike/gamma_case.png');
+
+  /// File path: assets/images/counter_strike/glock_18_ramese_s_reach.png
+  AssetGenImage get glock18RameseSReach => const AssetGenImage(
+      'assets/images/counter_strike/glock_18_ramese_s_reach.png');
+
+  /// File path: assets/images/counter_strike/horizon_case.png
+  AssetGenImage get horizonCase =>
+      const AssetGenImage('assets/images/counter_strike/horizon_case.png');
+
+  /// File path: assets/images/counter_strike/m4a1_s_printstream.png
+  AssetGenImage get m4a1SPrintstream => const AssetGenImage(
+      'assets/images/counter_strike/m4a1_s_printstream.png');
+
+  /// File path: assets/images/counter_strike/prisma_2_case.png
+  AssetGenImage get prisma2Case =>
+      const AssetGenImage('assets/images/counter_strike/prisma_2_case.png');
+
+  /// File path: assets/images/counter_strike/prisma_case.png
+  AssetGenImage get prismaCase =>
+      const AssetGenImage('assets/images/counter_strike/prisma_case.png');
+
+  /// File path: assets/images/counter_strike/recoil_case.png
+  AssetGenImage get recoilCase =>
+      const AssetGenImage('assets/images/counter_strike/recoil_case.png');
+
+  /// File path: assets/images/counter_strike/revolution_case.png
+  AssetGenImage get revolutionCase =>
+      const AssetGenImage('assets/images/counter_strike/revolution_case.png');
+
+  /// File path: assets/images/counter_strike/shadow_case.png
+  AssetGenImage get shadowCase =>
+      const AssetGenImage('assets/images/counter_strike/shadow_case.png');
+
+  /// File path: assets/images/counter_strike/spectrum_case.png
+  AssetGenImage get spectrumCase =>
+      const AssetGenImage('assets/images/counter_strike/spectrum_case.png');
+
+  /// File path: assets/images/counter_strike/stiletto_slaughter.png
+  AssetGenImage get stilettoSlaughter => const AssetGenImage(
+      'assets/images/counter_strike/stiletto_slaughter.png');
+
+  /// File path: assets/images/counter_strike/ursus_fade.png
+  AssetGenImage get ursusFade =>
+      const AssetGenImage('assets/images/counter_strike/ursus_fade.png');
+
+  /// File path: assets/images/counter_strike/usp_s_printstream.png
+  AssetGenImage get uspSPrintstream =>
+      const AssetGenImage('assets/images/counter_strike/usp_s_printstream.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        ak47Bloodsport,
+        ak47LeetMuseo,
+        ak47LegionOfAnubis,
+        bayonetTigerTooth,
+        falchionCase,
+        gammaCase,
+        glock18RameseSReach,
+        horizonCase,
+        m4a1SPrintstream,
+        prisma2Case,
+        prismaCase,
+        recoilCase,
+        revolutionCase,
+        shadowCase,
+        spectrumCase,
+        stilettoSlaughter,
+        ursusFade,
+        uspSPrintstream
+      ];
 }
 
 class $AssetsImagesCryptoGen {
@@ -87,7 +189,7 @@ class $AssetsImagesIconGen {
 }
 
 class MonnAssets {
-  MonnAssets._();
+  const MonnAssets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
@@ -125,7 +227,7 @@ class AssetGenImage {
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
-    FilterQuality filterQuality = FilterQuality.low,
+    FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
   }) {

@@ -68,7 +68,7 @@ class MonnBottomSheet {
 
   static SliverWoltModalSheetPage itemList({
     required BuildContext context,
-    required SliverChildBuilderDelegate builder,
+    required Widget sliver,
     required String title,
   }) {
     return SliverWoltModalSheetPage(
@@ -93,7 +93,7 @@ class MonnBottomSheet {
       mainContentSliversBuilder: (_) => [
         SliverPadding(
           padding: const EdgeInsets.only(bottom: 16),
-          sliver: SliverList(delegate: builder),
+          sliver: sliver,
         ),
       ],
     );
