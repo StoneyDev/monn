@@ -6,7 +6,7 @@ part of 'pea_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$peaFormControllerHash() => r'a202e450f4f8e170a8b52be7d642e0a6ebae36e0';
+String _$peaFormControllerHash() => r'ee339b0de83d83bb66f97420ef3d3f1e8aec220e';
 
 /// See also [PeaFormController].
 @ProviderFor(PeaFormController)

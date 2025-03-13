@@ -32,7 +32,6 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
             padding: const EdgeInsets.all(16),
             child: Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 spacing: 16,
                 children: [
@@ -42,14 +41,11 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                     provider: peaFormControllerProvider.select(
                       (form) => form.equity,
                     ),
-                    onChanged: (newEquity) => ref
-                        .read(
-                          peaFormControllerProvider.notifier,
-                        )
-                        .equity(
-                          equity: newEquity,
-                          initial: value?.equity,
-                        ),
+                    onChanged: (newEquity) =>
+                        ref.read(peaFormControllerProvider.notifier).equity(
+                              equity: newEquity,
+                              initial: value?.equity,
+                            ),
                   ),
                   MonnFieldNumber<double>(
                     label: context.tr('purchase_price'),
@@ -58,9 +54,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                       (form) => form.costAverage,
                     ),
                     onChanged: (newCostAverage) => ref
-                        .read(
-                          peaFormControllerProvider.notifier,
-                        )
+                        .read(peaFormControllerProvider.notifier)
                         .costAverage(
                           costAverage: newCostAverage,
                           initial: value?.costAverage,
@@ -82,24 +76,25 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
             ),
           )
       },
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SizedBox(
-        width: MediaQuery.sizeOf(context).width - 32,
-        child: MonnButton(
-          text: context.tr('button.save'),
-          onPressed: canSubmit
-              ? () async {
-                  final success = await ref
-                      .read(submitPeaFormControllerProvider.notifier)
-                      .submit();
-                  if (!context.mounted || !success) return;
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: MonnButton(
+            text: context.tr('button.save'),
+            onPressed: canSubmit
+                ? () async {
+                    final success = await ref
+                        .read(submitPeaFormControllerProvider.notifier)
+                        .submit();
+                    if (!context.mounted || !success) return;
 
-                  ref
-                    ..invalidate(getPeaProvider)
-                    ..invalidate(getPayoutReportPeaProvider);
-                  Navigator.pop(context);
-                }
-              : null,
+                    ref
+                      ..invalidate(getPeaProvider)
+                      ..invalidate(getPayoutReportPeaProvider);
+                    Navigator.pop(context);
+                  }
+                : null,
+          ),
         ),
       ),
     );

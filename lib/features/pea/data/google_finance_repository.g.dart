@@ -25,7 +25,7 @@ final googleFinanceRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GoogleFinanceRepositoryRef = ProviderRef<GoogleFinanceRepository>;
-String _$getEtfPriceMarketHash() => r'ac979ac5af921600b988b292b5eb64d07c9273dd';
+String _$getEtfPriceMarketHash() => r'f928ac93a4343844af35e56e8b77d5b421df58f1';
 
 /// Copied from Dart SDK
 class _SystemHash {
