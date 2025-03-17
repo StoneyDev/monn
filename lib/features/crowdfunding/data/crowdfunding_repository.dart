@@ -55,8 +55,8 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(Ref ref) async* {
         results.fold<(double, double, double)>(
       (0, 0, 0),
       (totals, e) => (
-        totals.$1 + e.netProfit,
-        totals.$2 + e.taxProfit,
+        totals.$1 + (e.netProfit ?? 0),
+        totals.$2 + (e.taxProfit ?? 0),
         totals.$3 + (e.brutProfit.isNegative ? e.brutProfit : 0)
       ),
     );

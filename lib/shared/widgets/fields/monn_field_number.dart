@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,7 +82,10 @@ class _MonnFieldNumberState<T> extends ConsumerState<MonnFieldNumber<T>> {
                   )
                 : null,
           ),
-          keyboardType: TextInputType.numberWithOptions(decimal: T == double),
+          keyboardType: TextInputType.numberWithOptions(
+            signed: Platform.isIOS,
+            decimal: T == double,
+          ),
           validator: widget.required
               ? (value) {
                   final amount = double.tryParse(value ?? '');
@@ -89,7 +94,7 @@ class _MonnFieldNumberState<T> extends ConsumerState<MonnFieldNumber<T>> {
                     return context.tr('input.error.empty');
                   } else if (amount == null) {
                     return context.tr('input.error.wrong_data');
-                  } else if (amount <= 0) {
+                  } else if (amount <= 0 && !amount.isNegative) {
                     return context.tr('input.error.superior');
                   } else if (amount > 100 && widget.suffix == '%') {
                     return context.tr('input.error.wrong_percentage');

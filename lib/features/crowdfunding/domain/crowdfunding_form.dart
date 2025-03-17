@@ -5,9 +5,9 @@ part 'crowdfunding_form.freezed.dart';
 @freezed
 class CrowdfundingForm with _$CrowdfundingForm {
   const factory CrowdfundingForm({
-    String? platformName,
-    DateTime? receivedAt,
-    double? taxPercentage,
-    double? brutProfit,
+    required String platformName,
+    required DateTime receivedAt,
+    required String brutProfit,
+    String? taxPercentage,
   }) = _CrowdfundingForm;
 }

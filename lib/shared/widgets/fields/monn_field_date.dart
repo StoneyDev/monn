@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/global_theme_data.dart';
 
 class MonnFieldDate extends ConsumerStatefulWidget {
   const MonnFieldDate({
     required this.label,
     required this.onChanged,
-    required this.locale,
+    required this.provider,
     this.required = false,
-    this.initialValue,
     super.key,
   });
 
   final String label;
-  final String locale;
-  final DateTime? initialValue;
+  final ProviderListenable<DateTime?> provider;
   final bool required;
   final void Function(DateTime) onChanged;
 
@@ -25,75 +24,79 @@ class MonnFieldDate extends ConsumerStatefulWidget {
 }
 
 class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
-  late final TextEditingController _dateController;
+  late final TextEditingController _controller;
 
   @override
-  void initState() {
-    super.initState();
-
-    _dateController = TextEditingController(
-      text: widget.initialValue?.slashFormat(widget.locale),
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _controller = TextEditingController(
+      text: ref.read(widget.provider)?.slashFormat(context.locale.toString()),
     );
   }
 
   @override
   void dispose() {
-    _dateController.dispose();
-
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.gray300),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.label,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _dateController,
-              readOnly: true,
-              onTap: () async {
-                final result = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(1970),
-                  initialDate: DateTime.now(),
-                  lastDate: DateTime(DateTime.now().year + 2),
-                );
+    final locale = context.locale.toString();
 
-                if (result != null) {
-                  _dateController.text = result.slashFormat(widget.locale);
-                  widget.onChanged(result);
-                }
-              },
-              validator: widget.required
-                  ? (value) {
-                      if (value == null || value.isEmpty) {
-                        return context.tr('input.error.empty');
-                      }
+    ref.listen<DateTime?>(widget.provider, (_, next) {
+      _controller.text = next!.slashFormat(locale);
+    });
 
-                      return null;
-                    }
-                  : null,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-            ),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            widget.label,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AppColors.lightGray,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
         ),
-      ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _controller,
+          readOnly: true,
+          decoration: GlobalThemeData.inputDecoration(context),
+          onTap: () async {
+            final now = DateTime.now();
+            final result = await showDatePicker(
+              context: context,
+              firstDate: DateTime(1970),
+              initialDate: _controller.text.isEmpty
+                  ? now
+                  : DateFormat.yMd(locale).parse(_controller.text),
+              locale: context.locale,
+              lastDate: DateTime(now.year + 2),
+            );
+
+            if (result != null) {
+              _controller.text = result.slashFormat(locale);
+              widget.onChanged(result);
+            }
+          },
+          validator: widget.required
+              ? (value) {
+                  if (value == null || value.isEmpty) {
+                    return context.tr('input.error.empty');
+                  }
+
+                  return null;
+                }
+              : null,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w900,
+              ),
+        ),
+      ],
     );
   }
 }

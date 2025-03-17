@@ -7,12 +7,12 @@ part of 'crowdfunding_form_controller.dart';
 // **************************************************************************
 
 String _$crowdfundingFormControllerHash() =>
-    r'4e3ef197bfdcaebcd9cec6117fae803608b6a104';
+    r'cfa80c364548a881c1a8da9780240f544e3f0f15';
 
 /// See also [CrowdfundingFormController].
 @ProviderFor(CrowdfundingFormController)
-final crowdfundingFormControllerProvider =
-    NotifierProvider<CrowdfundingFormController, CrowdfundingForm>.internal(
+final crowdfundingFormControllerProvider = AutoDisposeNotifierProvider<
+    CrowdfundingFormController, CrowdfundingForm>.internal(
   CrowdfundingFormController.new,
   name: r'crowdfundingFormControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final crowdfundingFormControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$CrowdfundingFormController = Notifier<CrowdfundingForm>;
+typedef _$CrowdfundingFormController = AutoDisposeNotifier<CrowdfundingForm>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
