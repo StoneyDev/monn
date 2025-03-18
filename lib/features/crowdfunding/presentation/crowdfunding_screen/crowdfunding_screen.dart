@@ -14,6 +14,7 @@ import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_up_down.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -144,10 +145,7 @@ class _RefundTransaction extends StatelessWidget {
     return MonnCard(
       child: Row(
         children: [
-          if (data.brutProfit.isNegative)
-            const iconoir.ArrowUp(color: AppColors.red)
-          else
-            const iconoir.ArrowDown(color: AppColors.lightGray),
+          MonnUpDown(value: data.brutProfit),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
