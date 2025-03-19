@@ -21,8 +21,8 @@ void main() {
       // Assert
       expect(controller.state, isA<CryptoForm>());
       expect(controller.state.crypto, isNull);
-      expect(controller.state.amount, isNull);
-      expect(controller.state.date, isNull);
+      expect(controller.state.amount, '');
+      expect(controller.state.date, isA<DateTime>);
     });
 
     test('should update crypto when edit is called with Cryptocurrency', () {
@@ -34,7 +34,7 @@ void main() {
       final controller = container.read(
         cryptoFormControllerProvider.notifier,
       );
-      controller.edit(crypto: crypto);
+      controller.crypto(crypto: crypto);
 
       // Assert
       expect(controller.state.crypto, crypto);
@@ -50,7 +50,7 @@ void main() {
       final controller = container.read(
         cryptoFormControllerProvider.notifier,
       );
-      controller.edit(amount: amount);
+      controller.amount(amount: amount);
 
       // Assert
       expect(controller.state.amount, expectedAmount);
@@ -65,7 +65,7 @@ void main() {
       final controller = container.read(
         cryptoFormControllerProvider.notifier,
       );
-      controller.edit(date: date);
+      controller.date(date: date);
 
       // Assert
       expect(controller.state.date, date);
@@ -85,11 +85,10 @@ void main() {
         final controller = container.read(
           cryptoFormControllerProvider.notifier,
         );
-        controller.edit(
-          crypto: crypto,
-          amount: amount,
-          date: now,
-        );
+        controller
+          ..crypto(crypto: crypto)
+          ..amount(amount: amount)
+          ..date(date: now);
 
         // Assert
         expect(controller.state.crypto, crypto);

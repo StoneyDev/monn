@@ -84,13 +84,13 @@ Stream<Chart> watchCryptoChart(Ref ref) async* {
       (0, 0),
       (totals, crypto) => (
         totals.$1 + (crypto.totalCrypto * crypto.priceMarket),
-        totals.$2 + log(crypto.totalCrypto),
+        totals.$2 + log(crypto.totalCrypto + 1.2),
       ),
     );
 
     final data = totalCryptoValue > 0
         ? results.map((crypto) {
-            final logValue = log(crypto.totalCrypto);
+            final logValue = log(crypto.totalCrypto + 1.2);
             final portion = (logValue * 100) / totalLog;
 
             return ChartData(

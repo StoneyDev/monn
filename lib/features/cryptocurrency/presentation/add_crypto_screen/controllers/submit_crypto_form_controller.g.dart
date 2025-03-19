@@ -7,7 +7,7 @@ part of 'submit_crypto_form_controller.dart';
 // **************************************************************************
 
 String _$submitCryptoFormControllerHash() =>
-    r'c42576f19d3e95a7578c872c0dc44848b23c04d7';
+    r'8003fed7d09efb93f983d762b79b1d5a357b393d';
 
 /// See also [SubmitCryptoFormController].
 @ProviderFor(SubmitCryptoFormController)

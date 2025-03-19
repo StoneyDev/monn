@@ -11,17 +11,15 @@ class SubmitCryptoFormController extends _$SubmitCryptoFormController {
   FutureOr<void> build() async {}
 
   Future<bool> submit() async {
-    state = const AsyncLoading();
-
     final repository = ref.read(cryptocurrencyRepositoryProvider);
     final formData = ref.read(cryptoFormControllerProvider);
 
     state = await AsyncValue.guard(
       () => repository.editCryptocurrency(
-        crypto: formData.crypto!..totalCrypto += formData.amount!,
+        crypto: formData.crypto!..totalCrypto += double.parse(formData.amount),
         transaction: CryptocurrencyTransaction()
-          ..amount = formData.amount!
-          ..date = formData.date!,
+          ..amount = double.parse(formData.amount)
+          ..date = formData.date,
       ),
     );
 

@@ -32,7 +32,7 @@ class CryptoPageScreen extends ConsumerWidget {
       appBar: MonnAppBar(
         title: '${type.label} (${type.symbol})',
       ),
-      body: cryptocurrency.maybeWhen(
+      body: cryptocurrency.when(
         data: (crypto) {
           final marketValue = crypto.totalCrypto * crypto.priceMarket;
           final sortByPurchase = crypto.transactions.toList().sorted(
@@ -58,22 +58,24 @@ class CryptoPageScreen extends ConsumerWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headlineLarge
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                       IconButton.filled(
+                        style: IconButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.outline,
+                        ),
                         icon: const RotatedBox(
                           quarterTurns: 1,
                           child: iconoir.DataTransferBoth(
-                            color: Colors.white,
+                            color: AppColors.lightGray,
                           ),
                         ),
                         onPressed: () {
                           ref
                               .read(cryptoFormControllerProvider.notifier)
-                              .edit(crypto: crypto);
+                              .crypto(crypto: crypto);
 
                           context.push(const AddCryptoScreen());
                         },
@@ -150,7 +152,7 @@ class CryptoPageScreen extends ConsumerWidget {
               SliverPadding(
                 padding: const EdgeInsets.all(16),
                 sliver: SliverList.separated(
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final transaction = sortByPurchase[index];
                     final isWithdrawal = transaction.amount.isNegative;
@@ -186,7 +188,6 @@ class CryptoPageScreen extends ConsumerWidget {
             child: CircularProgressIndicator(),
           ),
         ),
-        orElse: () => const SizedBox.shrink(),
       ),
     );
   }
