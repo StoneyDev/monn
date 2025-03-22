@@ -39,7 +39,7 @@ class _AddCounterStrikeScreenState
         title: 'Suivi des achats',
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
         child: Form(
           key: formKey,
           child: Column(

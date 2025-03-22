@@ -70,7 +70,7 @@ class CounterStrikeScreen extends ConsumerWidget {
           switch (counterStrikes) {
             AsyncData(:final value) => Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                   itemBuilder: (_, index) => _CounterStrikeItem(value[index]),
                   separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemCount: value.length,

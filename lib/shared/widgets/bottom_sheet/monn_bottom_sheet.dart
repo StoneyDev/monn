@@ -53,7 +53,6 @@ class MonnBottomSheet {
                 trailing: Text(
                   item.amount.simpleCurrency(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.gray700,
                         fontWeight: FontWeight.w900,
                       ),
                 ),

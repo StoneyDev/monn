@@ -19,13 +19,7 @@ import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 
-final _startAmountProvider = StateProvider.autoDispose<String>(
-  (ref) {
-    final pea =
-        ref.refresh(getSavingsProvider(type: SavingsType.pea)).valueOrNull;
-    return (pea?.startAmount ?? '').toString();
-  },
-);
+final _startAmountProvider = StateProvider.autoDispose<String>((_) => '');
 
 class PeaScreen extends ConsumerWidget {
   const PeaScreen({super.key});
