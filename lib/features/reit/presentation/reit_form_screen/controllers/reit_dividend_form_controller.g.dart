@@ -7,12 +7,12 @@ part of 'reit_dividend_form_controller.dart';
 // **************************************************************************
 
 String _$reitDividendFormControllerHash() =>
-    r'0e5a3866fdaf5eaaac9b29a7377e95c6a9ad1021';
+    r'7f9d21215cabfb8d26a1a806815ec92b04a84d31';
 
 /// See also [ReitDividendFormController].
 @ProviderFor(ReitDividendFormController)
-final reitDividendFormControllerProvider =
-    NotifierProvider<ReitDividendFormController, ReitDividendForm>.internal(
+final reitDividendFormControllerProvider = AutoDisposeNotifierProvider<
+    ReitDividendFormController, ReitDividendForm>.internal(
   ReitDividendFormController.new,
   name: r'reitDividendFormControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final reitDividendFormControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ReitDividendFormController = Notifier<ReitDividendForm>;
+typedef _$ReitDividendFormController = AutoDisposeNotifier<ReitDividendForm>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

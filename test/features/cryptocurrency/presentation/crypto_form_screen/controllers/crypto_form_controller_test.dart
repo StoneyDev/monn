@@ -22,7 +22,7 @@ void main() {
       expect(controller.state, isA<CryptoForm>());
       expect(controller.state.crypto, isNull);
       expect(controller.state.amount, '');
-      expect(controller.state.date, isA<DateTime>);
+      expect(controller.state.date, isA<DateTime>());
     });
 
     test('should update crypto when edit is called with Cryptocurrency', () {
@@ -43,7 +43,7 @@ void main() {
     test('should update amount when edit is called', () {
       // Arrange
       const amount = '77.8';
-      const expectedAmount = 77.8;
+      const expectedAmount = '77.8';
       final container = createContainer();
 
       // Act
@@ -77,7 +77,7 @@ void main() {
         // Arrange
         final crypto = Cryptocurrency()..type = CryptoType.bitcoin;
         const amount = '2.15455';
-        const expectedAmount = 2.15455;
+        const expectedAmount = '2.15455';
         final now = DateTime.now();
         final container = createContainer();
 

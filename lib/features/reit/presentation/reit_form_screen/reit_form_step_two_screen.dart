@@ -13,9 +13,7 @@ class ReitFormStepTwoScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
     final formKey = GlobalKey<FormState>();
-    final formData = ref.read(reitDividendFormControllerProvider);
 
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
@@ -24,49 +22,52 @@ class ReitFormStepTwoScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
+            spacing: 16,
             children: [
-              MonnFieldNumber(
+              MonnFieldNumber<double>(
                 label: 'Dividende',
                 suffix: '€',
-                initialValue: formData.amount?.toString(),
                 required: true,
-                onChanged: (value) => ref
+                provider: reitDividendFormControllerProvider.select(
+                  (form) => form.amount,
+                ),
+                onChanged: (newAmount) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .edit(amount: value),
+                    .amount(amount: newAmount),
               ),
-              const SizedBox(height: 16),
               MonnFieldDate(
                 label: 'Reçu le',
                 required: true,
-                locale: locale,
-                initialValue: formData.receivedAt,
-                onChanged: (value) => ref
+                provider: reitDividendFormControllerProvider.select(
+                  (form) => form.receivedAt,
+                ),
+                onChanged: (newReceivedAt) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .edit(receivedAt: value),
+                    .receivedAt(receivedAt: newReceivedAt),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: MonnButton(
-          text: context.tr('button.validate'),
-          onPressed: () async {
-            if (!formKey.currentState!.validate()) return;
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: MonnButton(
+            text: context.tr('button.validate'),
+            onPressed: () async {
+              if (!(formKey.currentState?.validate() ?? false)) return;
 
-            final success = await ref
-                .read(submitReitDividendFormControllerProvider.notifier)
-                .submit();
+              final success = await ref
+                  .read(submitReitDividendFormControllerProvider.notifier)
+                  .submit();
+              if (!context.mounted || !success) return;
 
-            if (!context.mounted || !success) return;
-
-            ref.invalidate(reitDividendFormControllerProvider);
-
-            Navigator.of(context)
-              ..pop()
-              ..pop();
-          },
+              ref.invalidate(reitDividendFormControllerProvider);
+              Navigator.of(context)
+                ..pop()
+                ..pop();
+            },
+          ),
         ),
       ),
     );

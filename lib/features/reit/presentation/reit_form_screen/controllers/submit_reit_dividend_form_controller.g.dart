@@ -7,7 +7,7 @@ part of 'submit_reit_dividend_form_controller.dart';
 // **************************************************************************
 
 String _$submitReitDividendFormControllerHash() =>
-    r'b54c2fadecaf311edd9deb6e1008ef3ea8e3a16b';
+    r'7b505791cf05c392962bc742d13b4ad488bf570a';
 
 /// See also [SubmitReitDividendFormController].
 @ProviderFor(SubmitReitDividendFormController)

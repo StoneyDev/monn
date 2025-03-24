@@ -49,25 +49,27 @@ class ReitScreen extends ConsumerWidget {
           Text(
             finalAmount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.gray700,
                   fontWeight: FontWeight.w900,
                 ),
           ),
-          Text(
-            startAmount.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                ),
+          OutlinedButton(
+            onPressed: null,
+            child: Text(
+              startAmount.simpleCurrency(locale),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.lightGray,
+                  ),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 32),
+          Divider(
+            color: Theme.of(context).colorScheme.outline,
+            height: 0,
+          ),
           switch (reits) {
             AsyncData(:final value) => Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 32,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                   itemBuilder: (_, index) {
                     final item = value[index];
                     final amount = item.dividends
@@ -92,24 +94,19 @@ class ReitScreen extends ConsumerWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w900),
                           ),
-                          const Divider(),
                           Row(
+                            spacing: 24,
                             children: [
                               MonnFinancialInfo(
                                 title: 'Vers. ini.',
                                 data: item.shares * item.price,
                               ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
                                 title: 'Part',
-                                data: item.shares.toStringAsFixed(0),
+                                data: item.shares,
                               ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
                                 title: 'Valeur',
                                 data: item.price,
