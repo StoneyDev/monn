@@ -7,7 +7,7 @@ part of 'savings_book_form_controller.dart';
 // **************************************************************************
 
 String _$savingsBookFormControllerHash() =>
-    r'e6d9cf7e8c3918fd5f8e107bd8e8ab13f469d5ab';
+    r'5816dbff4879ce8d7072c350f020495003b4f93f';
 
 /// See also [SavingsBookFormController].
 @ProviderFor(SavingsBookFormController)

@@ -20,8 +20,8 @@ class SubmitSavingsBookFormController
     state = await AsyncValue.guard(
       () => repository.editSavingsBook(
         SavingsBook()
-          ..name = formData.name!
-          ..startAmount = formData.startAmount!,
+          ..name = formData.name
+          ..startAmount = double.parse(formData.startAmount),
       ),
     );
 

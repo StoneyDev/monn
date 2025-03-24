@@ -8,13 +8,19 @@ import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
-class ReitFormStepTwoScreen extends ConsumerWidget {
+class ReitFormStepTwoScreen extends ConsumerStatefulWidget {
   const ReitFormStepTwoScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = GlobalKey<FormState>();
+  ConsumerState<ReitFormStepTwoScreen> createState() =>
+      _ReitFormStepTwoScreenState();
+}
 
+class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
       body: Form(

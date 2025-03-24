@@ -10,12 +10,18 @@ import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
-class AddCryptoScreen extends ConsumerWidget {
+class AddCryptoScreen extends ConsumerStatefulWidget {
   const AddCryptoScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = GlobalKey<FormState>();
+  ConsumerState<AddCryptoScreen> createState() => _AddCryptoScreenState();
+}
+
+class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     final formData = ref.read(cryptoFormControllerProvider);
 
     return Scaffold(
@@ -74,7 +80,7 @@ class AddCryptoScreen extends ConsumerWidget {
           child: MonnButton(
             text: context.tr('button.validate'),
             onPressed: () async {
-              if (!formKey.currentState!.validate()) return;
+              if (!(formKey.currentState?.validate() ?? false)) return;
 
               final success = await ref
                   .read(submitCryptoFormControllerProvider.notifier)

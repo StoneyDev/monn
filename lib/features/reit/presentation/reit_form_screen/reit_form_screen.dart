@@ -14,12 +14,18 @@ import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 
-class ReitFormScreen extends ConsumerWidget {
+class ReitFormScreen extends ConsumerStatefulWidget {
   const ReitFormScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = GlobalKey<FormState>();
+  ConsumerState<ReitFormScreen> createState() => _ReitFormScreenState();
+}
+
+class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     final reitData = ref.watch(
       getSavingsProvider(type: SavingsType.reit).select(
         (savings) => savings.valueOrNull,

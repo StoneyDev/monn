@@ -11,7 +11,7 @@ class AmountScreen extends ConsumerStatefulWidget {
     required this.provider,
     required this.onSubmit,
     required this.onChanged,
-    required this.initialValue,
+    this.initialValue = 0,
     super.key,
   });
 
