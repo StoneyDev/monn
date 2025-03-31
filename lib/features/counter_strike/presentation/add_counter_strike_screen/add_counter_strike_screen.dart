@@ -35,8 +35,8 @@ class _AddCounterStrikeScreenState
     );
 
     return Scaffold(
-      appBar: const MonnAppBar(
-        title: 'Suivi des achats',
+      appBar: MonnAppBar(
+        title: context.tr('common.purchasing_tracking'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
@@ -123,7 +123,7 @@ class _AddCounterStrikeScreenState
                           },
                         ),
                       ),
-                      title: 'Image',
+                      title: context.tr('common.image'),
                     ),
                   ],
                 ),
@@ -144,7 +144,7 @@ class _AddCounterStrikeScreenState
                     ),
               ),
               MonnFieldNumber<double>(
-                label: 'Usure',
+                label: context.tr('common.wear'),
                 provider: counterStrikeFormControllerProvider.select(
                   (form) => form.wear,
                 ),
@@ -154,7 +154,7 @@ class _AddCounterStrikeScreenState
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
-                label: "Prix d'achat",
+                label: context.tr('common.purchase_price'),
                 suffix: '€',
                 required: true,
                 provider: counterStrikeFormControllerProvider.select(
@@ -166,7 +166,7 @@ class _AddCounterStrikeScreenState
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
-                label: 'Prix actuelle',
+                label: context.tr('common.current_price'),
                 suffix: '€',
                 required: true,
                 provider: counterStrikeFormControllerProvider.select(
@@ -178,7 +178,7 @@ class _AddCounterStrikeScreenState
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldDate(
-                label: 'Acheté le',
+                label: context.tr('common.bought_on', args: ['']),
                 required: true,
                 provider: counterStrikeFormControllerProvider.select(
                   (form) => form.boughtAt,
@@ -188,7 +188,7 @@ class _AddCounterStrikeScreenState
                     .boughtAt(boughtAt: newBoughtAt),
               ),
               MonnFieldNumber<int>(
-                label: 'Quantité',
+                label: context.tr('common.quantity'),
                 required: true,
                 provider: counterStrikeFormControllerProvider.select(
                   (form) => form.quantity,

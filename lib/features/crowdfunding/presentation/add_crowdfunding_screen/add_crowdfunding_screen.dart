@@ -26,8 +26,8 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MonnAppBar(
-        title: 'Suivi des gains',
+      appBar: MonnAppBar(
+        title: context.tr('common.tracking_earnings'),
       ),
       body: MonnScrollView(
         slivers: [
@@ -40,7 +40,7 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                   spacing: 16,
                   children: [
                     MonnFieldText(
-                      label: 'Plateforme',
+                      label: context.tr('common.platform'),
                       required: true,
                       provider: crowdfundingFormControllerProvider.select(
                         (form) => form.platformName,
@@ -50,7 +50,7 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                           .platformName(platformName: newPlatformName),
                     ),
                     MonnFieldNumber<double>(
-                      label: 'Gain',
+                      label: context.tr('common.profit'),
                       suffix: '€',
                       required: true,
                       provider: crowdfundingFormControllerProvider.select(
@@ -80,7 +80,12 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                               if (!isTaxFree) ...[
                                 Expanded(
                                   child: MonnFieldNumber<double>(
-                                    label: 'Taxe (sans IR: 17.2)',
+                                    label: context.tr(
+                                      'common.tax',
+                                      args: [
+                                        context.tr('common.without_income_tax'),
+                                      ],
+                                    ),
                                     suffix: '%',
                                     required:
                                         !brutProfit.isNegative && !isTaxFree,
@@ -100,7 +105,9 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                               ],
                               OutlinedButton.icon(
                                 label: Text(
-                                  isTaxFree ? 'Ne plus exonérer' : 'Exonérer',
+                                  isTaxFree
+                                      ? context.tr('common.no_longer_exempt')
+                                      : context.tr('common.exempt'),
                                 ),
                                 onPressed: () => setState(
                                   () => isTaxFree = !isTaxFree,
@@ -119,7 +126,7 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                       },
                     ),
                     MonnFieldDate(
-                      label: 'Reçu le',
+                      label: context.tr('common.receive_at'),
                       required: true,
                       provider: crowdfundingFormControllerProvider.select(
                         (form) => form.receivedAt,

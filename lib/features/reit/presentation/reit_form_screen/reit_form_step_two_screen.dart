@@ -31,7 +31,7 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
             spacing: 16,
             children: [
               MonnFieldNumber<double>(
-                label: 'Dividende',
+                label: context.tr('common.dividend'),
                 suffix: '€',
                 required: true,
                 provider: reitDividendFormControllerProvider.select(
@@ -42,7 +42,7 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                     .amount(amount: newAmount),
               ),
               MonnFieldDate(
-                label: 'Reçu le',
+                label: context.tr('common.receive_at'),
                 required: true,
                 provider: reitDividendFormControllerProvider.select(
                   (form) => form.receivedAt,

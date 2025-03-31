@@ -33,8 +33,8 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
     );
 
     return Scaffold(
-      appBar: const MonnAppBar(
-        title: 'Ajouter une SCPI',
+      appBar: MonnAppBar(
+        title: context.tr('common.add_reit'),
       ),
       body: MonnScrollView(
         slivers: [
@@ -47,7 +47,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                   spacing: 16,
                   children: [
                     MonnFieldText(
-                      label: 'Nom de la SCPI',
+                      label: context.tr('common.reit_name'),
                       required: true,
                       provider: reitFormControllerProvider.select(
                         (form) => form.reitName,
@@ -57,7 +57,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                           .reitName(newName),
                     ),
                     MonnFieldNumber<int>(
-                      label: 'Part',
+                      label: context.tr('common.part'),
                       required: true,
                       provider: reitFormControllerProvider.select(
                         (form) => form.shares,
@@ -67,7 +67,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                           .shares(newShares),
                     ),
                     MonnFieldNumber<double>(
-                      label: 'Prix de la part',
+                      label: context.tr('common.share_price'),
                       suffix: '€',
                       required: true,
                       provider: reitFormControllerProvider.select(
@@ -78,7 +78,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                           .price(newPrice),
                     ),
                     MonnFieldDate(
-                      label: 'Acheté le',
+                      label: context.tr('common.bought_on', args: ['']),
                       required: true,
                       provider: reitFormControllerProvider.select(
                         (form) => form.boughtOn,

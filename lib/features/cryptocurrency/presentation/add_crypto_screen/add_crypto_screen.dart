@@ -26,7 +26,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('tracking_earnings'),
+        title: context.tr('common.tracking_earnings'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -35,7 +35,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
           child: Column(
             children: [
               MonnFieldNumber<double>(
-                label: context.tr('input.label.crypto_amount'),
+                label: context.tr('common.crypto_amount'),
                 suffix: formData.crypto?.type.symbol ?? '',
                 required: true,
                 provider: cryptoFormControllerProvider.select(
@@ -59,7 +59,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
                   final id = cryptoAmount.isNegative ? 'sold_on' : 'bought_on';
 
                   return MonnFieldDate(
-                    label: context.tr('input.label.$id'),
+                    label: context.tr('common.$id', args: ['']),
                     required: true,
                     provider: cryptoFormControllerProvider.select(
                       (form) => form.date,

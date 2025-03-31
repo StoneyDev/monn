@@ -109,17 +109,17 @@ class SavingsBookScreen extends ConsumerWidget {
                           Row(
                             children: [
                               MonnFinancialInfo(
-                                title: 'Vers. ini.',
+                                title: context.tr('common.start_amount'),
                                 data: item.startAmount,
                               ),
                               const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Intérêts totaux',
+                                title: context.tr('common.total_interest'),
                                 data: item.interests,
                               ),
                               const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Retrait',
+                                title: context.tr('common.withdrawal'),
                                 data: item.withdrawal,
                               ),
                             ],

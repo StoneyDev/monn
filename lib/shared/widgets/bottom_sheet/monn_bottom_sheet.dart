@@ -23,7 +23,7 @@ class MonnBottomSheet {
       surfaceTintColor: AppColors.white,
       isTopBarLayerAlwaysVisible: true,
       topBarTitle: Text(
-        'Dividandes (${reit.name.toUpperCase()})',
+        '${context.tr('common.dividends')} (${reit.name.toUpperCase()})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w900,
             ),

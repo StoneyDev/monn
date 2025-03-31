@@ -31,8 +31,8 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
     );
 
     return Scaffold(
-      appBar: const MonnAppBar(
-        title: 'Ajouter un livret',
+      appBar: MonnAppBar(
+        title: context.tr('common.add_savings_book'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -41,7 +41,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
           child: Column(
             children: [
               MonnFieldText(
-                label: 'Nom du livret',
+                label: context.tr('common.savings_book_name'),
                 required: true,
                 provider: savingsBookFormControllerProvider.select(
                   (form) => form.name,
@@ -52,7 +52,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
               ),
               const SizedBox(height: 16),
               MonnFieldNumber<double>(
-                label: 'Montant initial',
+                label: context.tr('common.start_amount'),
                 suffix: '€',
                 required: true,
                 provider: savingsBookFormControllerProvider.select(

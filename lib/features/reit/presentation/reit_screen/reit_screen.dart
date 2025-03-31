@@ -105,15 +105,15 @@ class ReitScreen extends ConsumerWidget {
                             spacing: 24,
                             children: [
                               MonnFinancialInfo(
-                                title: 'Vers. ini.',
+                                title: context.tr('common.start_amount'),
                                 data: item.shares * item.price,
                               ),
                               MonnFinancialInfo(
-                                title: 'Part',
+                                title: context.tr('common.part'),
                                 data: item.shares,
                               ),
                               MonnFinancialInfo(
-                                title: 'Valeur',
+                                title: context.tr('common.worth'),
                                 data: item.price,
                               ),
                             ],

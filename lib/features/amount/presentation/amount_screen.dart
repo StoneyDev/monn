@@ -42,7 +42,7 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
           child: MonnFieldNumber<double>(
             label:
                 // ignore: lines_longer_than_80_chars
-                'Montant${widget.initialValue > 0 ? ' (Ancienne valeur: ${widget.initialValue.simpleCurrency(locale)})' : ''}',
+                '${context.tr('common.amount')}${widget.initialValue > 0 ? ' (${context.tr('common.old_value')}: ${widget.initialValue.simpleCurrency(locale)})' : ''}',
             required: true,
             autofocus: true,
             provider: widget.provider,
@@ -56,14 +56,15 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SizedBox(
-        width: MediaQuery.sizeOf(context).width - 32,
-        child: MonnButton(
-          text: context.tr('button.validate'),
-          onPressed: (formKey.currentState?.validate() ?? false) && isDirty
-              ? widget.onSubmit
-              : null,
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: MonnButton(
+            text: context.tr('button.validate'),
+            onPressed: (formKey.currentState?.validate() ?? false) && isDirty
+                ? widget.onSubmit
+                : null,
+          ),
         ),
       ),
     );

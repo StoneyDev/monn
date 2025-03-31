@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,7 +62,8 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           ),
                           content: RichText(
                             text: TextSpan(
-                              text: '${context.tr('total_amount_invested')}: ',
+                              text:
+                                  '${context.tr('common.total_amount_invested')}: ',
                               children: [
                                 TextSpan(
                                   text: cryptoData?.startAmount
@@ -87,9 +90,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                             );
 
                             final success = await ref
-                                .read(
-                                  editSavingsControllerProvider.notifier,
-                                )
+                                .read(editSavingsControllerProvider.notifier)
                                 .submit(newSaving!);
                             if (!context.mounted || !success) return;
 
@@ -102,10 +103,9 @@ class CryptocurrencyScreen extends ConsumerWidget {
                               ..invalidate(watchCryptoChartProvider);
                             Navigator.pop(context);
                           },
-                          onChanged: (value) {
-                            ref.read(_startAmountProvider.notifier).state =
-                                value;
-                          },
+                          onChanged: (newAmount) => ref
+                              .read(_startAmountProvider.notifier)
+                              .state = newAmount,
                         ),
                       ),
                     ),
@@ -119,7 +119,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          context.tr('loading'),
+                          context.tr('common.loading'),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           ),

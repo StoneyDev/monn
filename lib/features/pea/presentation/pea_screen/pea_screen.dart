@@ -45,7 +45,7 @@ class PeaScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 16),
             child: Tooltip(
               message: context.tr(
-                'opening_account',
+                'common.opening_account',
                 args: [
                   '${openingDate.numberYears()}',
                   if (eligibility) '17,2%' else '30%',
@@ -62,7 +62,7 @@ class PeaScreen extends ConsumerWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    context.tr('taxation'),
+                    context.tr('common.taxation'),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: eligibility ? AppColors.green : AppColors.red,
@@ -171,7 +171,7 @@ class PeaScreen extends ConsumerWidget {
                             ),
                           ),
                           MonnLine(
-                            title: context.tr('number_equities'),
+                            title: context.tr('common.number_equities'),
                             value: Text(
                               '${value?.equity ?? 0}',
                               textAlign: TextAlign.right,
@@ -182,7 +182,7 @@ class PeaScreen extends ConsumerWidget {
                             ),
                           ),
                           MonnLine(
-                            title: context.tr('average_purchase_price'),
+                            title: context.tr('common.average_purchase_price'),
                             value: Text(
                               (value?.costAverage ?? 0).simpleCurrency(locale),
                               textAlign: TextAlign.right,
@@ -193,7 +193,7 @@ class PeaScreen extends ConsumerWidget {
                             ),
                           ),
                           MonnLine(
-                            title: context.tr('current_price'),
+                            title: context.tr('common.current_price'),
                             value: switch (etfPrice) {
                               AsyncData(:final value) => Text(
                                   value.simpleCurrency(locale),
@@ -211,7 +211,7 @@ class PeaScreen extends ConsumerWidget {
                                   ),
                                 ),
                               _ => Text(
-                                  context.tr('loading'),
+                                  context.tr('common.loading'),
                                   textAlign: TextAlign.right,
                                   style: Theme.of(context)
                                       .textTheme
@@ -221,11 +221,11 @@ class PeaScreen extends ConsumerWidget {
                             },
                           ),
                           MonnLine(
-                            title: context.tr('last_update'),
+                            title: context.tr('common.last_update'),
                             value: Text(
                               value?.lastUpdate == null
                                   ? etfPrice.isLoading
-                                      ? context.tr('loading')
+                                      ? context.tr('common.loading')
                                       : DateTime.now().slashFormat(
                                           locale,
                                           withHour: true,
@@ -259,7 +259,7 @@ class PeaScreen extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('update_data'),
+            text: context.tr('button.update_data'),
             onPressed: () => context.push(const PeaFormScreen()),
           ),
         ),

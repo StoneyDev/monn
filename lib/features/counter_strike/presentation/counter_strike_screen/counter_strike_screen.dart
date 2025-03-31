@@ -81,7 +81,10 @@ class CounterStrikeScreen extends ConsumerWidget {
                   itemCount: value.length,
                 ),
               ),
-            AsyncError(:final error) => Text('error: $error'),
+            AsyncError(:final error) => Text(
+                'Error: $error',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             _ => const Center(
                 child: RepaintBoundary(
                   child: CircularProgressIndicator(),
@@ -165,13 +168,22 @@ class _CounterStrikeItem extends ConsumerWidget {
                       ],
                     ),
                     Text(
-                      'Acheté le ${data.boughtAt.slashFormat(locale)}',
+                      context.tr(
+                        'common.bought_on',
+                        args: [data.boughtAt.slashFormat(locale)],
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(color: AppColors.lightGray),
                     ),
                     Text(
-                      'Prix à ${data.currentValue.simpleCurrency(locale)} le ${data.lastUpdate.slashFormat(locale)}',
+                      context.tr(
+                        'common.price_and_purchase_date',
+                        args: [
+                          data.currentValue.simpleCurrency(locale),
+                          data.lastUpdate.slashFormat(locale),
+                        ],
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(color: AppColors.lightGray),

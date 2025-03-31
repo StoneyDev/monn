@@ -36,7 +36,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                 spacing: 16,
                 children: [
                   MonnFieldNumber<int>(
-                    label: context.tr('number_equities'),
+                    label: context.tr('common.number_equities'),
                     required: true,
                     provider: peaFormControllerProvider.select(
                       (form) => form.equity,
@@ -48,7 +48,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                             ),
                   ),
                   MonnFieldNumber<double>(
-                    label: context.tr('purchase_price'),
+                    label: context.tr('common.purchase_price'),
                     required: true,
                     provider: peaFormControllerProvider.select(
                       (form) => form.costAverage,

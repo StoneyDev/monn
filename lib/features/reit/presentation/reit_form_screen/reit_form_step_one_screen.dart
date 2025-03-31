@@ -23,8 +23,8 @@ class ReitFormStepOneScreen extends ConsumerWidget {
     final reits = ref.watch(watchReitsProvider);
 
     return Scaffold(
-      appBar: const MonnAppBar(
-        title: 'Sélectionnez une SCPI',
+      appBar: MonnAppBar(
+        title: context.tr('common.select_a_reit'),
       ),
       body: switch (reits) {
         AsyncData(:final value) => ListView.builder(
@@ -46,7 +46,10 @@ class ReitFormStepOneScreen extends ConsumerWidget {
               );
             },
           ),
-        AsyncError(:final error) => Text('error: $error'),
+        AsyncError(:final error) => Text(
+            'Error: $error',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
         _ => const RepaintBoundary(
             child: CircularProgressIndicator(),
           ),

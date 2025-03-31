@@ -125,7 +125,10 @@ class CrowdfundingScreen extends ConsumerWidget {
                   itemCount: value.length,
                 ),
               ),
-            AsyncError(:final error) => Text('error: $error'),
+            AsyncError(:final error) => Text(
+                'Error: $error',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             _ => const Center(
                 child: RepaintBoundary(
                   child: CircularProgressIndicator(),

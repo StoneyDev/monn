@@ -123,7 +123,7 @@ class CryptoPageScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    context.tr('market_price'),
+                                    context.tr('common.market_price'),
                                     style: const TextStyle(
                                       color: AppColors.lightGray,
                                       fontWeight: FontWeight.w600,
@@ -160,7 +160,11 @@ class CryptoPageScreen extends ConsumerWidget {
                     return MonnTile(
                       icon: MonnUpDown(value: transaction.amount),
                       content: Text(
-                        context.tr(isWithdrawal ? 'withdrawal' : 'purchase'),
+                        context.tr(
+                          isWithdrawal
+                              ? 'common.withdrawal'
+                              : 'common.purchase',
+                        ),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subContent: Text(
