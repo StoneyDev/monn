@@ -9,6 +9,7 @@ import 'package:monn/features/settings/presentation/settings_screen/settings_scr
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -30,9 +31,7 @@ class DashboardScreen extends ConsumerWidget {
     final filter = ref.watch(_filterProvider);
     final savings = ref.watch(watchSavingsProvider(filter: filter));
     final report = ref.watch(
-      watchPayoutReportSavingsProvider.select(
-        (data) => data.valueOrNull ?? 0,
-      ),
+      watchPayoutReportSavingsProvider.select((data) => data.valueOrNull ?? 0),
     );
 
     return Scaffold(
@@ -47,7 +46,7 @@ class DashboardScreen extends ConsumerWidget {
               pageListBuilder: (context) => [
                 MonnBottomSheet.itemList(
                   context: context,
-                  title: context.tr('filter'),
+                  title: context.tr('common.filter'),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -59,7 +58,9 @@ class DashboardScreen extends ConsumerWidget {
                               value: item,
                               groupValue: ref.watch(_filterProvider),
                               title: Text(
-                                context.tr('filters.${item.name}'),
+                                context.tr(
+                                  'filters.${item.name.toSnakeCase()}',
+                                ),
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               onChanged: (newFilter) => ref
@@ -123,7 +124,9 @@ class DashboardScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  item.type.label,
+                                  context.tr(
+                                    'savings.${item.type.name.toSnakeCase()}',
+                                  ),
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall
@@ -153,7 +156,10 @@ class DashboardScreen extends ConsumerWidget {
                 ),
               ),
             AsyncError(:final error) => SliverToBoxAdapter(
-                child: Text('error: $error'),
+                child: Text(
+                  'Error: $error',
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ),
             _ => const SliverFillRemaining(
                 child: Center(
@@ -203,7 +209,7 @@ class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
             duration: Durations.short4,
             alignment: Alignment.bottomCenter,
             firstChild: Text(
-              context.tr('net_worth'),
+              context.tr('common.net_worth'),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.lightGray,

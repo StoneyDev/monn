@@ -37,7 +37,7 @@ extension SavingsTypeUI on SavingsType {
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
         ),
-      SavingsType.csknives => ref.watch(
+      SavingsType.csKnives => ref.watch(
           watchPayoutReportCounterStrikeProvider.select(
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
@@ -63,7 +63,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.savingsBook => const SavingsBookScreen(),
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
-      SavingsType.csknives => const CounterStrikeScreen(),
+      SavingsType.csKnives => const CounterStrikeScreen(),
       // SavingsType.cto => const MonnWip(),
       // SavingsType.lifeInsurance => const MonnWip(),
       SavingsType.pea => const PeaScreen(),
@@ -77,7 +77,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.savingsBook => MonnAssets.images.icon.locker.provider(),
       SavingsType.crowdfunding => MonnAssets.images.icon.moneyBag.provider(),
       SavingsType.cryptocurrency => MonnAssets.images.icon.ethCoin.provider(),
-      SavingsType.csknives => MonnAssets.images.icon.crown.provider(),
+      SavingsType.csKnives => MonnAssets.images.icon.crown.provider(),
       // SavingsType.cto => MonnAssets.images.icon.bag.provider(),
       // SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
       SavingsType.pea => MonnAssets.images.icon.bag.provider(),

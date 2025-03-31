@@ -5,6 +5,7 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
@@ -24,7 +25,7 @@ class AddSavingsScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(title: context.tr('add.savings')),
+      appBar: MonnAppBar(title: context.tr('common.add_savings')),
       body: ListView.builder(
         physics: const ClampingScrollPhysics(),
         itemCount: SavingsType.values.length,
@@ -47,7 +48,7 @@ class AddSavingsScreen extends ConsumerWidget {
                   opacity: AlwaysStoppedAnimation(isExist ? 0.4 : 1),
                 ),
                 const SizedBox(width: 16),
-                Text(savings.label),
+                Text(context.tr('savings.${savings.name.toSnakeCase()}')),
               ],
             ),
           );

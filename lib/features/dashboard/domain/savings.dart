@@ -18,19 +18,15 @@ class Savings with _$Savings {
 }
 
 enum SavingsType {
-  savingsBook('Livret'),
-  crowdfunding('Crowdfunding Immobilier'),
-  cryptocurrency('Cryptomonnaie'),
-  csknives('Couteaux CS'),
+  savingsBook,
+  crowdfunding,
+  cryptocurrency,
+  csKnives,
   // cto('CTO'),
   // lifeInsurance('Assurance-vie'),
-  pea('PEA'),
-  reit('SCPI');
+  pea,
+  reit,
   // rip('PER')
-
-  const SavingsType(this.label);
-
-  final String label;
 }
 
 enum SavingsFilter {

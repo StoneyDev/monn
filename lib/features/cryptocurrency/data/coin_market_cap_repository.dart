@@ -4,7 +4,7 @@ import 'package:monn/features/cryptocurrency/data/coin_market_cap_api.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/coin_market_cap.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
-import 'package:monn/utils/monn_tools.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +50,7 @@ Future<List<Cryptocurrency>> getCryptoPriceMarket(Ref ref) async {
 
   if (now.isAfter(lastUpdate)) {
     cryptoMarket = await repository.getCryptoPriceMarket(
-      CryptoType.values.map((e) => MonnTools.toKebabCase(e.name)).join(','),
+      CryptoType.values.map((e) => e.name.toKebabCase()).join(','),
     );
     await prefs.setString('lastCryptoUpdate', now.toIso8601String());
   }
@@ -64,8 +64,7 @@ Future<List<Cryptocurrency>> getCryptoPriceMarket(Ref ref) async {
     );
 
     if (cryptoMarket.isNotEmpty) {
-      final cryptoMarket =
-          cryptoMarketMap[MonnTools.toKebabCase(cryptoType.name)];
+      final cryptoMarket = cryptoMarketMap[cryptoType.name.toKebabCase()];
 
       final newCrypto = crypto
         ..priceMarket = cryptoMarket!.quote.priceUsd.price

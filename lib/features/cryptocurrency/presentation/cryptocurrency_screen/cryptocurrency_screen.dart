@@ -12,6 +12,7 @@ import 'package:monn/features/dashboard/presentation/add_savings_screen/controll
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/charts/monn_doughnut_chart.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -36,7 +37,11 @@ class CryptocurrencyScreen extends ConsumerWidget {
     final cryptocurrencies = ref.watch(getCryptoPriceMarketProvider);
 
     return Scaffold(
-      appBar: MonnAppBar(title: SavingsType.cryptocurrency.label),
+      appBar: MonnAppBar(
+        title: context.tr(
+          'savings.${SavingsType.cryptocurrency.name.toSnakeCase()}',
+        ),
+      ),
       body: MonnScrollView(
         slivers: [
           SliverToBoxAdapter(

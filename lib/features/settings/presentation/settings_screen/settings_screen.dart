@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('settings'),
+        title: context.tr('common.settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -32,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
                   pageListBuilder: (context) => [
                     MonnBottomSheet.itemList(
                       context: context,
-                      title: context.tr('theme'),
+                      title: context.tr('common.theme'),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
@@ -77,7 +77,7 @@ class SettingsScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.tr('theme'),
+                          context.tr('common.theme'),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
@@ -97,7 +97,7 @@ class SettingsScreen extends ConsumerWidget {
                   pageListBuilder: (context) => [
                     MonnBottomSheet.itemList(
                       context: context,
-                      title: context.tr('language'),
+                      title: context.tr('common.language'),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
@@ -138,7 +138,7 @@ class SettingsScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.tr('language'),
+                          context.tr('common.language'),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(

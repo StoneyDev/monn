@@ -12,6 +12,7 @@ import 'package:monn/features/pea/presentation/pea_form_screen/pea_form_screen.d
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 import 'package:monn/shared/widgets/monn_line.dart';
@@ -36,7 +37,9 @@ class PeaScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: SavingsType.pea.label,
+        title: context.tr(
+          'savings.${SavingsType.pea.name.toSnakeCase()}',
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

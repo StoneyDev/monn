@@ -26,7 +26,7 @@ final coinMarketCapRepositoryProvider =
 // ignore: unused_element
 typedef CoinMarketCapRepositoryRef = ProviderRef<CoinMarketCapRepository>;
 String _$getCryptoPriceMarketHash() =>
-    r'1082bb08a7a3bc20aed6883ca7807269e2078eac';
+    r'92313ee49ef9d571f94558cbefa589ba062b22ef';
 
 /// See also [getCryptoPriceMarket].
 @ProviderFor(getCryptoPriceMarket)

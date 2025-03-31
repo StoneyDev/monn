@@ -12,6 +12,7 @@ import 'package:monn/features/savings_book/presentation/savings_book_form_screen
 import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
@@ -36,7 +37,11 @@ class SavingsBookScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(title: SavingsType.savingsBook.label),
+      appBar: MonnAppBar(
+        title: context.tr(
+          'savings.${SavingsType.savingsBook.name.toSnakeCase()}',
+        ),
+      ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
