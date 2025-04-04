@@ -18,9 +18,9 @@ void main() {
         // Arrange
         final formData = ReitForm(
           reitName: 'Random SCPI',
-          price: 200,
+          price: '200',
           boughtOn: DateTime.now(),
-          shares: 10,
+          shares: '10',
         );
 
         final repository = MockReitRepository();

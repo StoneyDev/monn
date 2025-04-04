@@ -31,31 +31,27 @@ const CounterStrikeSchema = CollectionSchema(
       id: 2,
       name: r'imageId',
       type: IsarType.string,
+      enumMap: _CounterStrikeimageIdEnumValueMap,
     ),
     r'lastUpdate': PropertySchema(
       id: 3,
       name: r'lastUpdate',
       type: IsarType.dateTime,
     ),
-    r'name': PropertySchema(
-      id: 4,
-      name: r'name',
-      type: IsarType.string,
-    ),
     r'purchaseValue': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'purchaseValue',
       type: IsarType.double,
     ),
     r'quantity': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'quantity',
       type: IsarType.long,
     ),
     r'wear': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'wear',
-      type: IsarType.string,
+      type: IsarType.double,
     )
   },
   estimateSize: _counterStrikeEstimateSize,
@@ -78,14 +74,7 @@ int _counterStrikeEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.imageId.length * 3;
-  bytesCount += 3 + object.name.length * 3;
-  {
-    final value = object.wear;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.imageId.name.length * 3;
   return bytesCount;
 }
 
@@ -97,12 +86,11 @@ void _counterStrikeSerialize(
 ) {
   writer.writeDateTime(offsets[0], object.boughtAt);
   writer.writeDouble(offsets[1], object.currentValue);
-  writer.writeString(offsets[2], object.imageId);
+  writer.writeString(offsets[2], object.imageId.name);
   writer.writeDateTime(offsets[3], object.lastUpdate);
-  writer.writeString(offsets[4], object.name);
-  writer.writeDouble(offsets[5], object.purchaseValue);
-  writer.writeLong(offsets[6], object.quantity);
-  writer.writeString(offsets[7], object.wear);
+  writer.writeDouble(offsets[4], object.purchaseValue);
+  writer.writeLong(offsets[5], object.quantity);
+  writer.writeDouble(offsets[6], object.wear);
 }
 
 CounterStrike _counterStrikeDeserialize(
@@ -115,12 +103,13 @@ CounterStrike _counterStrikeDeserialize(
     boughtAt: reader.readDateTime(offsets[0]),
     currentValue: reader.readDouble(offsets[1]),
     id: id,
-    imageId: reader.readString(offsets[2]),
+    imageId: _CounterStrikeimageIdValueEnumMap[
+            reader.readStringOrNull(offsets[2])] ??
+        CounterStrikeItem.ak47Bloodsport,
     lastUpdate: reader.readDateTime(offsets[3]),
-    name: reader.readString(offsets[4]),
-    purchaseValue: reader.readDouble(offsets[5]),
-    quantity: reader.readLong(offsets[6]),
-    wear: reader.readStringOrNull(offsets[7]),
+    purchaseValue: reader.readDouble(offsets[4]),
+    quantity: reader.readLong(offsets[5]),
+    wear: reader.readDoubleOrNull(offsets[6]),
   );
   return object;
 }
@@ -137,21 +126,62 @@ P _counterStrikeDeserializeProp<P>(
     case 1:
       return (reader.readDouble(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
+      return (_CounterStrikeimageIdValueEnumMap[
+              reader.readStringOrNull(offset)] ??
+          CounterStrikeItem.ak47Bloodsport) as P;
     case 3:
       return (reader.readDateTime(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readDouble(offset)) as P;
-    case 6:
+    case 5:
       return (reader.readLong(offset)) as P;
-    case 7:
-      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _CounterStrikeimageIdEnumValueMap = {
+  r'ak47Bloodsport': r'ak47Bloodsport',
+  r'ak47LegionOfAnubis': r'ak47LegionOfAnubis',
+  r'ak47LeetMuseo': r'ak47LeetMuseo',
+  r'm4a1SPrintstream': r'm4a1SPrintstream',
+  r'uspSPrintstream': r'uspSPrintstream',
+  r'glock18RameseSReach': r'glock18RameseSReach',
+  r'stilettoSlaughter': r'stilettoSlaughter',
+  r'bayonetTigerTooth': r'bayonetTigerTooth',
+  r'ursusFade': r'ursusFade',
+  r'prismaCase': r'prismaCase',
+  r'prisma2Case': r'prisma2Case',
+  r'gammaCase': r'gammaCase',
+  r'revolutionCase': r'revolutionCase',
+  r'shadowCase': r'shadowCase',
+  r'spectrumCase': r'spectrumCase',
+  r'falchionCase': r'falchionCase',
+  r'horizonCase': r'horizonCase',
+  r'recoilCase': r'recoilCase',
+};
+const _CounterStrikeimageIdValueEnumMap = {
+  r'ak47Bloodsport': CounterStrikeItem.ak47Bloodsport,
+  r'ak47LegionOfAnubis': CounterStrikeItem.ak47LegionOfAnubis,
+  r'ak47LeetMuseo': CounterStrikeItem.ak47LeetMuseo,
+  r'm4a1SPrintstream': CounterStrikeItem.m4a1SPrintstream,
+  r'uspSPrintstream': CounterStrikeItem.uspSPrintstream,
+  r'glock18RameseSReach': CounterStrikeItem.glock18RameseSReach,
+  r'stilettoSlaughter': CounterStrikeItem.stilettoSlaughter,
+  r'bayonetTigerTooth': CounterStrikeItem.bayonetTigerTooth,
+  r'ursusFade': CounterStrikeItem.ursusFade,
+  r'prismaCase': CounterStrikeItem.prismaCase,
+  r'prisma2Case': CounterStrikeItem.prisma2Case,
+  r'gammaCase': CounterStrikeItem.gammaCase,
+  r'revolutionCase': CounterStrikeItem.revolutionCase,
+  r'shadowCase': CounterStrikeItem.shadowCase,
+  r'spectrumCase': CounterStrikeItem.spectrumCase,
+  r'falchionCase': CounterStrikeItem.falchionCase,
+  r'horizonCase': CounterStrikeItem.horizonCase,
+  r'recoilCase': CounterStrikeItem.recoilCase,
+};
 
 Id _counterStrikeGetId(CounterStrike object) {
   return object.id;
@@ -425,7 +455,7 @@ extension CounterStrikeQueryFilter
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       imageIdEqualTo(
-    String value, {
+    CounterStrikeItem value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -439,7 +469,7 @@ extension CounterStrikeQueryFilter
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       imageIdGreaterThan(
-    String value, {
+    CounterStrikeItem value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -455,7 +485,7 @@ extension CounterStrikeQueryFilter
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       imageIdLessThan(
-    String value, {
+    CounterStrikeItem value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -471,8 +501,8 @@ extension CounterStrikeQueryFilter
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       imageIdBetween(
-    String lower,
-    String upper, {
+    CounterStrikeItem lower,
+    CounterStrikeItem upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -611,141 +641,6 @@ extension CounterStrikeQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> nameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> nameBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'name',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> nameMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'name',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      nameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'name',
-        value: '',
       ));
     });
   }
@@ -891,56 +786,56 @@ extension CounterStrikeQueryFilter
   }
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> wearEqualTo(
-    String? value, {
-    bool caseSensitive = true,
+    double? value, {
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'wear',
         value: value,
-        caseSensitive: caseSensitive,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       wearGreaterThan(
-    String? value, {
+    double? value, {
     bool include = false,
-    bool caseSensitive = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'wear',
         value: value,
-        caseSensitive: caseSensitive,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
       wearLessThan(
-    String? value, {
+    double? value, {
     bool include = false,
-    bool caseSensitive = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'wear',
         value: value,
-        caseSensitive: caseSensitive,
+        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> wearBetween(
-    String? lower,
-    String? upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
+    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -949,78 +844,7 @@ extension CounterStrikeQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      wearStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'wear',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      wearEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'wear',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      wearContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'wear',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition> wearMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'wear',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      wearIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'wear',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterFilterCondition>
-      wearIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'wear',
-        value: '',
+        epsilon: epsilon,
       ));
     });
   }
@@ -1083,18 +907,6 @@ extension CounterStrikeQuerySortBy
       sortByLastUpdateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdate', Sort.desc);
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterSortBy> sortByName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.asc);
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterSortBy> sortByNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.desc);
     });
   }
 
@@ -1204,18 +1016,6 @@ extension CounterStrikeQuerySortThenBy
     });
   }
 
-  QueryBuilder<CounterStrike, CounterStrike, QAfterSortBy> thenByName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.asc);
-    });
-  }
-
-  QueryBuilder<CounterStrike, CounterStrike, QAfterSortBy> thenByNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'name', Sort.desc);
-    });
-  }
-
   QueryBuilder<CounterStrike, CounterStrike, QAfterSortBy>
       thenByPurchaseValue() {
     return QueryBuilder.apply(this, (query) {
@@ -1284,13 +1084,6 @@ extension CounterStrikeQueryWhereDistinct
     });
   }
 
-  QueryBuilder<CounterStrike, CounterStrike, QDistinct> distinctByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<CounterStrike, CounterStrike, QDistinct>
       distinctByPurchaseValue() {
     return QueryBuilder.apply(this, (query) {
@@ -1304,10 +1097,9 @@ extension CounterStrikeQueryWhereDistinct
     });
   }
 
-  QueryBuilder<CounterStrike, CounterStrike, QDistinct> distinctByWear(
-      {bool caseSensitive = true}) {
+  QueryBuilder<CounterStrike, CounterStrike, QDistinct> distinctByWear() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'wear', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'wear');
     });
   }
 }
@@ -1332,7 +1124,8 @@ extension CounterStrikeQueryProperty
     });
   }
 
-  QueryBuilder<CounterStrike, String, QQueryOperations> imageIdProperty() {
+  QueryBuilder<CounterStrike, CounterStrikeItem, QQueryOperations>
+      imageIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'imageId');
     });
@@ -1341,12 +1134,6 @@ extension CounterStrikeQueryProperty
   QueryBuilder<CounterStrike, DateTime, QQueryOperations> lastUpdateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastUpdate');
-    });
-  }
-
-  QueryBuilder<CounterStrike, String, QQueryOperations> nameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'name');
     });
   }
 
@@ -1363,7 +1150,7 @@ extension CounterStrikeQueryProperty
     });
   }
 
-  QueryBuilder<CounterStrike, String?, QQueryOperations> wearProperty() {
+  QueryBuilder<CounterStrike, double?, QQueryOperations> wearProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'wear');
     });

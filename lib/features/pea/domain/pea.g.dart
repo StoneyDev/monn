@@ -80,10 +80,10 @@ Pea _peaDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Pea();
-  object.costAverage = reader.readDouble(offsets[0]);
-  object.equity = reader.readLong(offsets[1]);
+  object.costAverage = reader.readDoubleOrNull(offsets[0]);
+  object.equity = reader.readLongOrNull(offsets[1]);
   object.id = id;
-  object.lastPrice = reader.readDouble(offsets[2]);
+  object.lastPrice = reader.readDoubleOrNull(offsets[2]);
   object.lastUpdate = reader.readDateTimeOrNull(offsets[3]);
   return object;
 }
@@ -96,11 +96,11 @@ P _peaDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 3:
       return (reader.readDateTimeOrNull(offset)) as P;
     default:
@@ -196,8 +196,24 @@ extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
 }
 
 extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'costAverage',
+      ));
+    });
+  }
+
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'costAverage',
+      ));
+    });
+  }
+
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -210,7 +226,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -225,7 +241,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -240,8 +256,8 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -258,7 +274,23 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Pea, Pea, QAfterFilterCondition> equityEqualTo(int value) {
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> equityIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'equity',
+      ));
+    });
+  }
+
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> equityIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'equity',
+      ));
+    });
+  }
+
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> equityEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'equity',
@@ -268,7 +300,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityGreaterThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -281,7 +313,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityLessThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -294,8 +326,8 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityBetween(
-    int lower,
-    int upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -362,8 +394,24 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lastPrice',
+      ));
+    });
+  }
+
+  QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lastPrice',
+      ));
+    });
+  }
+
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -376,7 +424,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -391,7 +439,7 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -406,8 +454,8 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -643,19 +691,19 @@ extension PeaQueryProperty on QueryBuilder<Pea, Pea, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Pea, double, QQueryOperations> costAverageProperty() {
+  QueryBuilder<Pea, double?, QQueryOperations> costAverageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'costAverage');
     });
   }
 
-  QueryBuilder<Pea, int, QQueryOperations> equityProperty() {
+  QueryBuilder<Pea, int?, QQueryOperations> equityProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'equity');
     });
   }
 
-  QueryBuilder<Pea, double, QQueryOperations> lastPriceProperty() {
+  QueryBuilder<Pea, double?, QQueryOperations> lastPriceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastPrice');
     });

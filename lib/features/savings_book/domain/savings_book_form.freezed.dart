@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SavingsBookForm {
-  String? get name => throw _privateConstructorUsedError;
-  double? get startAmount => throw _privateConstructorUsedError;
-  double? get withdrawal => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get startAmount => throw _privateConstructorUsedError;
+  String? get withdrawal => throw _privateConstructorUsedError;
 
   /// Create a copy of SavingsBookForm
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +33,7 @@ abstract class $SavingsBookFormCopyWith<$Res> {
           SavingsBookForm value, $Res Function(SavingsBookForm) then) =
       _$SavingsBookFormCopyWithImpl<$Res, SavingsBookForm>;
   @useResult
-  $Res call({String? name, double? startAmount, double? withdrawal});
+  $Res call({String name, String startAmount, String? withdrawal});
 }
 
 /// @nodoc
@@ -51,23 +51,23 @@ class _$SavingsBookFormCopyWithImpl<$Res, $Val extends SavingsBookForm>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? startAmount = freezed,
+    Object? name = null,
+    Object? startAmount = null,
     Object? withdrawal = freezed,
   }) {
     return _then(_value.copyWith(
-      name: freezed == name
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      startAmount: freezed == startAmount
+              as String,
+      startAmount: null == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
       withdrawal: freezed == withdrawal
           ? _value.withdrawal
           : withdrawal // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +80,7 @@ abstract class _$$SavingsBookFormImplCopyWith<$Res>
       __$$SavingsBookFormImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, double? startAmount, double? withdrawal});
+  $Res call({String name, String startAmount, String? withdrawal});
 }
 
 /// @nodoc
@@ -96,23 +96,23 @@ class __$$SavingsBookFormImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? startAmount = freezed,
+    Object? name = null,
+    Object? startAmount = null,
     Object? withdrawal = freezed,
   }) {
     return _then(_$SavingsBookFormImpl(
-      name: freezed == name
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      startAmount: freezed == startAmount
+              as String,
+      startAmount: null == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
       withdrawal: freezed == withdrawal
           ? _value.withdrawal
           : withdrawal // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ));
   }
 }
@@ -120,14 +120,15 @@ class __$$SavingsBookFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SavingsBookFormImpl implements _SavingsBookForm {
-  const _$SavingsBookFormImpl({this.name, this.startAmount, this.withdrawal});
+  const _$SavingsBookFormImpl(
+      {required this.name, required this.startAmount, this.withdrawal});
 
   @override
-  final String? name;
+  final String name;
   @override
-  final double? startAmount;
+  final String startAmount;
   @override
-  final double? withdrawal;
+  final String? withdrawal;
 
   @override
   String toString() {
@@ -161,16 +162,16 @@ class _$SavingsBookFormImpl implements _SavingsBookForm {
 
 abstract class _SavingsBookForm implements SavingsBookForm {
   const factory _SavingsBookForm(
-      {final String? name,
-      final double? startAmount,
-      final double? withdrawal}) = _$SavingsBookFormImpl;
+      {required final String name,
+      required final String startAmount,
+      final String? withdrawal}) = _$SavingsBookFormImpl;
 
   @override
-  String? get name;
+  String get name;
   @override
-  double? get startAmount;
+  String get startAmount;
   @override
-  double? get withdrawal;
+  String? get withdrawal;
 
   /// Create a copy of SavingsBookForm
   /// with the given fields replaced by the non-null parameter values.

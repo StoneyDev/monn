@@ -11,10 +11,15 @@ extension ContextUi on BuildContext {
     return isDark;
   }
 
-  Future<void> push(Widget page) {
+  Future<void> push(Widget page, {bool fullscreenDialog = false}) {
     return Navigator.push(
       this,
-      MaterialPageRoute<void>(builder: (_) => page),
+      MaterialPageRoute<void>(
+        builder: (_) => page,
+        fullscreenDialog: fullscreenDialog,
+      ),
     );
   }
+
+  bool get isKeyboardVisible => MediaQuery.viewInsetsOf(this).bottom > 0;
 }

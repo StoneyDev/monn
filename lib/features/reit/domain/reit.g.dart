@@ -35,7 +35,7 @@ const ReitSchema = CollectionSchema(
     r'shares': PropertySchema(
       id: 3,
       name: r'shares',
-      type: IsarType.double,
+      type: IsarType.long,
     )
   },
   estimateSize: _reitEstimateSize,
@@ -78,7 +78,7 @@ void _reitSerialize(
   writer.writeDateTime(offsets[0], object.boughtOn);
   writer.writeString(offsets[1], object.name);
   writer.writeDouble(offsets[2], object.price);
-  writer.writeDouble(offsets[3], object.shares);
+  writer.writeLong(offsets[3], object.shares);
 }
 
 Reit _reitDeserialize(
@@ -92,7 +92,7 @@ Reit _reitDeserialize(
   object.id = id;
   object.name = reader.readString(offsets[1]);
   object.price = reader.readDouble(offsets[2]);
-  object.shares = reader.readDouble(offsets[3]);
+  object.shares = reader.readLong(offsets[3]);
   return object;
 }
 
@@ -110,7 +110,7 @@ P _reitDeserializeProp<P>(
     case 2:
       return (reader.readDouble(offset)) as P;
     case 3:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -517,55 +517,46 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'shares',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesGreaterThan(
-    double value, {
+    int value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'shares',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesLessThan(
-    double value, {
+    int value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'shares',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesBetween(
-    double lower,
-    double upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -574,7 +565,6 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        epsilon: epsilon,
       ));
     });
   }
@@ -804,7 +794,7 @@ extension ReitQueryProperty on QueryBuilder<Reit, Reit, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Reit, double, QQueryOperations> sharesProperty() {
+  QueryBuilder<Reit, int, QQueryOperations> sharesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shares');
     });

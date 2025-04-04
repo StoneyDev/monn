@@ -19,16 +19,16 @@ void main() {
         // Arrange
         final formData = CrowdfundingForm(
           platformName: 'La Première Brique',
-          brutProfit: 100,
-          taxPercentage: 30,
+          brutProfit: '100',
+          taxPercentage: '30',
           receivedAt: DateTime(2024, 01, 20),
         );
 
         final crowdfunding = Crowdfunding(
-          platformName: formData.platformName!,
-          brutProfit: formData.brutProfit!,
+          platformName: formData.platformName,
+          brutProfit: double.parse(formData.brutProfit),
           receivedAt: formData.receivedAt,
-          taxPercentage: formData.taxPercentage!,
+          taxPercentage: double.parse(formData.taxPercentage!),
           taxProfit: 30,
           netProfit: 70,
         );
@@ -71,13 +71,13 @@ void main() {
         // Arrange
         final formData = CrowdfundingForm(
           platformName: 'La Première Brique',
-          brutProfit: -1999,
+          brutProfit: '-1999',
           receivedAt: DateTime(2024, 01, 20),
         );
 
         final crowdfunding = Crowdfunding(
-          platformName: formData.platformName!,
-          brutProfit: formData.brutProfit!,
+          platformName: formData.platformName,
+          brutProfit: double.parse(formData.brutProfit),
           receivedAt: formData.receivedAt,
         );
 
@@ -118,7 +118,7 @@ void main() {
       final error = Exception();
       final formData = CrowdfundingForm(
         platformName: 'La Première Brique',
-        brutProfit: -1999,
+        brutProfit: '-1999',
         receivedAt: DateTime(2024, 01, 20),
       );
 

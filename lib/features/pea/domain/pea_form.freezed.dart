@@ -16,8 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PeaForm {
-  int? get equity => throw _privateConstructorUsedError;
-  double? get costAverage => throw _privateConstructorUsedError;
+  String get equity => throw _privateConstructorUsedError;
+  String get costAverage => throw _privateConstructorUsedError;
+  bool get isDirty => throw _privateConstructorUsedError;
 
   /// Create a copy of PeaForm
   /// with the given fields replaced by the non-null parameter values.
@@ -30,7 +31,7 @@ abstract class $PeaFormCopyWith<$Res> {
   factory $PeaFormCopyWith(PeaForm value, $Res Function(PeaForm) then) =
       _$PeaFormCopyWithImpl<$Res, PeaForm>;
   @useResult
-  $Res call({int? equity, double? costAverage});
+  $Res call({String equity, String costAverage, bool isDirty});
 }
 
 /// @nodoc
@@ -48,18 +49,23 @@ class _$PeaFormCopyWithImpl<$Res, $Val extends PeaForm>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? equity = freezed,
-    Object? costAverage = freezed,
+    Object? equity = null,
+    Object? costAverage = null,
+    Object? isDirty = null,
   }) {
     return _then(_value.copyWith(
-      equity: freezed == equity
+      equity: null == equity
           ? _value.equity
           : equity // ignore: cast_nullable_to_non_nullable
-              as int?,
-      costAverage: freezed == costAverage
+              as String,
+      costAverage: null == costAverage
           ? _value.costAverage
           : costAverage // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
+      isDirty: null == isDirty
+          ? _value.isDirty
+          : isDirty // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$PeaFormImplCopyWith<$Res> implements $PeaFormCopyWith<$Res> {
       __$$PeaFormImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? equity, double? costAverage});
+  $Res call({String equity, String costAverage, bool isDirty});
 }
 
 /// @nodoc
@@ -87,18 +93,23 @@ class __$$PeaFormImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? equity = freezed,
-    Object? costAverage = freezed,
+    Object? equity = null,
+    Object? costAverage = null,
+    Object? isDirty = null,
   }) {
     return _then(_$PeaFormImpl(
-      equity: freezed == equity
+      equity: null == equity
           ? _value.equity
           : equity // ignore: cast_nullable_to_non_nullable
-              as int?,
-      costAverage: freezed == costAverage
+              as String,
+      costAverage: null == costAverage
           ? _value.costAverage
           : costAverage // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
+      isDirty: null == isDirty
+          ? _value.isDirty
+          : isDirty // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -106,16 +117,20 @@ class __$$PeaFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PeaFormImpl implements _PeaForm {
-  const _$PeaFormImpl({this.equity, this.costAverage});
+  const _$PeaFormImpl(
+      {required this.equity, required this.costAverage, this.isDirty = false});
 
   @override
-  final int? equity;
+  final String equity;
   @override
-  final double? costAverage;
+  final String costAverage;
+  @override
+  @JsonKey()
+  final bool isDirty;
 
   @override
   String toString() {
-    return 'PeaForm(equity: $equity, costAverage: $costAverage)';
+    return 'PeaForm(equity: $equity, costAverage: $costAverage, isDirty: $isDirty)';
   }
 
   @override
@@ -125,11 +140,12 @@ class _$PeaFormImpl implements _PeaForm {
             other is _$PeaFormImpl &&
             (identical(other.equity, equity) || other.equity == equity) &&
             (identical(other.costAverage, costAverage) ||
-                other.costAverage == costAverage));
+                other.costAverage == costAverage) &&
+            (identical(other.isDirty, isDirty) || other.isDirty == isDirty));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, equity, costAverage);
+  int get hashCode => Object.hash(runtimeType, equity, costAverage, isDirty);
 
   /// Create a copy of PeaForm
   /// with the given fields replaced by the non-null parameter values.
@@ -141,13 +157,17 @@ class _$PeaFormImpl implements _PeaForm {
 }
 
 abstract class _PeaForm implements PeaForm {
-  const factory _PeaForm({final int? equity, final double? costAverage}) =
-      _$PeaFormImpl;
+  const factory _PeaForm(
+      {required final String equity,
+      required final String costAverage,
+      final bool isDirty}) = _$PeaFormImpl;
 
   @override
-  int? get equity;
+  String get equity;
   @override
-  double? get costAverage;
+  String get costAverage;
+  @override
+  bool get isDirty;
 
   /// Create a copy of PeaForm
   /// with the given fields replaced by the non-null parameter values.

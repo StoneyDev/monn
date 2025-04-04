@@ -1,14 +1,88 @@
 {
+  "common": {
+    "dividends": "Dividendes",
+    "dividend": "Dividende",
+    "filter": "Filtre",
+    "language": "Langue",
+    "loading": "Chargement...",
+    "loss": "Perte",
+    "market_price": "Prix du marché",
+    "net_profit": "Plus-value",
+    "net_worth": "Patrimoine net",
+    "purchase": "Achat",
+    "settings": "Paramètres",
+    "amount": "Montant",
+    "start_amount": "Montant initial",
+    "tax": "Taxe {}",
+    "taxation": "Fiscalité",
+    "number_equities": "Nombre de titres",
+    "average_purchase_price": "Prix d'achat moyen",
+    "purchase_price": "Prix d'achat",
+    "current_price": "Prix actuel",
+    "share_price": "Prix de la part",
+    "last_update": "Dernière actualisation",
+    "theme": "Thème",
+    "image": "Image",
+    "wear": "Usure",
+    "exempt": "Exonérer",
+    "no_longer_exempt": "N'est plus exonéré",
+    "profit": "Gain",
+    "quantity": "Quantité",
+    "total_amount_invested": "Montant total investi",
+    "tracking_earnings": "Suivi des gains",
+    "withdrawal": "Retrait",
+    "add_savings": "Ajouter une épargne",
+    "add_savings_book": "Ajouter un livret",
+    "part": "Part",
+    "worth": "Valeur",
+    "platform": "Plateforme",
+    "select_a_reit": "Sélectionnez une SCPI",
+    "add_reit": "Ajouter une SCPI",
+    "savings_book_name": "Nom du livret",
+    "reit_name": "Nom de la SCPI",
+    "crypto_amount": "Montant en crypto",
+    "old_value": "Ancienne valeur",
+    "total_interest": "Intérêts totaux",
+    "receive_at": "Reçu le",
+    "sold_on": "Vendu le",
+    "bought_on": "Acheté le {}",
+    "without_income_tax": "(sans IR: 17.2%)",
+    "purchasing_tracking": "Suivi des achats",
+    "price_and_purchase_date": "Prix à {} le {}",
+    "opening_account": "Ouvert depuis {} ans / {}"
+  },
   "button": {
     "validate": "Valider",
-    "save": "Sauvegarder"
+    "save": "Sauvegarder",
+    "update_data": "Mettre à jour les données"
   },
   "input": {
     "error": {
       "empty": "Le champ est requis",
+      "superior": "Le champ doit être supérieur à zéro",
       "wrong_data": "Le champ comporte une erreur",
       "wrong_percentage": "Le pourcentage ne peut pas être supérieur à 100"
     }
   },
-  "start_amount": "Montant investi"
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "savings": {
+    "savings_book": "Livret",
+    "crowdfunding": "Crowdfunding Immobilier",
+    "cryptocurrency": "Cryptomonnaie",
+    "cs_knives": "Couteaux CS",
+    "pea": "PEA",
+    "reit": "SCPI"
+  },
+  "filters": {
+    "sort_by_start_amount_desc": "Montant initial (Décroissant)",
+    "sort_by_start_amount_asc": "Montant initial (Croissant)"
+  },
+  "theme_mode": {
+    "dark": "Sombre",
+    "light": "Clair",
+    "system": "Système"
+  }
 }

@@ -10,15 +10,15 @@ class SubmitPeaFormController extends _$SubmitPeaFormController {
   Future<void> build() async {}
 
   Future<bool> submit() async {
-    final repository = ref.read(peaRepositoryProvider);
-    final formData = ref.read(peaFormControllerProvider);
+    final repository = ref.watch(peaRepositoryProvider);
+    final formData = ref.watch(peaFormControllerProvider);
     final pea = await ref.refresh(getPeaProvider.future);
 
     state = await AsyncValue.guard(
       () => repository.editPea(
         pea!
-          ..equity = formData.equity!
-          ..costAverage = formData.costAverage!,
+          ..equity = int.parse(formData.equity)
+          ..costAverage = double.parse(formData.costAverage),
       ),
     );
 

@@ -19,7 +19,7 @@ void main() {
         // Arrange
         final formData = ReitDividendForm(
           reit: Reit(),
-          amount: 200,
+          amount: '200',
           receivedAt: DateTime.now(),
         );
 

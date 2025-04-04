@@ -15,20 +15,23 @@ class App extends ConsumerWidget {
       themeSwitchControllerProvider.select((theme) => theme.valueOrNull),
     );
 
-    return MaterialApp(
-      title: 'Monn',
-      theme: GlobalThemeData.light,
-      darkTheme: GlobalThemeData.dark,
-      themeMode: theme,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      home: const DashboardScreen(),
-      builder: (_, child) => AnnotatedRegion(
-        value: context.isDarkTheme(theme)
-            ? GlobalThemeData.lightSystemUi
-            : GlobalThemeData.darkSystemUi,
-        child: child!,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: MaterialApp(
+        title: 'Monn',
+        theme: GlobalThemeData.light,
+        darkTheme: GlobalThemeData.dark,
+        themeMode: theme,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: const DashboardScreen(),
+        builder: (_, child) => AnnotatedRegion(
+          value: context.isDarkTheme(theme)
+              ? GlobalThemeData.lightSystemUi
+              : GlobalThemeData.darkSystemUi,
+          child: child!,
+        ),
       ),
     );
   }

@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Savings {
   @Enumerated(EnumType.name)
   SavingsType get type => throw _privateConstructorUsedError;
-  double get startAmount => throw _privateConstructorUsedError;
+  double? get startAmount => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
   /// Create a copy of Savings
@@ -34,7 +34,7 @@ abstract class $SavingsCopyWith<$Res> {
   @useResult
   $Res call(
       {@Enumerated(EnumType.name) SavingsType type,
-      double startAmount,
+      double? startAmount,
       int id});
 }
 
@@ -54,7 +54,7 @@ class _$SavingsCopyWithImpl<$Res, $Val extends Savings>
   @override
   $Res call({
     Object? type = null,
-    Object? startAmount = null,
+    Object? startAmount = freezed,
     Object? id = null,
   }) {
     return _then(_value.copyWith(
@@ -62,10 +62,10 @@ class _$SavingsCopyWithImpl<$Res, $Val extends Savings>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as SavingsType,
-      startAmount: null == startAmount
+      startAmount: freezed == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -83,7 +83,7 @@ abstract class _$$SavingsImplCopyWith<$Res> implements $SavingsCopyWith<$Res> {
   @useResult
   $Res call(
       {@Enumerated(EnumType.name) SavingsType type,
-      double startAmount,
+      double? startAmount,
       int id});
 }
 
@@ -101,7 +101,7 @@ class __$$SavingsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? startAmount = null,
+    Object? startAmount = freezed,
     Object? id = null,
   }) {
     return _then(_$SavingsImpl(
@@ -109,10 +109,10 @@ class __$$SavingsImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as SavingsType,
-      startAmount: null == startAmount
+      startAmount: freezed == startAmount
           ? _value.startAmount
           : startAmount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -126,15 +126,14 @@ class __$$SavingsImplCopyWithImpl<$Res>
 class _$SavingsImpl implements _Savings {
   const _$SavingsImpl(
       {@Enumerated(EnumType.name) required this.type,
-      this.startAmount = 0.0,
+      this.startAmount,
       this.id = Isar.autoIncrement});
 
   @override
   @Enumerated(EnumType.name)
   final SavingsType type;
   @override
-  @JsonKey()
-  final double startAmount;
+  final double? startAmount;
   @override
   @JsonKey()
   final int id;
@@ -170,14 +169,14 @@ class _$SavingsImpl implements _Savings {
 abstract class _Savings implements Savings {
   const factory _Savings(
       {@Enumerated(EnumType.name) required final SavingsType type,
-      final double startAmount,
+      final double? startAmount,
       final int id}) = _$SavingsImpl;
 
   @override
   @Enumerated(EnumType.name)
   SavingsType get type;
   @override
-  double get startAmount;
+  double? get startAmount;
   @override
   int get id;
 

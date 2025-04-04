@@ -7,6 +7,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -33,7 +34,11 @@ class ReitScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(title: SavingsType.reit.label),
+      appBar: MonnAppBar(
+        title: context.tr(
+          'savings.${SavingsType.reit.name.toSnakeCase()}',
+        ),
+      ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
@@ -49,25 +54,27 @@ class ReitScreen extends ConsumerWidget {
           Text(
             finalAmount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: AppColors.gray700,
                   fontWeight: FontWeight.w900,
                 ),
           ),
-          Text(
-            startAmount.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                ),
+          OutlinedButton(
+            onPressed: null,
+            child: Text(
+              startAmount.simpleCurrency(locale),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.lightGray,
+                  ),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 32),
+          Divider(
+            color: Theme.of(context).colorScheme.outline,
+            height: 0,
+          ),
           switch (reits) {
             AsyncData(:final value) => Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 32,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                   itemBuilder: (_, index) {
                     final item = value[index];
                     final amount = item.dividends
@@ -92,26 +99,21 @@ class ReitScreen extends ConsumerWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w900),
                           ),
-                          const Divider(),
                           Row(
+                            spacing: 24,
                             children: [
                               MonnFinancialInfo(
-                                title: 'Vers. ini.',
+                                title: context.tr('common.start_amount'),
                                 data: item.shares * item.price,
                               ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Part',
-                                data: item.shares.toStringAsFixed(0),
+                                title: context.tr('common.part'),
+                                data: item.shares,
                               ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Valeur',
+                                title: context.tr('common.worth'),
                                 data: item.price,
                               ),
                             ],

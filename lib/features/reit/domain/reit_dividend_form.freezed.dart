@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReitDividendForm {
+  DateTime get receivedAt => throw _privateConstructorUsedError;
+  String get amount => throw _privateConstructorUsedError;
   Reit? get reit => throw _privateConstructorUsedError;
-  DateTime? get receivedAt => throw _privateConstructorUsedError;
-  double? get amount => throw _privateConstructorUsedError;
 
   /// Create a copy of ReitDividendForm
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +33,7 @@ abstract class $ReitDividendFormCopyWith<$Res> {
           ReitDividendForm value, $Res Function(ReitDividendForm) then) =
       _$ReitDividendFormCopyWithImpl<$Res, ReitDividendForm>;
   @useResult
-  $Res call({Reit? reit, DateTime? receivedAt, double? amount});
+  $Res call({DateTime receivedAt, String amount, Reit? reit});
 }
 
 /// @nodoc
@@ -51,23 +51,23 @@ class _$ReitDividendFormCopyWithImpl<$Res, $Val extends ReitDividendForm>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? receivedAt = null,
+    Object? amount = null,
     Object? reit = freezed,
-    Object? receivedAt = freezed,
-    Object? amount = freezed,
   }) {
     return _then(_value.copyWith(
+      receivedAt: null == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
       reit: freezed == reit
           ? _value.reit
           : reit // ignore: cast_nullable_to_non_nullable
               as Reit?,
-      receivedAt: freezed == receivedAt
-          ? _value.receivedAt
-          : receivedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      amount: freezed == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
     ) as $Val);
   }
 }
@@ -80,7 +80,7 @@ abstract class _$$ReitDividendFormImplCopyWith<$Res>
       __$$ReitDividendFormImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Reit? reit, DateTime? receivedAt, double? amount});
+  $Res call({DateTime receivedAt, String amount, Reit? reit});
 }
 
 /// @nodoc
@@ -96,23 +96,23 @@ class __$$ReitDividendFormImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? receivedAt = null,
+    Object? amount = null,
     Object? reit = freezed,
-    Object? receivedAt = freezed,
-    Object? amount = freezed,
   }) {
     return _then(_$ReitDividendFormImpl(
+      receivedAt: null == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
       reit: freezed == reit
           ? _value.reit
           : reit // ignore: cast_nullable_to_non_nullable
               as Reit?,
-      receivedAt: freezed == receivedAt
-          ? _value.receivedAt
-          : receivedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      amount: freezed == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double?,
     ));
   }
 }
@@ -120,18 +120,19 @@ class __$$ReitDividendFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReitDividendFormImpl implements _ReitDividendForm {
-  const _$ReitDividendFormImpl({this.reit, this.receivedAt, this.amount});
+  const _$ReitDividendFormImpl(
+      {required this.receivedAt, required this.amount, this.reit});
 
   @override
+  final DateTime receivedAt;
+  @override
+  final String amount;
+  @override
   final Reit? reit;
-  @override
-  final DateTime? receivedAt;
-  @override
-  final double? amount;
 
   @override
   String toString() {
-    return 'ReitDividendForm(reit: $reit, receivedAt: $receivedAt, amount: $amount)';
+    return 'ReitDividendForm(receivedAt: $receivedAt, amount: $amount, reit: $reit)';
   }
 
   @override
@@ -139,14 +140,14 @@ class _$ReitDividendFormImpl implements _ReitDividendForm {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReitDividendFormImpl &&
-            (identical(other.reit, reit) || other.reit == reit) &&
             (identical(other.receivedAt, receivedAt) ||
                 other.receivedAt == receivedAt) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.reit, reit) || other.reit == reit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reit, receivedAt, amount);
+  int get hashCode => Object.hash(runtimeType, receivedAt, amount, reit);
 
   /// Create a copy of ReitDividendForm
   /// with the given fields replaced by the non-null parameter values.
@@ -160,16 +161,16 @@ class _$ReitDividendFormImpl implements _ReitDividendForm {
 
 abstract class _ReitDividendForm implements ReitDividendForm {
   const factory _ReitDividendForm(
-      {final Reit? reit,
-      final DateTime? receivedAt,
-      final double? amount}) = _$ReitDividendFormImpl;
+      {required final DateTime receivedAt,
+      required final String amount,
+      final Reit? reit}) = _$ReitDividendFormImpl;
 
   @override
+  DateTime get receivedAt;
+  @override
+  String get amount;
+  @override
   Reit? get reit;
-  @override
-  DateTime? get receivedAt;
-  @override
-  double? get amount;
 
   /// Create a copy of ReitDividendForm
   /// with the given fields replaced by the non-null parameter values.

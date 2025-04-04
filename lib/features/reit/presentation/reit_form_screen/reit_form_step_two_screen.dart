@@ -8,15 +8,19 @@ import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
-class ReitFormStepTwoScreen extends ConsumerWidget {
+class ReitFormStepTwoScreen extends ConsumerStatefulWidget {
   const ReitFormStepTwoScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
-    final formKey = GlobalKey<FormState>();
-    final formData = ref.read(reitDividendFormControllerProvider);
+  ConsumerState<ReitFormStepTwoScreen> createState() =>
+      _ReitFormStepTwoScreenState();
+}
 
+class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
       body: Form(
@@ -24,49 +28,52 @@ class ReitFormStepTwoScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
+            spacing: 16,
             children: [
-              MonnFieldNumber(
-                label: 'Dividende',
+              MonnFieldNumber<double>(
+                label: context.tr('common.dividend'),
                 suffix: '€',
-                initialValue: formData.amount?.toString(),
                 required: true,
-                onChanged: (value) => ref
+                provider: reitDividendFormControllerProvider.select(
+                  (form) => form.amount,
+                ),
+                onChanged: (newAmount) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .edit(amount: value),
+                    .amount(amount: newAmount),
               ),
-              const SizedBox(height: 16),
               MonnFieldDate(
-                label: 'Reçu le',
+                label: context.tr('common.receive_at'),
                 required: true,
-                locale: locale,
-                initialValue: formData.receivedAt,
-                onChanged: (value) => ref
+                provider: reitDividendFormControllerProvider.select(
+                  (form) => form.receivedAt,
+                ),
+                onChanged: (newReceivedAt) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .edit(receivedAt: value),
+                    .receivedAt(receivedAt: newReceivedAt),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: MonnButton(
-          text: context.tr('button.validate'),
-          onPressed: () async {
-            if (!formKey.currentState!.validate()) return;
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: MonnButton(
+            text: context.tr('button.validate'),
+            onPressed: () async {
+              if (!(formKey.currentState?.validate() ?? false)) return;
 
-            final success = await ref
-                .read(submitReitDividendFormControllerProvider.notifier)
-                .submit();
+              final success = await ref
+                  .read(submitReitDividendFormControllerProvider.notifier)
+                  .submit();
+              if (!context.mounted || !success) return;
 
-            if (!context.mounted || !success) return;
-
-            ref.invalidate(reitDividendFormControllerProvider);
-
-            Navigator.of(context)
-              ..pop()
-              ..pop();
-          },
+              ref.invalidate(reitDividendFormControllerProvider);
+              Navigator.of(context)
+                ..pop()
+                ..pop();
+            },
+          ),
         ),
       ),
     );

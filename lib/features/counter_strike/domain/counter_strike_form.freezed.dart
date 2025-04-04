@@ -16,13 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CounterStrikeForm {
-  String? get name => throw _privateConstructorUsedError;
+  String get purchaseValue => throw _privateConstructorUsedError;
+  String get currentValue => throw _privateConstructorUsedError;
+  DateTime get boughtAt => throw _privateConstructorUsedError;
+  String get quantity => throw _privateConstructorUsedError;
+  CounterStrikeItem? get imageId => throw _privateConstructorUsedError;
   String? get wear => throw _privateConstructorUsedError;
-  double? get purchaseValue => throw _privateConstructorUsedError;
-  double? get currentValue => throw _privateConstructorUsedError;
-  DateTime? get boughtAt => throw _privateConstructorUsedError;
-  int? get quantity => throw _privateConstructorUsedError;
-  String? get imageId => throw _privateConstructorUsedError;
 
   /// Create a copy of CounterStrikeForm
   /// with the given fields replaced by the non-null parameter values.
@@ -38,13 +37,12 @@ abstract class $CounterStrikeFormCopyWith<$Res> {
       _$CounterStrikeFormCopyWithImpl<$Res, CounterStrikeForm>;
   @useResult
   $Res call(
-      {String? name,
-      String? wear,
-      double? purchaseValue,
-      double? currentValue,
-      DateTime? boughtAt,
-      int? quantity,
-      String? imageId});
+      {String purchaseValue,
+      String currentValue,
+      DateTime boughtAt,
+      String quantity,
+      CounterStrikeItem? imageId,
+      String? wear});
 }
 
 /// @nodoc
@@ -62,42 +60,37 @@ class _$CounterStrikeFormCopyWithImpl<$Res, $Val extends CounterStrikeForm>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? wear = freezed,
-    Object? purchaseValue = freezed,
-    Object? currentValue = freezed,
-    Object? boughtAt = freezed,
-    Object? quantity = freezed,
+    Object? purchaseValue = null,
+    Object? currentValue = null,
+    Object? boughtAt = null,
+    Object? quantity = null,
     Object? imageId = freezed,
+    Object? wear = freezed,
   }) {
     return _then(_value.copyWith(
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      wear: freezed == wear
-          ? _value.wear
-          : wear // ignore: cast_nullable_to_non_nullable
-              as String?,
-      purchaseValue: freezed == purchaseValue
+      purchaseValue: null == purchaseValue
           ? _value.purchaseValue
           : purchaseValue // ignore: cast_nullable_to_non_nullable
-              as double?,
-      currentValue: freezed == currentValue
+              as String,
+      currentValue: null == currentValue
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
-              as double?,
-      boughtAt: freezed == boughtAt
+              as String,
+      boughtAt: null == boughtAt
           ? _value.boughtAt
           : boughtAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      quantity: freezed == quantity
+              as DateTime,
+      quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       imageId: freezed == imageId
           ? _value.imageId
           : imageId // ignore: cast_nullable_to_non_nullable
+              as CounterStrikeItem?,
+      wear: freezed == wear
+          ? _value.wear
+          : wear // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -112,13 +105,12 @@ abstract class _$$CounterStrikeFormImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? name,
-      String? wear,
-      double? purchaseValue,
-      double? currentValue,
-      DateTime? boughtAt,
-      int? quantity,
-      String? imageId});
+      {String purchaseValue,
+      String currentValue,
+      DateTime boughtAt,
+      String quantity,
+      CounterStrikeItem? imageId,
+      String? wear});
 }
 
 /// @nodoc
@@ -134,42 +126,37 @@ class __$$CounterStrikeFormImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? wear = freezed,
-    Object? purchaseValue = freezed,
-    Object? currentValue = freezed,
-    Object? boughtAt = freezed,
-    Object? quantity = freezed,
+    Object? purchaseValue = null,
+    Object? currentValue = null,
+    Object? boughtAt = null,
+    Object? quantity = null,
     Object? imageId = freezed,
+    Object? wear = freezed,
   }) {
     return _then(_$CounterStrikeFormImpl(
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      wear: freezed == wear
-          ? _value.wear
-          : wear // ignore: cast_nullable_to_non_nullable
-              as String?,
-      purchaseValue: freezed == purchaseValue
+      purchaseValue: null == purchaseValue
           ? _value.purchaseValue
           : purchaseValue // ignore: cast_nullable_to_non_nullable
-              as double?,
-      currentValue: freezed == currentValue
+              as String,
+      currentValue: null == currentValue
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
-              as double?,
-      boughtAt: freezed == boughtAt
+              as String,
+      boughtAt: null == boughtAt
           ? _value.boughtAt
           : boughtAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      quantity: freezed == quantity
+              as DateTime,
+      quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       imageId: freezed == imageId
           ? _value.imageId
           : imageId // ignore: cast_nullable_to_non_nullable
+              as CounterStrikeItem?,
+      wear: freezed == wear
+          ? _value.wear
+          : wear // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -179,32 +166,29 @@ class __$$CounterStrikeFormImplCopyWithImpl<$Res>
 
 class _$CounterStrikeFormImpl implements _CounterStrikeForm {
   const _$CounterStrikeFormImpl(
-      {this.name,
-      this.wear,
-      this.purchaseValue,
-      this.currentValue,
-      this.boughtAt,
-      this.quantity,
-      this.imageId});
+      {required this.purchaseValue,
+      required this.currentValue,
+      required this.boughtAt,
+      required this.quantity,
+      required this.imageId,
+      this.wear});
 
   @override
-  final String? name;
+  final String purchaseValue;
+  @override
+  final String currentValue;
+  @override
+  final DateTime boughtAt;
+  @override
+  final String quantity;
+  @override
+  final CounterStrikeItem? imageId;
   @override
   final String? wear;
-  @override
-  final double? purchaseValue;
-  @override
-  final double? currentValue;
-  @override
-  final DateTime? boughtAt;
-  @override
-  final int? quantity;
-  @override
-  final String? imageId;
 
   @override
   String toString() {
-    return 'CounterStrikeForm(name: $name, wear: $wear, purchaseValue: $purchaseValue, currentValue: $currentValue, boughtAt: $boughtAt, quantity: $quantity, imageId: $imageId)';
+    return 'CounterStrikeForm(purchaseValue: $purchaseValue, currentValue: $currentValue, boughtAt: $boughtAt, quantity: $quantity, imageId: $imageId, wear: $wear)';
   }
 
   @override
@@ -212,8 +196,6 @@ class _$CounterStrikeFormImpl implements _CounterStrikeForm {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CounterStrikeFormImpl &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.wear, wear) || other.wear == wear) &&
             (identical(other.purchaseValue, purchaseValue) ||
                 other.purchaseValue == purchaseValue) &&
             (identical(other.currentValue, currentValue) ||
@@ -222,12 +204,13 @@ class _$CounterStrikeFormImpl implements _CounterStrikeForm {
                 other.boughtAt == boughtAt) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.imageId, imageId) || other.imageId == imageId));
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            (identical(other.wear, wear) || other.wear == wear));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, wear, purchaseValue,
-      currentValue, boughtAt, quantity, imageId);
+  int get hashCode => Object.hash(runtimeType, purchaseValue, currentValue,
+      boughtAt, quantity, imageId, wear);
 
   /// Create a copy of CounterStrikeForm
   /// with the given fields replaced by the non-null parameter values.
@@ -241,28 +224,25 @@ class _$CounterStrikeFormImpl implements _CounterStrikeForm {
 
 abstract class _CounterStrikeForm implements CounterStrikeForm {
   const factory _CounterStrikeForm(
-      {final String? name,
-      final String? wear,
-      final double? purchaseValue,
-      final double? currentValue,
-      final DateTime? boughtAt,
-      final int? quantity,
-      final String? imageId}) = _$CounterStrikeFormImpl;
+      {required final String purchaseValue,
+      required final String currentValue,
+      required final DateTime boughtAt,
+      required final String quantity,
+      required final CounterStrikeItem? imageId,
+      final String? wear}) = _$CounterStrikeFormImpl;
 
   @override
-  String? get name;
+  String get purchaseValue;
+  @override
+  String get currentValue;
+  @override
+  DateTime get boughtAt;
+  @override
+  String get quantity;
+  @override
+  CounterStrikeItem? get imageId;
   @override
   String? get wear;
-  @override
-  double? get purchaseValue;
-  @override
-  double? get currentValue;
-  @override
-  DateTime? get boughtAt;
-  @override
-  int? get quantity;
-  @override
-  String? get imageId;
 
   /// Create a copy of CounterStrikeForm
   /// with the given fields replaced by the non-null parameter values.

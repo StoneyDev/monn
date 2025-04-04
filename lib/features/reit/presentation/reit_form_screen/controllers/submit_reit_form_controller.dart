@@ -19,10 +19,10 @@ class SubmitReitFormController extends _$SubmitReitFormController {
     state = await AsyncValue.guard(
       () => repository.addReit(
         Reit()
-          ..name = formData.reitName!
-          ..price = formData.price!
-          ..boughtOn = formData.boughtOn!
-          ..shares = formData.shares!,
+          ..name = formData.reitName
+          ..price = double.parse(formData.price)
+          ..boughtOn = formData.boughtOn
+          ..shares = int.parse(formData.shares),
       ),
     );
 

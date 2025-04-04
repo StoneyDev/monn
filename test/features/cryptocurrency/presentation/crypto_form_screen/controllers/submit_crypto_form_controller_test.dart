@@ -21,7 +21,7 @@ void main() {
 
         final formData = CryptoForm(
           crypto: crypto,
-          amount: 20,
+          amount: '20',
           date: DateTime.now(),
         );
 
@@ -55,13 +55,13 @@ void main() {
 
         final formData = CryptoForm(
           crypto: crypto,
-          amount: 20,
+          amount: '20',
           date: DateTime.now(),
         );
 
         final cryptoTransaction = CryptocurrencyTransaction()
-          ..amount = formData.amount!
-          ..date = formData.date!;
+          ..amount = double.parse(formData.amount)
+          ..date = formData.date;
 
         const expectedAmount = 20;
         const expectedTotalCrypto = 42;

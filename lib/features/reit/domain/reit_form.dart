@@ -5,9 +5,9 @@ part 'reit_form.freezed.dart';
 @freezed
 class ReitForm with _$ReitForm {
   const factory ReitForm({
-    String? reitName,
-    DateTime? boughtOn,
-    double? shares,
-    double? price,
+    required String reitName,
+    required DateTime boughtOn,
+    required String shares,
+    required String price,
   }) = _ReitForm;
 }

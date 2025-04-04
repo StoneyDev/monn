@@ -3,23 +3,28 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_form_controller.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class CrowdfundingFormController extends _$CrowdfundingFormController {
   @override
-  CrowdfundingForm build() => const CrowdfundingForm();
+  CrowdfundingForm build() => CrowdfundingForm(
+        platformName: '',
+        receivedAt: DateTime.now(),
+        brutProfit: '',
+      );
 
-  void edit({
-    String? platformName,
-    String? taxPercentage,
-    String? brutProfit,
-    DateTime? receivedAt,
-  }) {
-    state = state.copyWith(
-      platformName: platformName ?? state.platformName,
-      taxPercentage:
-          double.tryParse(taxPercentage ?? '') ?? state.taxPercentage,
-      brutProfit: double.tryParse(brutProfit ?? '') ?? state.brutProfit,
-      receivedAt: receivedAt ?? state.receivedAt,
-    );
+  void platformName({required String platformName}) {
+    state = state.copyWith(platformName: platformName);
+  }
+
+  void receivedAt({required DateTime receivedAt}) {
+    state = state.copyWith(receivedAt: receivedAt);
+  }
+
+  void brutProfit({required String brutProfit}) {
+    state = state.copyWith(brutProfit: brutProfit);
+  }
+
+  void taxPercentage({String? taxPercentage}) {
+    state = state.copyWith(taxPercentage: taxPercentage);
   }
 }

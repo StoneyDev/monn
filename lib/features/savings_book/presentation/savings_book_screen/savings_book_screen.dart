@@ -1,21 +1,24 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/savings_book_form_screen.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/dialogs/monn_dialog.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-final newInterestProvider = StateProvider<String?>((_) => null);
+final _newInterestProvider = StateProvider.autoDispose<String>((_) => '');
 
 class SavingsBookScreen extends ConsumerWidget {
   const SavingsBookScreen({super.key});
@@ -23,7 +26,6 @@ class SavingsBookScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final formKey = GlobalKey<FormState>();
     final startAmount = ref.watch(
       getSavingsProvider(type: SavingsType.savingsBook).select(
         (savings) => savings.valueOrNull?.startAmount ?? 0,
@@ -35,7 +37,11 @@ class SavingsBookScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(title: SavingsType.savingsBook.label),
+      appBar: MonnAppBar(
+        title: context.tr(
+          'savings.${SavingsType.savingsBook.name.toSnakeCase()}',
+        ),
+      ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
         onPressed: () => Navigator.push(
@@ -54,21 +60,25 @@ class SavingsBookScreen extends ConsumerWidget {
                   fontWeight: FontWeight.w900,
                 ),
           ),
-          Text(
-            startAmount.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                ),
+          OutlinedButton(
+            onPressed: null,
+            child: Text(
+              startAmount.simpleCurrency(locale),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.lightGray,
+                  ),
+            ),
+          ),
+          const SizedBox(height: 32),
+          Divider(
+            color: Theme.of(context).colorScheme.outline,
+            height: 0,
           ),
           const SizedBox(height: 16),
           switch (savingsBooks) {
             AsyncData(:final value) => Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 32,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                   itemBuilder: (_, index) {
                     final item = value[index];
                     final netValue =
@@ -99,59 +109,49 @@ class SavingsBookScreen extends ConsumerWidget {
                           Row(
                             children: [
                               MonnFinancialInfo(
-                                title: 'Vers. ini.',
+                                title: context.tr('common.start_amount'),
                                 data: item.startAmount,
                               ),
                               const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Intérêts totaux',
+                                title: context.tr('common.total_interest'),
                                 data: item.interests,
                               ),
                               const SizedBox(width: 24),
                               MonnFinancialInfo(
-                                title: 'Retrait',
+                                title: context.tr('common.withdrawal'),
                                 data: item.withdrawal,
                               ),
                             ],
                           ),
                         ],
                       ),
-                      onTap: () => WoltModalSheet.show<void>(
-                        context: context,
-                        barrierDismissible: true,
-                        modalTypeBuilder: (_) => WoltModalType.dialog(),
-                        pageListBuilder: (context) => [
-                          MonnDialog.amount(
-                            context: context,
-                            formKey: formKey,
-                            onChanged: (value) {
-                              if (value.isEmpty) return;
-                              ref.read(newInterestProvider.notifier).state =
-                                  value;
-                            },
-                            onSubmit: () async {
-                              if (!formKey.currentState!.validate()) return;
+                      onTap: () => context.push(
+                        fullscreenDialog: true,
+                        AmountScreen(
+                          provider: _newInterestProvider,
+                          onChanged: (value) => ref
+                              .read(_newInterestProvider.notifier)
+                              .state = value,
+                          onSubmit: () async {
+                            final success = await ref
+                                .read(
+                                  submitSavingsBookInterestFormControllerProvider
+                                      .notifier,
+                                )
+                                .submit(
+                                  savingsBook: item,
+                                  amount: double.parse(
+                                    ref.read(_newInterestProvider),
+                                  ),
+                                );
 
-                              final success = await ref
-                                  .read(
-                                    // ignore: lines_longer_than_80_chars .
-                                    submitSavingsBookInterestFormControllerProvider
-                                        .notifier,
-                                  )
-                                  .submit(
-                                    savingsBook: item,
-                                    amount: double.parse(
-                                      ref.read(newInterestProvider)!,
-                                    ),
-                                  );
+                            if (!context.mounted || !success) return;
 
-                              if (!context.mounted || !success) return;
-
-                              ref.invalidate(newInterestProvider);
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                            ref.invalidate(_newInterestProvider);
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     );
                   },

@@ -7,7 +7,7 @@ class Reit {
   Id? id;
   late String name;
   late DateTime boughtOn;
-  late double shares;
+  late int shares;
   late double price;
 
   final dividends = IsarLinks<ReitDividend>();

@@ -3,22 +3,29 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_form_controller.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ReitFormController extends _$ReitFormController {
   @override
-  ReitForm build() => const ReitForm();
+  ReitForm build() => ReitForm(
+        reitName: '',
+        boughtOn: DateTime.now(),
+        price: '',
+        shares: '',
+      );
 
-  void edit({
-    String? reitName,
-    DateTime? boughtOn,
-    String? shares,
-    String? price,
-  }) {
-    state = state.copyWith(
-      reitName: reitName ?? state.reitName,
-      price: double.tryParse(price ?? '') ?? state.price,
-      shares: double.tryParse(shares ?? '') ?? state.shares,
-      boughtOn: boughtOn ?? state.boughtOn,
-    );
+  void reitName(String reitName) {
+    state = state.copyWith(reitName: reitName);
+  }
+
+  void boughtOn(DateTime boughtOn) {
+    state = state.copyWith(boughtOn: boughtOn);
+  }
+
+  void shares(String shares) {
+    state = state.copyWith(shares: shares);
+  }
+
+  void price(String price) {
+    state = state.copyWith(price: price);
   }
 }

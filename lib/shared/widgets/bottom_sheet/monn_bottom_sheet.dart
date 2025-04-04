@@ -23,7 +23,7 @@ class MonnBottomSheet {
       surfaceTintColor: AppColors.white,
       isTopBarLayerAlwaysVisible: true,
       topBarTitle: Text(
-        'Dividandes (${reit.name.toUpperCase()})',
+        '${context.tr('common.dividends')} (${reit.name.toUpperCase()})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w900,
             ),
@@ -53,7 +53,6 @@ class MonnBottomSheet {
                 trailing: Text(
                   item.amount.simpleCurrency(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.gray700,
                         fontWeight: FontWeight.w900,
                       ),
                 ),
@@ -68,7 +67,7 @@ class MonnBottomSheet {
 
   static SliverWoltModalSheetPage itemList({
     required BuildContext context,
-    required SliverChildBuilderDelegate builder,
+    required Widget sliver,
     required String title,
   }) {
     return SliverWoltModalSheetPage(
@@ -93,7 +92,7 @@ class MonnBottomSheet {
       mainContentSliversBuilder: (_) => [
         SliverPadding(
           padding: const EdgeInsets.only(bottom: 16),
-          sliver: SliverList(delegate: builder),
+          sliver: sliver,
         ),
       ],
     );

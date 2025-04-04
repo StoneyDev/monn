@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'coin_cap_api.dart';
+part of 'coin_market_cap_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,13 +8,13 @@ part of 'coin_cap_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _CoinCapApi implements CoinCapApi {
-  _CoinCapApi(
+class _CoinMarketCapApi implements CoinMarketCapApi {
+  _CoinMarketCapApi(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.coincap.io/v2/';
+    baseUrl ??= 'https://pro-api.coinmarketcap.com/';
   }
 
   final Dio _dio;
@@ -24,19 +24,19 @@ class _CoinCapApi implements CoinCapApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CoinCapResponse> getCryptoPriceMarket(String id) async {
+  Future<CoinMarketCapResponse> getCryptoPriceMarket(String slug) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'slug': slug};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CoinCapResponse>(Options(
+    final _options = _setStreamType<CoinMarketCapResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/assets/${id}',
+          '/v2/cryptocurrency/quotes/latest',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -46,9 +46,9 @@ class _CoinCapApi implements CoinCapApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CoinCapResponse _value;
+    late CoinMarketCapResponse _value;
     try {
-      _value = CoinCapResponse.fromJson(_result.data!);
+      _value = CoinMarketCapResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

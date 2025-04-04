@@ -7,75 +7,93 @@ import 'package:monn/features/pea/presentation/pea_form_screen/controllers/submi
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
+import 'package:monn/shared/widgets/monn_error.dart';
 
-class PeaFormScreen extends ConsumerWidget {
+class PeaFormScreen extends ConsumerStatefulWidget {
   const PeaFormScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = GlobalKey<FormState>();
-    final peaData = ref.watch(getPeaProvider);
+  ConsumerState<PeaFormScreen> createState() => _PeaFormScreenState();
+}
 
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: MonnAppBar(
-          onBack: () => ref.invalidate(peaFormControllerProvider),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: formKey,
-            child: switch (peaData) {
-              AsyncData(:final value) => Column(
-                  spacing: 16,
-                  children: [
-                    MonnFieldNumber(
-                      label: 'Nombre de titre',
-                      initialValue: value?.equity.toString(),
-                      required: true,
-                      onChanged: (value) => ref
-                          .read(peaFormControllerProvider.notifier)
-                          .equity(value),
+class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final peaData = ref.watch(getPeaProvider);
+    final canSubmit = ref.watch(peaFormControllerProvider).isDirty &&
+        (formKey.currentState?.validate() ?? false);
+
+    return Scaffold(
+      appBar: const MonnAppBar(),
+      body: switch (peaData) {
+        AsyncData(:final value) => SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: formKey,
+              child: Column(
+                spacing: 16,
+                children: [
+                  MonnFieldNumber<int>(
+                    label: context.tr('common.number_equities'),
+                    required: true,
+                    provider: peaFormControllerProvider.select(
+                      (form) => form.equity,
                     ),
-                    MonnFieldNumber(
-                      label: "Prix d'achat",
-                      initialValue: value?.costAverage.toString(),
-                      required: true,
-                      onChanged: (value) => ref
-                          .read(peaFormControllerProvider.notifier)
-                          .costAverage(value),
-                    ),
-                  ],
-                ),
-              AsyncError(:final error) => Text(error.toString()),
-              _ => const Center(
-                  child: RepaintBoundary(
-                    child: CircularProgressIndicator(),
+                    onChanged: (newEquity) =>
+                        ref.read(peaFormControllerProvider.notifier).equity(
+                              equity: newEquity,
+                              initial: value?.equity,
+                            ),
                   ),
-                )
-            },
+                  MonnFieldNumber<double>(
+                    label: context.tr('common.purchase_price'),
+                    required: true,
+                    provider: peaFormControllerProvider.select(
+                      (form) => form.costAverage,
+                    ),
+                    onChanged: (newCostAverage) => ref
+                        .read(peaFormControllerProvider.notifier)
+                        .costAverage(
+                          costAverage: newCostAverage,
+                          initial: value?.costAverage,
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: SizedBox(
-          width: MediaQuery.sizeOf(context).width - 32,
+        AsyncError(:final error) => Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: MonnError(message: '$error'),
+            ),
+          ),
+        _ => const Center(
+            child: RepaintBoundary(
+              child: CircularProgressIndicator(),
+            ),
+          )
+      },
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: MonnButton(
             text: context.tr('button.save'),
-            onPressed: () async {
-              if (!(formKey.currentState?.validate() ?? false)) return;
+            onPressed: canSubmit
+                ? () async {
+                    final success = await ref
+                        .read(submitPeaFormControllerProvider.notifier)
+                        .submit();
+                    if (!context.mounted || !success) return;
 
-              final success = await ref
-                  .read(submitPeaFormControllerProvider.notifier)
-                  .submit();
-              if (!context.mounted || !success) return;
-
-              ref
-                ..invalidate(getPeaProvider)
-                ..invalidate(getPayoutReportPeaProvider)
-                ..invalidate(peaFormControllerProvider);
-              Navigator.pop(context);
-            },
+                    ref
+                      ..invalidate(getPeaProvider)
+                      ..invalidate(getPayoutReportPeaProvider);
+                    Navigator.pop(context);
+                  }
+                : null,
           ),
         ),
       ),

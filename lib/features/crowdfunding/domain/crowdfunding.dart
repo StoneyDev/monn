@@ -8,11 +8,11 @@ part 'crowdfunding.g.dart';
 @Collection(ignore: {'copyWith'})
 class Crowdfunding with _$Crowdfunding {
   const factory Crowdfunding({
-    @Default(0.0) double netProfit,
-    @Default(0.0) double brutProfit,
-    @Default(0.0) double taxProfit,
-    @Default(0.0) double taxPercentage,
-    @Default('Inconnue') String platformName,
+    required double brutProfit,
+    required String platformName,
+    double? netProfit,
+    double? taxProfit,
+    double? taxPercentage,
     DateTime? receivedAt,
     @Default(Isar.autoIncrement) Id id,
   }) = _Crowdfunding;

@@ -35,7 +35,7 @@ class PayoutReport extends StatelessWidget {
           children: [
             MonnLine(
               icon: const iconoir.PiggyBank(color: AppColors.green),
-              title: context.tr('net_profit'),
+              title: context.tr('common.net_profit'),
               value: Text(
                 netProfit.simpleCurrency(locale),
                 textAlign: TextAlign.right,
@@ -47,7 +47,7 @@ class PayoutReport extends StatelessWidget {
             ),
             MonnLine(
               icon: const iconoir.Bank(color: AppColors.blue),
-              title: context.tr('tax'),
+              title: context.tr('common.tax', args: ['']),
               value: Text(
                 (-tax).simpleCurrency(locale),
                 textAlign: TextAlign.right,
@@ -59,7 +59,7 @@ class PayoutReport extends StatelessWidget {
             ),
             MonnLine(
               icon: const iconoir.FireFlame(color: AppColors.red),
-              title: context.tr('loss'),
+              title: context.tr('common.loss'),
               value: Text(
                 loss.simpleCurrency(locale),
                 textAlign: TextAlign.right,
