@@ -149,6 +149,7 @@ class _RefundTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale.toString();
+    final isExempt = (data.netProfit ?? 0) != data.brutProfit;
 
     return MonnCard(
       child: Row(
@@ -194,8 +195,12 @@ class _RefundTransaction extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  '(${data.brutProfit})',
-                  style: const TextStyle(color: AppColors.lightGray),
+                  isExempt
+                      ? '(${data.brutProfit})'
+                      : context.tr('common.exempt'),
+                  style: TextStyle(
+                    color: isExempt ? AppColors.lightGray : AppColors.green,
+                  ),
                 ),
               ],
             ),
