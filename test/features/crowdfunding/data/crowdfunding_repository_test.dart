@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,10 +71,26 @@ void main() {
       () async {
         // Arrange
         final crowdfundings = [
-          Crowdfunding(receivedAt: DateTime(2024, 8, 25)),
-          Crowdfunding(receivedAt: DateTime(2024, 2, 14)),
-          Crowdfunding(receivedAt: DateTime(2024, 7, 08)),
-          Crowdfunding(receivedAt: DateTime(2024, 8, 10)),
+          Crowdfunding(
+            receivedAt: DateTime(2024, 8, 25),
+            platformName: 'La Première Brique',
+            brutProfit: 0,
+          ),
+          Crowdfunding(
+            receivedAt: DateTime(2024, 2, 14),
+            platformName: 'La Première Brique',
+            brutProfit: 0,
+          ),
+          Crowdfunding(
+            receivedAt: DateTime(2024, 7, 08),
+            platformName: 'La Première Brique',
+            brutProfit: 0,
+          ),
+          Crowdfunding(
+            receivedAt: DateTime(2024, 8, 10),
+            platformName: 'La Première Brique',
+            brutProfit: 0,
+          ),
         ];
 
         final sorted = [
@@ -146,20 +160,28 @@ void main() {
           receivedAt: DateTime(2024, 8, 25),
           netProfit: 70,
           taxProfit: 30,
+          brutProfit: 100,
+          platformName: 'La Première Brique',
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 2, 14),
           netProfit: 39.2,
           taxProfit: 16.8,
+          brutProfit: 56,
+          platformName: 'La Première Brique',
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 7, 08),
           netProfit: 66.24,
           taxProfit: 13.76,
+          brutProfit: 80,
+          platformName: 'La Première Brique',
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 8, 10),
           netProfit: 20,
+          brutProfit: 20,
+          platformName: 'La Première Brique',
         ),
       ];
 
@@ -185,8 +207,8 @@ void main() {
         (_) => Stream.value(crowdfundings),
       );
 
-      when(savingRepository.watchSaving(any)).thenAnswer(
-        (_) => Stream.value(savings),
+      when(savingRepository.getSavings(any)).thenAnswer(
+        (_) => Future.value(savings),
       );
 
       // Act
@@ -216,20 +238,26 @@ void main() {
         Crowdfunding(
           receivedAt: DateTime(2024, 8, 25),
           brutProfit: -100,
+          platformName: 'La Première Brique',
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 8, 10),
           brutProfit: -564.22,
+          platformName: 'La Première Brique',
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 2, 14),
           netProfit: 39.2,
           taxProfit: 16.8,
+          platformName: 'La Première Brique',
+          brutProfit: 56,
         ),
         Crowdfunding(
           receivedAt: DateTime(2024, 7, 08),
           netProfit: 66.24,
           taxProfit: 13.76,
+          brutProfit: 80,
+          platformName: 'La Première Brique',
         ),
       ];
 
@@ -260,8 +288,8 @@ void main() {
         (_) => Stream.value(crowdfundings),
       );
 
-      when(savingRepository.watchSaving(any)).thenAnswer(
-        (_) => Stream.value(savings),
+      when(savingRepository.getSavings(any)).thenAnswer(
+        (_) => Future.value(savings),
       );
 
       // Act

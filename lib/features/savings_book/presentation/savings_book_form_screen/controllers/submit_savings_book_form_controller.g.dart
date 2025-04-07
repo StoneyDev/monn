@@ -7,7 +7,7 @@ part of 'submit_savings_book_form_controller.dart';
 // **************************************************************************
 
 String _$submitSavingsBookFormControllerHash() =>
-    r'98c62ad1aa65b31885c074bb003ba0c277d8ed43';
+    r'169a32f45421be0561d04214b2614870fd0eb13f';
 
 /// See also [SubmitSavingsBookFormController].
 @ProviderFor(SubmitSavingsBookFormController)
@@ -25,4 +25,4 @@ final submitSavingsBookFormControllerProvider =
 
 typedef _$SubmitSavingsBookFormController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

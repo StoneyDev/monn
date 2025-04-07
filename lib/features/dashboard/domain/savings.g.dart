@@ -40,7 +40,7 @@ const SavingsSchema = CollectionSchema(
   getId: _savingsGetId,
   getLinks: _savingsGetLinks,
   attach: _savingsAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _savingsEstimateSize(
@@ -71,7 +71,7 @@ Savings _savingsDeserialize(
 ) {
   final object = Savings(
     id: id,
-    startAmount: reader.readDouble(offsets[0]),
+    startAmount: reader.readDoubleOrNull(offsets[0]),
     type: _SavingstypeValueEnumMap[reader.readStringOrNull(offsets[1])] ??
         SavingsType.savingsBook,
   );
@@ -86,7 +86,7 @@ P _savingsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 1:
       return (_SavingstypeValueEnumMap[reader.readStringOrNull(offset)] ??
           SavingsType.savingsBook) as P;
@@ -99,23 +99,17 @@ const _SavingstypeEnumValueMap = {
   r'savingsBook': r'savingsBook',
   r'crowdfunding': r'crowdfunding',
   r'cryptocurrency': r'cryptocurrency',
-  r'csknives': r'csknives',
-  r'cto': r'cto',
-  r'lifeInsurance': r'lifeInsurance',
+  r'csKnives': r'csKnives',
   r'pea': r'pea',
   r'reit': r'reit',
-  r'rip': r'rip',
 };
 const _SavingstypeValueEnumMap = {
   r'savingsBook': SavingsType.savingsBook,
   r'crowdfunding': SavingsType.crowdfunding,
   r'cryptocurrency': SavingsType.cryptocurrency,
-  r'csknives': SavingsType.csknives,
-  r'cto': SavingsType.cto,
-  r'lifeInsurance': SavingsType.lifeInsurance,
+  r'csKnives': SavingsType.csKnives,
   r'pea': SavingsType.pea,
   r'reit': SavingsType.reit,
-  r'rip': SavingsType.rip,
 };
 
 Id _savingsGetId(Savings object) {
@@ -257,8 +251,24 @@ extension SavingsQueryFilter
     });
   }
 
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'startAmount',
+      ));
+    });
+  }
+
+  QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'startAmount',
+      ));
+    });
+  }
+
   QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -271,7 +281,7 @@ extension SavingsQueryFilter
   }
 
   QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -286,7 +296,7 @@ extension SavingsQueryFilter
   }
 
   QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -301,8 +311,8 @@ extension SavingsQueryFilter
   }
 
   QueryBuilder<Savings, Savings, QAfterFilterCondition> startAmountBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -545,7 +555,7 @@ extension SavingsQueryProperty
     });
   }
 
-  QueryBuilder<Savings, double, QQueryOperations> startAmountProperty() {
+  QueryBuilder<Savings, double?, QQueryOperations> startAmountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startAmount');
     });

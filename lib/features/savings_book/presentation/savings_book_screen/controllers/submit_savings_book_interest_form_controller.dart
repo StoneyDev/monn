@@ -14,8 +14,6 @@ class SubmitSavingsBookInterestFormController
     required SavingsBook savingsBook,
     required double amount,
   }) async {
-    state = const AsyncLoading();
-
     final repository = ref.read(savingsBookRepositoryProvider);
     final newSavingsBook = savingsBook;
 

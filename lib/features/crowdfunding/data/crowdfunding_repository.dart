@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
@@ -26,16 +27,12 @@ class CrowdfundingRepository {
 }
 
 @Riverpod(keepAlive: true)
-CrowdfundingRepository crowdfundingRepository(
-  CrowdfundingRepositoryRef ref,
-) {
+CrowdfundingRepository crowdfundingRepository(Ref ref) {
   return CrowdfundingRepository(LocalDatabase().database);
 }
 
 @riverpod
-Stream<List<Crowdfunding>> watchCrowdfundings(
-  WatchCrowdfundingsRef ref,
-) async* {
+Stream<List<Crowdfunding>> watchCrowdfundings(Ref ref) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
 
   await for (final results in repository.watchCrowdfundings()) {
@@ -45,12 +42,12 @@ Stream<List<Crowdfunding>> watchCrowdfundings(
 }
 
 @riverpod
-Stream<PayoutReportData> watchPayoutReportCrowdfunding(
-  WatchPayoutReportCrowdfundingRef ref,
-) async* {
+Stream<PayoutReportData> watchPayoutReportCrowdfunding(Ref ref) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
-  final crowdfundingData = await ref.watch(
-    watchSavingProvider(type: SavingsType.crowdfunding).future,
+  final startAmount = await ref.watch(
+    getSavingsProvider(type: SavingsType.crowdfunding).selectAsync(
+      (data) => data?.startAmount ?? 0,
+    ),
   );
 
   await for (final results in repository.watchCrowdfundings()) {
@@ -58,13 +55,13 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(
         results.fold<(double, double, double)>(
       (0, 0, 0),
       (totals, e) => (
-        totals.$1 + e.netProfit,
-        totals.$2 + e.taxProfit,
+        totals.$1 + (e.netProfit ?? 0),
+        totals.$2 + (e.taxProfit ?? 0),
         totals.$3 + (e.brutProfit.isNegative ? e.brutProfit : 0)
       ),
     );
 
-    final totalAmount = crowdfundingData.startAmount + totalNetProfit;
+    final totalAmount = startAmount + totalNetProfit;
     final finalAmount = totalAmount - totalLoss.abs();
 
     yield PayoutReportData(

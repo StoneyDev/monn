@@ -6,24 +6,33 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/submit_savings_book_form_controller.dart';
-import 'package:monn/shared/widgets/fields/moon_field_number.dart';
-import 'package:monn/shared/widgets/fields/moon_field_text.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_button.dart';
+import 'package:monn/shared/widgets/fields/monn_field_number.dart';
+import 'package:monn/shared/widgets/fields/monn_field_text.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 
-class SavingsBookFormScreen extends ConsumerWidget {
+class SavingsBookFormScreen extends ConsumerStatefulWidget {
   const SavingsBookFormScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref
-        .watch(watchSavingProvider(type: SavingsType.savingsBook))
-        .valueOrNull;
-    final formKey = GlobalKey<FormState>();
+  ConsumerState<SavingsBookFormScreen> createState() =>
+      _SavingsBookFormScreenState();
+}
+
+class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final savingsBookData = ref.watch(
+      getSavingsProvider(type: SavingsType.savingsBook).select(
+        (savings) => savings.valueOrNull,
+      ),
+    );
 
     return Scaffold(
-      appBar: const MoonAppBar(
-        title: 'Ajouter un livret',
+      appBar: MonnAppBar(
+        title: context.tr('common.add_savings_book'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -31,52 +40,57 @@ class SavingsBookFormScreen extends ConsumerWidget {
           key: formKey,
           child: Column(
             children: [
-              MoonFieldText(
-                label: 'Nom du livret',
+              MonnFieldText(
+                label: context.tr('common.savings_book_name'),
                 required: true,
-                onChanged: (value) => ref
+                onChanged: (newName) => ref
                     .read(savingsBookFormControllerProvider.notifier)
-                    .edit(name: value),
+                    .name(name: newName),
               ),
               const SizedBox(height: 16),
-              MoonFieldNumber(
-                label: 'Montant initial',
+              MonnFieldNumber<double>(
+                label: context.tr('common.start_amount'),
                 suffix: '€',
                 required: true,
-                onChanged: (value) => ref
+                onChanged: (newStartAmount) => ref
                     .read(savingsBookFormControllerProvider.notifier)
-                    .edit(startAmount: value.isEmpty ? '0' : value),
+                    .startAmount(startAmount: newStartAmount),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: MoonButton(
-          text: context.tr('button.validate'),
-          onPressed: () async {
-            if (!formKey.currentState!.validate()) return;
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: MonnButton(
+            text: context.tr('button.validate'),
+            onPressed: () async {
+              if (!(formKey.currentState?.validate() ?? false)) return;
 
-            final success = await ref
-                .read(submitSavingsBookFormControllerProvider.notifier)
-                .submit();
+              final success = await ref
+                  .read(submitSavingsBookFormControllerProvider.notifier)
+                  .submit();
 
-            final formData = ref.read(savingsBookFormControllerProvider);
+              final formData = ref.read(savingsBookFormControllerProvider);
 
-            final newSaving = data!.copyWith(
-              startAmount: data.startAmount + formData.startAmount!,
-            );
+              final newSaving = savingsBookData?.copyWith(
+                startAmount: (savingsBookData.startAmount ?? 0) +
+                    double.parse(formData.startAmount),
+              );
 
-            final updated = await ref
-                .read(editSavingsControllerProvider.notifier)
-                .submit(newSaving);
+              final updated = await ref
+                  .read(editSavingsControllerProvider.notifier)
+                  .submit(newSaving!);
 
-            if (!context.mounted || !success || !updated) return;
+              if (!context.mounted || !success || !updated) return;
 
-            ref.invalidate(submitSavingsBookFormControllerProvider);
-            Navigator.pop(context);
-          },
+              ref
+                ..invalidate(savingsBookFormControllerProvider)
+                ..invalidate(getSavingsProvider);
+              Navigator.pop(context);
+            },
+          ),
         ),
       ),
     );

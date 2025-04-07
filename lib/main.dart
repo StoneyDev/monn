@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/app.dart';
+import 'package:monn/debug_observer.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/utils/app_colors.dart';
-import 'package:monn/utils/global_theme_data.dart';
+import 'package:monn/shared/widgets/monn_error.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +19,11 @@ void main() async {
 
   runApp(
     ProviderScope(
+      observers: kDebugMode ? [DebugObserver()] : null,
       child: EasyLocalization(
         path: 'assets/translations',
         supportedLocales: const [Locale('fr'), Locale('en')],
+        fallbackLocale: const Locale('en'),
         child: const App(),
       ),
     ),
@@ -40,9 +42,6 @@ void _systemChrome() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
-  // Setting overlay
-  SystemChrome.setSystemUIOverlayStyle(GlobalThemeData.systemUi);
 }
 
 void _registerErrorHandlers() {
@@ -60,18 +59,8 @@ void _registerErrorHandlers() {
   ErrorWidget.builder = (error) {
     return Scaffold(
       body: SafeArea(
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            color: AppColors.lightError,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Error widget : ${error.exceptionAsString()}',
-              style: const TextStyle(color: AppColors.error),
-            ),
-          ),
+        child: MonnError(
+          message: error.exceptionAsString(),
         ),
       ),
     );

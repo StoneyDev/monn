@@ -21,8 +21,8 @@ class SubmitReitDividendFormController
       () => repository.editReit(
         reit: formData.reit!,
         dividend: ReitDividend()
-          ..amount = formData.amount!
-          ..receivedAt = formData.receivedAt!,
+          ..amount = double.parse(formData.amount)
+          ..receivedAt = formData.receivedAt,
       ),
     );
 

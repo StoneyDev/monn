@@ -16,7 +16,7 @@ void main() {
         // Arrange
         const formData = SavingsBookForm(
           name: 'Livret 1',
-          startAmount: 100,
+          startAmount: '100',
         );
 
         final repository = MockSavingsBookRepository();

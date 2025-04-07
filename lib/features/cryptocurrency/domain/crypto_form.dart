@@ -6,9 +6,8 @@ part 'crypto_form.freezed.dart';
 @freezed
 class CryptoForm with _$CryptoForm {
   const factory CryptoForm({
+    required String amount,
+    required DateTime date,
     Cryptocurrency? crypto,
-    double? fiat,
-    double? amount,
-    DateTime? boughtOn,
   }) = _CryptoForm;
 }

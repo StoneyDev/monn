@@ -3,15 +3,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_form_controller.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class SavingsBookFormController extends _$SavingsBookFormController {
   @override
-  SavingsBookForm build() => const SavingsBookForm();
+  SavingsBookForm build() => const SavingsBookForm(name: '', startAmount: '');
 
-  void edit({String? name, String? startAmount}) {
-    state = state.copyWith(
-      name: name ?? state.name,
-      startAmount: double.tryParse(startAmount ?? '') ?? state.startAmount,
-    );
+  void name({required String name}) {
+    state = state.copyWith(name: name);
+  }
+
+  void startAmount({required String startAmount}) {
+    state = state.copyWith(startAmount: startAmount);
   }
 }

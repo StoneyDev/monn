@@ -12,14 +12,12 @@ class SubmitCrowdfundingFormController
   FutureOr<void> build() async {}
 
   Future<bool> submit() async {
-    state = const AsyncLoading();
-
     final repository = ref.read(crowdfundingRepositoryProvider);
     final formData = ref.read(crowdfundingFormControllerProvider);
 
-    final platformName = formData.platformName!;
-    final receivedAt = formData.receivedAt!;
-    final brutProfit = formData.brutProfit!;
+    final platformName = formData.platformName;
+    final receivedAt = formData.receivedAt;
+    final brutProfit = double.parse(formData.brutProfit);
 
     late Crowdfunding newCrowdfunding;
 
@@ -29,8 +27,15 @@ class SubmitCrowdfundingFormController
         receivedAt: receivedAt,
         brutProfit: brutProfit,
       );
+    } else if (formData.taxPercentage == null) {
+      newCrowdfunding = Crowdfunding(
+        platformName: platformName,
+        receivedAt: receivedAt,
+        brutProfit: brutProfit,
+        netProfit: brutProfit,
+      );
     } else {
-      final taxPercentage = formData.taxPercentage!;
+      final taxPercentage = double.parse(formData.taxPercentage!);
       final taxProfit = double.parse(
         (brutProfit * (taxPercentage / 100)).toStringAsFixed(2),
       );

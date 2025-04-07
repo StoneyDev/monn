@@ -7,18 +7,33 @@
     {
       "name": "monn",
       "request": "launch",
+      "args": [
+        "--track-widget-creation",
+        "--dart-define-from-file",
+        "api_keys.json",
+      ],
       "type": "dart"
     },
     {
       "name": "monn (profile mode)",
       "request": "launch",
       "type": "dart",
+      "args": [
+        "--track-widget-creation",
+        "--dart-define-from-file",
+        "api_keys.json",
+      ],
       "flutterMode": "profile"
     },
     {
       "name": "monn (release mode)",
       "request": "launch",
       "type": "dart",
+      "args": [
+        "--track-widget-creation",
+        "--dart-define-from-file",
+        "api_keys.json",
+      ],
       "flutterMode": "release"
     }
   ]

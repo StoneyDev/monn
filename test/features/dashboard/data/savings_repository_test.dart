@@ -48,12 +48,12 @@ void main() {
       // Act
       final listener = MockListener<AsyncValue<List<Savings>>>();
       container.listen(
-        watchSavingsProvider,
+        watchSavingsProvider(),
         listener.call,
         fireImmediately: true,
       );
 
-      await container.read(watchSavingsProvider.future);
+      await container.read(watchSavingsProvider().future);
 
       // Assert
       verifyInOrder([
@@ -75,14 +75,14 @@ void main() {
       when(repository.watchSavings()).thenThrow(error);
 
       // Act
-      final controller = container.read(watchSavingsProvider.future);
+      final controller = container.read(watchSavingsProvider().future);
 
       // Assert
       await expectLater(controller, throwsA(error));
     });
   });
 
-  group('watchSaving', () {
+  group('getSaving', () {
     test(
       'should return Savings with the identical type passed in parameter',
       () async {
@@ -97,20 +97,20 @@ void main() {
           ],
         );
 
-        when(repository.watchSaving(any)).thenAnswer(
-          (_) => Stream.value(saving),
+        when(repository.getSavings(any)).thenAnswer(
+          (_) => Future.value(saving),
         );
 
         // Act
-        final listener = MockListener<AsyncValue<Savings>>();
+        final listener = MockListener<AsyncValue<Savings?>>();
         container.listen(
-          watchSavingProvider(type: savingType),
+          getSavingsProvider(type: savingType),
           listener.call,
           fireImmediately: true,
         );
 
         final result = await container.read(
-          watchSavingProvider(type: savingType).future,
+          getSavingsProvider(type: savingType).future,
         );
 
         // Assert
@@ -135,11 +135,11 @@ void main() {
         ],
       );
 
-      when(repository.watchSaving(savingType)).thenThrow(error);
+      when(repository.getSavings(savingType)).thenThrow(error);
 
       // Act
       final controller = container.read(
-        watchSavingProvider(type: savingType).future,
+        getSavingsProvider(type: savingType).future,
       );
 
       // Assert

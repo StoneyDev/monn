@@ -16,15 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Crowdfunding {
-  double get netProfit => throw _privateConstructorUsedError;
   double get brutProfit => throw _privateConstructorUsedError;
-  double get taxProfit => throw _privateConstructorUsedError;
-  double get taxPercentage => throw _privateConstructorUsedError;
   String get platformName => throw _privateConstructorUsedError;
+  double? get netProfit => throw _privateConstructorUsedError;
+  double? get taxProfit => throw _privateConstructorUsedError;
+  double? get taxPercentage => throw _privateConstructorUsedError;
   DateTime? get receivedAt => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CrowdfundingCopyWith<Crowdfunding> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -36,11 +38,11 @@ abstract class $CrowdfundingCopyWith<$Res> {
       _$CrowdfundingCopyWithImpl<$Res, Crowdfunding>;
   @useResult
   $Res call(
-      {double netProfit,
-      double brutProfit,
-      double taxProfit,
-      double taxPercentage,
+      {double brutProfit,
       String platformName,
+      double? netProfit,
+      double? taxProfit,
+      double? taxPercentage,
       DateTime? receivedAt,
       int id});
 }
@@ -55,38 +57,40 @@ class _$CrowdfundingCopyWithImpl<$Res, $Val extends Crowdfunding>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netProfit = null,
     Object? brutProfit = null,
-    Object? taxProfit = null,
-    Object? taxPercentage = null,
     Object? platformName = null,
+    Object? netProfit = freezed,
+    Object? taxProfit = freezed,
+    Object? taxPercentage = freezed,
     Object? receivedAt = freezed,
     Object? id = null,
   }) {
     return _then(_value.copyWith(
-      netProfit: null == netProfit
-          ? _value.netProfit
-          : netProfit // ignore: cast_nullable_to_non_nullable
-              as double,
       brutProfit: null == brutProfit
           ? _value.brutProfit
           : brutProfit // ignore: cast_nullable_to_non_nullable
-              as double,
-      taxProfit: null == taxProfit
-          ? _value.taxProfit
-          : taxProfit // ignore: cast_nullable_to_non_nullable
-              as double,
-      taxPercentage: null == taxPercentage
-          ? _value.taxPercentage
-          : taxPercentage // ignore: cast_nullable_to_non_nullable
               as double,
       platformName: null == platformName
           ? _value.platformName
           : platformName // ignore: cast_nullable_to_non_nullable
               as String,
+      netProfit: freezed == netProfit
+          ? _value.netProfit
+          : netProfit // ignore: cast_nullable_to_non_nullable
+              as double?,
+      taxProfit: freezed == taxProfit
+          ? _value.taxProfit
+          : taxProfit // ignore: cast_nullable_to_non_nullable
+              as double?,
+      taxPercentage: freezed == taxPercentage
+          ? _value.taxPercentage
+          : taxPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
       receivedAt: freezed == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
@@ -108,11 +112,11 @@ abstract class _$$CrowdfundingImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {double netProfit,
-      double brutProfit,
-      double taxProfit,
-      double taxPercentage,
+      {double brutProfit,
       String platformName,
+      double? netProfit,
+      double? taxProfit,
+      double? taxPercentage,
       DateTime? receivedAt,
       int id});
 }
@@ -125,38 +129,40 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
       _$CrowdfundingImpl _value, $Res Function(_$CrowdfundingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netProfit = null,
     Object? brutProfit = null,
-    Object? taxProfit = null,
-    Object? taxPercentage = null,
     Object? platformName = null,
+    Object? netProfit = freezed,
+    Object? taxProfit = freezed,
+    Object? taxPercentage = freezed,
     Object? receivedAt = freezed,
     Object? id = null,
   }) {
     return _then(_$CrowdfundingImpl(
-      netProfit: null == netProfit
-          ? _value.netProfit
-          : netProfit // ignore: cast_nullable_to_non_nullable
-              as double,
       brutProfit: null == brutProfit
           ? _value.brutProfit
           : brutProfit // ignore: cast_nullable_to_non_nullable
-              as double,
-      taxProfit: null == taxProfit
-          ? _value.taxProfit
-          : taxProfit // ignore: cast_nullable_to_non_nullable
-              as double,
-      taxPercentage: null == taxPercentage
-          ? _value.taxPercentage
-          : taxPercentage // ignore: cast_nullable_to_non_nullable
               as double,
       platformName: null == platformName
           ? _value.platformName
           : platformName // ignore: cast_nullable_to_non_nullable
               as String,
+      netProfit: freezed == netProfit
+          ? _value.netProfit
+          : netProfit // ignore: cast_nullable_to_non_nullable
+              as double?,
+      taxProfit: freezed == taxProfit
+          ? _value.taxProfit
+          : taxProfit // ignore: cast_nullable_to_non_nullable
+              as double?,
+      taxPercentage: freezed == taxPercentage
+          ? _value.taxPercentage
+          : taxPercentage // ignore: cast_nullable_to_non_nullable
+              as double?,
       receivedAt: freezed == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
@@ -173,29 +179,24 @@ class __$$CrowdfundingImplCopyWithImpl<$Res>
 
 class _$CrowdfundingImpl implements _Crowdfunding {
   const _$CrowdfundingImpl(
-      {this.netProfit = 0.0,
-      this.brutProfit = 0.0,
-      this.taxProfit = 0.0,
-      this.taxPercentage = 0.0,
-      this.platformName = 'Inconnue',
+      {required this.brutProfit,
+      required this.platformName,
+      this.netProfit,
+      this.taxProfit,
+      this.taxPercentage,
       this.receivedAt,
       this.id = Isar.autoIncrement});
 
   @override
-  @JsonKey()
-  final double netProfit;
-  @override
-  @JsonKey()
   final double brutProfit;
   @override
-  @JsonKey()
-  final double taxProfit;
-  @override
-  @JsonKey()
-  final double taxPercentage;
-  @override
-  @JsonKey()
   final String platformName;
+  @override
+  final double? netProfit;
+  @override
+  final double? taxProfit;
+  @override
+  final double? taxPercentage;
   @override
   final DateTime? receivedAt;
   @override
@@ -204,7 +205,7 @@ class _$CrowdfundingImpl implements _Crowdfunding {
 
   @override
   String toString() {
-    return 'Crowdfunding(netProfit: $netProfit, brutProfit: $brutProfit, taxProfit: $taxProfit, taxPercentage: $taxPercentage, platformName: $platformName, receivedAt: $receivedAt, id: $id)';
+    return 'Crowdfunding(brutProfit: $brutProfit, platformName: $platformName, netProfit: $netProfit, taxProfit: $taxProfit, taxPercentage: $taxPercentage, receivedAt: $receivedAt, id: $id)';
   }
 
   @override
@@ -212,26 +213,28 @@ class _$CrowdfundingImpl implements _Crowdfunding {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CrowdfundingImpl &&
-            (identical(other.netProfit, netProfit) ||
-                other.netProfit == netProfit) &&
             (identical(other.brutProfit, brutProfit) ||
                 other.brutProfit == brutProfit) &&
+            (identical(other.platformName, platformName) ||
+                other.platformName == platformName) &&
+            (identical(other.netProfit, netProfit) ||
+                other.netProfit == netProfit) &&
             (identical(other.taxProfit, taxProfit) ||
                 other.taxProfit == taxProfit) &&
             (identical(other.taxPercentage, taxPercentage) ||
                 other.taxPercentage == taxPercentage) &&
-            (identical(other.platformName, platformName) ||
-                other.platformName == platformName) &&
             (identical(other.receivedAt, receivedAt) ||
                 other.receivedAt == receivedAt) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, netProfit, brutProfit, taxProfit,
-      taxPercentage, platformName, receivedAt, id);
+  int get hashCode => Object.hash(runtimeType, brutProfit, platformName,
+      netProfit, taxProfit, taxPercentage, receivedAt, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrowdfundingImplCopyWith<_$CrowdfundingImpl> get copyWith =>
@@ -240,30 +243,33 @@ class _$CrowdfundingImpl implements _Crowdfunding {
 
 abstract class _Crowdfunding implements Crowdfunding {
   const factory _Crowdfunding(
-      {final double netProfit,
-      final double brutProfit,
-      final double taxProfit,
-      final double taxPercentage,
-      final String platformName,
+      {required final double brutProfit,
+      required final String platformName,
+      final double? netProfit,
+      final double? taxProfit,
+      final double? taxPercentage,
       final DateTime? receivedAt,
       final int id}) = _$CrowdfundingImpl;
 
   @override
-  double get netProfit;
-  @override
   double get brutProfit;
   @override
-  double get taxProfit;
-  @override
-  double get taxPercentage;
-  @override
   String get platformName;
+  @override
+  double? get netProfit;
+  @override
+  double? get taxProfit;
+  @override
+  double? get taxPercentage;
   @override
   DateTime? get receivedAt;
   @override
   int get id;
+
+  /// Create a copy of Crowdfunding
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrowdfundingImplCopyWith<_$CrowdfundingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

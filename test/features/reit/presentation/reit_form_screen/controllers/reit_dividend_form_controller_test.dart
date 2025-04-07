@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, lines_longer_than_80_chars
+// ignore_for_file: cascade_invocations, lines_longer_than_80_chars .
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monn/features/reit/domain/reit.dart';
@@ -20,8 +20,8 @@ void main() {
 
       // Assert
       expect(controller.state, isA<ReitDividendForm>());
-      expect(controller.state.amount, isNull);
-      expect(controller.state.receivedAt, isNull);
+      expect(controller.state.amount, '');
+      expect(controller.state.receivedAt, isA<DateTime>());
       expect(controller.state.reit, isNull);
     });
 
@@ -34,7 +34,7 @@ void main() {
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
       );
-      controller.edit(reit: reit);
+      controller.reit(reit: reit);
 
       // Assert
       expect(controller.state.reit, reit);
@@ -43,14 +43,14 @@ void main() {
     test('should update amount when edit is called with new amount', () {
       // Arrange
       const amount = '50.7';
-      const expectedAmount = 50.7;
+      const expectedAmount = '50.7';
       final container = createContainer();
 
       // Act
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
       );
-      controller.edit(amount: amount);
+      controller.amount(amount: amount);
 
       // Assert
       expect(controller.state.amount, expectedAmount);
@@ -65,7 +65,7 @@ void main() {
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
       );
-      controller.edit(receivedAt: receivedAt);
+      controller.receivedAt(receivedAt: receivedAt);
 
       // Assert
       expect(controller.state.receivedAt, receivedAt);
@@ -77,7 +77,7 @@ void main() {
         // Arrange
         final reit = Reit()..name = 'Random SCPI';
         const amount = '2.15455';
-        const expectedAmount = 2.15455;
+        const expectedAmount = '2.15455';
         final receivedAt = DateTime.now();
         final container = createContainer();
 
@@ -85,11 +85,10 @@ void main() {
         final controller = container.read(
           reitDividendFormControllerProvider.notifier,
         );
-        controller.edit(
-          reit: reit,
-          amount: amount,
-          receivedAt: receivedAt,
-        );
+        controller
+          ..reit(reit: reit)
+          ..amount(amount: amount)
+          ..receivedAt(receivedAt: receivedAt);
 
         // Assert
         expect(controller.state.reit, reit);

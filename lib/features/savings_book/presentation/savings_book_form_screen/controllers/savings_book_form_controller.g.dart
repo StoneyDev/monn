@@ -7,12 +7,12 @@ part of 'savings_book_form_controller.dart';
 // **************************************************************************
 
 String _$savingsBookFormControllerHash() =>
-    r'e6d9cf7e8c3918fd5f8e107bd8e8ab13f469d5ab';
+    r'33a6a1044b4bf3a8a92ff40a8a0dc95dd6b404f6';
 
 /// See also [SavingsBookFormController].
 @ProviderFor(SavingsBookFormController)
-final savingsBookFormControllerProvider =
-    NotifierProvider<SavingsBookFormController, SavingsBookForm>.internal(
+final savingsBookFormControllerProvider = AutoDisposeNotifierProvider<
+    SavingsBookFormController, SavingsBookForm>.internal(
   SavingsBookFormController.new,
   name: r'savingsBookFormControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final savingsBookFormControllerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SavingsBookFormController = Notifier<SavingsBookForm>;
+typedef _$SavingsBookFormController = AutoDisposeNotifier<SavingsBookForm>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

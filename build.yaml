@@ -2,3 +2,11 @@ global_options:
   freezed:freezed:
     runs_before:
       - isar_generator:isar_generator
+
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          field_rename: snake

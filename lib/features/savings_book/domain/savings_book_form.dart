@@ -5,8 +5,8 @@ part 'savings_book_form.freezed.dart';
 @freezed
 class SavingsBookForm with _$SavingsBookForm {
   const factory SavingsBookForm({
-    String? name,
-    double? startAmount,
-    double? withdrawal,
+    required String name,
+    required String startAmount,
+    String? withdrawal,
   }) = _SavingsBookForm;
 }

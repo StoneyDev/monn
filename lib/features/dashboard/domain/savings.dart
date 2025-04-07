@@ -9,7 +9,7 @@ part 'savings.g.dart';
 class Savings with _$Savings {
   const factory Savings({
     @Enumerated(EnumType.name) required SavingsType type,
-    @Default(0.0) double startAmount,
+    double? startAmount,
     @Default(Isar.autoIncrement) Id id,
   }) = _Savings;
 
@@ -18,17 +18,20 @@ class Savings with _$Savings {
 }
 
 enum SavingsType {
-  savingsBook('Livret'),
-  crowdfunding('Crowdfunding Immobilier'),
-  cryptocurrency('Cryptomonnaie'),
-  csknives('Couteaux CS'),
-  cto('CTO'),
-  lifeInsurance('Assurance-vie'),
-  pea('PEA'),
-  reit('SCPI'),
-  rip('PER');
+  savingsBook,
+  crowdfunding,
+  cryptocurrency,
+  csKnives,
+  // cto('CTO'),
+  // lifeInsurance('Assurance-vie'),
+  pea,
+  reit,
+  // rip('PER')
+}
 
-  const SavingsType(this.label);
-
-  final String label;
+enum SavingsFilter {
+  sortByStartAmountDesc,
+  sortByStartAmountAsc,
+  // sortByFinalAmountDesc, // TODO(yann): Need refactor for this
+  // sortByFinalAmountAsc,
 }

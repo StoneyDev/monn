@@ -7,9 +7,8 @@ import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_dividend_form_controller.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_screen.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_two_screen.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
-import 'package:monn/shared/widgets/moon_button.dart';
-import 'package:monn/utils/app_colors.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 
 final _selectedReitProvider = StateProvider.autoDispose<Reit?>(
   (ref) => ref.read(reitDividendFormControllerProvider).reit,
@@ -24,9 +23,8 @@ class ReitFormStepOneScreen extends ConsumerWidget {
     final reits = ref.watch(watchReitsProvider);
 
     return Scaffold(
-      appBar: MoonAppBar(
-        title: 'Sélectionnez une SCPI',
-        onBack: () => ref.invalidate(reitDividendFormControllerProvider),
+      appBar: MonnAppBar(
+        title: context.tr('common.select_a_reit'),
       ),
       body: switch (reits) {
         AsyncData(:final value) => ListView.builder(
@@ -40,10 +38,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
                 title: Text(
                   item.name,
                   style: selectedReit?.id == item.id
-                      ? const TextStyle(
-                          color: AppColors.darkGray,
-                          fontWeight: FontWeight.w900,
-                        )
+                      ? const TextStyle(fontWeight: FontWeight.w900)
                       : null,
                 ),
                 onChanged: (_) =>
@@ -51,45 +46,52 @@ class ReitFormStepOneScreen extends ConsumerWidget {
               );
             },
           ),
-        AsyncError(:final error) => Text('error: $error'),
+        AsyncError(:final error) => Text(
+            'Error: $error',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
         _ => const RepaintBoundary(
             child: CircularProgressIndicator(),
           ),
       },
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            IconButton.outlined(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (_) => const ReitFormScreen(),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            spacing: 8,
+            children: [
+              IconButton.outlined(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ReitFormScreen(),
+                  ),
+                ),
+                icon: iconoir.Plus(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              icon: const iconoir.Plus(),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: MoonButton(
-                text: context.tr('button.validate'),
-                onPressed: selectedReit != null
-                    ? () {
-                        ref
-                            .read(reitDividendFormControllerProvider.notifier)
-                            .edit(reit: ref.read(_selectedReitProvider));
+              Expanded(
+                child: MonnButton(
+                  text: context.tr('button.validate'),
+                  onPressed: selectedReit != null
+                      ? () {
+                          ref
+                              .read(reitDividendFormControllerProvider.notifier)
+                              .reit(reit: ref.read(_selectedReitProvider)!);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (_) => const ReitFormStepTwoScreen(),
-                          ),
-                        );
-                      }
-                    : null,
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (_) => const ReitFormStepTwoScreen(),
+                            ),
+                          );
+                        }
+                      : null,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

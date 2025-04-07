@@ -1,90 +1,179 @@
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:monn/features/amount/presentation/amount_screen.dart';
+import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
-import 'package:monn/features/cryptocurrency/presentation/crypto_form_screen/crypto_form_step_one_screen.dart';
+import 'package:monn/features/cryptocurrency/presentation/crypto_page_screen/crypto_page_screen.dart';
+import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/widgets/bottom_sheet/moon_bottom_sheet.dart';
-import 'package:monn/shared/widgets/charts/moon_donut_chart.dart';
-import 'package:monn/shared/widgets/moon_app_bar.dart';
+import 'package:monn/shared/extensions/enum_ui.dart';
+import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/widgets/charts/monn_doughnut_chart.dart';
+import 'package:monn/shared/widgets/monn_app_bar.dart';
+import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_scroll_view.dart';
+import 'package:monn/shared/widgets/monn_tile.dart';
 import 'package:monn/utils/app_colors.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+final _startAmountProvider = StateProvider<String>((_) => '');
 
 class CryptocurrencyScreen extends ConsumerWidget {
   const CryptocurrencyScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cryptocurrencies = ref.watch(watchCryptocurrenciesProvider);
+    final locale = context.locale.toString();
     final chart = ref.watch(watchCryptoChartProvider);
+    final cryptoData = ref.watch(
+      getSavingsProvider(type: SavingsType.cryptocurrency).select(
+        (value) => value.valueOrNull,
+      ),
+    );
+    final cryptocurrencies = ref.watch(getCryptoPriceMarketProvider);
 
     return Scaffold(
-      appBar: MoonAppBar(title: SavingsType.cryptocurrency.label),
-      floatingActionButton: IconButton.filled(
-        icon: const iconoir.Plus(color: AppColors.white),
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (_) => const CryptoFormStepOneScreen(),
-          ),
+      appBar: MonnAppBar(
+        title: context.tr(
+          'savings.${SavingsType.cryptocurrency.name.toSnakeCase()}',
         ),
       ),
-      body: Column(
-        children: [
-          switch (chart) {
-            AsyncData(:final value) => MoonDonutChart(chart: value),
-            _ => const CircularProgressIndicator(
-                color: AppColors.extraLightGray,
-              ),
-          },
-          const SizedBox(height: 20),
-          switch (cryptocurrencies) {
-            AsyncData(:final value) => Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 4 / 3,
-                  ),
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 32,
-                  ),
+      body: MonnScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                switch (chart) {
+                  AsyncData(:final value) => MonnDoughnutChart(
+                      chart: value,
+                      onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: AppColors.blue50,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          content: RichText(
+                            text: TextSpan(
+                              text:
+                                  '${context.tr('common.total_amount_invested')}: ',
+                              children: [
+                                TextSpan(
+                                  text: cryptoData?.startAmount
+                                      ?.simpleCurrency(locale),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                              style: const TextStyle(color: AppColors.blue),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onLongPress: () => context.push(
+                        fullscreenDialog: true,
+                        AmountScreen(
+                          initialValue: cryptoData?.startAmount ?? 0,
+                          onSubmit: () async {
+                            final newValue = ref.read(_startAmountProvider);
+                            final newSaving = cryptoData?.copyWith(
+                              startAmount: double.parse(newValue),
+                            );
+
+                            final success = await ref
+                                .read(editSavingsControllerProvider.notifier)
+                                .submit(newSaving!);
+                            if (!context.mounted || !success) return;
+
+                            ref
+                              ..invalidate(_startAmountProvider)
+                              ..invalidate(
+                                getSavingsProvider(
+                                  type: SavingsType.cryptocurrency,
+                                ),
+                              )
+                              ..invalidate(watchCryptoChartProvider);
+                            Navigator.pop(context);
+                          },
+                          onChanged: (newAmount) => ref
+                              .read(_startAmountProvider.notifier)
+                              .state = newAmount,
+                        ),
+                      ),
+                    ),
+                  _ => Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox.square(
+                          dimension: 200,
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        Text(
+                          context.tr('common.loading'),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                },
+                const SizedBox(height: 24),
+                Divider(color: Theme.of(context).colorScheme.outline),
+              ],
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+            sliver: switch (cryptocurrencies) {
+              AsyncData(:final value) => SliverList.separated(
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final crypto = value[index];
 
                     return _CryptoCard(
                       crypto: crypto,
-                      onTap: () => WoltModalSheet.show<void>(
-                        context: context,
-                        pageListBuilder: (context) => [
-                          MoonBottomSheet.cryptoDetails(
-                            context: context,
-                            crypto: crypto,
-                          ),
-                        ],
+                      onTap: () => context.push(
+                        CryptoPageScreen(type: crypto.type),
                       ),
                     );
                   },
                   itemCount: value.length,
                 ),
-              ),
-            AsyncError(:final error) => Text('error: $error'),
-            _ => const RepaintBoundary(
-                child: CircularProgressIndicator(),
-              ),
-          },
+              AsyncError(:final error) => SliverToBoxAdapter(
+                  child: Text(
+                    '$error',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+              _ => const SliverToBoxAdapter(
+                  child: Center(
+                    child: RepaintBoundary(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                )
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-class _CryptoCard extends StatelessWidget {
+class _CryptoCard extends ConsumerWidget {
   const _CryptoCard({
     required this.crypto,
     this.onTap,
@@ -94,58 +183,46 @@ class _CryptoCard extends StatelessWidget {
   final void Function()? onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Card.outlined(
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(color: AppColors.extraLightGray),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      margin: EdgeInsets.zero,
-      child: InkWell(
-        highlightColor: AppColors.extraExtraLightGray,
-        splashColor: AppColors.extraExtraLightGray,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = context.locale.toString();
+
+    return DefaultTextStyle.merge(
+      style: Theme.of(context).textTheme.titleMedium,
+      child: MonnCard(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      crypto.type.symbol,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.darkGray,
-                          ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(crypto.totalFiat.simpleCurrency()),
-                ],
-              ),
-              Text(
-                crypto.totalCrypto.toString(),
-                maxLines: 1,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.darkGray,
-                    ),
-              ),
-              const Spacer(),
-              Text(
-                crypto.type.label,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: crypto.type.color,
-                    ),
-              ),
-            ],
+        child: MonnTile(
+          icon: Image(
+            image: crypto.type.logo(),
+            height: 40,
+            width: 40,
           ),
+          content: Text(
+            crypto.type.label,
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              color: crypto.type.color,
+            ),
+          ),
+          subContent: Text(
+            crypto.priceMarket.simpleCurrency('en'),
+            style: const TextStyle(color: AppColors.lightGray),
+          ),
+          trailing: Text(
+            '${crypto.totalCrypto.toDecimal(locale)} ${crypto.type.symbol}',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          subTrailing: crypto.totalCrypto > 0
+              ? Text(
+                  (crypto.priceMarket * crypto.totalCrypto)
+                      .simpleCurrency('en'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: AppColors.lightGray),
+                )
+              : null,
         ),
       ),
     );

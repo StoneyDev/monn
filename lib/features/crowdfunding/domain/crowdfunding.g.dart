@@ -59,7 +59,7 @@ const CrowdfundingSchema = CollectionSchema(
   getId: _crowdfundingGetId,
   getLinks: _crowdfundingGetLinks,
   attach: _crowdfundingAttach,
-  version: '3.1.7',
+  version: '3.1.8',
 );
 
 int _crowdfundingEstimateSize(
@@ -95,11 +95,11 @@ Crowdfunding _crowdfundingDeserialize(
   final object = Crowdfunding(
     brutProfit: reader.readDouble(offsets[0]),
     id: id,
-    netProfit: reader.readDouble(offsets[1]),
+    netProfit: reader.readDoubleOrNull(offsets[1]),
     platformName: reader.readString(offsets[2]),
     receivedAt: reader.readDateTimeOrNull(offsets[3]),
-    taxPercentage: reader.readDouble(offsets[4]),
-    taxProfit: reader.readDouble(offsets[5]),
+    taxPercentage: reader.readDoubleOrNull(offsets[4]),
+    taxProfit: reader.readDoubleOrNull(offsets[5]),
   );
   return object;
 }
@@ -114,15 +114,15 @@ P _crowdfundingDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 5:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -340,8 +340,26 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      netProfitIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'netProfit',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      netProfitIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'netProfit',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       netProfitEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -355,7 +373,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       netProfitGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -371,7 +389,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       netProfitLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -387,8 +405,8 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       netProfitBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -616,8 +634,26 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      taxPercentageIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'taxPercentage',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      taxPercentageIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'taxPercentage',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxPercentageEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -631,7 +667,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxPercentageGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -647,7 +683,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxPercentageLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -663,8 +699,8 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxPercentageBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -682,8 +718,26 @@ extension CrowdfundingQueryFilter
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      taxProfitIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'taxProfit',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+      taxProfitIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'taxProfit',
+      ));
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxProfitEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -697,7 +751,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxProfitGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -713,7 +767,7 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxProfitLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -729,8 +783,8 @@ extension CrowdfundingQueryFilter
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
       taxProfitBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -979,7 +1033,7 @@ extension CrowdfundingQueryProperty
     });
   }
 
-  QueryBuilder<Crowdfunding, double, QQueryOperations> netProfitProperty() {
+  QueryBuilder<Crowdfunding, double?, QQueryOperations> netProfitProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'netProfit');
     });
@@ -997,13 +1051,14 @@ extension CrowdfundingQueryProperty
     });
   }
 
-  QueryBuilder<Crowdfunding, double, QQueryOperations> taxPercentageProperty() {
+  QueryBuilder<Crowdfunding, double?, QQueryOperations>
+      taxPercentageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'taxPercentage');
     });
   }
 
-  QueryBuilder<Crowdfunding, double, QQueryOperations> taxProfitProperty() {
+  QueryBuilder<Crowdfunding, double?, QQueryOperations> taxProfitProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'taxProfit');
     });

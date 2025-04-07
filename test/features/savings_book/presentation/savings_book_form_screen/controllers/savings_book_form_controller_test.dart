@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, lines_longer_than_80_chars
+// ignore_for_file: cascade_invocations, lines_longer_than_80_chars .
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monn/features/savings_book/domain/savings_book_form.dart';
@@ -19,8 +19,8 @@ void main() {
 
       // Assert
       expect(controller.state, isA<SavingsBookForm>());
-      expect(controller.state.name, isNull);
-      expect(controller.state.startAmount, isNull);
+      expect(controller.state.name, '');
+      expect(controller.state.startAmount, '');
     });
 
     test('should update name when edit is called with new name', () {
@@ -32,7 +32,7 @@ void main() {
       final controller = container.read(
         savingsBookFormControllerProvider.notifier,
       );
-      controller.edit(name: name);
+      controller.name(name: name);
 
       // Assert
       expect(controller.state.name, name);
@@ -41,35 +41,18 @@ void main() {
     test('should update name when edit is called with new name', () {
       // Arrange
       const amount = '9200.50';
-      const expectedAmount = 9200.50;
+      const expectedAmount = '9200.50';
       final container = createContainer();
 
       // Act
       final controller = container.read(
         savingsBookFormControllerProvider.notifier,
       );
-      controller.edit(startAmount: amount);
+      controller.startAmount(startAmount: amount);
 
       // Assert
       expect(controller.state.startAmount, expectedAmount);
     });
-
-    test(
-      'should not update startAmount when edit is called with invalid type',
-      () {
-        // Arrange
-        final container = createContainer();
-
-        // Act
-        final controller = container.read(
-          savingsBookFormControllerProvider.notifier,
-        );
-        controller.edit(startAmount: 'number0');
-
-        // Assert
-        expect(controller.state.startAmount, isNull);
-      },
-    );
 
     test(
       'should update multiple fields when edit is called with multiple parameters',
@@ -77,14 +60,16 @@ void main() {
         // Arrange
         const name = 'Livret 1';
         const amount = '102.3';
-        const expectedAmount = 102.3;
+        const expectedAmount = '102.3';
         final container = createContainer();
 
         // Act
         final controller = container.read(
           savingsBookFormControllerProvider.notifier,
         );
-        controller.edit(startAmount: amount, name: name);
+        controller
+          ..startAmount(startAmount: amount)
+          ..name(name: name);
 
         // Assert
         expect(controller.state.name, name);

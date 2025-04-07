@@ -1,1 +1,88 @@
-{}
+{
+  "common": {
+    "dividends": "Dividends",
+    "dividend": "Dividend",
+    "filter": "Filter",
+    "language": "Language",
+    "loading": "Loading...",
+    "loss": "Loss",
+    "market_price": "Market price",
+    "net_profit": "Net profit",
+    "net_worth": "Net worth",
+    "purchase": "Purchase",
+    "settings": "Settings",
+    "amount": "Amount",
+    "start_amount": "Start amount",
+    "tax": "Tax {}",
+    "taxation": "Taxation",
+    "number_equities": "Number of equities",
+    "average_purchase_price": "Average purchase price",
+    "purchase_price": "Purchase price",
+    "current_price": "Current price",
+    "share_price": "Share price",
+    "last_update": "Last update",
+    "theme": "Theme",
+    "image": "Image",
+    "wear": "Wear",
+    "exempt": "Exempt",
+    "no_longer_exempt": "No longer exempt",
+    "profit": "Profit",
+    "quantity": "Quantity",
+    "total_amount_invested": "Total amount invested",
+    "tracking_earnings": "Tracking earnings",
+    "withdrawal": "Withdrawal",
+    "add_savings": "Add savings",
+    "add_savings_book": "Add savings book",
+    "part": "Part",
+    "worth": "Worth",
+    "platform": "Plateform",
+    "select_a_reit": "Select a reit",
+    "add_reit": "Add reit",
+    "savings_book_name": "Savings book name",
+    "reit_name": "Reit name",
+    "crypto_amount": "Crypto amount",
+    "old_value": "Old value",
+    "total_interest": "Total interest",
+    "receive_at": "Receive at",
+    "sold_on": "Sold on",
+    "bought_on": "Bought on {}",
+    "without_income_tax": "(without IT: 17.2%)",
+    "purchasing_tracking": "Purchasing tracking",
+    "price_and_purchase_date": "Price at {} on {}",
+    "opening_account": "Open for {} years / {}"
+  },
+  "button": {
+    "validate": "Validate",
+    "save": "Save",
+    "update_data": "Update data"
+  },
+  "input": {
+    "error": {
+      "empty": "The field is required",
+      "superior": "Field must be greater than zero",
+      "wrong_data": "The field contains an error",
+      "wrong_percentage": "The percentage cannot exceed 100"
+    }
+  },
+  "languages": {
+    "fr": "French",
+    "en": "English"
+  },
+  "savings": {
+    "savings_book": "Savings book",
+    "crowdfunding": "Real estate crowdfunding",
+    "cryptocurrency": "Cryptocurrency",
+    "cs_knives": "CS knives",
+    "pea": "PEA",
+    "reit": "Reit"
+  },
+  "filters": {
+    "sort_by_start_amount_desc": "Initial amount (descending)",
+    "sort_by_start_amount_asc": "Initial amount (Ascending)"
+  },
+  "theme_mode": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
+  }
+}

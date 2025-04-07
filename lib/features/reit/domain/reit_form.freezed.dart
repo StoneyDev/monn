@@ -16,12 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReitForm {
-  String? get reitName => throw _privateConstructorUsedError;
-  DateTime? get boughtOn => throw _privateConstructorUsedError;
-  double? get shares => throw _privateConstructorUsedError;
-  double? get price => throw _privateConstructorUsedError;
+  String get reitName => throw _privateConstructorUsedError;
+  DateTime get boughtOn => throw _privateConstructorUsedError;
+  String get shares => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ReitFormCopyWith<ReitForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -31,8 +33,7 @@ abstract class $ReitFormCopyWith<$Res> {
   factory $ReitFormCopyWith(ReitForm value, $Res Function(ReitForm) then) =
       _$ReitFormCopyWithImpl<$Res, ReitForm>;
   @useResult
-  $Res call(
-      {String? reitName, DateTime? boughtOn, double? shares, double? price});
+  $Res call({String reitName, DateTime boughtOn, String shares, String price});
 }
 
 /// @nodoc
@@ -45,31 +46,33 @@ class _$ReitFormCopyWithImpl<$Res, $Val extends ReitForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reitName = freezed,
-    Object? boughtOn = freezed,
-    Object? shares = freezed,
-    Object? price = freezed,
+    Object? reitName = null,
+    Object? boughtOn = null,
+    Object? shares = null,
+    Object? price = null,
   }) {
     return _then(_value.copyWith(
-      reitName: freezed == reitName
+      reitName: null == reitName
           ? _value.reitName
           : reitName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      boughtOn: freezed == boughtOn
+              as String,
+      boughtOn: null == boughtOn
           ? _value.boughtOn
           : boughtOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      shares: freezed == shares
+              as DateTime,
+      shares: null == shares
           ? _value.shares
           : shares // ignore: cast_nullable_to_non_nullable
-              as double?,
-      price: freezed == price
+              as String,
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
     ) as $Val);
   }
 }
@@ -82,8 +85,7 @@ abstract class _$$ReitFormImplCopyWith<$Res>
       __$$ReitFormImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? reitName, DateTime? boughtOn, double? shares, double? price});
+  $Res call({String reitName, DateTime boughtOn, String shares, String price});
 }
 
 /// @nodoc
@@ -94,31 +96,33 @@ class __$$ReitFormImplCopyWithImpl<$Res>
       _$ReitFormImpl _value, $Res Function(_$ReitFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reitName = freezed,
-    Object? boughtOn = freezed,
-    Object? shares = freezed,
-    Object? price = freezed,
+    Object? reitName = null,
+    Object? boughtOn = null,
+    Object? shares = null,
+    Object? price = null,
   }) {
     return _then(_$ReitFormImpl(
-      reitName: freezed == reitName
+      reitName: null == reitName
           ? _value.reitName
           : reitName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      boughtOn: freezed == boughtOn
+              as String,
+      boughtOn: null == boughtOn
           ? _value.boughtOn
           : boughtOn // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      shares: freezed == shares
+              as DateTime,
+      shares: null == shares
           ? _value.shares
           : shares // ignore: cast_nullable_to_non_nullable
-              as double?,
-      price: freezed == price
+              as String,
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String,
     ));
   }
 }
@@ -126,16 +130,20 @@ class __$$ReitFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ReitFormImpl implements _ReitForm {
-  const _$ReitFormImpl({this.reitName, this.boughtOn, this.shares, this.price});
+  const _$ReitFormImpl(
+      {required this.reitName,
+      required this.boughtOn,
+      required this.shares,
+      required this.price});
 
   @override
-  final String? reitName;
+  final String reitName;
   @override
-  final DateTime? boughtOn;
+  final DateTime boughtOn;
   @override
-  final double? shares;
+  final String shares;
   @override
-  final double? price;
+  final String price;
 
   @override
   String toString() {
@@ -159,7 +167,9 @@ class _$ReitFormImpl implements _ReitForm {
   int get hashCode =>
       Object.hash(runtimeType, reitName, boughtOn, shares, price);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReitFormImplCopyWith<_$ReitFormImpl> get copyWith =>
@@ -168,21 +178,24 @@ class _$ReitFormImpl implements _ReitForm {
 
 abstract class _ReitForm implements ReitForm {
   const factory _ReitForm(
-      {final String? reitName,
-      final DateTime? boughtOn,
-      final double? shares,
-      final double? price}) = _$ReitFormImpl;
+      {required final String reitName,
+      required final DateTime boughtOn,
+      required final String shares,
+      required final String price}) = _$ReitFormImpl;
 
   @override
-  String? get reitName;
+  String get reitName;
   @override
-  DateTime? get boughtOn;
+  DateTime get boughtOn;
   @override
-  double? get shares;
+  String get shares;
   @override
-  double? get price;
+  String get price;
+
+  /// Create a copy of ReitForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReitFormImplCopyWith<_$ReitFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

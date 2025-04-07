@@ -10,8 +10,9 @@ class Cryptocurrency {
   Id? id;
   @Enumerated(EnumType.name)
   late CryptoType type;
-  double totalFiat = 0;
   double totalCrypto = 0;
+  double priceMarket = 0;
+  DateTime? lastUpdate;
 
   final transactions = IsarLinks<CryptocurrencyTransaction>();
 }
@@ -19,14 +20,13 @@ class Cryptocurrency {
 @collection
 class CryptocurrencyTransaction {
   Id? id;
-  late DateTime boughtOn;
-  late double fiat;
+  late DateTime date; // withdrawalOn or boughtOn
   late double amount;
 }
 
 enum CryptoType {
   bitcoin('Bitcoin', 'BTC', AppColors.btc),
-  ethereum('Etherum', 'ETH', AppColors.eth),
+  ethereum('Ethereum', 'ETH', AppColors.eth),
   chainlink('Chainlink', 'LINK', AppColors.link),
   tether('Tether', 'USDT', AppColors.usdt),
   usdCoin('USD Coin', 'USDC', AppColors.usdc);

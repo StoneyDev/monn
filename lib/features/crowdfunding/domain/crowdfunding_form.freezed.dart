@@ -16,12 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CrowdfundingForm {
-  String? get platformName => throw _privateConstructorUsedError;
-  DateTime? get receivedAt => throw _privateConstructorUsedError;
-  double? get taxPercentage => throw _privateConstructorUsedError;
-  double? get brutProfit => throw _privateConstructorUsedError;
+  String get platformName => throw _privateConstructorUsedError;
+  DateTime get receivedAt => throw _privateConstructorUsedError;
+  String get brutProfit => throw _privateConstructorUsedError;
+  String? get taxPercentage => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CrowdfundingFormCopyWith<CrowdfundingForm> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -33,10 +35,10 @@ abstract class $CrowdfundingFormCopyWith<$Res> {
       _$CrowdfundingFormCopyWithImpl<$Res, CrowdfundingForm>;
   @useResult
   $Res call(
-      {String? platformName,
-      DateTime? receivedAt,
-      double? taxPercentage,
-      double? brutProfit});
+      {String platformName,
+      DateTime receivedAt,
+      String brutProfit,
+      String? taxPercentage});
 }
 
 /// @nodoc
@@ -49,31 +51,33 @@ class _$CrowdfundingFormCopyWithImpl<$Res, $Val extends CrowdfundingForm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? platformName = freezed,
-    Object? receivedAt = freezed,
+    Object? platformName = null,
+    Object? receivedAt = null,
+    Object? brutProfit = null,
     Object? taxPercentage = freezed,
-    Object? brutProfit = freezed,
   }) {
     return _then(_value.copyWith(
-      platformName: freezed == platformName
+      platformName: null == platformName
           ? _value.platformName
           : platformName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receivedAt: freezed == receivedAt
+              as String,
+      receivedAt: null == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
+      brutProfit: null == brutProfit
+          ? _value.brutProfit
+          : brutProfit // ignore: cast_nullable_to_non_nullable
+              as String,
       taxPercentage: freezed == taxPercentage
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
-              as double?,
-      brutProfit: freezed == brutProfit
-          ? _value.brutProfit
-          : brutProfit // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ) as $Val);
   }
 }
@@ -87,10 +91,10 @@ abstract class _$$CrowdfundingFormImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? platformName,
-      DateTime? receivedAt,
-      double? taxPercentage,
-      double? brutProfit});
+      {String platformName,
+      DateTime receivedAt,
+      String brutProfit,
+      String? taxPercentage});
 }
 
 /// @nodoc
@@ -101,31 +105,33 @@ class __$$CrowdfundingFormImplCopyWithImpl<$Res>
       $Res Function(_$CrowdfundingFormImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? platformName = freezed,
-    Object? receivedAt = freezed,
+    Object? platformName = null,
+    Object? receivedAt = null,
+    Object? brutProfit = null,
     Object? taxPercentage = freezed,
-    Object? brutProfit = freezed,
   }) {
     return _then(_$CrowdfundingFormImpl(
-      platformName: freezed == platformName
+      platformName: null == platformName
           ? _value.platformName
           : platformName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receivedAt: freezed == receivedAt
+              as String,
+      receivedAt: null == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
+      brutProfit: null == brutProfit
+          ? _value.brutProfit
+          : brutProfit // ignore: cast_nullable_to_non_nullable
+              as String,
       taxPercentage: freezed == taxPercentage
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
-              as double?,
-      brutProfit: freezed == brutProfit
-          ? _value.brutProfit
-          : brutProfit // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ));
   }
 }
@@ -134,23 +140,23 @@ class __$$CrowdfundingFormImplCopyWithImpl<$Res>
 
 class _$CrowdfundingFormImpl implements _CrowdfundingForm {
   const _$CrowdfundingFormImpl(
-      {this.platformName,
-      this.receivedAt,
-      this.taxPercentage,
-      this.brutProfit});
+      {required this.platformName,
+      required this.receivedAt,
+      required this.brutProfit,
+      this.taxPercentage});
 
   @override
-  final String? platformName;
+  final String platformName;
   @override
-  final DateTime? receivedAt;
+  final DateTime receivedAt;
   @override
-  final double? taxPercentage;
+  final String brutProfit;
   @override
-  final double? brutProfit;
+  final String? taxPercentage;
 
   @override
   String toString() {
-    return 'CrowdfundingForm(platformName: $platformName, receivedAt: $receivedAt, taxPercentage: $taxPercentage, brutProfit: $brutProfit)';
+    return 'CrowdfundingForm(platformName: $platformName, receivedAt: $receivedAt, brutProfit: $brutProfit, taxPercentage: $taxPercentage)';
   }
 
   @override
@@ -162,17 +168,19 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
                 other.platformName == platformName) &&
             (identical(other.receivedAt, receivedAt) ||
                 other.receivedAt == receivedAt) &&
-            (identical(other.taxPercentage, taxPercentage) ||
-                other.taxPercentage == taxPercentage) &&
             (identical(other.brutProfit, brutProfit) ||
-                other.brutProfit == brutProfit));
+                other.brutProfit == brutProfit) &&
+            (identical(other.taxPercentage, taxPercentage) ||
+                other.taxPercentage == taxPercentage));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, platformName, receivedAt, taxPercentage, brutProfit);
+      runtimeType, platformName, receivedAt, brutProfit, taxPercentage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrowdfundingFormImplCopyWith<_$CrowdfundingFormImpl> get copyWith =>
@@ -182,21 +190,24 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
 
 abstract class _CrowdfundingForm implements CrowdfundingForm {
   const factory _CrowdfundingForm(
-      {final String? platformName,
-      final DateTime? receivedAt,
-      final double? taxPercentage,
-      final double? brutProfit}) = _$CrowdfundingFormImpl;
+      {required final String platformName,
+      required final DateTime receivedAt,
+      required final String brutProfit,
+      final String? taxPercentage}) = _$CrowdfundingFormImpl;
 
   @override
-  String? get platformName;
+  String get platformName;
   @override
-  DateTime? get receivedAt;
+  DateTime get receivedAt;
   @override
-  double? get taxPercentage;
+  String get brutProfit;
   @override
-  double? get brutProfit;
+  String? get taxPercentage;
+
+  /// Create a copy of CrowdfundingForm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrowdfundingFormImplCopyWith<_$CrowdfundingFormImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -11,18 +11,16 @@ class SubmitReitFormController extends _$SubmitReitFormController {
   FutureOr<void> build() async {}
 
   Future<bool> submit() async {
-    state = const AsyncLoading();
-
     final repository = ref.read(reitRepositoryProvider);
     final formData = ref.read(reitFormControllerProvider);
 
     state = await AsyncValue.guard(
       () => repository.addReit(
         Reit()
-          ..name = formData.reitName!
-          ..price = formData.price!
-          ..boughtOn = formData.boughtOn!
-          ..shares = formData.shares!,
+          ..name = formData.reitName
+          ..price = double.parse(formData.price)
+          ..boughtOn = formData.boughtOn
+          ..shares = int.parse(formData.shares),
       ),
     );
 

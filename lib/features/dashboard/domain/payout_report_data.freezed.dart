@@ -21,7 +21,9 @@ mixin _$PayoutReportData {
   double get totalLoss => throw _privateConstructorUsedError;
   double get finalAmount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PayoutReportData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PayoutReportDataCopyWith<PayoutReportData> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +51,8 @@ class _$PayoutReportDataCopyWithImpl<$Res, $Val extends PayoutReportData>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PayoutReportData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +105,8 @@ class __$$PayoutReportDataImplCopyWithImpl<$Res>
       $Res Function(_$PayoutReportDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PayoutReportData
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -176,7 +182,9 @@ class _$PayoutReportDataImpl implements _PayoutReportData {
   int get hashCode => Object.hash(
       runtimeType, totalNetProfit, totalTaxProfit, totalLoss, finalAmount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PayoutReportData
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PayoutReportDataImplCopyWith<_$PayoutReportDataImpl> get copyWith =>
@@ -199,8 +207,11 @@ abstract class _PayoutReportData implements PayoutReportData {
   double get totalLoss;
   @override
   double get finalAmount;
+
+  /// Create a copy of PayoutReportData
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PayoutReportDataImplCopyWith<_$PayoutReportDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

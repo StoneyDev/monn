@@ -12,37 +12,105 @@ class GlobalThemeData {
         fontFamily: 'DMSans',
         useMaterial3: true,
         colorScheme: colorScheme,
-        canvasColor: colorScheme.surface,
-        scaffoldBackgroundColor: colorScheme.surface,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       );
 
   static const ColorScheme lightColorScheme = ColorScheme.light(
-    primary: AppColors.darkGray,
-    onPrimary: Colors.black,
-    secondary: AppColors.extraExtraLightGray,
-    onSecondary: AppColors.lightGray,
-    error: AppColors.error,
-    onSurface: AppColors.lightGray,
+    primary: AppColors.gray700,
+    onPrimary: AppColors.white500,
+    primaryContainer: AppColors.gray300,
+    onPrimaryContainer: AppColors.white,
+    secondary: AppColors.blue,
+    tertiary: AppColors.gray700,
+    tertiaryContainer: AppColors.gray700,
+    onTertiaryContainer: AppColors.white,
+    error: AppColors.red,
+    surface: AppColors.white500,
+    onSurface: AppColors.gray700,
+    surfaceContainerHighest: AppColors.white,
+    onSurfaceVariant: AppColors.gray300,
+    outline: AppColors.white600,
   );
 
-  // TODO: darkMode
   static const ColorScheme darkColorScheme = ColorScheme.dark(
-    primary: AppColors.white,
-    secondary: AppColors.white,
-    surface: AppColors.white,
-    error: AppColors.white,
-    onError: AppColors.white,
-    onPrimary: AppColors.white,
-    onSecondary: AppColors.white,
+    primary: AppColors.white500,
+    onPrimary: AppColors.gray700,
+    primaryContainer: AppColors.white500,
+    onPrimaryContainer: AppColors.gray300,
+    secondary: AppColors.blue,
+    tertiary: AppColors.white500,
+    tertiaryContainer: AppColors.white500,
+    onTertiaryContainer: AppColors.gray700,
+    error: AppColors.red,
+    surface: AppColors.gray,
+    onSurface: AppColors.white500,
+    surfaceContainerHighest: AppColors.gray700,
+    onSurfaceVariant: AppColors.white500,
+    outline: AppColors.gray300,
   );
 
-  static const SystemUiOverlayStyle systemUi = SystemUiOverlayStyle(
+  static const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
     // Android
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: AppColors.gray,
+    systemNavigationBarIconBrightness: Brightness.light,
     // iOS
     statusBarBrightness: Brightness.dark,
   );
+
+  static const SystemUiOverlayStyle darkSystemUi = SystemUiOverlayStyle(
+    // Android
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.light,
+    // iOS
+    statusBarBrightness: Brightness.light,
+  );
+
+  static const List<BoxShadow> shadow = [
+    BoxShadow(
+      color: Color(0x1A0C0C0D),
+      offset: Offset(0, 1),
+      blurRadius: 4,
+    ),
+    BoxShadow(
+      color: Color(0x0D0C0C0D),
+      offset: Offset(0, 1),
+      blurRadius: 4,
+    ),
+  ];
+
+  static InputDecoration inputDecoration(BuildContext context) {
+    final inputBorder = OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.outline,
+        width: 2,
+      ),
+    );
+
+    final inputBorderError = inputBorder.copyWith(
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.error,
+        width: 2,
+      ),
+    );
+
+    return InputDecoration(
+      filled: true,
+      fillColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      focusedBorder: inputBorder,
+      enabledBorder: inputBorder,
+      disabledBorder: inputBorder,
+      focusedErrorBorder: inputBorderError,
+      errorBorder: inputBorderError,
+      errorMaxLines: 2,
+    );
+  }
 }
