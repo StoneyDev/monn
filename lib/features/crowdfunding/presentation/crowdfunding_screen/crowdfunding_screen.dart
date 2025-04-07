@@ -80,7 +80,6 @@ class CrowdfundingScreen extends ConsumerWidget {
                   onPressed: () => context.push(
                     fullscreenDialog: true,
                     AmountScreen(
-                      provider: _startAmountProvider,
                       initialValue: crowdfundingData?.startAmount ?? 0,
                       onChanged: (value) =>
                           ref.read(_startAmountProvider.notifier).state = value,

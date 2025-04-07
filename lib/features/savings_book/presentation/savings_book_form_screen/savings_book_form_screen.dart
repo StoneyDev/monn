@@ -43,9 +43,6 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
               MonnFieldText(
                 label: context.tr('common.savings_book_name'),
                 required: true,
-                provider: savingsBookFormControllerProvider.select(
-                  (form) => form.name,
-                ),
                 onChanged: (newName) => ref
                     .read(savingsBookFormControllerProvider.notifier)
                     .name(name: newName),
@@ -55,9 +52,6 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
                 label: context.tr('common.start_amount'),
                 suffix: '€',
                 required: true,
-                provider: savingsBookFormControllerProvider.select(
-                  (form) => form.startAmount,
-                ),
                 onChanged: (newStartAmount) => ref
                     .read(savingsBookFormControllerProvider.notifier)
                     .startAmount(startAmount: newStartAmount),

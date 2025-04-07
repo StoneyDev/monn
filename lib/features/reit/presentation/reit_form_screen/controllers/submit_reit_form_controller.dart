@@ -11,8 +11,6 @@ class SubmitReitFormController extends _$SubmitReitFormController {
   FutureOr<void> build() async {}
 
   Future<bool> submit() async {
-    state = const AsyncLoading();
-
     final repository = ref.read(reitRepositoryProvider);
     final formData = ref.read(reitFormControllerProvider);
 

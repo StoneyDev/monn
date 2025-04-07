@@ -26,11 +26,9 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final reitData = ref.watch(
-      getSavingsProvider(type: SavingsType.reit).select(
-        (savings) => savings.valueOrNull,
-      ),
-    );
+    final reit = ref.watch(getSavingsProvider(type: SavingsType.reit));
+
+    ref.listen(reitFormControllerProvider, (previous, next) {});
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -49,9 +47,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                     MonnFieldText(
                       label: context.tr('common.reit_name'),
                       required: true,
-                      provider: reitFormControllerProvider.select(
-                        (form) => form.reitName,
-                      ),
                       onChanged: (newName) => ref
                           .read(reitFormControllerProvider.notifier)
                           .reitName(newName),
@@ -59,9 +54,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                     MonnFieldNumber<int>(
                       label: context.tr('common.part'),
                       required: true,
-                      provider: reitFormControllerProvider.select(
-                        (form) => form.shares,
-                      ),
                       onChanged: (newShares) => ref
                           .read(reitFormControllerProvider.notifier)
                           .shares(newShares),
@@ -70,9 +62,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                       label: context.tr('common.share_price'),
                       suffix: '€',
                       required: true,
-                      provider: reitFormControllerProvider.select(
-                        (form) => form.price,
-                      ),
                       onChanged: (newPrice) => ref
                           .read(reitFormControllerProvider.notifier)
                           .price(newPrice),
@@ -80,9 +69,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                     MonnFieldDate(
                       label: context.tr('common.bought_on', args: ['']),
                       required: true,
-                      provider: reitFormControllerProvider.select(
-                        (form) => form.boughtOn,
-                      ),
                       onChanged: (newDate) => ref
                           .read(reitFormControllerProvider.notifier)
                           .boughtOn(newDate),
@@ -97,33 +83,39 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: MonnButton(
-            text: context.tr('button.validate'),
-            onPressed: () async {
-              if (!(formKey.currentState?.validate() ?? false)) return;
+          child: switch (reit) {
+            AsyncData(:final value) => MonnButton(
+                text: context.tr('button.validate'),
+                onPressed: () async {
+                  if (!(formKey.currentState?.validate() ?? false)) return;
 
-              final success = await ref
-                  .read(submitReitFormControllerProvider.notifier)
-                  .submit();
+                  final success = await ref
+                      .read(submitReitFormControllerProvider.notifier)
+                      .submit();
 
-              final formData = ref.read(reitFormControllerProvider);
+                  final formData = ref.read(reitFormControllerProvider);
+                  final newSaving = value?.copyWith(
+                    startAmount: (value.startAmount ?? 0) +
+                        (double.parse(formData.price) *
+                            int.parse(formData.shares)),
+                  );
 
-              final newSaving = reitData?.copyWith(
-                startAmount: (reitData.startAmount ?? 0) +
-                    (double.parse(formData.price) * int.parse(formData.shares)),
-              );
+                  final updated = await ref
+                      .read(editSavingsControllerProvider.notifier)
+                      .submit(newSaving!);
+                  if (!context.mounted || !success || !updated) return;
 
-              final updated = await ref
-                  .read(editSavingsControllerProvider.notifier)
-                  .submit(newSaving!);
-              if (!context.mounted || !success || !updated) return;
-
-              ref
-                ..invalidate(watchPayoutReportReitProvider)
-                ..invalidate(getSavingsProvider(type: SavingsType.reit));
-              Navigator.pop(context);
-            },
-          ),
+                  ref
+                    ..invalidate(watchPayoutReportReitProvider)
+                    ..invalidate(getSavingsProvider(type: SavingsType.reit));
+                  Navigator.pop(context);
+                },
+              ),
+            _ => const Center(
+                heightFactor: 1,
+                child: RepaintBoundary(child: CircularProgressIndicator()),
+              ),
+          },
         ),
       ),
     );

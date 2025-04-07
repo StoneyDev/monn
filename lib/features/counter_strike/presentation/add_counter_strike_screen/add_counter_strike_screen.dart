@@ -145,9 +145,6 @@ class _AddCounterStrikeScreenState
               ),
               MonnFieldNumber<double>(
                 label: context.tr('common.wear'),
-                provider: counterStrikeFormControllerProvider.select(
-                  (form) => form.wear,
-                ),
                 onChanged: (newWear) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .wear(wear: newWear),
@@ -157,9 +154,6 @@ class _AddCounterStrikeScreenState
                 label: context.tr('common.purchase_price'),
                 suffix: '€',
                 required: true,
-                provider: counterStrikeFormControllerProvider.select(
-                  (form) => form.purchaseValue,
-                ),
                 onChanged: (newPurchaseValue) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .purchaseValue(purchaseValue: newPurchaseValue),
@@ -169,9 +163,6 @@ class _AddCounterStrikeScreenState
                 label: context.tr('common.current_price'),
                 suffix: '€',
                 required: true,
-                provider: counterStrikeFormControllerProvider.select(
-                  (form) => form.currentValue,
-                ),
                 onChanged: (newCurrentValue) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .currentValue(currentValue: newCurrentValue),
@@ -180,9 +171,6 @@ class _AddCounterStrikeScreenState
               MonnFieldDate(
                 label: context.tr('common.bought_on', args: ['']),
                 required: true,
-                provider: counterStrikeFormControllerProvider.select(
-                  (form) => form.boughtAt,
-                ),
                 onChanged: (newBoughtAt) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .boughtAt(boughtAt: newBoughtAt),
@@ -190,9 +178,6 @@ class _AddCounterStrikeScreenState
               MonnFieldNumber<int>(
                 label: context.tr('common.quantity'),
                 required: true,
-                provider: counterStrikeFormControllerProvider.select(
-                  (form) => form.quantity,
-                ),
                 onChanged: (newQuantity) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .quantity(quantity: newQuantity),

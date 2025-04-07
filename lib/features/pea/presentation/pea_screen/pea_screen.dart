@@ -20,7 +20,7 @@ import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 
-final _startAmountProvider = StateProvider.autoDispose<String>((_) => '');
+final _startAmountProvider = StateProvider<String>((_) => '');
 
 class PeaScreen extends ConsumerWidget {
   const PeaScreen({super.key});
@@ -104,7 +104,6 @@ class PeaScreen extends ConsumerWidget {
                         onPressed: () => context.push(
                           fullscreenDialog: true,
                           AmountScreen(
-                            provider: _startAmountProvider,
                             initialValue: value?.startAmount ?? 0,
                             onChanged: (value) => ref
                                 .read(_startAmountProvider.notifier)

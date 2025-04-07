@@ -42,9 +42,7 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                     MonnFieldText(
                       label: context.tr('common.platform'),
                       required: true,
-                      provider: crowdfundingFormControllerProvider.select(
-                        (form) => form.platformName,
-                      ),
+                      initialValue: 'La Première Brique',
                       onChanged: (newPlatformName) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
                           .platformName(platformName: newPlatformName),
@@ -53,9 +51,6 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                       label: context.tr('common.profit'),
                       suffix: '€',
                       required: true,
-                      provider: crowdfundingFormControllerProvider.select(
-                        (form) => form.brutProfit,
-                      ),
                       onChanged: (newBrutProfit) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
                           .brutProfit(brutProfit: newBrutProfit),
@@ -89,10 +84,6 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                                     suffix: '%',
                                     required:
                                         !brutProfit.isNegative && !isTaxFree,
-                                    provider: crowdfundingFormControllerProvider
-                                        .select(
-                                      (form) => form.taxPercentage,
-                                    ),
                                     onChanged: (newTax) => ref
                                         .read(
                                           crowdfundingFormControllerProvider
@@ -128,9 +119,6 @@ class _AddCrowdfundingScreenState extends ConsumerState<AddCrowdfundingScreen> {
                     MonnFieldDate(
                       label: context.tr('common.receive_at'),
                       required: true,
-                      provider: crowdfundingFormControllerProvider.select(
-                        (form) => form.receivedAt,
-                      ),
                       onChanged: (newReceivedAt) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
                           .receivedAt(receivedAt: newReceivedAt),

@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_form_controller.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class SavingsBookFormController extends _$SavingsBookFormController {
   @override
   SavingsBookForm build() => const SavingsBookForm(name: '', startAmount: '');

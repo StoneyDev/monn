@@ -197,7 +197,6 @@ class _CounterStrikeItem extends ConsumerWidget {
       ),
       onTap: () => context.push(
         AmountScreen(
-          provider: _currentValueProvider,
           initialValue: data.currentValue,
           onSubmit: () async {
             final success = await ref
@@ -210,7 +209,6 @@ class _CounterStrikeItem extends ConsumerWidget {
                     ),
                   ),
                 );
-
             if (!context.mounted || !success) return;
 
             ref.invalidate(_currentValueProvider);

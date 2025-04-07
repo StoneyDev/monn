@@ -22,7 +22,7 @@ import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/shared/widgets/monn_tile.dart';
 import 'package:monn/utils/app_colors.dart';
 
-final _startAmountProvider = StateProvider.autoDispose<String>((_) => '');
+final _startAmountProvider = StateProvider<String>((_) => '');
 
 class CryptocurrencyScreen extends ConsumerWidget {
   const CryptocurrencyScreen({super.key});
@@ -81,7 +81,6 @@ class CryptocurrencyScreen extends ConsumerWidget {
                       onLongPress: () => context.push(
                         fullscreenDialog: true,
                         AmountScreen(
-                          provider: _startAmountProvider,
                           initialValue: cryptoData?.startAmount ?? 0,
                           onSubmit: () async {
                             final newValue = ref.read(_startAmountProvider);
@@ -95,6 +94,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                             if (!context.mounted || !success) return;
 
                             ref
+                              ..invalidate(_startAmountProvider)
                               ..invalidate(
                                 getSavingsProvider(
                                   type: SavingsType.cryptocurrency,

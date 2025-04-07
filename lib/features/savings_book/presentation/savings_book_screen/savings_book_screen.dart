@@ -18,7 +18,7 @@ import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
 
-final _newInterestProvider = StateProvider.autoDispose<String>((_) => '');
+final _newInterestProvider = StateProvider<String>((_) => '');
 
 class SavingsBookScreen extends ConsumerWidget {
   const SavingsBookScreen({super.key});
@@ -129,7 +129,6 @@ class SavingsBookScreen extends ConsumerWidget {
                       onTap: () => context.push(
                         fullscreenDialog: true,
                         AmountScreen(
-                          provider: _newInterestProvider,
                           onChanged: (value) => ref
                               .read(_newInterestProvider.notifier)
                               .state = value,
@@ -145,7 +144,6 @@ class SavingsBookScreen extends ConsumerWidget {
                                     ref.read(_newInterestProvider),
                                   ),
                                 );
-
                             if (!context.mounted || !success) return;
 
                             ref.invalidate(_newInterestProvider);
@@ -159,7 +157,7 @@ class SavingsBookScreen extends ConsumerWidget {
                   itemCount: value.length,
                 ),
               ),
-            AsyncError(:final error) => Text('error: $error'),
+            AsyncError(:final error) => Text('Error: $error'),
             _ => const Center(
                 child: RepaintBoundary(
                   child: CircularProgressIndicator(),

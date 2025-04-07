@@ -38,9 +38,6 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
                 label: context.tr('common.crypto_amount'),
                 suffix: formData.crypto?.type.symbol ?? '',
                 required: true,
-                provider: cryptoFormControllerProvider.select(
-                  (form) => form.amount,
-                ),
                 onChanged: (newAmount) => ref
                     .read(cryptoFormControllerProvider.notifier)
                     .amount(amount: newAmount),
@@ -61,9 +58,6 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
                   return MonnFieldDate(
                     label: context.tr('common.$id', args: ['']),
                     required: true,
-                    provider: cryptoFormControllerProvider.select(
-                      (form) => form.date,
-                    ),
                     onChanged: (newDate) => ref
                         .read(cryptoFormControllerProvider.notifier)
                         .date(date: newDate),

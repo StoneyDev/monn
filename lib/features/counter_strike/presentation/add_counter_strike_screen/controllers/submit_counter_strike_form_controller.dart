@@ -12,8 +12,6 @@ class SubmitCounterStrikeFormController
   FutureOr<void> build() async {}
 
   Future<bool> submit() async {
-    state = const AsyncLoading();
-
     final repository = ref.read(counterStrikeRepositoryProvider);
     final formData = ref.read(counterStrikeFormControllerProvider);
 
@@ -35,8 +33,6 @@ class SubmitCounterStrikeFormController
   }
 
   Future<bool> submitNewCurrentValue(CounterStrike counterStrike) async {
-    state = const AsyncLoading();
-
     final repository = ref.read(counterStrikeRepositoryProvider);
 
     state = await AsyncValue.guard(

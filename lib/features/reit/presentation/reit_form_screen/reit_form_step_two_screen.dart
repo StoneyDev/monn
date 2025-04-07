@@ -21,6 +21,8 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(reitDividendFormControllerProvider, (previous, next) {});
+
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
       body: Form(
@@ -34,9 +36,6 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                 label: context.tr('common.dividend'),
                 suffix: '€',
                 required: true,
-                provider: reitDividendFormControllerProvider.select(
-                  (form) => form.amount,
-                ),
                 onChanged: (newAmount) => ref
                     .read(reitDividendFormControllerProvider.notifier)
                     .amount(amount: newAmount),
@@ -44,9 +43,6 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
               MonnFieldDate(
                 label: context.tr('common.receive_at'),
                 required: true,
-                provider: reitDividendFormControllerProvider.select(
-                  (form) => form.receivedAt,
-                ),
                 onChanged: (newReceivedAt) => ref
                     .read(reitDividendFormControllerProvider.notifier)
                     .receivedAt(receivedAt: newReceivedAt),
@@ -68,7 +64,6 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                   .submit();
               if (!context.mounted || !success) return;
 
-              ref.invalidate(reitDividendFormControllerProvider);
               Navigator.of(context)
                 ..pop()
                 ..pop();

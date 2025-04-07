@@ -8,14 +8,12 @@ import 'package:monn/shared/widgets/monn_button.dart';
 
 class AmountScreen extends ConsumerStatefulWidget {
   const AmountScreen({
-    required this.provider,
     required this.onSubmit,
     required this.onChanged,
     this.initialValue = 0,
     super.key,
   });
 
-  final ProviderListenable<String?> provider;
   final double initialValue;
   final void Function() onSubmit;
   final void Function(String) onChanged;
@@ -45,7 +43,6 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
                 '${context.tr('common.amount')}${widget.initialValue > 0 ? ' (${context.tr('common.old_value')}: ${widget.initialValue.simpleCurrency(locale)})' : ''}',
             required: true,
             autofocus: true,
-            provider: widget.provider,
             onChanged: (newAmount) {
               setState(
                 () =>

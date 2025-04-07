@@ -38,9 +38,6 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                   MonnFieldNumber<int>(
                     label: context.tr('common.number_equities'),
                     required: true,
-                    provider: peaFormControllerProvider.select(
-                      (form) => form.equity,
-                    ),
                     onChanged: (newEquity) =>
                         ref.read(peaFormControllerProvider.notifier).equity(
                               equity: newEquity,
@@ -50,9 +47,6 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                   MonnFieldNumber<double>(
                     label: context.tr('common.purchase_price'),
                     required: true,
-                    provider: peaFormControllerProvider.select(
-                      (form) => form.costAverage,
-                    ),
                     onChanged: (newCostAverage) => ref
                         .read(peaFormControllerProvider.notifier)
                         .costAverage(

@@ -9,13 +9,13 @@ class MonnFieldDate extends ConsumerStatefulWidget {
   const MonnFieldDate({
     required this.label,
     required this.onChanged,
-    required this.provider,
+    this.initialValue,
     this.required = false,
     super.key,
   });
 
   final String label;
-  final ProviderListenable<DateTime?> provider;
+  final DateTime? initialValue;
   final bool required;
   final void Function(DateTime) onChanged;
 
@@ -30,7 +30,7 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _controller = TextEditingController(
-      text: ref.read(widget.provider)?.slashFormat(context.locale.toString()),
+      text: widget.initialValue?.slashFormat(context.locale.toString()),
     );
   }
 
@@ -43,10 +43,6 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale.toString();
-
-    ref.listen<DateTime?>(widget.provider, (_, next) {
-      _controller.text = next!.slashFormat(locale);
-    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,6 +60,8 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
         const SizedBox(height: 8),
         TextFormField(
           controller: _controller,
+          autovalidateMode:
+              widget.required ? AutovalidateMode.onUserInteraction : null,
           readOnly: true,
           decoration: GlobalThemeData.inputDecoration(context),
           onTap: () async {
