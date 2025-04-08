@@ -8,12 +8,14 @@ class MonnCard extends ConsumerStatefulWidget {
     required this.child,
     this.padding = const EdgeInsets.all(16),
     this.onTap,
+    this.onLongPress,
     super.key,
   });
 
   final Widget child;
   final EdgeInsets padding;
   final void Function()? onTap;
+  final void Function()? onLongPress;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MonnCardState();
@@ -31,6 +33,7 @@ class _MonnCardState extends ConsumerState<MonnCard> {
     );
 
     return GestureDetector(
+      onLongPress: widget.onLongPress,
       onTapDown: widget.onTap != null
           ? (_) => setState(() {
                 _isPressed = true;

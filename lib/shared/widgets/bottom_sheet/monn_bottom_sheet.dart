@@ -97,4 +97,34 @@ class MonnBottomSheet {
       ],
     );
   }
+
+  static SliverWoltModalSheetPage warningDialog({
+    required BuildContext context,
+    required Widget sliver,
+    required String title,
+  }) {
+    return SliverWoltModalSheetPage(
+      surfaceTintColor: AppColors.white,
+      topBarTitle: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
+      ),
+      isTopBarLayerAlwaysVisible: true,
+      mainContentSliversBuilder: (_) => [
+        SliverPadding(
+          padding: const EdgeInsets.all(16),
+          sliver: SliverToBoxAdapter(
+            child: Text(context.tr('common.deletion_warning')),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          sliver: sliver,
+        ),
+      ],
+    );
+  }
 }

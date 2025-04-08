@@ -37,6 +37,17 @@ class ReitRepository {
       await reit.dividends.save();
     });
   }
+
+  Future<void> deleteReit(Reit reit) {
+    return _localDB.writeTxn<void>(() async {
+      await _localDB.reits.delete(reit.id!);
+      if (reit.dividends.isNotEmpty) {
+        await _localDB.reitDividends.deleteAll(
+          reit.dividends.map((e) => e.id!).toList(),
+        );
+      }
+    });
+  }
 }
 
 @Riverpod(keepAlive: true)
@@ -48,6 +59,12 @@ ReitRepository reitRepository(Ref ref) {
 Stream<List<Reit>> watchReits(Ref ref) {
   final repository = ref.watch(reitRepositoryProvider);
   return repository.watchReits();
+}
+
+@riverpod
+Future<void> deleteReit(Ref ref, Reit reit) {
+  final repository = ref.watch(reitRepositoryProvider);
+  return repository.deleteReit(reit);
 }
 
 @riverpod

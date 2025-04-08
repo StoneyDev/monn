@@ -7,7 +7,7 @@ part of 'submit_counter_strike_form_controller.dart';
 // **************************************************************************
 
 String _$submitCounterStrikeFormControllerHash() =>
-    r'856f86928e03ae40fb2a7dac39e0c4d396e52802';
+    r'ff969211538d8c7b417554727a57a5f93c5edcf0';
 
 /// See also [SubmitCounterStrikeFormController].
 @ProviderFor(SubmitCounterStrikeFormController)

@@ -7,7 +7,7 @@ part of 'submit_reit_form_controller.dart';
 // **************************************************************************
 
 String _$submitReitFormControllerHash() =>
-    r'428352507ac49ebead18b126534a761704e001b8';
+    r'fab9013e91878ece651a593434977b3267360c86';
 
 /// See also [SubmitReitFormController].
 @ProviderFor(SubmitReitFormController)

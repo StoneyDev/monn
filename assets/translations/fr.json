@@ -49,9 +49,12 @@
     "without_income_tax": "(sans IR: 17.2%)",
     "purchasing_tracking": "Suivi des achats",
     "price_and_purchase_date": "Prix à {} le {}",
-    "opening_account": "Ouvert depuis {} ans / {}"
+    "opening_account": "Ouvert depuis {} ans / {}",
+    "deletion_warning": "Voulez-vous vraiment supprimer ?"
   },
   "button": {
+    "close": "Fermer",
+    "ok": "OK",
     "validate": "Valider",
     "save": "Sauvegarder",
     "update_data": "Mettre à jour les données"

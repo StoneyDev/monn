@@ -49,9 +49,12 @@
     "without_income_tax": "(without IT: 17.2%)",
     "purchasing_tracking": "Purchasing tracking",
     "price_and_purchase_date": "Price at {} on {}",
-    "opening_account": "Open for {} years / {}"
+    "opening_account": "Open for {} years / {}",
+    "deletion_warning": "Do you really want to delete?"
   },
   "button": {
+    "close": "Close",
+    "ok": "OK",
     "validate": "Validate",
     "save": "Save",
     "update_data": "Update data"

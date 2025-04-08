@@ -187,6 +187,16 @@ class MockReitRepository extends _i1.Mock implements _i9.ReitRepository {
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> deleteReit(_i10.Reit? reit) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteReit,
+          [reit],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
 
 /// A class which mocks [SavingsBookRepository].
