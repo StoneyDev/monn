@@ -7,7 +7,7 @@ part 'crowdfunding_form_controller.g.dart';
 class CrowdfundingFormController extends _$CrowdfundingFormController {
   @override
   CrowdfundingForm build() => CrowdfundingForm(
-        platformName: '',
+        platformName: 'La Première Brique',
         receivedAt: DateTime.now(),
         brutProfit: '',
       );
