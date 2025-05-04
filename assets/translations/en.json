@@ -50,7 +50,15 @@
     "purchasing_tracking": "Purchasing tracking",
     "price_and_purchase_date": "Price at {} on {}",
     "opening_account": "Open for {} years / {}",
-    "deletion_warning": "Do you really want to delete?"
+    "deletion_warning": "Do you really want to delete?",
+    "backup": "Backup",
+    "no_backup": "No backup",
+    "import": "Import",
+    "import_failed": "Import failed, file has wrong extrension (.isar)",
+    "export": "Export",
+    "restore": "Restore",
+    "successfully_restored": "The database has been successfully restored",
+    "failed_to_restore": "Database restore failed"
   },
   "button": {
     "close": "Close",
