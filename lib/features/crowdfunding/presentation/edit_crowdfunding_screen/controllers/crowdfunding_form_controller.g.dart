@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'submit_reit_form_controller.dart';
+part of 'crowdfunding_form_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitReitFormControllerHash() =>
-    r'fab9013e91878ece651a593434977b3267360c86';
+String _$crowdfundingFormControllerHash() =>
+    r'dc952a519d2f899e57185748553fa1d677c2d3c6';
 
-/// See also [SubmitReitFormController].
-@ProviderFor(SubmitReitFormController)
-final submitReitFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitReitFormController, void>.internal(
-  SubmitReitFormController.new,
-  name: r'submitReitFormControllerProvider',
+/// See also [CrowdfundingFormController].
+@ProviderFor(CrowdfundingFormController)
+final crowdfundingFormControllerProvider = AutoDisposeNotifierProvider<
+    CrowdfundingFormController, CrowdfundingForm>.internal(
+  CrowdfundingFormController.new,
+  name: r'crowdfundingFormControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$submitReitFormControllerHash,
+      : _$crowdfundingFormControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SubmitReitFormController = AutoDisposeAsyncNotifier<void>;
+typedef _$CrowdfundingFormController = AutoDisposeNotifier<CrowdfundingForm>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -30,6 +30,8 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
       ),
     );
 
+    ref.listen(savingsBookFormControllerProvider, (previous, next) {});
+
     return Scaffold(
       appBar: MonnAppBar(
         title: context.tr('common.add_savings_book'),
@@ -85,9 +87,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               if (!context.mounted || !success || !updated) return;
 
-              ref
-                ..invalidate(savingsBookFormControllerProvider)
-                ..invalidate(getSavingsProvider);
+              ref.invalidate(getSavingsProvider);
               Navigator.pop(context);
             },
           ),

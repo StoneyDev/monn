@@ -25,8 +25,16 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Forces data retrieval because no data is used in the UI
+    // It's strange, but perhaps normal for the way riverpod works.
+    ref.invalidate(getSavingsProvider(type: SavingsType.reit));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final reit = ref.watch(getSavingsProvider(type: SavingsType.reit));
+    final savingsReit = ref.watch(getSavingsProvider(type: SavingsType.reit));
 
     ref.listen(reitFormControllerProvider, (previous, next) {});
 
@@ -83,7 +91,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: switch (reit) {
+          child: switch (savingsReit) {
             AsyncData(:final value) => MonnButton(
                 text: context.tr('button.validate'),
                 onPressed: () async {

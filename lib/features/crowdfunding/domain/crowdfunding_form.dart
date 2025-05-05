@@ -9,5 +9,6 @@ class CrowdfundingForm with _$CrowdfundingForm {
     required DateTime receivedAt,
     required String brutProfit,
     String? taxPercentage,
+    int? id,
   }) = _CrowdfundingForm;
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -21,9 +22,9 @@ class ReitScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final startAmount = ref.watch(
+    final savingsReit = ref.watch(
       getSavingsProvider(type: SavingsType.reit).select(
-        (value) => value.valueOrNull?.startAmount ?? 0,
+        (value) => value.valueOrNull,
       ),
     );
     final reits = ref.watch(watchReitsProvider);
@@ -60,7 +61,7 @@ class ReitScreen extends ConsumerWidget {
           OutlinedButton(
             onPressed: null,
             child: Text(
-              startAmount.simpleCurrency(locale),
+              (savingsReit?.startAmount ?? 0).simpleCurrency(locale),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppColors.lightGray,
                   ),
@@ -79,6 +80,7 @@ class ReitScreen extends ConsumerWidget {
                     final item = value[index];
                     final amount = item.dividends
                         .fold<double>(0, (total, div) => total + div.amount);
+                    final startAmount = item.shares * item.price;
 
                     return MonnCard(
                       child: Column(
@@ -106,7 +108,7 @@ class ReitScreen extends ConsumerWidget {
                             children: [
                               MonnFinancialInfo(
                                 title: context.tr('common.start_amount'),
-                                data: item.shares * item.price,
+                                data: startAmount,
                               ),
                               MonnFinancialInfo(
                                 title: context.tr('common.part'),
@@ -117,6 +119,58 @@ class ReitScreen extends ConsumerWidget {
                                 data: item.price,
                               ),
                             ],
+                          ),
+                        ],
+                      ),
+                      onLongPress: () => WoltModalSheet.show<void>(
+                        context: context,
+                        modalTypeBuilder: (_) => WoltModalType.alertDialog(),
+                        pageListBuilder: (context) => [
+                          MonnBottomSheet.warningDialog(
+                            context: context,
+                            title: item.name.toUpperCase(),
+                            sliver: SliverToBoxAdapter(
+                              child: Column(
+                                spacing: 8,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Center(
+                                      child: Text(context.tr('button.close')),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await ref.read(
+                                        deleteReitProvider(item).future,
+                                      );
+                                      final success = await ref
+                                          .read(
+                                            editSavingsControllerProvider
+                                                .notifier,
+                                          )
+                                          .submit(
+                                            savingsReit!.copyWith(
+                                              startAmount:
+                                                  savingsReit.startAmount! -
+                                                      startAmount,
+                                            ),
+                                          );
+                                      if (!context.mounted || !success) return;
+                                      ref.invalidate(
+                                        getSavingsProvider(
+                                          type: SavingsType.reit,
+                                        ),
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(
+                                      child: Text(context.tr('button.ok')),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

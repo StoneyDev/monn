@@ -19,6 +19,7 @@ import 'package:monn/shared/widgets/charts/monn_doughnut_chart.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
+import 'package:monn/shared/widgets/monn_snack_bar.dart';
 import 'package:monn/shared/widgets/monn_tile.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -54,28 +55,9 @@ class CryptocurrencyScreen extends ConsumerWidget {
                   AsyncData(:final value) => MonnDoughnutChart(
                       chart: value,
                       onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: AppColors.blue50,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          content: RichText(
-                            text: TextSpan(
-                              text:
-                                  '${context.tr('common.total_amount_invested')}: ',
-                              children: [
-                                TextSpan(
-                                  text: cryptoData?.startAmount
-                                      ?.simpleCurrency(locale),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                              style: const TextStyle(color: AppColors.blue),
-                            ),
-                          ),
+                        MonnSnackBar.info(
+                          message:
+                              '${context.tr('common.total_amount_invested')}: ${cryptoData?.startAmount?.simpleCurrency(locale)}',
                         ),
                       ),
                       onLongPress: () => context.push(

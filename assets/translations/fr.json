@@ -49,9 +49,20 @@
     "without_income_tax": "(sans IR: 17.2%)",
     "purchasing_tracking": "Suivi des achats",
     "price_and_purchase_date": "Prix à {} le {}",
-    "opening_account": "Ouvert depuis {} ans / {}"
+    "opening_account": "Ouvert depuis {} ans / {}",
+    "deletion_warning": "Voulez-vous vraiment supprimer ?",
+    "backup": "Sauvegarde",
+    "no_backup": "Aucune sauvegarde",
+    "import": "Importer",
+    "import_failed": "L'importation a échoué, le fichier n'a pas la bonne extension (.isar)",
+    "export": "Exporter",
+    "restore": "Restaurer",
+    "successfully_restored": "La base de données a été restaurée avec succès",
+    "failed_to_restore": "Échec de la restauration de la base de données"
   },
   "button": {
+    "close": "Fermer",
+    "ok": "OK",
     "validate": "Valider",
     "save": "Sauvegarder",
     "update_data": "Mettre à jour les données"

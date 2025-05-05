@@ -2,7 +2,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding_form.dart';
-import 'package:monn/features/crowdfunding/presentation/add_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 
 import '../../../../../utils.dart';
 
@@ -19,7 +19,7 @@ void main() {
 
       // Assert
       expect(controller.state, isA<CrowdfundingForm>());
-      expect(controller.state.platformName, '');
+      expect(controller.state.platformName, 'LPB');
       expect(controller.state.taxPercentage, isNull);
       expect(controller.state.brutProfit, '');
       expect(controller.state.receivedAt, isA<DateTime>());

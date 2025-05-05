@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
+import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/pea/data/google_finance_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
@@ -61,6 +63,11 @@ Future<Savings?> getSavings(Ref ref, {required SavingsType type}) {
 
 @riverpod
 Future<double> watchPayoutReportSavings(Ref ref) async {
+  // Update data on app startup
+  ref
+    ..invalidate(getEtfPriceMarketProvider(stock: 'ESE:EPA'))
+    ..invalidate(getCryptoPriceMarketProvider);
+
   final report = await Future.wait([
     ref.watch(
       watchPayoutReportCrowdfundingProvider.selectAsync(
