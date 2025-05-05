@@ -5,8 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding_form.dart';
-import 'package:monn/features/crowdfunding/presentation/add_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
-import 'package:monn/features/crowdfunding/presentation/add_crowdfunding_screen/controllers/submit_crowdfunding_form_controller.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/submit_crowdfunding_form_controller.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';

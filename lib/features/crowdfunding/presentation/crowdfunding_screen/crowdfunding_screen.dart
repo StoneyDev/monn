@@ -5,7 +5,8 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
-import 'package:monn/features/crowdfunding/presentation/add_crowdfunding_screen/add_crowdfunding_screen.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/edit_crowdfunding_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
@@ -55,7 +56,7 @@ class CrowdfundingScreen extends ConsumerWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (_) => const AddCrowdfundingScreen(),
+            builder: (_) => const EditCrowdfundingScreen(),
           ),
         ),
       ),
@@ -140,27 +141,40 @@ class CrowdfundingScreen extends ConsumerWidget {
   }
 }
 
-class _RefundTransaction extends StatelessWidget {
-  const _RefundTransaction(this.data);
+class _RefundTransaction extends ConsumerWidget {
+  const _RefundTransaction(this.crowdfunding);
 
-  final Crowdfunding data;
+  final Crowdfunding crowdfunding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final isExempt = (data.netProfit ?? 0) != data.brutProfit;
+    final isExempt = (crowdfunding.netProfit ?? 0) != crowdfunding.brutProfit;
 
     return MonnCard(
+      onLongPress: () {
+        ref.read(crowdfundingFormControllerProvider.notifier)
+          ..id(id: crowdfunding.id)
+          ..platformName(platformName: crowdfunding.platformName)
+          ..brutProfit(brutProfit: crowdfunding.brutProfit.toString())
+          ..receivedAt(receivedAt: crowdfunding.receivedAt!)
+          ..taxPercentage(
+            taxPercentage: crowdfunding.taxPercentage != null
+                ? '${crowdfunding.taxPercentage}'
+                : null,
+          );
+        context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
+      },
       child: Row(
         children: [
-          MonnUpDown(value: data.brutProfit),
+          MonnUpDown(value: crowdfunding.brutProfit),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.platformName,
+                  crowdfunding.platformName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -168,16 +182,16 @@ class _RefundTransaction extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  data.receivedAt!.slashFormat(locale),
+                  crowdfunding.receivedAt!.slashFormat(locale),
                   style: const TextStyle(color: AppColors.lightGray),
                 ),
               ],
             ),
           ),
           const SizedBox(width: 10),
-          if (data.brutProfit.isNegative)
+          if (crowdfunding.brutProfit.isNegative)
             Text(
-              data.brutProfit.simpleCurrency(locale),
+              crowdfunding.brutProfit.simpleCurrency(locale),
               style: const TextStyle(
                 color: AppColors.red,
                 fontWeight: FontWeight.bold,
@@ -188,14 +202,14 @@ class _RefundTransaction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  data.netProfit!.simpleCurrency(locale),
+                  crowdfunding.netProfit!.simpleCurrency(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
                   isExempt
-                      ? '(${data.brutProfit})'
+                      ? '(${crowdfunding.brutProfit})'
                       : context.tr('common.exempt'),
                   style: TextStyle(
                     color: isExempt ? AppColors.lightGray : AppColors.green,

@@ -49,6 +49,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        // Exclude x86 architecture (not supported by Flutter) to reduce app size. 
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
     }
 
     buildTypes {

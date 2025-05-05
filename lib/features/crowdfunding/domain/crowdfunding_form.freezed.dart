@@ -20,6 +20,7 @@ mixin _$CrowdfundingForm {
   DateTime get receivedAt => throw _privateConstructorUsedError;
   String get brutProfit => throw _privateConstructorUsedError;
   String? get taxPercentage => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
 
   /// Create a copy of CrowdfundingForm
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +39,8 @@ abstract class $CrowdfundingFormCopyWith<$Res> {
       {String platformName,
       DateTime receivedAt,
       String brutProfit,
-      String? taxPercentage});
+      String? taxPercentage,
+      int? id});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$CrowdfundingFormCopyWithImpl<$Res, $Val extends CrowdfundingForm>
     Object? receivedAt = null,
     Object? brutProfit = null,
     Object? taxPercentage = freezed,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       platformName: null == platformName
@@ -78,6 +81,10 @@ class _$CrowdfundingFormCopyWithImpl<$Res, $Val extends CrowdfundingForm>
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -94,7 +101,8 @@ abstract class _$$CrowdfundingFormImplCopyWith<$Res>
       {String platformName,
       DateTime receivedAt,
       String brutProfit,
-      String? taxPercentage});
+      String? taxPercentage,
+      int? id});
 }
 
 /// @nodoc
@@ -114,6 +122,7 @@ class __$$CrowdfundingFormImplCopyWithImpl<$Res>
     Object? receivedAt = null,
     Object? brutProfit = null,
     Object? taxPercentage = freezed,
+    Object? id = freezed,
   }) {
     return _then(_$CrowdfundingFormImpl(
       platformName: null == platformName
@@ -132,6 +141,10 @@ class __$$CrowdfundingFormImplCopyWithImpl<$Res>
           ? _value.taxPercentage
           : taxPercentage // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -143,7 +156,8 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
       {required this.platformName,
       required this.receivedAt,
       required this.brutProfit,
-      this.taxPercentage});
+      this.taxPercentage,
+      this.id});
 
   @override
   final String platformName;
@@ -153,10 +167,12 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
   final String brutProfit;
   @override
   final String? taxPercentage;
+  @override
+  final int? id;
 
   @override
   String toString() {
-    return 'CrowdfundingForm(platformName: $platformName, receivedAt: $receivedAt, brutProfit: $brutProfit, taxPercentage: $taxPercentage)';
+    return 'CrowdfundingForm(platformName: $platformName, receivedAt: $receivedAt, brutProfit: $brutProfit, taxPercentage: $taxPercentage, id: $id)';
   }
 
   @override
@@ -171,12 +187,13 @@ class _$CrowdfundingFormImpl implements _CrowdfundingForm {
             (identical(other.brutProfit, brutProfit) ||
                 other.brutProfit == brutProfit) &&
             (identical(other.taxPercentage, taxPercentage) ||
-                other.taxPercentage == taxPercentage));
+                other.taxPercentage == taxPercentage) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, platformName, receivedAt, brutProfit, taxPercentage);
+      runtimeType, platformName, receivedAt, brutProfit, taxPercentage, id);
 
   /// Create a copy of CrowdfundingForm
   /// with the given fields replaced by the non-null parameter values.
@@ -193,7 +210,8 @@ abstract class _CrowdfundingForm implements CrowdfundingForm {
       {required final String platformName,
       required final DateTime receivedAt,
       required final String brutProfit,
-      final String? taxPercentage}) = _$CrowdfundingFormImpl;
+      final String? taxPercentage,
+      final int? id}) = _$CrowdfundingFormImpl;
 
   @override
   String get platformName;
@@ -203,6 +221,8 @@ abstract class _CrowdfundingForm implements CrowdfundingForm {
   String get brutProfit;
   @override
   String? get taxPercentage;
+  @override
+  int? get id;
 
   /// Create a copy of CrowdfundingForm
   /// with the given fields replaced by the non-null parameter values.

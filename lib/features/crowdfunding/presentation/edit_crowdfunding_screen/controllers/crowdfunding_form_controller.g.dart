@@ -7,7 +7,7 @@ part of 'crowdfunding_form_controller.dart';
 // **************************************************************************
 
 String _$crowdfundingFormControllerHash() =>
-    r'ba4b4a1850a375691af57450dfb350951eb970ea';
+    r'dc952a519d2f899e57185748553fa1d677c2d3c6';
 
 /// See also [CrowdfundingFormController].
 @ProviderFor(CrowdfundingFormController)
