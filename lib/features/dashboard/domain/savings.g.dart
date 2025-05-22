@@ -100,6 +100,7 @@ const _SavingstypeEnumValueMap = {
   r'crowdfunding': r'crowdfunding',
   r'cryptocurrency': r'cryptocurrency',
   r'csKnives': r'csKnives',
+  r'cash': r'cash',
   r'pea': r'pea',
   r'reit': r'reit',
 };
@@ -108,6 +109,7 @@ const _SavingstypeValueEnumMap = {
   r'crowdfunding': SavingsType.crowdfunding,
   r'cryptocurrency': SavingsType.cryptocurrency,
   r'csKnives': SavingsType.csKnives,
+  r'cash': SavingsType.cash,
   r'pea': SavingsType.pea,
   r'reit': SavingsType.reit,
 };

@@ -42,6 +42,7 @@ class MonnFieldText extends StatelessWidget {
           textInputAction: textInputAction,
           decoration: GlobalThemeData.inputDecoration(context),
           onChanged: onChanged,
+          autocorrect: false,
           validator: required
               ? (value) {
                   if (value == null || value.isEmpty) {

@@ -175,6 +175,10 @@ class $AssetsImagesIconGen {
   AssetGenImage get locker =>
       const AssetGenImage('assets/images/icon/locker.png');
 
+  /// File path: assets/images/icon/money.png
+  AssetGenImage get money =>
+      const AssetGenImage('assets/images/icon/money.png');
+
   /// File path: assets/images/icon/money_bag.png
   AssetGenImage get moneyBag =>
       const AssetGenImage('assets/images/icon/money_bag.png');
@@ -184,8 +188,17 @@ class $AssetsImagesIconGen {
       const AssetGenImage('assets/images/icon/umbrella.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [bag, calendar, crown, ethCoin, folder, locker, moneyBag, umbrella];
+  List<AssetGenImage> get values => [
+        bag,
+        calendar,
+        crown,
+        ethCoin,
+        folder,
+        locker,
+        money,
+        moneyBag,
+        umbrella
+      ];
 }
 
 class MonnAssets {

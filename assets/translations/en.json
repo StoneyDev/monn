@@ -15,6 +15,7 @@
     "start_amount": "Start amount",
     "tax": "Tax {}",
     "taxation": "Taxation",
+    "label": "Label",
     "number_equities": "Number of equities",
     "average_purchase_price": "Average purchase price",
     "purchase_price": "Purchase price",
@@ -85,6 +86,7 @@
     "cryptocurrency": "Cryptocurrency",
     "cs_knives": "CS knives",
     "pea": "PEA",
+    "cash": "Cash",
     "reit": "Reit"
   },
   "filters": {

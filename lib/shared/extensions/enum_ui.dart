@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monn/features/cash/data/cash_repository.dart';
+import 'package:monn/features/cash/presentation/cash_screen/cash_screen.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/counter_strike_screen/counter_strike_screen.dart';
@@ -42,6 +44,11 @@ extension SavingsTypeUI on SavingsType {
             (value) => value.valueOrNull?.finalAmount ?? 0,
           ),
         ),
+      SavingsType.cash => ref.watch(
+          watchPayoutReportCashProvider.select(
+            (value) => value.valueOrNull?.finalAmount ?? 0,
+          ),
+        ),
       // SavingsType.cto => 0,
       // SavingsType.lifeInsurance => 0,
       SavingsType.pea => ref.watch(
@@ -64,6 +71,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.crowdfunding => const CrowdfundingScreen(),
       SavingsType.cryptocurrency => const CryptocurrencyScreen(),
       SavingsType.csKnives => const CounterStrikeScreen(),
+      SavingsType.cash => const CashScreen(),
       // SavingsType.cto => const MonnWip(),
       // SavingsType.lifeInsurance => const MonnWip(),
       SavingsType.pea => const PeaScreen(),
@@ -78,6 +86,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.crowdfunding => MonnAssets.images.icon.moneyBag.provider(),
       SavingsType.cryptocurrency => MonnAssets.images.icon.ethCoin.provider(),
       SavingsType.csKnives => MonnAssets.images.icon.crown.provider(),
+      SavingsType.cash => MonnAssets.images.icon.money.provider(),
       // SavingsType.cto => MonnAssets.images.icon.bag.provider(),
       // SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
       SavingsType.pea => MonnAssets.images.icon.bag.provider(),
