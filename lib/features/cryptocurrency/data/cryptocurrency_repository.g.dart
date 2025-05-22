@@ -198,7 +198,7 @@ class _GetCryptocurrencyProviderElement
   CryptoType get type => (origin as GetCryptocurrencyProvider).type;
 }
 
-String _$watchCryptoChartHash() => r'15399d814764facd70ba874bc4939eecae257fe0';
+String _$watchCryptoChartHash() => r'4997850470e5a362eee30787cca53562f976496d';
 
 /// See also [watchCryptoChart].
 @ProviderFor(watchCryptoChart)
