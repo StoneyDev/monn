@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/savings_book_form_screen.dart';
@@ -26,11 +25,6 @@ class SavingsBookScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final startAmount = ref.watch(
-      getSavingsProvider(type: SavingsType.savingsBook).select(
-        (savings) => savings.valueOrNull?.startAmount ?? 0,
-      ),
-    );
     final savingsBooks = ref.watch(watchSavingsBooksProvider);
     final report = ref.watch(
       watchPayoutReportSavingsBookProvider.select((data) => data.valueOrNull),
@@ -59,20 +53,6 @@ class SavingsBookScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
-          ),
-          OutlinedButton(
-            onPressed: null,
-            child: Text(
-              startAmount.simpleCurrency(locale),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.lightGray,
-                  ),
-            ),
-          ),
-          const SizedBox(height: 32),
-          Divider(
-            color: Theme.of(context).colorScheme.outline,
-            height: 0,
           ),
           const SizedBox(height: 16),
           switch (savingsBooks) {
@@ -107,17 +87,12 @@ class SavingsBookScreen extends ConsumerWidget {
                           ),
                           const Divider(),
                           Row(
+                            spacing: 24,
                             children: [
-                              MonnFinancialInfo(
-                                title: context.tr('common.start_amount'),
-                                data: item.startAmount,
-                              ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
                                 title: context.tr('common.total_interest'),
                                 data: item.interests,
                               ),
-                              const SizedBox(width: 24),
                               MonnFinancialInfo(
                                 title: context.tr('common.withdrawal'),
                                 data: item.withdrawal,
