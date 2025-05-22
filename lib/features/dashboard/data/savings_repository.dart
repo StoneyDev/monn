@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
@@ -97,6 +98,11 @@ Future<double> watchPayoutReportSavings(Ref ref) async {
     ref.watch(
       watchPayoutReportCounterStrikeProvider.selectAsync(
         (cs) => cs.finalAmount,
+      ),
+    ),
+    ref.watch(
+      watchPayoutReportCashProvider.selectAsync(
+        (cash) => cash.finalAmount,
       ),
     ),
   ]);

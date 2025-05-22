@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:monn/features/cash/domain/cash.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
@@ -24,6 +25,7 @@ class LocalDatabase {
         SavingsBookSchema,
         CounterStrikeSchema,
         PeaSchema,
+        CashSchema,
       ],
       directory: dir.path,
     );

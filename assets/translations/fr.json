@@ -15,6 +15,7 @@
     "start_amount": "Montant initial",
     "tax": "Taxe {}",
     "taxation": "Fiscalité",
+    "label": "Label",
     "number_equities": "Nombre de titres",
     "average_purchase_price": "Prix d'achat moyen",
     "purchase_price": "Prix d'achat",
@@ -85,6 +86,7 @@
     "cryptocurrency": "Cryptomonnaie",
     "cs_knives": "Couteaux CS",
     "pea": "PEA",
+    "cash": "Liquide",
     "reit": "SCPI"
   },
   "filters": {

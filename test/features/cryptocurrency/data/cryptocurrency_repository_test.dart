@@ -199,8 +199,8 @@ void main() {
       const chart = Chart(
         totalAmount: 193742.07,
         data: [
-          ChartData(portion: 33.25, color: AppColors.btc),
-          ChartData(portion: 66.75, color: AppColors.eth),
+          ChartData(portion: 54.41, color: AppColors.btc),
+          ChartData(portion: 45.59, color: AppColors.eth),
         ],
       );
 

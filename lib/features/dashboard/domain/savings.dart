@@ -22,6 +22,7 @@ enum SavingsType {
   crowdfunding,
   cryptocurrency,
   csKnives,
+  cash,
   // cto('CTO'),
   // lifeInsurance('Assurance-vie'),
   pea,
