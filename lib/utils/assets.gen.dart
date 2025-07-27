@@ -36,11 +36,13 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/ak_47_legion_of_anubis.png
   AssetGenImage get ak47LegionOfAnubis => const AssetGenImage(
-      'assets/images/counter_strike/ak_47_legion_of_anubis.png');
+    'assets/images/counter_strike/ak_47_legion_of_anubis.png',
+  );
 
   /// File path: assets/images/counter_strike/bayonet_tiger_tooth.png
   AssetGenImage get bayonetTigerTooth => const AssetGenImage(
-      'assets/images/counter_strike/bayonet_tiger_tooth.png');
+    'assets/images/counter_strike/bayonet_tiger_tooth.png',
+  );
 
   /// File path: assets/images/counter_strike/falchion_case.png
   AssetGenImage get falchionCase =>
@@ -52,7 +54,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/glock_18_ramese_s_reach.png
   AssetGenImage get glock18RameseSReach => const AssetGenImage(
-      'assets/images/counter_strike/glock_18_ramese_s_reach.png');
+    'assets/images/counter_strike/glock_18_ramese_s_reach.png',
+  );
 
   /// File path: assets/images/counter_strike/horizon_case.png
   AssetGenImage get horizonCase =>
@@ -60,7 +63,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/m4a1_s_printstream.png
   AssetGenImage get m4a1SPrintstream => const AssetGenImage(
-      'assets/images/counter_strike/m4a1_s_printstream.png');
+    'assets/images/counter_strike/m4a1_s_printstream.png',
+  );
 
   /// File path: assets/images/counter_strike/prisma_2_case.png
   AssetGenImage get prisma2Case =>
@@ -88,7 +92,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/stiletto_slaughter.png
   AssetGenImage get stilettoSlaughter => const AssetGenImage(
-      'assets/images/counter_strike/stiletto_slaughter.png');
+    'assets/images/counter_strike/stiletto_slaughter.png',
+  );
 
   /// File path: assets/images/counter_strike/ursus_fade.png
   AssetGenImage get ursusFade =>
@@ -100,25 +105,25 @@ class $AssetsImagesCounterStrikeGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        ak47Bloodsport,
-        ak47LeetMuseo,
-        ak47LegionOfAnubis,
-        bayonetTigerTooth,
-        falchionCase,
-        gammaCase,
-        glock18RameseSReach,
-        horizonCase,
-        m4a1SPrintstream,
-        prisma2Case,
-        prismaCase,
-        recoilCase,
-        revolutionCase,
-        shadowCase,
-        spectrumCase,
-        stilettoSlaughter,
-        ursusFade,
-        uspSPrintstream
-      ];
+    ak47Bloodsport,
+    ak47LeetMuseo,
+    ak47LegionOfAnubis,
+    bayonetTigerTooth,
+    falchionCase,
+    gammaCase,
+    glock18RameseSReach,
+    horizonCase,
+    m4a1SPrintstream,
+    prisma2Case,
+    prismaCase,
+    recoilCase,
+    revolutionCase,
+    shadowCase,
+    spectrumCase,
+    stilettoSlaughter,
+    ursusFade,
+    uspSPrintstream,
+  ];
 }
 
 class $AssetsImagesCryptoGen {
@@ -145,8 +150,13 @@ class $AssetsImagesCryptoGen {
       const AssetGenImage('assets/images/crypto/usd_coin.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [bitcoin, chainlink, ethereum, tether, usdCoin];
+  List<AssetGenImage> get values => [
+    bitcoin,
+    chainlink,
+    ethereum,
+    tether,
+    usdCoin,
+  ];
 }
 
 class $AssetsImagesIconGen {
@@ -189,16 +199,16 @@ class $AssetsImagesIconGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        bag,
-        calendar,
-        crown,
-        ethCoin,
-        folder,
-        locker,
-        money,
-        moneyBag,
-        umbrella
-      ];
+    bag,
+    calendar,
+    crown,
+    ethCoin,
+    folder,
+    locker,
+    money,
+    moneyBag,
+    umbrella,
+  ];
 }
 
 class MonnAssets {
@@ -208,11 +218,7 @@ class MonnAssets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  });
+  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
 
@@ -272,15 +278,8 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;

@@ -8,10 +8,10 @@ environment:
   sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
-  collection: ^1.19.0
+  collection: ^1.19.1
   dio: ^5.8.0+1
-  easy_localization: ^3.0.7
-  file_picker: ^10.1.2
+  easy_localization: ^3.0.8
+  file_picker: ^10.2.0
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -20,7 +20,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   freezed_annotation: ^2.4.4
   html: ^0.15.6
-  iconoir_flutter: ^7.10.1
+  iconoir_flutter: ^7.11.0
   isar:
     version: ^3.1.8
     hosted: https://pub.isar-community.dev/
@@ -28,14 +28,14 @@ dependencies:
     version: ^3.1.8
     hosted: https://pub.isar-community.dev/
   json_annotation: ^4.9.0
-  logger: ^2.5.0
-  mockito: ^5.4.5
-  path: ^1.9.0
+  logger: ^2.6.1
+  mockito: ^5.4.4
+  path: ^1.9.1
   path_provider: ^2.1.5
-  retrofit: ^4.4.2
+  retrofit: ^4.6.0
   riverpod_annotation: ^2.6.1
   share_plus: ^11.0.0
-  shared_preferences: ^2.5.2
+  shared_preferences: ^2.5.3
   wolt_modal_sheet: ^0.11.0
 
 dev_dependencies:
@@ -44,15 +44,20 @@ dev_dependencies:
   flutter_gen_runner: ^5.10.0
   flutter_test:
     sdk: flutter
-  freezed: ^2.5.7
+  freezed: ^2.5.8
+  # isar_generator:
+  #   version: ^3.1.8
+  #   hosted: https://pub.isar-community.dev/
   isar_generator:
-    version: ^3.1.8
-    hosted: https://pub.isar-community.dev/
-  json_serializable: ^6.9.0
-  retrofit_generator: ^9.1.7
-  riverpod_generator: ^2.6.1
+    git: 
+      url: https://github.com/callumw-k/isar
+      ref: v3
+      path: packages/isar_generator
+  json_serializable: ^6.9.5
+  retrofit_generator: ^9.6.0
+  riverpod_generator: ^2.6.3
   riverpod_lint: ^2.6.3
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ^9.0.0
 
 flutter_gen:
   output: lib/utils/

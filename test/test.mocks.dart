@@ -42,24 +42,21 @@ class MockCrowdfundingRepository extends _i1.Mock
   @override
   _i3.Stream<List<_i4.Crowdfunding>> watchCrowdfundings() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #watchCrowdfundings,
-          [],
-        ),
-        returnValue: _i3.Stream<List<_i4.Crowdfunding>>.empty(),
-        returnValueForMissingStub: _i3.Stream<List<_i4.Crowdfunding>>.empty(),
-      ) as _i3.Stream<List<_i4.Crowdfunding>>);
+            Invocation.method(#watchCrowdfundings, []),
+            returnValue: _i3.Stream<List<_i4.Crowdfunding>>.empty(),
+            returnValueForMissingStub:
+                _i3.Stream<List<_i4.Crowdfunding>>.empty(),
+          )
+          as _i3.Stream<List<_i4.Crowdfunding>>);
 
   @override
   _i3.Future<void> editCrowdfunding(_i4.Crowdfunding? newCrowdfunding) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #editCrowdfunding,
-          [newCrowdfunding],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#editCrowdfunding, [newCrowdfunding]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [SavingsRepository].
@@ -69,35 +66,29 @@ class MockSavingsRepository extends _i1.Mock implements _i5.SavingsRepository {
   @override
   _i3.Stream<List<_i6.Savings>> watchSavings({_i6.SavingsFilter? filter}) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #watchSavings,
-          [],
-          {#filter: filter},
-        ),
-        returnValue: _i3.Stream<List<_i6.Savings>>.empty(),
-        returnValueForMissingStub: _i3.Stream<List<_i6.Savings>>.empty(),
-      ) as _i3.Stream<List<_i6.Savings>>);
+            Invocation.method(#watchSavings, [], {#filter: filter}),
+            returnValue: _i3.Stream<List<_i6.Savings>>.empty(),
+            returnValueForMissingStub: _i3.Stream<List<_i6.Savings>>.empty(),
+          )
+          as _i3.Stream<List<_i6.Savings>>);
 
   @override
   _i3.Future<_i6.Savings?> getSavings(_i6.SavingsType? type) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getSavings,
-          [type],
-        ),
-        returnValue: _i3.Future<_i6.Savings?>.value(),
-        returnValueForMissingStub: _i3.Future<_i6.Savings?>.value(),
-      ) as _i3.Future<_i6.Savings?>);
+            Invocation.method(#getSavings, [type]),
+            returnValue: _i3.Future<_i6.Savings?>.value(),
+            returnValueForMissingStub: _i3.Future<_i6.Savings?>.value(),
+          )
+          as _i3.Future<_i6.Savings?>);
 
   @override
-  _i3.Future<void> editSaving(_i6.Savings? newSaving) => (super.noSuchMethod(
-        Invocation.method(
-          #editSaving,
-          [newSaving],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> editSaving(_i6.Savings? newSaving) =>
+      (super.noSuchMethod(
+            Invocation.method(#editSaving, [newSaving]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [CryptocurrencyRepository].
@@ -108,24 +99,21 @@ class MockCryptocurrencyRepository extends _i1.Mock
   @override
   _i3.Stream<List<_i8.Cryptocurrency>> watchCryptocurrencies() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #watchCryptocurrencies,
-          [],
-        ),
-        returnValue: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
-        returnValueForMissingStub: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
-      ) as _i3.Stream<List<_i8.Cryptocurrency>>);
+            Invocation.method(#watchCryptocurrencies, []),
+            returnValue: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+            returnValueForMissingStub:
+                _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+          )
+          as _i3.Stream<List<_i8.Cryptocurrency>>);
 
   @override
   _i3.Future<_i8.Cryptocurrency?> getCryptocurrency(_i8.CryptoType? type) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getCryptocurrency,
-          [type],
-        ),
-        returnValue: _i3.Future<_i8.Cryptocurrency?>.value(),
-        returnValueForMissingStub: _i3.Future<_i8.Cryptocurrency?>.value(),
-      ) as _i3.Future<_i8.Cryptocurrency?>);
+            Invocation.method(#getCryptocurrency, [type]),
+            returnValue: _i3.Future<_i8.Cryptocurrency?>.value(),
+            returnValueForMissingStub: _i3.Future<_i8.Cryptocurrency?>.value(),
+          )
+          as _i3.Future<_i8.Cryptocurrency?>);
 
   @override
   _i3.Future<void> editCryptocurrency({
@@ -133,17 +121,14 @@ class MockCryptocurrencyRepository extends _i1.Mock
     _i8.CryptocurrencyTransaction? transaction,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #editCryptocurrency,
-          [],
-          {
-            #crypto: crypto,
-            #transaction: transaction,
-          },
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#editCryptocurrency, [], {
+              #crypto: crypto,
+              #transaction: transaction,
+            }),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [ReitRepository].
@@ -151,24 +136,22 @@ class MockCryptocurrencyRepository extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockReitRepository extends _i1.Mock implements _i9.ReitRepository {
   @override
-  _i3.Stream<List<_i10.Reit>> watchReits() => (super.noSuchMethod(
-        Invocation.method(
-          #watchReits,
-          [],
-        ),
-        returnValue: _i3.Stream<List<_i10.Reit>>.empty(),
-        returnValueForMissingStub: _i3.Stream<List<_i10.Reit>>.empty(),
-      ) as _i3.Stream<List<_i10.Reit>>);
+  _i3.Stream<List<_i10.Reit>> watchReits() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchReits, []),
+            returnValue: _i3.Stream<List<_i10.Reit>>.empty(),
+            returnValueForMissingStub: _i3.Stream<List<_i10.Reit>>.empty(),
+          )
+          as _i3.Stream<List<_i10.Reit>>);
 
   @override
-  _i3.Future<void> addReit(_i10.Reit? reit) => (super.noSuchMethod(
-        Invocation.method(
-          #addReit,
-          [reit],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> addReit(_i10.Reit? reit) =>
+      (super.noSuchMethod(
+            Invocation.method(#addReit, [reit]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   _i3.Future<void> editReit({
@@ -176,27 +159,23 @@ class MockReitRepository extends _i1.Mock implements _i9.ReitRepository {
     required _i10.ReitDividend? dividend,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #editReit,
-          [],
-          {
-            #reit: reit,
-            #dividend: dividend,
-          },
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#editReit, [], {
+              #reit: reit,
+              #dividend: dividend,
+            }),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> deleteReit(_i10.Reit? reit) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteReit,
-          [reit],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> deleteReit(_i10.Reit? reit) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteReit, [reit]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [SavingsBookRepository].
@@ -205,23 +184,21 @@ class MockReitRepository extends _i1.Mock implements _i9.ReitRepository {
 class MockSavingsBookRepository extends _i1.Mock
     implements _i11.SavingsBookRepository {
   @override
-  _i3.Stream<List<_i12.SavingsBook>> watchSavingsBooks() => (super.noSuchMethod(
-        Invocation.method(
-          #watchSavingsBooks,
-          [],
-        ),
-        returnValue: _i3.Stream<List<_i12.SavingsBook>>.empty(),
-        returnValueForMissingStub: _i3.Stream<List<_i12.SavingsBook>>.empty(),
-      ) as _i3.Stream<List<_i12.SavingsBook>>);
+  _i3.Stream<List<_i12.SavingsBook>> watchSavingsBooks() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchSavingsBooks, []),
+            returnValue: _i3.Stream<List<_i12.SavingsBook>>.empty(),
+            returnValueForMissingStub:
+                _i3.Stream<List<_i12.SavingsBook>>.empty(),
+          )
+          as _i3.Stream<List<_i12.SavingsBook>>);
 
   @override
   _i3.Future<void> editSavingsBook(_i12.SavingsBook? savingsBook) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #editSavingsBook,
-          [savingsBook],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#editSavingsBook, [savingsBook]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }

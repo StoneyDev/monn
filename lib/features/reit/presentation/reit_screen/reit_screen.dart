@@ -187,6 +187,7 @@ class ReitScreen extends ConsumerWidget {
                   },
                   separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemCount: value.length,
+                  cacheExtent: 250,
                 ),
               ),
             AsyncError(:final error) => Text('error: $error'),

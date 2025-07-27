@@ -123,6 +123,7 @@ class CrowdfundingScreen extends ConsumerWidget {
                   itemBuilder: (_, index) => _RefundTransaction(value[index]),
                   separatorBuilder: (_, __) => const SizedBox(height: 16),
                   itemCount: value.length,
+                  cacheExtent: 250,
                 ),
               ),
             AsyncError(:final error) => Text(
