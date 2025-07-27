@@ -15,10 +15,10 @@ import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/utils/app_colors.dart';
-import 'package:monn/utils/global_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-final _filterProvider = StateProvider.autoDispose<SavingsFilter>(
+final AutoDisposeStateProvider<SavingsFilter> _filterProvider =
+    StateProvider.autoDispose<SavingsFilter>(
   (_) => SavingsFilter.sortByStartAmountDesc,
 );
 
@@ -30,9 +30,6 @@ class DashboardScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final filter = ref.watch(_filterProvider);
     final savings = ref.watch(watchSavingsProvider(filter: filter));
-    final report = ref.watch(
-      watchPayoutReportSavingsProvider.select((data) => data.valueOrNull ?? 0),
-    );
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -94,13 +91,7 @@ class DashboardScreen extends ConsumerWidget {
       ),
       body: MonnScrollView(
         slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: _SliverHeaderDelegate(
-              netWorth: report,
-              maxEntent: MediaQuery.sizeOf(context).height / 2,
-            ),
-          ),
+          const _ResizingHeader(),
           switch (savings) {
             AsyncData(:final value) => SliverPadding(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
@@ -175,72 +166,64 @@ class DashboardScreen extends ConsumerWidget {
   }
 }
 
-class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const _SliverHeaderDelegate({
-    required this.netWorth,
-    required this.maxEntent,
-  });
-
-  final double netWorth;
-  final double maxEntent;
+class _ResizingHeader extends ConsumerWidget {
+  const _ResizingHeader();
 
   @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final progress = shrinkOffset / maxExtent;
+    final report = ref.watch(
+      watchPayoutReportSavingsProvider.select((data) => data.valueOrNull ?? 0),
+    );
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 60),
-      decoration: BoxDecoration(
-        boxShadow: GlobalThemeData.shadow,
-        color: Theme.of(context).colorScheme.surface,
+    return SliverResizingHeader(
+      maxExtentPrototype: SizedBox(
+        height: MediaQuery.sizeOf(context).height / 2,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AnimatedCrossFade(
-            crossFadeState: progress <= 0.3
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-            duration: Durations.short4,
-            alignment: Alignment.bottomCenter,
-            firstChild: Text(
-              context.tr('common.net_worth'),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.lightGray,
+      minExtentPrototype: const SizedBox(height: 80),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final shrinkFactor =
+              ((constraints.maxHeight - 80) / (200 - 80)).clamp(0.0, 1.0);
+          final opacity = shrinkFactor > 0.5 ? (shrinkFactor - 0.5) * 2 : 0.0;
+
+          return ColoredBox(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 100),
+                  height: shrinkFactor > 0 ? (8 + (20 * shrinkFactor)) : 0,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: opacity,
+                    child: Text(
+                      context.tr('common.net_worth'),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.lightGray,
+                          ),
+                    ),
                   ),
+                ),
+                Text(
+                  report.simpleCurrency(locale),
+                  style: TextStyle.lerp(
+                    Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
+                    Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.w900,
+                        ),
+                    opacity,
+                  ),
+                ),
+              ],
             ),
-            secondChild: const SizedBox.shrink(),
-          ),
-          Text(
-            netWorth.simpleCurrency(locale),
-            style: TextStyle.lerp(
-              Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-              Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-              progress,
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
-
-  @override
-  double get maxExtent => maxEntent;
-
-  @override
-  double get minExtent => 60;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      oldDelegate != this;
 }
