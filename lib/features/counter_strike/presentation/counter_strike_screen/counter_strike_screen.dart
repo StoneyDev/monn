@@ -132,10 +132,9 @@ class _CounterStrikeItem extends ConsumerWidget {
                   children: [
                     Text(
                       '${data.imageId.label}${data.wear != null ? ' | ${data.wear!}' : ''}',
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: AppColors.lightGray,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
