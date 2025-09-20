@@ -18,6 +18,7 @@ import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/formula.dart';
 
 final _currentValueProvider = StateProvider<String>((_) => '');
 
@@ -224,7 +225,10 @@ class _CounterStrikeItem extends ConsumerWidget {
   Widget percentageValue() {
     final purchaseValue = data.purchaseValue;
     final currentValue = data.currentValue;
-    final change = ((purchaseValue - currentValue) / purchaseValue) * 100;
+    final change = totalReturnRate(
+      initialValue: purchaseValue,
+      finalValue: currentValue,
+    );
 
     return Text(
       '${change.abs().toStringAsFixed(2)}%',

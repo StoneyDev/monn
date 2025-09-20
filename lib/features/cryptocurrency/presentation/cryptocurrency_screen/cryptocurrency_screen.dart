@@ -12,16 +12,19 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
+import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/charts/monn_doughnut_chart.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_line.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/shared/widgets/monn_snack_bar.dart';
 import 'package:monn/shared/widgets/monn_tile.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/formula.dart';
 
 final _startAmountProvider = StateProvider<String>((_) => '');
 
@@ -110,6 +113,37 @@ class CryptocurrencyScreen extends ConsumerWidget {
                     ),
                 },
                 const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    spacing: 8,
+                    children: [
+                      MonnLine(
+                        title: context.tr('common.rate_of_return'),
+                        value: Text(
+                          '${totalReturnRate(
+                            initialValue: cryptoData?.startAmount ?? 0,
+                            finalValue: chart.valueOrNull?.totalAmount ?? 0,
+                          ).abs().toStringAsFixed(2)}%',
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                      MonnLine(
+                        title: context.tr('common.annual_performance'),
+                        value: Text(
+                          context.tr('common.per_year', args: [
+                            compoundAnnualGrowthRate(
+                              initialValue: cryptoData?.startAmount ?? 0,
+                              duration: DateTime(2022, 04, 24).numberYears(),
+                              finalValue: chart.valueOrNull?.totalAmount ?? 0,
+                            ).toStringAsFixed(2)
+                          ]),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Divider(color: Theme.of(context).colorScheme.outline),
               ],
             ),
