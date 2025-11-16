@@ -15,7 +15,7 @@ class MonnAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.valueOrNull),
+      themeSwitchControllerProvider.select((theme) => theme.value),
     );
 
     return AppBar(
@@ -42,9 +42,9 @@ class MonnAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? Text(
               title!,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.lightGray,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: AppColors.lightGray,
+                fontWeight: FontWeight.bold,
+              ),
             )
           : null,
       actions: actions,

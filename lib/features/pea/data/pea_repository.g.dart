@@ -6,57 +6,119 @@ part of 'pea_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(peaRepository)
+const peaRepositoryProvider = PeaRepositoryProvider._();
+
+final class PeaRepositoryProvider
+    extends $FunctionalProvider<PeaRepository, PeaRepository, PeaRepository>
+    with $Provider<PeaRepository> {
+  const PeaRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'peaRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$peaRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PeaRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  PeaRepository create(Ref ref) {
+    return peaRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PeaRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PeaRepository>(value),
+    );
+  }
+}
+
 String _$peaRepositoryHash() => r'46f15a02f111a1eed0834449ccab835e01df9526';
 
-/// See also [peaRepository].
-@ProviderFor(peaRepository)
-final peaRepositoryProvider = Provider<PeaRepository>.internal(
-  peaRepository,
-  name: r'peaRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$peaRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(getPea)
+const getPeaProvider = GetPeaProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef PeaRepositoryRef = ProviderRef<PeaRepository>;
+final class GetPeaProvider
+    extends $FunctionalProvider<AsyncValue<Pea?>, Pea?, FutureOr<Pea?>>
+    with $FutureModifier<Pea?>, $FutureProvider<Pea?> {
+  const GetPeaProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getPeaProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getPeaHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Pea?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Pea?> create(Ref ref) {
+    return getPea(ref);
+  }
+}
+
 String _$getPeaHash() => r'36a208facf7acb501ac42cf517c7e569aeccbd9b';
 
-/// See also [getPea].
-@ProviderFor(getPea)
-final getPeaProvider = AutoDisposeFutureProvider<Pea?>.internal(
-  getPea,
-  name: r'getPeaProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getPeaHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(getPayoutReportPea)
+const getPayoutReportPeaProvider = GetPayoutReportPeaProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetPeaRef = AutoDisposeFutureProviderRef<Pea?>;
+final class GetPayoutReportPeaProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PayoutReportData>,
+          PayoutReportData,
+          FutureOr<PayoutReportData>
+        >
+    with $FutureModifier<PayoutReportData>, $FutureProvider<PayoutReportData> {
+  const GetPayoutReportPeaProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getPayoutReportPeaProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getPayoutReportPeaHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<PayoutReportData> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PayoutReportData> create(Ref ref) {
+    return getPayoutReportPea(ref);
+  }
+}
+
 String _$getPayoutReportPeaHash() =>
     r'ca5e13700c7d52c8fa16dee3551f969b90c6f20e';
-
-/// See also [getPayoutReportPea].
-@ProviderFor(getPayoutReportPea)
-final getPayoutReportPeaProvider =
-    AutoDisposeFutureProvider<PayoutReportData>.internal(
-  getPayoutReportPea,
-  name: r'getPayoutReportPeaProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getPayoutReportPeaHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetPayoutReportPeaRef = AutoDisposeFutureProviderRef<PayoutReportData>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

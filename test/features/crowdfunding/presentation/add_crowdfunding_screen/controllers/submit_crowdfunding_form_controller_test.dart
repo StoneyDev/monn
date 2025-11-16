@@ -24,14 +24,13 @@ void main() {
           receivedAt: DateTime(2024, 01, 20),
         );
 
-        final crowdfunding = Crowdfunding(
-          platformName: formData.platformName,
-          brutProfit: double.parse(formData.brutProfit),
-          receivedAt: formData.receivedAt,
-          taxPercentage: double.parse(formData.taxPercentage!),
-          taxProfit: 30,
-          netProfit: 70,
-        );
+        final crowdfunding = Crowdfunding()
+          ..platformName = formData.platformName
+          ..brutProfit = double.parse(formData.brutProfit)
+          ..receivedAt = formData.receivedAt
+          ..taxPercentage = double.parse(formData.taxPercentage!)
+          ..taxProfit = 30
+          ..netProfit = 70;
 
         final repository = MockCrowdfundingRepository();
         final container = createContainer(
@@ -75,11 +74,10 @@ void main() {
           receivedAt: DateTime(2024, 01, 20),
         );
 
-        final crowdfunding = Crowdfunding(
-          platformName: formData.platformName,
-          brutProfit: double.parse(formData.brutProfit),
-          receivedAt: formData.receivedAt,
-        );
+        final crowdfunding = Crowdfunding()
+          ..platformName = formData.platformName
+          ..brutProfit = double.parse(formData.brutProfit)
+          ..receivedAt = formData.receivedAt;
 
         final repository = MockCrowdfundingRepository();
         final container = createContainer(

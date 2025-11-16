@@ -21,8 +21,6 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(reitDividendFormControllerProvider, (previous, next) {});
-
     return Scaffold(
       appBar: const MonnAppBar(title: 'Suivi des gains'),
       body: Form(
@@ -64,6 +62,9 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                   .submit();
               if (!context.mounted || !success) return;
 
+              ref
+                ..invalidate(reitDividendFormControllerProvider)
+                ..invalidate(submitReitDividendFormControllerProvider);
               Navigator.of(context)
                 ..pop()
                 ..pop();

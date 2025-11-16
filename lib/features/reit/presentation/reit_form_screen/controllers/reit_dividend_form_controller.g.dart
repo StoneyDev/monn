@@ -6,22 +6,61 @@ part of 'reit_dividend_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reitDividendFormControllerHash() =>
-    r'7f9d21215cabfb8d26a1a806815ec92b04a84d31';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ReitDividendFormController].
 @ProviderFor(ReitDividendFormController)
-final reitDividendFormControllerProvider = AutoDisposeNotifierProvider<
-    ReitDividendFormController, ReitDividendForm>.internal(
-  ReitDividendFormController.new,
-  name: r'reitDividendFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$reitDividendFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const reitDividendFormControllerProvider =
+    ReitDividendFormControllerProvider._();
 
-typedef _$ReitDividendFormController = AutoDisposeNotifier<ReitDividendForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ReitDividendFormControllerProvider
+    extends $NotifierProvider<ReitDividendFormController, ReitDividendForm> {
+  const ReitDividendFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reitDividendFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reitDividendFormControllerHash();
+
+  @$internal
+  @override
+  ReitDividendFormController create() => ReitDividendFormController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReitDividendForm value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReitDividendForm>(value),
+    );
+  }
+}
+
+String _$reitDividendFormControllerHash() =>
+    r'6e8daddccb865e78543b65d2ae2ee1ea87ce44ce';
+
+abstract class _$ReitDividendFormController
+    extends $Notifier<ReitDividendForm> {
+  ReitDividendForm build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<ReitDividendForm, ReitDividendForm>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ReitDividendForm, ReitDividendForm>,
+              ReitDividendForm,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

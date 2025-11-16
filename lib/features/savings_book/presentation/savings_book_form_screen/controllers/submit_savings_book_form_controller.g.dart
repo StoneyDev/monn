@@ -6,23 +6,52 @@ part of 'submit_savings_book_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitSavingsBookFormControllerHash() =>
-    r'169a32f45421be0561d04214b2614870fd0eb13f';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitSavingsBookFormController].
 @ProviderFor(SubmitSavingsBookFormController)
-final submitSavingsBookFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitSavingsBookFormController,
-        void>.internal(
-  SubmitSavingsBookFormController.new,
-  name: r'submitSavingsBookFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitSavingsBookFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitSavingsBookFormControllerProvider =
+    SubmitSavingsBookFormControllerProvider._();
 
-typedef _$SubmitSavingsBookFormController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitSavingsBookFormControllerProvider
+    extends $AsyncNotifierProvider<SubmitSavingsBookFormController, void> {
+  const SubmitSavingsBookFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitSavingsBookFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$submitSavingsBookFormControllerHash();
+
+  @$internal
+  @override
+  SubmitSavingsBookFormController create() => SubmitSavingsBookFormController();
+}
+
+String _$submitSavingsBookFormControllerHash() =>
+    r'fc27dbf75803b2674efa2ec98307592eeeafa9ea';
+
+abstract class _$SubmitSavingsBookFormController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

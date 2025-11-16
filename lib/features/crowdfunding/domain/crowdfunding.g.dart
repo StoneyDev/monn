@@ -46,8 +46,9 @@ const CrowdfundingSchema = CollectionSchema(
       id: 5,
       name: r'taxProfit',
       type: IsarType.double,
-    )
+    ),
   },
+
   estimateSize: _crowdfundingEstimateSize,
   serialize: _crowdfundingSerialize,
   deserialize: _crowdfundingDeserialize,
@@ -56,10 +57,11 @@ const CrowdfundingSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {},
+
   getId: _crowdfundingGetId,
   getLinks: _crowdfundingGetLinks,
   attach: _crowdfundingAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _crowdfundingEstimateSize(
@@ -92,15 +94,14 @@ Crowdfunding _crowdfundingDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Crowdfunding(
-    brutProfit: reader.readDouble(offsets[0]),
-    id: id,
-    netProfit: reader.readDoubleOrNull(offsets[1]),
-    platformName: reader.readString(offsets[2]),
-    receivedAt: reader.readDateTimeOrNull(offsets[3]),
-    taxPercentage: reader.readDoubleOrNull(offsets[4]),
-    taxProfit: reader.readDoubleOrNull(offsets[5]),
-  );
+  final object = Crowdfunding();
+  object.brutProfit = reader.readDouble(offsets[0]);
+  object.id = id;
+  object.netProfit = reader.readDoubleOrNull(offsets[1]);
+  object.platformName = reader.readString(offsets[2]);
+  object.receivedAt = reader.readDateTimeOrNull(offsets[3]);
+  object.taxPercentage = reader.readDoubleOrNull(offsets[4]);
+  object.taxProfit = reader.readDoubleOrNull(offsets[5]);
   return object;
 }
 
@@ -137,7 +138,12 @@ List<IsarLinkBase<dynamic>> _crowdfundingGetLinks(Crowdfunding object) {
 }
 
 void _crowdfundingAttach(
-    IsarCollection<dynamic> col, Id id, Crowdfunding object) {}
+  IsarCollection<dynamic> col,
+  Id id,
+  Crowdfunding object,
+) {
+  object.id = id;
+}
 
 extension CrowdfundingQueryWhereSort
     on QueryBuilder<Crowdfunding, Crowdfunding, QWhere> {
@@ -152,15 +158,13 @@ extension CrowdfundingQueryWhere
     on QueryBuilder<Crowdfunding, Crowdfunding, QWhereClause> {
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -183,8 +187,9 @@ extension CrowdfundingQueryWhere
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -192,8 +197,10 @@ extension CrowdfundingQueryWhere
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -208,12 +215,14 @@ extension CrowdfundingQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -221,53 +230,59 @@ extension CrowdfundingQueryWhere
 extension CrowdfundingQueryFilter
     on QueryBuilder<Crowdfunding, Crowdfunding, QFilterCondition> {
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      brutProfitEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  brutProfitEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'brutProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'brutProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      brutProfitGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'brutProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      brutProfitLessThan(
+  brutProfitGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'brutProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'brutProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      brutProfitBetween(
+  brutProfitLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'brutProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+  brutProfitBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -275,24 +290,27 @@ extension CrowdfundingQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'brutProfit',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'brutProfit',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition> idEqualTo(
-      Id value) {
+    Id value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -301,11 +319,13 @@ extension CrowdfundingQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -314,11 +334,13 @@ extension CrowdfundingQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -329,82 +351,90 @@ extension CrowdfundingQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitIsNull() {
+  netProfitIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'netProfit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'netProfit'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitIsNotNull() {
+  netProfitIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'netProfit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'netProfit'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitEqualTo(
-    double? value, {
-    double epsilon = Query.epsilon,
-  }) {
+  netProfitEqualTo(double? value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'netProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'netProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitGreaterThan(
-    double? value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'netProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitLessThan(
+  netProfitGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'netProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'netProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      netProfitBetween(
+  netProfitLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'netProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+  netProfitBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -412,65 +442,71 @@ extension CrowdfundingQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'netProfit',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'netProfit',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  platformNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameLessThan(
+  platformNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameBetween(
+  platformNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+  platformNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -478,227 +514,234 @@ extension CrowdfundingQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'platformName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'platformName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  platformNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  platformNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameContains(String value, {bool caseSensitive = true}) {
+  platformNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'platformName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'platformName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameMatches(String pattern, {bool caseSensitive = true}) {
+  platformNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'platformName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'platformName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameIsEmpty() {
+  platformNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'platformName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'platformName', value: ''),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      platformNameIsNotEmpty() {
+  platformNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'platformName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'platformName', value: ''),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtIsNull() {
+  receivedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'receivedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'receivedAt'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtIsNotNull() {
+  receivedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'receivedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'receivedAt'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtEqualTo(DateTime? value) {
+  receivedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'receivedAt', value: value),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  receivedAtGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'receivedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  receivedAtLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'receivedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      receivedAtBetween(
+  receivedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'receivedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'receivedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageIsNull() {
+  taxPercentageIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'taxPercentage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'taxPercentage'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageIsNotNull() {
+  taxPercentageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'taxPercentage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'taxPercentage'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageEqualTo(
-    double? value, {
-    double epsilon = Query.epsilon,
-  }) {
+  taxPercentageEqualTo(double? value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taxPercentage',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'taxPercentage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageGreaterThan(
-    double? value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'taxPercentage',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageLessThan(
+  taxPercentageGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'taxPercentage',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'taxPercentage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxPercentageBetween(
+  taxPercentageLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'taxPercentage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+  taxPercentageBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -706,83 +749,92 @@ extension CrowdfundingQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'taxPercentage',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'taxPercentage',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitIsNull() {
+  taxProfitIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'taxProfit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'taxProfit'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitIsNotNull() {
+  taxProfitIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'taxProfit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'taxProfit'),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitEqualTo(
-    double? value, {
-    double epsilon = Query.epsilon,
-  }) {
+  taxProfitEqualTo(double? value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taxProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'taxProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitGreaterThan(
-    double? value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'taxProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitLessThan(
+  taxProfitGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'taxProfit',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'taxProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
-      taxProfitBetween(
+  taxProfitLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'taxProfit',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Crowdfunding, Crowdfunding, QAfterFilterCondition>
+  taxProfitBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -790,14 +842,17 @@ extension CrowdfundingQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'taxProfit',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'taxProfit',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 }
@@ -817,7 +872,7 @@ extension CrowdfundingQuerySortBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      sortByBrutProfitDesc() {
+  sortByBrutProfitDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'brutProfit', Sort.desc);
     });
@@ -842,7 +897,7 @@ extension CrowdfundingQuerySortBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      sortByPlatformNameDesc() {
+  sortByPlatformNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'platformName', Sort.desc);
     });
@@ -855,7 +910,7 @@ extension CrowdfundingQuerySortBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      sortByReceivedAtDesc() {
+  sortByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'receivedAt', Sort.desc);
     });
@@ -868,7 +923,7 @@ extension CrowdfundingQuerySortBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      sortByTaxPercentageDesc() {
+  sortByTaxPercentageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxPercentage', Sort.desc);
     });
@@ -896,7 +951,7 @@ extension CrowdfundingQuerySortThenBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      thenByBrutProfitDesc() {
+  thenByBrutProfitDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'brutProfit', Sort.desc);
     });
@@ -933,7 +988,7 @@ extension CrowdfundingQuerySortThenBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      thenByPlatformNameDesc() {
+  thenByPlatformNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'platformName', Sort.desc);
     });
@@ -946,7 +1001,7 @@ extension CrowdfundingQuerySortThenBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      thenByReceivedAtDesc() {
+  thenByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'receivedAt', Sort.desc);
     });
@@ -959,7 +1014,7 @@ extension CrowdfundingQuerySortThenBy
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QAfterSortBy>
-      thenByTaxPercentageDesc() {
+  thenByTaxPercentageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxPercentage', Sort.desc);
     });
@@ -992,8 +1047,9 @@ extension CrowdfundingQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByPlatformName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Crowdfunding, Crowdfunding, QDistinct> distinctByPlatformName({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'platformName', caseSensitive: caseSensitive);
     });
@@ -1006,7 +1062,7 @@ extension CrowdfundingQueryWhereDistinct
   }
 
   QueryBuilder<Crowdfunding, Crowdfunding, QDistinct>
-      distinctByTaxPercentage() {
+  distinctByTaxPercentage() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'taxPercentage');
     });
@@ -1052,7 +1108,7 @@ extension CrowdfundingQueryProperty
   }
 
   QueryBuilder<Crowdfunding, double?, QQueryOperations>
-      taxPercentageProperty() {
+  taxPercentageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'taxPercentage');
     });

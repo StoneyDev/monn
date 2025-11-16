@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/utils/app_colors.dart';
 
 part 'cryptocurrency.g.dart';

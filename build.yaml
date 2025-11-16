@@ -1,7 +1,8 @@
 global_options:
   freezed:freezed:
     runs_before:
-      - isar_generator:isar_generator
+      - isar_community_generator:isar_community_generator
+      # - isar_generator:isar_generator
 
 targets:
   $default:

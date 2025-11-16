@@ -22,11 +22,7 @@ const PeaSchema = CollectionSchema(
       name: r'costAverage',
       type: IsarType.double,
     ),
-    r'equity': PropertySchema(
-      id: 1,
-      name: r'equity',
-      type: IsarType.long,
-    ),
+    r'equity': PropertySchema(id: 1, name: r'equity', type: IsarType.long),
     r'lastPrice': PropertySchema(
       id: 2,
       name: r'lastPrice',
@@ -36,8 +32,9 @@ const PeaSchema = CollectionSchema(
       id: 3,
       name: r'lastUpdate',
       type: IsarType.dateTime,
-    )
+    ),
   },
+
   estimateSize: _peaEstimateSize,
   serialize: _peaSerialize,
   deserialize: _peaDeserialize,
@@ -46,10 +43,11 @@ const PeaSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {},
+
   getId: _peaGetId,
   getLinks: _peaGetLinks,
   attach: _peaAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _peaEstimateSize(
@@ -131,10 +129,7 @@ extension PeaQueryWhereSort on QueryBuilder<Pea, Pea, QWhere> {
 extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
   QueryBuilder<Pea, Pea, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
@@ -160,8 +155,10 @@ extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
     });
   }
 
-  QueryBuilder<Pea, Pea, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Pea, Pea, QAfterWhereClause> idGreaterThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -169,8 +166,10 @@ extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
     });
   }
 
-  QueryBuilder<Pea, Pea, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Pea, Pea, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -185,12 +184,14 @@ extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -198,17 +199,17 @@ extension PeaQueryWhere on QueryBuilder<Pea, Pea, QWhereClause> {
 extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'costAverage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'costAverage'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> costAverageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'costAverage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'costAverage'),
+      );
     });
   }
 
@@ -217,11 +218,14 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'costAverage',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'costAverage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -231,12 +235,15 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'costAverage',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'costAverage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -246,12 +253,15 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'costAverage',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'costAverage',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -263,39 +273,41 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'costAverage',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'costAverage',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'equity',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'equity'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'equity',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'equity'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> equityEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'equity',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'equity', value: value),
+      );
     });
   }
 
@@ -304,11 +316,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'equity',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'equity',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -317,11 +331,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'equity',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'equity',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -332,22 +348,23 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'equity',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'equity',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -356,11 +373,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -369,11 +388,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -384,29 +405,31 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'lastPrice',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'lastPrice'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastPriceIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'lastPrice',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'lastPrice'),
+      );
     });
   }
 
@@ -415,11 +438,14 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastPrice',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'lastPrice',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -429,12 +455,15 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastPrice',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'lastPrice',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -444,12 +473,15 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastPrice',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'lastPrice',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -461,40 +493,43 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastPrice',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'lastPrice',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastUpdateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'lastUpdate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'lastUpdate'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastUpdateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'lastUpdate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'lastUpdate'),
+      );
     });
   }
 
   QueryBuilder<Pea, Pea, QAfterFilterCondition> lastUpdateEqualTo(
-      DateTime? value) {
+    DateTime? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'lastUpdate', value: value),
+      );
     });
   }
 
@@ -503,11 +538,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'lastUpdate',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -516,11 +553,13 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'lastUpdate',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -531,13 +570,15 @@ extension PeaQueryFilter on QueryBuilder<Pea, Pea, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastUpdate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'lastUpdate',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }

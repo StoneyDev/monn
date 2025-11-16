@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_crowdfunding_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitCrowdfundingFormController
     extends _$SubmitCrowdfundingFormController {
   @override
@@ -24,20 +24,18 @@ class SubmitCrowdfundingFormController
     late Crowdfunding newCrowdfunding;
 
     if (brutProfit.isNegative) {
-      newCrowdfunding = Crowdfunding(
-        id: id,
-        platformName: platformName,
-        receivedAt: receivedAt,
-        brutProfit: brutProfit,
-      );
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..brutProfit = brutProfit;
     } else if (formData.taxPercentage == null) {
-      newCrowdfunding = Crowdfunding(
-        id: id,
-        platformName: platformName,
-        receivedAt: receivedAt,
-        brutProfit: brutProfit,
-        netProfit: brutProfit,
-      );
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..brutProfit = brutProfit
+        ..netProfit = brutProfit;
     } else {
       final taxPercentage = double.parse(formData.taxPercentage!);
       final taxProfit = double.parse(
@@ -47,15 +45,14 @@ class SubmitCrowdfundingFormController
         (brutProfit - taxProfit).toStringAsFixed(2),
       );
 
-      newCrowdfunding = Crowdfunding(
-        id: id,
-        platformName: platformName,
-        receivedAt: receivedAt,
-        taxPercentage: taxPercentage,
-        taxProfit: taxProfit,
-        brutProfit: brutProfit,
-        netProfit: netProfit,
-      );
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..taxPercentage = taxPercentage
+        ..taxProfit = taxProfit
+        ..brutProfit = brutProfit
+        ..netProfit = netProfit;
     }
 
     state = await AsyncValue.guard(

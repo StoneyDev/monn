@@ -64,15 +64,16 @@ class _EditCrowdfundingScreenState
                       label: context.tr('common.profit'),
                       suffix: '€',
                       required: true,
-                      initialValue:
-                          (widget.crowdfunding?.brutProfit ?? '').toString(),
+                      initialValue: (widget.crowdfunding?.brutProfit ?? '')
+                          .toString(),
                       onChanged: (newBrutProfit) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
                           .brutProfit(brutProfit: newBrutProfit),
                     ),
                     Consumer(
-                      builder: (_, ref, __) {
-                        final brutProfit = double.tryParse(
+                      builder: (_, ref, _) {
+                        final brutProfit =
+                            double.tryParse(
                               ref.watch(
                                 crowdfundingFormControllerProvider.select(
                                   (value) => value.brutProfit,
@@ -99,8 +100,8 @@ class _EditCrowdfundingScreenState
                                     suffix: '%',
                                     required:
                                         !brutProfit.isNegative && !isTaxFree,
-                                    initialValue: widget
-                                                .crowdfunding?.taxPercentage !=
+                                    initialValue:
+                                        widget.crowdfunding?.taxPercentage !=
                                             null
                                         // ignore: lines_longer_than_80_chars
                                         ? '${widget.crowdfunding!.taxPercentage}'
@@ -135,9 +136,9 @@ class _EditCrowdfundingScreenState
                                 icon: isTaxFree
                                     ? const Text('💔')
                                     : iconoir.Heart(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
                                       ),
                               ),
                             ],
@@ -174,7 +175,9 @@ class _EditCrowdfundingScreenState
 
               if (!context.mounted || !success) return;
 
-              ref.invalidate(crowdfundingFormControllerProvider);
+              ref
+                ..invalidate(crowdfundingFormControllerProvider)
+                ..invalidate(submitCrowdfundingFormControllerProvider);
               Navigator.pop(context);
             },
           ),

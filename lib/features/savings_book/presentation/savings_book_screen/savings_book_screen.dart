@@ -1,8 +1,7 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
@@ -27,7 +26,7 @@ class SavingsBookScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final savingsBooks = ref.watch(watchSavingsBooksProvider);
     final report = ref.watch(
-      watchPayoutReportSavingsBookProvider.select((data) => data.valueOrNull),
+      watchPayoutReportSavingsBookProvider.select((data) => data.value),
     );
 
     return Scaffold(
@@ -51,94 +50,90 @@ class SavingsBookScreen extends ConsumerWidget {
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(locale),
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(height: 16),
           switch (savingsBooks) {
             AsyncData(:final value) => Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                  itemBuilder: (_, index) {
-                    final item = value[index];
-                    final netValue =
-                        (item.startAmount + item.interests) - item.withdrawal;
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+                itemBuilder: (_, index) {
+                  final item = value[index];
+                  final netValue =
+                      (item.startAmount + item.interests) - item.withdrawal;
 
-                    return MonnCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.name.toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                  color: AppColors.lightGray,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          Text(
-                            netValue.simpleCurrency(locale),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(fontWeight: FontWeight.w900),
-                          ),
-                          const Divider(),
-                          Row(
-                            spacing: 24,
-                            children: [
-                              MonnFinancialInfo(
-                                title: context.tr('common.total_interest'),
-                                data: item.interests,
+                  return MonnCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.name.toUpperCase(),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                color: AppColors.lightGray,
+                                fontWeight: FontWeight.bold,
                               ),
-                              MonnFinancialInfo(
-                                title: context.tr('common.withdrawal'),
-                                data: item.withdrawal,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      onTap: () => context.push(
-                        fullscreenDialog: true,
-                        AmountScreen(
-                          onChanged: (value) => ref
-                              .read(_newInterestProvider.notifier)
-                              .state = value,
-                          onSubmit: () async {
-                            final success = await ref
-                                .read(
-                                  submitSavingsBookInterestFormControllerProvider
-                                      .notifier,
-                                )
-                                .submit(
-                                  savingsBook: item,
-                                  amount: double.parse(
-                                    ref.read(_newInterestProvider),
-                                  ),
-                                );
-                            if (!context.mounted || !success) return;
-
-                            ref.invalidate(_newInterestProvider);
-                            Navigator.pop(context);
-                          },
                         ),
+                        Text(
+                          netValue.simpleCurrency(locale),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.w900),
+                        ),
+                        const Divider(),
+                        Row(
+                          spacing: 24,
+                          children: [
+                            MonnFinancialInfo(
+                              title: context.tr('common.total_interest'),
+                              data: item.interests,
+                            ),
+                            MonnFinancialInfo(
+                              title: context.tr('common.withdrawal'),
+                              data: item.withdrawal,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    onTap: () => context.push(
+                      fullscreenDialog: true,
+                      AmountScreen(
+                        onChanged: (value) =>
+                            ref.read(_newInterestProvider.notifier).state =
+                                value,
+                        onSubmit: () async {
+                          final success = await ref
+                              .read(
+                                submitSavingsBookInterestFormControllerProvider
+                                    .notifier,
+                              )
+                              .submit(
+                                savingsBook: item,
+                                amount: double.parse(
+                                  ref.read(_newInterestProvider),
+                                ),
+                              );
+                          if (!context.mounted || !success) return;
+
+                          ref.invalidate(_newInterestProvider);
+                          Navigator.pop(context);
+                        },
                       ),
-                    );
-                  },
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemCount: value.length,
-                  cacheExtent: 250,
-                ),
+                    ),
+                  );
+                },
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemCount: value.length,
+                cacheExtent: 250,
               ),
+            ),
             AsyncError(:final error) => Text('Error: $error'),
             _ => const Center(
-                child: RepaintBoundary(
-                  child: CircularProgressIndicator(),
-                ),
+              child: RepaintBoundary(
+                child: CircularProgressIndicator(),
               ),
+            ),
           },
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:monn/features/reit/domain/reit.dart';
 part 'reit_dividend_form.freezed.dart';
 
 @freezed
-class ReitDividendForm with _$ReitDividendForm {
+abstract class ReitDividendForm with _$ReitDividendForm {
   const factory ReitDividendForm({
     required DateTime receivedAt,
     required String amount,

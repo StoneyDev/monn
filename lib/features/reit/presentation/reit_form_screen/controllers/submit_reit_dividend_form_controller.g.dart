@@ -6,23 +6,53 @@ part of 'submit_reit_dividend_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitReitDividendFormControllerHash() =>
-    r'7b505791cf05c392962bc742d13b4ad488bf570a';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitReitDividendFormController].
 @ProviderFor(SubmitReitDividendFormController)
-final submitReitDividendFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitReitDividendFormController,
-        void>.internal(
-  SubmitReitDividendFormController.new,
-  name: r'submitReitDividendFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitReitDividendFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitReitDividendFormControllerProvider =
+    SubmitReitDividendFormControllerProvider._();
 
-typedef _$SubmitReitDividendFormController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitReitDividendFormControllerProvider
+    extends $AsyncNotifierProvider<SubmitReitDividendFormController, void> {
+  const SubmitReitDividendFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitReitDividendFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$submitReitDividendFormControllerHash();
+
+  @$internal
+  @override
+  SubmitReitDividendFormController create() =>
+      SubmitReitDividendFormController();
+}
+
+String _$submitReitDividendFormControllerHash() =>
+    r'eafeb20b8c365ed8638f2f5cd6a6c649e0577443';
+
+abstract class _$SubmitReitDividendFormController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

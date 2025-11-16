@@ -1,25 +1,22 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
-part 'counter_strike.freezed.dart';
 part 'counter_strike.g.dart';
 
-@freezed
-@Collection(ignore: {'copyWith'})
-class CounterStrike with _$CounterStrike {
-  const factory CounterStrike({
-    required DateTime boughtAt,
-    required DateTime lastUpdate,
-    @Enumerated(EnumType.name) required CounterStrikeItem imageId,
-    required double purchaseValue,
-    required double currentValue,
-    required int quantity,
-    double? wear,
-    @Default(Isar.autoIncrement) Id id,
-  }) = _CounterStrike;
+@collection
+class CounterStrike {
+  Id id = Isar.autoIncrement;
 
-  @override
-  Id get id;
+  late DateTime boughtAt;
+  late DateTime lastUpdate;
+
+  @Enumerated(EnumType.name)
+  late CounterStrikeItem imageId;
+
+  late double purchaseValue;
+  late double currentValue;
+  late int quantity;
+
+  double? wear;
 }
 
 enum CounterStrikeItem {

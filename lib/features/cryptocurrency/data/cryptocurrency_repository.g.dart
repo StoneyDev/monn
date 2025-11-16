@@ -6,234 +6,243 @@ part of 'cryptocurrency_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(cryptocurrencyRepository)
+const cryptocurrencyRepositoryProvider = CryptocurrencyRepositoryProvider._();
+
+final class CryptocurrencyRepositoryProvider
+    extends
+        $FunctionalProvider<
+          CryptocurrencyRepository,
+          CryptocurrencyRepository,
+          CryptocurrencyRepository
+        >
+    with $Provider<CryptocurrencyRepository> {
+  const CryptocurrencyRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'cryptocurrencyRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$cryptocurrencyRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<CryptocurrencyRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CryptocurrencyRepository create(Ref ref) {
+    return cryptocurrencyRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CryptocurrencyRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CryptocurrencyRepository>(value),
+    );
+  }
+}
+
 String _$cryptocurrencyRepositoryHash() =>
     r'1b02d44b0048a8fe0e6d9186929203ace4b6e43f';
 
-/// See also [cryptocurrencyRepository].
-@ProviderFor(cryptocurrencyRepository)
-final cryptocurrencyRepositoryProvider =
-    Provider<CryptocurrencyRepository>.internal(
-  cryptocurrencyRepository,
-  name: r'cryptocurrencyRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$cryptocurrencyRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(watchCryptocurrencies)
+const watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CryptocurrencyRepositoryRef = ProviderRef<CryptocurrencyRepository>;
+final class WatchCryptocurrenciesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Cryptocurrency>>,
+          List<Cryptocurrency>,
+          Stream<List<Cryptocurrency>>
+        >
+    with
+        $FutureModifier<List<Cryptocurrency>>,
+        $StreamProvider<List<Cryptocurrency>> {
+  const WatchCryptocurrenciesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchCryptocurrenciesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchCryptocurrenciesHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<Cryptocurrency>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<Cryptocurrency>> create(Ref ref) {
+    return watchCryptocurrencies(ref);
+  }
+}
+
 String _$watchCryptocurrenciesHash() =>
     r'7d3db601fd12d61dd01ab55609cf157ee9010f6a';
 
-/// See also [watchCryptocurrencies].
-@ProviderFor(watchCryptocurrencies)
-final watchCryptocurrenciesProvider =
-    AutoDisposeStreamProvider<List<Cryptocurrency>>.internal(
-  watchCryptocurrencies,
-  name: r'watchCryptocurrenciesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchCryptocurrenciesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchCryptocurrenciesRef
-    = AutoDisposeStreamProviderRef<List<Cryptocurrency>>;
-String _$getCryptocurrencyHash() => r'21b065fd53f7814b6e0d77b3b19cf1847edc3709';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [getCryptocurrency].
 @ProviderFor(getCryptocurrency)
-const getCryptocurrencyProvider = GetCryptocurrencyFamily();
+const getCryptocurrencyProvider = GetCryptocurrencyFamily._();
 
-/// See also [getCryptocurrency].
-class GetCryptocurrencyFamily extends Family<AsyncValue<Cryptocurrency>> {
-  /// See also [getCryptocurrency].
-  const GetCryptocurrencyFamily();
+final class GetCryptocurrencyProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Cryptocurrency>,
+          Cryptocurrency,
+          FutureOr<Cryptocurrency>
+        >
+    with $FutureModifier<Cryptocurrency>, $FutureProvider<Cryptocurrency> {
+  const GetCryptocurrencyProvider._({
+    required GetCryptocurrencyFamily super.from,
+    required CryptoType super.argument,
+  }) : super(
+         retry: null,
+         name: r'getCryptocurrencyProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [getCryptocurrency].
-  GetCryptocurrencyProvider call(
-    CryptoType type,
-  ) {
-    return GetCryptocurrencyProvider(
-      type,
-    );
+  @override
+  String debugGetCreateSourceHash() => _$getCryptocurrencyHash();
+
+  @override
+  String toString() {
+    return r'getCryptocurrencyProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  GetCryptocurrencyProvider getProviderOverride(
-    covariant GetCryptocurrencyProvider provider,
-  ) {
-    return call(
-      provider.type,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  $FutureProviderElement<Cryptocurrency> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'getCryptocurrencyProvider';
-}
-
-/// See also [getCryptocurrency].
-class GetCryptocurrencyProvider
-    extends AutoDisposeFutureProvider<Cryptocurrency> {
-  /// See also [getCryptocurrency].
-  GetCryptocurrencyProvider(
-    CryptoType type,
-  ) : this._internal(
-          (ref) => getCryptocurrency(
-            ref as GetCryptocurrencyRef,
-            type,
-          ),
-          from: getCryptocurrencyProvider,
-          name: r'getCryptocurrencyProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getCryptocurrencyHash,
-          dependencies: GetCryptocurrencyFamily._dependencies,
-          allTransitiveDependencies:
-              GetCryptocurrencyFamily._allTransitiveDependencies,
-          type: type,
-        );
-
-  GetCryptocurrencyProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.type,
-  }) : super.internal();
-
-  final CryptoType type;
-
-  @override
-  Override overrideWith(
-    FutureOr<Cryptocurrency> Function(GetCryptocurrencyRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: GetCryptocurrencyProvider._internal(
-        (ref) => create(ref as GetCryptocurrencyRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        type: type,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<Cryptocurrency> createElement() {
-    return _GetCryptocurrencyProviderElement(this);
+  FutureOr<Cryptocurrency> create(Ref ref) {
+    final argument = this.argument as CryptoType;
+    return getCryptocurrency(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetCryptocurrencyProvider && other.type == type;
+    return other is GetCryptocurrencyProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, type.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin GetCryptocurrencyRef on AutoDisposeFutureProviderRef<Cryptocurrency> {
-  /// The parameter `type` of this provider.
-  CryptoType get type;
-}
+String _$getCryptocurrencyHash() => r'21b065fd53f7814b6e0d77b3b19cf1847edc3709';
 
-class _GetCryptocurrencyProviderElement
-    extends AutoDisposeFutureProviderElement<Cryptocurrency>
-    with GetCryptocurrencyRef {
-  _GetCryptocurrencyProviderElement(super.provider);
+final class GetCryptocurrencyFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Cryptocurrency>, CryptoType> {
+  const GetCryptocurrencyFamily._()
+    : super(
+        retry: null,
+        name: r'getCryptocurrencyProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetCryptocurrencyProvider call(CryptoType type) =>
+      GetCryptocurrencyProvider._(argument: type, from: this);
 
   @override
-  CryptoType get type => (origin as GetCryptocurrencyProvider).type;
+  String toString() => r'getCryptocurrencyProvider';
+}
+
+@ProviderFor(watchCryptoChart)
+const watchCryptoChartProvider = WatchCryptoChartProvider._();
+
+final class WatchCryptoChartProvider
+    extends $FunctionalProvider<AsyncValue<Chart>, Chart, Stream<Chart>>
+    with $FutureModifier<Chart>, $StreamProvider<Chart> {
+  const WatchCryptoChartProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchCryptoChartProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchCryptoChartHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<Chart> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<Chart> create(Ref ref) {
+    return watchCryptoChart(ref);
+  }
 }
 
 String _$watchCryptoChartHash() => r'4997850470e5a362eee30787cca53562f976496d';
 
-/// See also [watchCryptoChart].
-@ProviderFor(watchCryptoChart)
-final watchCryptoChartProvider = AutoDisposeStreamProvider<Chart>.internal(
-  watchCryptoChart,
-  name: r'watchCryptoChartProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchCryptoChartHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(watchPayoutReportCrypto)
+const watchPayoutReportCryptoProvider = WatchPayoutReportCryptoProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchCryptoChartRef = AutoDisposeStreamProviderRef<Chart>;
+final class WatchPayoutReportCryptoProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PayoutReportData>,
+          PayoutReportData,
+          Stream<PayoutReportData>
+        >
+    with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
+  const WatchPayoutReportCryptoProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchPayoutReportCryptoProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchPayoutReportCryptoHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<PayoutReportData> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<PayoutReportData> create(Ref ref) {
+    return watchPayoutReportCrypto(ref);
+  }
+}
+
 String _$watchPayoutReportCryptoHash() =>
     r'32747a4a42720493cfbdd8ecc4fe87d3918dd310';
-
-/// See also [watchPayoutReportCrypto].
-@ProviderFor(watchPayoutReportCrypto)
-final watchPayoutReportCryptoProvider =
-    AutoDisposeStreamProvider<PayoutReportData>.internal(
-  watchPayoutReportCrypto,
-  name: r'watchPayoutReportCryptoProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchPayoutReportCryptoHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchPayoutReportCryptoRef
-    = AutoDisposeStreamProviderRef<PayoutReportData>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

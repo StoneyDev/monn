@@ -4,7 +4,7 @@ import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 part 'crypto_form.freezed.dart';
 
 @freezed
-class CryptoForm with _$CryptoForm {
+abstract class CryptoForm with _$CryptoForm {
   const factory CryptoForm({
     required String amount,
     required DateTime date,

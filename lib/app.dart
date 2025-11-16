@@ -12,7 +12,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.valueOrNull),
+      themeSwitchControllerProvider.select((theme) => theme.value),
     );
 
     return GestureDetector(

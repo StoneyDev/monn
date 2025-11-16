@@ -44,8 +44,9 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
               ),
               const SizedBox(height: 16),
               Consumer(
-                builder: (_, ref, __) {
-                  final cryptoAmount = double.tryParse(
+                builder: (_, ref, _) {
+                  final cryptoAmount =
+                      double.tryParse(
                         ref.watch(
                           cryptoFormControllerProvider.select(
                             (value) => value.amount,
@@ -85,6 +86,8 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
               if (!context.mounted || !success) return;
 
               ref
+                ..invalidate(cryptoFormControllerProvider)
+                ..invalidate(submitCryptoFormControllerProvider)
                 ..invalidate(getCryptocurrencyProvider(formData.crypto!.type))
                 ..invalidate(getCryptoPriceMarketProvider);
               Navigator.pop(context);

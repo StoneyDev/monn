@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_pea_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitPeaFormController extends _$SubmitPeaFormController {
   @override
   Future<void> build() async {}

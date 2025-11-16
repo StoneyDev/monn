@@ -2,7 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';

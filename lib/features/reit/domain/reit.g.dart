@@ -22,22 +22,11 @@ const ReitSchema = CollectionSchema(
       name: r'boughtOn',
       type: IsarType.dateTime,
     ),
-    r'name': PropertySchema(
-      id: 1,
-      name: r'name',
-      type: IsarType.string,
-    ),
-    r'price': PropertySchema(
-      id: 2,
-      name: r'price',
-      type: IsarType.double,
-    ),
-    r'shares': PropertySchema(
-      id: 3,
-      name: r'shares',
-      type: IsarType.long,
-    )
+    r'name': PropertySchema(id: 1, name: r'name', type: IsarType.string),
+    r'price': PropertySchema(id: 2, name: r'price', type: IsarType.double),
+    r'shares': PropertySchema(id: 3, name: r'shares', type: IsarType.long),
   },
+
   estimateSize: _reitEstimateSize,
   serialize: _reitSerialize,
   deserialize: _reitDeserialize,
@@ -50,13 +39,14 @@ const ReitSchema = CollectionSchema(
       name: r'dividends',
       target: r'ReitDividend',
       single: false,
-    )
+    ),
   },
   embeddedSchemas: {},
+
   getId: _reitGetId,
   getLinks: _reitGetLinks,
   attach: _reitAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _reitEstimateSize(
@@ -126,8 +116,12 @@ List<IsarLinkBase<dynamic>> _reitGetLinks(Reit object) {
 
 void _reitAttach(IsarCollection<dynamic> col, Id id, Reit object) {
   object.id = id;
-  object.dividends
-      .attach(col, col.isar.collection<ReitDividend>(), r'dividends', id);
+  object.dividends.attach(
+    col,
+    col.isar.collection<ReitDividend>(),
+    r'dividends',
+    id,
+  );
 }
 
 extension ReitQueryWhereSort on QueryBuilder<Reit, Reit, QWhere> {
@@ -141,10 +135,7 @@ extension ReitQueryWhereSort on QueryBuilder<Reit, Reit, QWhere> {
 extension ReitQueryWhere on QueryBuilder<Reit, Reit, QWhereClause> {
   QueryBuilder<Reit, Reit, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
@@ -170,8 +161,10 @@ extension ReitQueryWhere on QueryBuilder<Reit, Reit, QWhereClause> {
     });
   }
 
-  QueryBuilder<Reit, Reit, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Reit, Reit, QAfterWhereClause> idGreaterThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -179,8 +172,10 @@ extension ReitQueryWhere on QueryBuilder<Reit, Reit, QWhereClause> {
     });
   }
 
-  QueryBuilder<Reit, Reit, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Reit, Reit, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -195,24 +190,26 @@ extension ReitQueryWhere on QueryBuilder<Reit, Reit, QWhereClause> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
 
 extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
   QueryBuilder<Reit, Reit, QAfterFilterCondition> boughtOnEqualTo(
-      DateTime value) {
+    DateTime value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'boughtOn',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'boughtOn', value: value),
+      );
     });
   }
 
@@ -221,11 +218,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'boughtOn',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'boughtOn',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -234,11 +233,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'boughtOn',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'boughtOn',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -249,38 +250,39 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'boughtOn',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'boughtOn',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -289,11 +291,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -302,11 +306,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -317,13 +323,15 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
@@ -332,11 +340,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -346,12 +356,14 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -361,12 +373,14 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -378,14 +392,16 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'name',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'name',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -394,11 +410,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -407,51 +425,59 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<Reit, Reit, QAfterFilterCondition> nameContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Reit, Reit, QAfterFilterCondition> nameContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<Reit, Reit, QAfterFilterCondition> nameMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Reit, Reit, QAfterFilterCondition> nameMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'name',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'name',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'name', value: ''),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'name',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'name', value: ''),
+      );
     });
   }
 
@@ -460,11 +486,14 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'price',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'price',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -474,12 +503,15 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'price',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'price',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -489,12 +521,15 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'price',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'price',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -506,23 +541,25 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'price',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'price',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> sharesEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'shares',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'shares', value: value),
+      );
     });
   }
 
@@ -531,11 +568,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'shares',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'shares',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -544,11 +583,13 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'shares',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'shares',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -559,13 +600,15 @@ extension ReitQueryFilter on QueryBuilder<Reit, Reit, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'shares',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'shares',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -574,14 +617,16 @@ extension ReitQueryObject on QueryBuilder<Reit, Reit, QFilterCondition> {}
 
 extension ReitQueryLinks on QueryBuilder<Reit, Reit, QFilterCondition> {
   QueryBuilder<Reit, Reit, QAfterFilterCondition> dividends(
-      FilterQuery<ReitDividend> q) {
+    FilterQuery<ReitDividend> q,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'dividends');
     });
   }
 
   QueryBuilder<Reit, Reit, QAfterFilterCondition> dividendsLengthEqualTo(
-      int length) {
+    int length,
+  ) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'dividends', length, true, length, true);
     });
@@ -625,7 +670,12 @@ extension ReitQueryLinks on QueryBuilder<Reit, Reit, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
-          r'dividends', lower, includeLower, upper, includeUpper);
+        r'dividends',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 }
@@ -749,8 +799,9 @@ extension ReitQueryWhereDistinct on QueryBuilder<Reit, Reit, QDistinct> {
     });
   }
 
-  QueryBuilder<Reit, Reit, QDistinct> distinctByName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Reit, Reit, QDistinct> distinctByName({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
@@ -812,17 +863,14 @@ const ReitDividendSchema = CollectionSchema(
   name: r'ReitDividend',
   id: 1657365802072717448,
   properties: {
-    r'amount': PropertySchema(
-      id: 0,
-      name: r'amount',
-      type: IsarType.double,
-    ),
+    r'amount': PropertySchema(id: 0, name: r'amount', type: IsarType.double),
     r'receivedAt': PropertySchema(
       id: 1,
       name: r'receivedAt',
       type: IsarType.dateTime,
-    )
+    ),
   },
+
   estimateSize: _reitDividendEstimateSize,
   serialize: _reitDividendSerialize,
   deserialize: _reitDividendDeserialize,
@@ -831,10 +879,11 @@ const ReitDividendSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {},
+
   getId: _reitDividendGetId,
   getLinks: _reitDividendGetLinks,
   attach: _reitDividendAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _reitDividendEstimateSize(
@@ -894,7 +943,10 @@ List<IsarLinkBase<dynamic>> _reitDividendGetLinks(ReitDividend object) {
 }
 
 void _reitDividendAttach(
-    IsarCollection<dynamic> col, Id id, ReitDividend object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  ReitDividend object,
+) {
   object.id = id;
 }
 
@@ -911,15 +963,13 @@ extension ReitDividendQueryWhere
     on QueryBuilder<ReitDividend, ReitDividend, QWhereClause> {
   QueryBuilder<ReitDividend, ReitDividend, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -942,8 +992,9 @@ extension ReitDividendQueryWhere
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -951,8 +1002,10 @@ extension ReitDividendQueryWhere
     });
   }
 
-  QueryBuilder<ReitDividend, ReitDividend, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<ReitDividend, ReitDividend, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -967,12 +1020,14 @@ extension ReitDividendQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -984,43 +1039,52 @@ extension ReitDividendQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      amountGreaterThan(
+  amountGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      amountLessThan(
+  amountLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -1032,41 +1096,44 @@ extension ReitDividendQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'amount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'amount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      idIsNotNull() {
+  idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition> idEqualTo(
-      Id? value) {
+    Id? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -1075,11 +1142,13 @@ extension ReitDividendQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -1088,11 +1157,13 @@ extension ReitDividendQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -1103,69 +1174,70 @@ extension ReitDividendQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      receivedAtEqualTo(DateTime value) {
+  receivedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'receivedAt', value: value),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      receivedAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  receivedAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'receivedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      receivedAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  receivedAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'receivedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'receivedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterFilterCondition>
-      receivedAtBetween(
+  receivedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'receivedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'receivedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -1197,7 +1269,7 @@ extension ReitDividendQuerySortBy
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterSortBy>
-      sortByReceivedAtDesc() {
+  sortByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'receivedAt', Sort.desc);
     });
@@ -1237,7 +1309,7 @@ extension ReitDividendQuerySortThenBy
   }
 
   QueryBuilder<ReitDividend, ReitDividend, QAfterSortBy>
-      thenByReceivedAtDesc() {
+  thenByReceivedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'receivedAt', Sort.desc);
     });

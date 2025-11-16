@@ -37,8 +37,9 @@ const CryptocurrencySchema = CollectionSchema(
       name: r'type',
       type: IsarType.string,
       enumMap: _CryptocurrencytypeEnumValueMap,
-    )
+    ),
   },
+
   estimateSize: _cryptocurrencyEstimateSize,
   serialize: _cryptocurrencySerialize,
   deserialize: _cryptocurrencyDeserialize,
@@ -51,13 +52,14 @@ const CryptocurrencySchema = CollectionSchema(
       name: r'transactions',
       target: r'CryptocurrencyTransaction',
       single: false,
-    )
+    ),
   },
   embeddedSchemas: {},
+
   getId: _cryptocurrencyGetId,
   getLinks: _cryptocurrencyGetLinks,
   attach: _cryptocurrencyAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _cryptocurrencyEstimateSize(
@@ -95,7 +97,7 @@ Cryptocurrency _cryptocurrencyDeserialize(
   object.totalCrypto = reader.readDouble(offsets[2]);
   object.type =
       _CryptocurrencytypeValueEnumMap[reader.readStringOrNull(offsets[3])] ??
-          CryptoType.bitcoin;
+      CryptoType.bitcoin;
   return object;
 }
 
@@ -113,9 +115,11 @@ P _cryptocurrencyDeserializeProp<P>(
     case 2:
       return (reader.readDouble(offset)) as P;
     case 3:
-      return (_CryptocurrencytypeValueEnumMap[
-              reader.readStringOrNull(offset)] ??
-          CryptoType.bitcoin) as P;
+      return (_CryptocurrencytypeValueEnumMap[reader.readStringOrNull(
+                offset,
+              )] ??
+              CryptoType.bitcoin)
+          as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -145,10 +149,17 @@ List<IsarLinkBase<dynamic>> _cryptocurrencyGetLinks(Cryptocurrency object) {
 }
 
 void _cryptocurrencyAttach(
-    IsarCollection<dynamic> col, Id id, Cryptocurrency object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  Cryptocurrency object,
+) {
   object.id = id;
-  object.transactions.attach(col,
-      col.isar.collection<CryptocurrencyTransaction>(), r'transactions', id);
+  object.transactions.attach(
+    col,
+    col.isar.collection<CryptocurrencyTransaction>(),
+    r'transactions',
+    id,
+  );
 }
 
 extension CryptocurrencyQueryWhereSort
@@ -163,17 +174,16 @@ extension CryptocurrencyQueryWhereSort
 extension CryptocurrencyQueryWhere
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QWhereClause> {
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterWhereClause> idEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -196,8 +206,9 @@ extension CryptocurrencyQueryWhere
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -206,8 +217,9 @@ extension CryptocurrencyQueryWhere
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterWhereClause> idLessThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -222,12 +234,14 @@ extension CryptocurrencyQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -235,58 +249,56 @@ extension CryptocurrencyQueryWhere
 extension CryptocurrencyQueryFilter
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QFilterCondition> {
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      idIsNull() {
+  idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      idIsNotNull() {
+  idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'id'),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition> idEqualTo(
-      Id? value) {
+    Id? value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      idGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  idGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      idLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  idLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -297,138 +309,145 @@ extension CryptocurrencyQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateIsNull() {
+  lastUpdateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'lastUpdate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'lastUpdate'),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateIsNotNull() {
+  lastUpdateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'lastUpdate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'lastUpdate'),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateEqualTo(DateTime? value) {
+  lastUpdateEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'lastUpdate', value: value),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  lastUpdateGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'lastUpdate',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  lastUpdateLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastUpdate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'lastUpdate',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      lastUpdateBetween(
+  lastUpdateBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastUpdate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'lastUpdate',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      priceMarketEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  priceMarketEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'priceMarket',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'priceMarket',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      priceMarketGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'priceMarket',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      priceMarketLessThan(
+  priceMarketGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'priceMarket',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'priceMarket',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      priceMarketBetween(
+  priceMarketLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'priceMarket',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+  priceMarketBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -436,65 +455,74 @@ extension CryptocurrencyQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'priceMarket',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'priceMarket',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      totalCryptoEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  totalCryptoEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'totalCrypto',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'totalCrypto',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      totalCryptoGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'totalCrypto',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      totalCryptoLessThan(
+  totalCryptoGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'totalCrypto',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'totalCrypto',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      totalCryptoBetween(
+  totalCryptoLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'totalCrypto',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+  totalCryptoBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -502,65 +530,71 @@ extension CryptocurrencyQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'totalCrypto',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'totalCrypto',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeEqualTo(
-    CryptoType value, {
-    bool caseSensitive = true,
-  }) {
+  typeEqualTo(CryptoType value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeGreaterThan(
-    CryptoType value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeLessThan(
+  typeGreaterThan(
     CryptoType value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeBetween(
+  typeLessThan(
+    CryptoType value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
+  typeBetween(
     CryptoType lower,
     CryptoType upper, {
     bool includeLower = true,
@@ -568,84 +602,86 @@ extension CryptocurrencyQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'type',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'type',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  typeStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  typeEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeContains(String value, {bool caseSensitive = true}) {
+  typeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'type',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'type',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeMatches(String pattern, {bool caseSensitive = true}) {
+  typeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'type',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'type',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeIsEmpty() {
+  typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'type',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'type', value: ''),
+      );
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      typeIsNotEmpty() {
+  typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'type',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'type', value: ''),
+      );
     });
   }
 }
@@ -656,55 +692,49 @@ extension CryptocurrencyQueryObject
 extension CryptocurrencyQueryLinks
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QFilterCondition> {
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactions(FilterQuery<CryptocurrencyTransaction> q) {
+  transactions(FilterQuery<CryptocurrencyTransaction> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'transactions');
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsLengthEqualTo(int length) {
+  transactionsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', length, true, length, true);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsIsEmpty() {
+  transactionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, true, 0, true);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsIsNotEmpty() {
+  transactionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, false, 999999, true);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  transactionsLengthLessThan(int length, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', 0, true, length, include);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  transactionsLengthGreaterThan(int length, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'transactions', length, include, 999999, true);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterFilterCondition>
-      transactionsLengthBetween(
+  transactionsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -712,7 +742,12 @@ extension CryptocurrencyQueryLinks
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
-          r'transactions', lower, includeLower, upper, includeUpper);
+        r'transactions',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 }
@@ -720,42 +755,42 @@ extension CryptocurrencyQueryLinks
 extension CryptocurrencyQuerySortBy
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QSortBy> {
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByLastUpdate() {
+  sortByLastUpdate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdate', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByLastUpdateDesc() {
+  sortByLastUpdateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdate', Sort.desc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByPriceMarket() {
+  sortByPriceMarket() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priceMarket', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByPriceMarketDesc() {
+  sortByPriceMarketDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priceMarket', Sort.desc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByTotalCrypto() {
+  sortByTotalCrypto() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'totalCrypto', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      sortByTotalCryptoDesc() {
+  sortByTotalCryptoDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'totalCrypto', Sort.desc);
     });
@@ -789,42 +824,42 @@ extension CryptocurrencyQuerySortThenBy
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByLastUpdate() {
+  thenByLastUpdate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdate', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByLastUpdateDesc() {
+  thenByLastUpdateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdate', Sort.desc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByPriceMarket() {
+  thenByPriceMarket() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priceMarket', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByPriceMarketDesc() {
+  thenByPriceMarketDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priceMarket', Sort.desc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByTotalCrypto() {
+  thenByTotalCrypto() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'totalCrypto', Sort.asc);
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QAfterSortBy>
-      thenByTotalCryptoDesc() {
+  thenByTotalCryptoDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'totalCrypto', Sort.desc);
     });
@@ -846,28 +881,29 @@ extension CryptocurrencyQuerySortThenBy
 extension CryptocurrencyQueryWhereDistinct
     on QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> {
   QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct>
-      distinctByLastUpdate() {
+  distinctByLastUpdate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastUpdate');
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct>
-      distinctByPriceMarket() {
+  distinctByPriceMarket() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'priceMarket');
     });
   }
 
   QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct>
-      distinctByTotalCrypto() {
+  distinctByTotalCrypto() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'totalCrypto');
     });
   }
 
-  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> distinctByType(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Cryptocurrency, Cryptocurrency, QDistinct> distinctByType({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
     });
@@ -883,7 +919,7 @@ extension CryptocurrencyQueryProperty
   }
 
   QueryBuilder<Cryptocurrency, DateTime?, QQueryOperations>
-      lastUpdateProperty() {
+  lastUpdateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastUpdate');
     });
@@ -920,17 +956,10 @@ const CryptocurrencyTransactionSchema = CollectionSchema(
   name: r'CryptocurrencyTransaction',
   id: 7445994297209788579,
   properties: {
-    r'amount': PropertySchema(
-      id: 0,
-      name: r'amount',
-      type: IsarType.double,
-    ),
-    r'date': PropertySchema(
-      id: 1,
-      name: r'date',
-      type: IsarType.dateTime,
-    )
+    r'amount': PropertySchema(id: 0, name: r'amount', type: IsarType.double),
+    r'date': PropertySchema(id: 1, name: r'date', type: IsarType.dateTime),
   },
+
   estimateSize: _cryptocurrencyTransactionEstimateSize,
   serialize: _cryptocurrencyTransactionSerialize,
   deserialize: _cryptocurrencyTransactionDeserialize,
@@ -939,10 +968,11 @@ const CryptocurrencyTransactionSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {},
+
   getId: _cryptocurrencyTransactionGetId,
   getLinks: _cryptocurrencyTransactionGetLinks,
   attach: _cryptocurrencyTransactionAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _cryptocurrencyTransactionEstimateSize(
@@ -998,39 +1028,62 @@ Id _cryptocurrencyTransactionGetId(CryptocurrencyTransaction object) {
 }
 
 List<IsarLinkBase<dynamic>> _cryptocurrencyTransactionGetLinks(
-    CryptocurrencyTransaction object) {
+  CryptocurrencyTransaction object,
+) {
   return [];
 }
 
 void _cryptocurrencyTransactionAttach(
-    IsarCollection<dynamic> col, Id id, CryptocurrencyTransaction object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  CryptocurrencyTransaction object,
+) {
   object.id = id;
 }
 
-extension CryptocurrencyTransactionQueryWhereSort on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QWhere> {
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhere> anyId() {
+extension CryptocurrencyTransactionQueryWhereSort
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QWhere
+        > {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhere
+  >
+  anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension CryptocurrencyTransactionQueryWhere on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QWhereClause> {
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhereClause> idEqualTo(Id id) {
+extension CryptocurrencyTransactionQueryWhere
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QWhereClause
+        > {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhereClause
+  >
+  idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhereClause
+  >
+  idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -1052,8 +1105,12 @@ extension CryptocurrencyTransactionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhereClause
+  >
+  idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -1061,8 +1118,12 @@ extension CryptocurrencyTransactionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhereClause
+  >
+  idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -1070,74 +1131,107 @@ extension CryptocurrencyTransactionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterWhereClause> idBetween(
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterWhereClause
+  >
+  idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
 
-extension CryptocurrencyTransactionQueryFilter on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QFilterCondition> {
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> amountEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+extension CryptocurrencyTransactionQueryFilter
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QFilterCondition
+        > {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  amountEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> amountGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> amountLessThan(
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  amountGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> amountBetween(
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  amountLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'amount',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  amountBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -1145,249 +1239,360 @@ extension CryptocurrencyTransactionQueryFilter on QueryBuilder<
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'amount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'amount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> dateEqualTo(DateTime value) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  dateEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'date', value: value),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> dateGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  dateGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> dateLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  dateLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> dateBetween(
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  dateBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'date',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'date',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idIsNull() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'id'),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idIsNotNull() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'id'),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idEqualTo(Id? value) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterFilterCondition
+  >
+  idBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
 
-extension CryptocurrencyTransactionQueryObject on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QFilterCondition> {}
+extension CryptocurrencyTransactionQueryObject
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QFilterCondition
+        > {}
 
-extension CryptocurrencyTransactionQueryLinks on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QFilterCondition> {}
+extension CryptocurrencyTransactionQueryLinks
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QFilterCondition
+        > {}
 
-extension CryptocurrencyTransactionQuerySortBy on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QSortBy> {
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> sortByAmount() {
+extension CryptocurrencyTransactionQuerySortBy
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QSortBy
+        > {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  sortByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> sortByAmountDesc() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  sortByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> sortByDate() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> sortByDateDesc() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 }
 
-extension CryptocurrencyTransactionQuerySortThenBy on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QSortThenBy> {
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenByAmount() {
+extension CryptocurrencyTransactionQuerySortThenBy
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QSortThenBy
+        > {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenByAmountDesc() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenByDate() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenByDateDesc() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenById() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction,
-      QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<
+    CryptocurrencyTransaction,
+    CryptocurrencyTransaction,
+    QAfterSortBy
+  >
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 }
 
-extension CryptocurrencyTransactionQueryWhereDistinct on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QDistinct> {
+extension CryptocurrencyTransactionQueryWhereDistinct
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QDistinct
+        > {
   QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction, QDistinct>
-      distinctByAmount() {
+  distinctByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'amount');
     });
   }
 
   QueryBuilder<CryptocurrencyTransaction, CryptocurrencyTransaction, QDistinct>
-      distinctByDate() {
+  distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
     });
   }
 }
 
-extension CryptocurrencyTransactionQueryProperty on QueryBuilder<
-    CryptocurrencyTransaction, CryptocurrencyTransaction, QQueryProperty> {
+extension CryptocurrencyTransactionQueryProperty
+    on
+        QueryBuilder<
+          CryptocurrencyTransaction,
+          CryptocurrencyTransaction,
+          QQueryProperty
+        > {
   QueryBuilder<CryptocurrencyTransaction, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
@@ -1395,14 +1600,14 @@ extension CryptocurrencyTransactionQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<CryptocurrencyTransaction, double, QQueryOperations>
-      amountProperty() {
+  amountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'amount');
     });
   }
 
   QueryBuilder<CryptocurrencyTransaction, DateTime, QQueryOperations>
-      dateProperty() {
+  dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });

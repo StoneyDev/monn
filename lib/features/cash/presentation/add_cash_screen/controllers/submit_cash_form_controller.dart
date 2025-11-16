@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/cash/domain/cash.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_cash_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitCashFormController extends _$SubmitCashFormController {
   @override
   Future<void> build() async {}
@@ -17,11 +17,10 @@ class SubmitCashFormController extends _$SubmitCashFormController {
 
     state = await AsyncValue.guard(
       () => repository.editCash(
-        Cash(
-          id: formData.id ?? Isar.autoIncrement,
-          label: formData.label,
-          value: double.parse(formData.value),
-        ),
+        Cash()
+          ..id = formData.id ?? Isar.autoIncrement
+          ..label = formData.label
+          ..value = double.parse(formData.value),
       ),
     );
 

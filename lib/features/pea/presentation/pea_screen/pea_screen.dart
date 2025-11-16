@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
@@ -31,9 +32,9 @@ class PeaScreen extends ConsumerWidget {
     final openingDate = DateTime(2024, 3, 26);
     final eligibility = openingDate.numberYears() >= 5;
     final peaData = ref.watch(getPeaProvider);
-    final etfPrice = ref.watch(getEtfPriceMarketProvider(stock: 'ESE:EPA'));
+    final etfPrice = ref.watch(getEtfPriceMarketProvider());
     final savingsPea = ref.refresh(getSavingsProvider(type: SavingsType.pea));
-    final report = ref.watch(getPayoutReportPeaProvider).valueOrNull;
+    final report = ref.watch(getPayoutReportPeaProvider).value;
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -88,50 +89,49 @@ class PeaScreen extends ConsumerWidget {
                   (report?.finalAmount ?? 0).simpleCurrency(locale),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 switch (savingsPea) {
                   AsyncData(:final value) => Center(
-                      child: OutlinedButton(
-                        child: Text(
-                          (value?.startAmount ?? 0).simpleCurrency(locale),
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppColors.lightGray,
-                                  ),
-                        ),
-                        onPressed: () => context.push(
-                          fullscreenDialog: true,
-                          AmountScreen(
-                            initialValue: value?.startAmount ?? 0,
-                            onChanged: (value) => ref
-                                .read(_startAmountProvider.notifier)
-                                .state = value,
-                            onSubmit: () async {
-                              final newValue = ref.read(_startAmountProvider);
-                              final newSaving = value?.copyWith(
-                                startAmount: double.parse(newValue),
+                    child: OutlinedButton(
+                      child: Text(
+                        (value?.startAmount ?? 0).simpleCurrency(locale),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: AppColors.lightGray,
+                            ),
+                      ),
+                      onPressed: () => context.push(
+                        fullscreenDialog: true,
+                        AmountScreen(
+                          initialValue: value?.startAmount ?? 0,
+                          onChanged: (value) =>
+                              ref.read(_startAmountProvider.notifier).state =
+                                  value,
+                          onSubmit: () async {
+                            final newValue = ref.read(_startAmountProvider);
+                            final newSaving = value
+                              ?..startAmount = double.parse(newValue);
+
+                            final success = await ref
+                                .read(
+                                  editSavingsControllerProvider.notifier,
+                                )
+                                .submit(newSaving!);
+                            if (!context.mounted || !success) return;
+
+                            ref
+                              ..invalidate(_startAmountProvider)
+                              ..invalidate(
+                                getSavingsProvider(type: SavingsType.pea),
                               );
-
-                              final success = await ref
-                                  .read(
-                                    editSavingsControllerProvider.notifier,
-                                  )
-                                  .submit(newSaving!);
-                              if (!context.mounted || !success) return;
-
-                              ref
-                                ..invalidate(_startAmountProvider)
-                                ..invalidate(
-                                  getSavingsProvider(type: SavingsType.pea),
-                                );
-                              Navigator.pop(context);
-                            },
-                          ),
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ),
+                  ),
                   _ => const SizedBox.shrink(),
                 },
                 const SizedBox(height: 32),
@@ -145,108 +145,94 @@ class PeaScreen extends ConsumerWidget {
                   ),
                   child: switch (peaData) {
                     AsyncData(:final value) => Column(
-                        spacing: 16,
-                        children: [
-                          MonnLine(
-                            title: 'ETF',
-                            value: Text(
-                              'BNP Paribas Easy S&P 500',
+                      spacing: 16,
+                      children: [
+                        MonnLine(
+                          title: 'ETF',
+                          value: Text(
+                            'BNP Paribas Easy S&P 500',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                        ),
+                        MonnLine(
+                          title: 'ISIN',
+                          value: Text(
+                            'FR0011550185',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                        ),
+                        MonnLine(
+                          title: context.tr('common.number_equities'),
+                          value: Text(
+                            '${value?.equity ?? 0}',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                        ),
+                        MonnLine(
+                          title: context.tr('common.average_purchase_price'),
+                          value: Text(
+                            (value?.costAverage ?? 0).simpleCurrency(locale),
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                        ),
+                        MonnLine(
+                          title: context.tr('common.current_price'),
+                          value: switch (etfPrice) {
+                            AsyncData(:final value) => Text(
+                              value.simpleCurrency(locale),
                               textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
+                              style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(color: AppColors.lightGray),
                             ),
-                          ),
-                          MonnLine(
-                            title: 'ISIN',
-                            value: Text(
-                              'FR0011550185',
+                            AsyncError() => Text(
+                              'Scraping failed',
                               textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                            _ => Text(
+                              context.tr('common.loading'),
+                              textAlign: TextAlign.right,
+                              style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(color: AppColors.lightGray),
                             ),
-                          ),
-                          MonnLine(
-                            title: context.tr('common.number_equities'),
-                            value: Text(
-                              '${value?.equity ?? 0}',
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(color: AppColors.lightGray),
-                            ),
-                          ),
-                          MonnLine(
-                            title: context.tr('common.average_purchase_price'),
-                            value: Text(
-                              (value?.costAverage ?? 0).simpleCurrency(locale),
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(color: AppColors.lightGray),
-                            ),
-                          ),
-                          MonnLine(
-                            title: context.tr('common.current_price'),
-                            value: switch (etfPrice) {
-                              AsyncData(:final value) => Text(
-                                  value.simpleCurrency(locale),
-                                  textAlign: TextAlign.right,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(color: AppColors.lightGray),
-                                ),
-                              AsyncError() => Text(
-                                  'Scraping failed',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
-                                ),
-                              _ => Text(
-                                  context.tr('common.loading'),
-                                  textAlign: TextAlign.right,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(color: AppColors.lightGray),
-                                )
-                            },
-                          ),
-                          MonnLine(
-                            title: context.tr('common.last_update'),
-                            value: Text(
-                              value?.lastUpdate == null
-                                  ? etfPrice.isLoading
+                          },
+                        ),
+                        MonnLine(
+                          title: context.tr('common.last_update'),
+                          value: Text(
+                            value?.lastUpdate == null
+                                ? etfPrice.isLoading
                                       ? context.tr('common.loading')
                                       : DateTime.now().slashFormat(
                                           locale,
                                           withHour: true,
                                         )
-                                  : value!.lastUpdate!.slashFormat(
-                                      locale,
-                                      withHour: true,
-                                    ),
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(color: AppColors.lightGray),
-                            ),
+                                : value!.lastUpdate!.slashFormat(
+                                    locale,
+                                    withHour: true,
+                                  ),
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
                           ),
-                        ],
-                      ),
-                    _ => const Center(
-                        child: RepaintBoundary(
-                          child: CircularProgressIndicator(),
                         ),
-                      )
+                      ],
+                    ),
+                    _ => const Center(
+                      child: RepaintBoundary(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                   },
                 ),
               ],

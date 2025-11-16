@@ -27,9 +27,9 @@ class ThemeSwitchController extends _$ThemeSwitchController {
     return themeMode;
   }
 
-  void toggle(ThemeMode theme) {
+  Future<void> toggle(ThemeMode theme) async {
     state = AsyncData(theme);
-    _prefsCache.setString('theme', theme.name);
+    await _prefsCache.setString('theme', theme.name);
   }
 }
 

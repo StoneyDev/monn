@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';

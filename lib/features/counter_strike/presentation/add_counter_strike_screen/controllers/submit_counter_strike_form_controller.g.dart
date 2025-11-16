@@ -6,23 +6,55 @@ part of 'submit_counter_strike_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitCounterStrikeFormControllerHash() =>
-    r'ff969211538d8c7b417554727a57a5f93c5edcf0';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitCounterStrikeFormController].
 @ProviderFor(SubmitCounterStrikeFormController)
-final submitCounterStrikeFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitCounterStrikeFormController,
-        void>.internal(
-  SubmitCounterStrikeFormController.new,
-  name: r'submitCounterStrikeFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitCounterStrikeFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitCounterStrikeFormControllerProvider =
+    SubmitCounterStrikeFormControllerProvider._();
 
-typedef _$SubmitCounterStrikeFormController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitCounterStrikeFormControllerProvider
+    extends $AsyncNotifierProvider<SubmitCounterStrikeFormController, void> {
+  const SubmitCounterStrikeFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitCounterStrikeFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$submitCounterStrikeFormControllerHash();
+
+  @$internal
+  @override
+  SubmitCounterStrikeFormController create() =>
+      SubmitCounterStrikeFormController();
+}
+
+String _$submitCounterStrikeFormControllerHash() =>
+    r'6b527cf4248519de1274c9eb006467f74d00101e';
+
+abstract class _$SubmitCounterStrikeFormController
+    extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

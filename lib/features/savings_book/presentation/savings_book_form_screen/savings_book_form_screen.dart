@@ -26,11 +26,9 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
   Widget build(BuildContext context) {
     final savingsBookData = ref.watch(
       getSavingsProvider(type: SavingsType.savingsBook).select(
-        (savings) => savings.valueOrNull,
+        (savings) => savings.value,
       ),
     );
-
-    ref.listen(savingsBookFormControllerProvider, (previous, next) {});
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -76,10 +74,10 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               final formData = ref.read(savingsBookFormControllerProvider);
 
-              final newSaving = savingsBookData?.copyWith(
-                startAmount: (savingsBookData.startAmount ?? 0) +
-                    double.parse(formData.startAmount),
-              );
+              final newSaving = savingsBookData
+                ?..startAmount =
+                    (savingsBookData.startAmount ?? 0) +
+                    double.parse(formData.startAmount);
 
               final updated = await ref
                   .read(editSavingsControllerProvider.notifier)
@@ -87,7 +85,10 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               if (!context.mounted || !success || !updated) return;
 
-              ref.invalidate(getSavingsProvider);
+              ref
+                ..invalidate(savingsBookFormControllerProvider)
+                ..invalidate(submitSavingsBookFormControllerProvider)
+                ..invalidate(getSavingsProvider);
               Navigator.pop(context);
             },
           ),

@@ -6,44 +6,95 @@ part of 'coin_market_cap_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(coinMarketCapRepository)
+const coinMarketCapRepositoryProvider = CoinMarketCapRepositoryProvider._();
+
+final class CoinMarketCapRepositoryProvider
+    extends
+        $FunctionalProvider<
+          CoinMarketCapRepository,
+          CoinMarketCapRepository,
+          CoinMarketCapRepository
+        >
+    with $Provider<CoinMarketCapRepository> {
+  const CoinMarketCapRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'coinMarketCapRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$coinMarketCapRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<CoinMarketCapRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CoinMarketCapRepository create(Ref ref) {
+    return coinMarketCapRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CoinMarketCapRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CoinMarketCapRepository>(value),
+    );
+  }
+}
+
 String _$coinMarketCapRepositoryHash() =>
     r'29fd3483b68c550210e7285f7ad54f6f1feaa73c';
 
-/// See also [coinMarketCapRepository].
-@ProviderFor(coinMarketCapRepository)
-final coinMarketCapRepositoryProvider =
-    Provider<CoinMarketCapRepository>.internal(
-  coinMarketCapRepository,
-  name: r'coinMarketCapRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$coinMarketCapRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(getCryptoPriceMarket)
+const getCryptoPriceMarketProvider = GetCryptoPriceMarketProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CoinMarketCapRepositoryRef = ProviderRef<CoinMarketCapRepository>;
+final class GetCryptoPriceMarketProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Cryptocurrency>>,
+          List<Cryptocurrency>,
+          FutureOr<List<Cryptocurrency>>
+        >
+    with
+        $FutureModifier<List<Cryptocurrency>>,
+        $FutureProvider<List<Cryptocurrency>> {
+  const GetCryptoPriceMarketProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getCryptoPriceMarketProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getCryptoPriceMarketHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Cryptocurrency>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Cryptocurrency>> create(Ref ref) {
+    return getCryptoPriceMarket(ref);
+  }
+}
+
 String _$getCryptoPriceMarketHash() =>
     r'92313ee49ef9d571f94558cbefa589ba062b22ef';
-
-/// See also [getCryptoPriceMarket].
-@ProviderFor(getCryptoPriceMarket)
-final getCryptoPriceMarketProvider =
-    AutoDisposeFutureProvider<List<Cryptocurrency>>.internal(
-  getCryptoPriceMarket,
-  name: r'getCryptoPriceMarketProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getCryptoPriceMarketHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef GetCryptoPriceMarketRef
-    = AutoDisposeFutureProviderRef<List<Cryptocurrency>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

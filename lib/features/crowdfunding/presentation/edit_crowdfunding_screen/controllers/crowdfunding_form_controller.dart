@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CrowdfundingFormController extends _$CrowdfundingFormController {
   @override
   CrowdfundingForm build() => CrowdfundingForm(

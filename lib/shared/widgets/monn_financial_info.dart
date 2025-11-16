@@ -11,13 +11,13 @@ class MonnFinancialInfo extends StatelessWidget {
   });
 
   final String title;
-  final dynamic data;
+  final Object data;
 
   @override
   Widget build(BuildContext context) {
     final locale = context.locale.toString();
-    final formattedData = switch (data.runtimeType) {
-      const (double) => (data as double).simpleCurrency(locale),
+    final formattedData = switch (data) {
+      double() => (data as double).simpleCurrency(locale),
       _ => '$data',
     };
 

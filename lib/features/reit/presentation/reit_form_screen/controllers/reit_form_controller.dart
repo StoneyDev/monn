@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ReitFormController extends _$ReitFormController {
   @override
   ReitForm build() => ReitForm(

@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_counter_strike_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitCounterStrikeFormController
     extends _$SubmitCounterStrikeFormController {
   @override
@@ -17,15 +17,14 @@ class SubmitCounterStrikeFormController
 
     state = await AsyncValue.guard(
       () => repository.editCounterStrike(
-        CounterStrike(
-          wear: double.tryParse(formData.wear ?? ''),
-          quantity: int.parse(formData.quantity),
-          currentValue: double.parse(formData.currentValue),
-          purchaseValue: double.parse(formData.purchaseValue),
-          boughtAt: formData.boughtAt,
-          lastUpdate: DateTime.now(),
-          imageId: formData.imageId!,
-        ),
+        CounterStrike()
+          ..wear = double.tryParse(formData.wear ?? '')
+          ..quantity = int.parse(formData.quantity)
+          ..currentValue = double.parse(formData.currentValue)
+          ..purchaseValue = double.parse(formData.purchaseValue)
+          ..boughtAt = formData.boughtAt
+          ..lastUpdate = DateTime.now()
+          ..imageId = formData.imageId!,
       ),
     );
 

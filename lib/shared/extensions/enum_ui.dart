@@ -25,42 +25,42 @@ extension SavingsTypeUI on SavingsType {
   double getReport(WidgetRef ref) {
     return switch (this) {
       SavingsType.savingsBook => ref.watch(
-          watchPayoutReportSavingsBookProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportSavingsBookProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       SavingsType.crowdfunding => ref.watch(
-          watchPayoutReportCrowdfundingProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportCrowdfundingProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       SavingsType.cryptocurrency => ref.watch(
-          watchPayoutReportCryptoProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportCryptoProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       SavingsType.csKnives => ref.watch(
-          watchPayoutReportCounterStrikeProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportCounterStrikeProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       SavingsType.cash => ref.watch(
-          watchPayoutReportCashProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportCashProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       // SavingsType.cto => 0,
       // SavingsType.lifeInsurance => 0,
       SavingsType.pea => ref.watch(
-          getPayoutReportPeaProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        getPayoutReportPeaProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       SavingsType.reit => ref.watch(
-          watchPayoutReportReitProvider.select(
-            (value) => value.valueOrNull?.finalAmount ?? 0,
-          ),
+        watchPayoutReportReitProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
         ),
+      ),
       // SavingsType.rip => 0,
     };
   }
@@ -113,9 +113,10 @@ extension CounterStrikeItemUI on CounterStrikeItem {
     return switch (this) {
       CounterStrikeItem.ak47Bloodsport =>
         MonnAssets.images.counterStrike.ak47Bloodsport.image(height: height),
-      CounterStrikeItem.ak47LegionOfAnubis => MonnAssets
-          .images.counterStrike.ak47LegionOfAnubis
-          .image(height: height),
+      CounterStrikeItem.ak47LegionOfAnubis =>
+        MonnAssets.images.counterStrike.ak47LegionOfAnubis.image(
+          height: height,
+        ),
       CounterStrikeItem.m4a1SPrintstream =>
         MonnAssets.images.counterStrike.m4a1SPrintstream.image(height: height),
       CounterStrikeItem.uspSPrintstream =>
@@ -132,9 +133,10 @@ extension CounterStrikeItemUI on CounterStrikeItem {
         MonnAssets.images.counterStrike.gammaCase.image(height: height),
       CounterStrikeItem.recoilCase =>
         MonnAssets.images.counterStrike.recoilCase.image(height: height),
-      CounterStrikeItem.glock18RameseSReach => MonnAssets
-          .images.counterStrike.glock18RameseSReach
-          .image(height: height),
+      CounterStrikeItem.glock18RameseSReach =>
+        MonnAssets.images.counterStrike.glock18RameseSReach.image(
+          height: height,
+        ),
       CounterStrikeItem.horizonCase =>
         MonnAssets.images.counterStrike.horizonCase.image(height: height),
       CounterStrikeItem.spectrumCase =>

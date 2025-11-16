@@ -6,22 +6,59 @@ part of 'crypto_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cryptoFormControllerHash() =>
-    r'283bb8ec56bff93ebd8c32a3e3f3005efa018b83';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CryptoFormController].
 @ProviderFor(CryptoFormController)
-final cryptoFormControllerProvider =
-    AutoDisposeNotifierProvider<CryptoFormController, CryptoForm>.internal(
-  CryptoFormController.new,
-  name: r'cryptoFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$cryptoFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const cryptoFormControllerProvider = CryptoFormControllerProvider._();
 
-typedef _$CryptoFormController = AutoDisposeNotifier<CryptoForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class CryptoFormControllerProvider
+    extends $NotifierProvider<CryptoFormController, CryptoForm> {
+  const CryptoFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'cryptoFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$cryptoFormControllerHash();
+
+  @$internal
+  @override
+  CryptoFormController create() => CryptoFormController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CryptoForm value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CryptoForm>(value),
+    );
+  }
+}
+
+String _$cryptoFormControllerHash() =>
+    r'6320da1fa2fcf0447ba7069e26b41d1283720481';
+
+abstract class _$CryptoFormController extends $Notifier<CryptoForm> {
+  CryptoForm build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<CryptoForm, CryptoForm>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CryptoForm, CryptoForm>,
+              CryptoForm,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

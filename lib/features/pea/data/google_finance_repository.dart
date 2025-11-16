@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/pea/data/google_finance_api.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/domain/pea.dart';
@@ -27,7 +26,7 @@ GoogleFinanceRepository googleFinanceRepository(Ref ref) {
 }
 
 @riverpod
-Future<double> getEtfPriceMarket(Ref ref, {required String stock}) async {
+Future<double> getEtfPriceMarket(Ref ref, {String? stock}) async {
   final googleFinanceRepository = ref.watch(googleFinanceRepositoryProvider);
   final peaRepository = ref.watch(peaRepositoryProvider);
   final pea = await ref.refresh(getPeaProvider.future);
@@ -39,7 +38,9 @@ Future<double> getEtfPriceMarket(Ref ref, {required String stock}) async {
   double? priceMarket;
 
   if (now.isAfter(lastUpdate)) {
-    priceMarket = await googleFinanceRepository.getEtfPriceMarket(stock);
+    priceMarket = await googleFinanceRepository.getEtfPriceMarket(
+      stock ?? 'ESEE:BIT',
+    );
 
     await peaRepository.editPea(
       pea ?? Pea()

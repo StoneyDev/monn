@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_savings_book_interest_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitSavingsBookInterestFormController
     extends _$SubmitSavingsBookInterestFormController {
   @override

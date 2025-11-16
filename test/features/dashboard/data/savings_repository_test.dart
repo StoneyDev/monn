@@ -88,7 +88,7 @@ void main() {
       () async {
         // Arrange
         const savingType = SavingsType.pea;
-        const saving = Savings(type: savingType);
+        final saving = Savings()..type = savingType;
 
         final repository = MockSavingsRepository();
         final container = createContainer(
@@ -116,7 +116,7 @@ void main() {
         // Assert
         verifyInOrder([
           listener(null, const AsyncLoading()),
-          listener(const AsyncLoading(), const AsyncData(saving)),
+          listener(const AsyncLoading(), AsyncData(saving)),
         ]);
         verifyNoMoreInteractions(listener);
         expect(result, saving);

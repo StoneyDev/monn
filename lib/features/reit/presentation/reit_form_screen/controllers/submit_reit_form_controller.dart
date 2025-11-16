@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_reit_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitReitFormController extends _$SubmitReitFormController {
   @override
   FutureOr<void> build() async {}

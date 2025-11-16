@@ -6,21 +6,50 @@ part of 'backup_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(BackupController)
+const backupControllerProvider = BackupControllerProvider._();
+
+final class BackupControllerProvider
+    extends $AsyncNotifierProvider<BackupController, String?> {
+  const BackupControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'backupControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$backupControllerHash();
+
+  @$internal
+  @override
+  BackupController create() => BackupController();
+}
+
 String _$backupControllerHash() => r'75a8ae113791f1a8456bf3c5439b11b66a461608';
 
-/// See also [BackupController].
-@ProviderFor(BackupController)
-final backupControllerProvider =
-    AutoDisposeAsyncNotifierProvider<BackupController, String?>.internal(
-  BackupController.new,
-  name: r'backupControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$backupControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$BackupController = AutoDisposeAsyncNotifier<String?>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$BackupController extends $AsyncNotifier<String?> {
+  FutureOr<String?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<String?>, String?>,
+              AsyncValue<String?>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

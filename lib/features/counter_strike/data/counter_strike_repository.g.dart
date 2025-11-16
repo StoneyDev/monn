@@ -6,64 +6,136 @@ part of 'counter_strike_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(counterStrikeRepository)
+const counterStrikeRepositoryProvider = CounterStrikeRepositoryProvider._();
+
+final class CounterStrikeRepositoryProvider
+    extends
+        $FunctionalProvider<
+          CounterStrikeRepository,
+          CounterStrikeRepository,
+          CounterStrikeRepository
+        >
+    with $Provider<CounterStrikeRepository> {
+  const CounterStrikeRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'counterStrikeRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$counterStrikeRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<CounterStrikeRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CounterStrikeRepository create(Ref ref) {
+    return counterStrikeRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CounterStrikeRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CounterStrikeRepository>(value),
+    );
+  }
+}
+
 String _$counterStrikeRepositoryHash() =>
     r'e648adf8fb332485d0a64152b76cf79655ad7c20';
 
-/// See also [counterStrikeRepository].
-@ProviderFor(counterStrikeRepository)
-final counterStrikeRepositoryProvider =
-    Provider<CounterStrikeRepository>.internal(
-  counterStrikeRepository,
-  name: r'counterStrikeRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$counterStrikeRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(watchCounterStrikes)
+const watchCounterStrikesProvider = WatchCounterStrikesProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CounterStrikeRepositoryRef = ProviderRef<CounterStrikeRepository>;
+final class WatchCounterStrikesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<CounterStrike>>,
+          List<CounterStrike>,
+          Stream<List<CounterStrike>>
+        >
+    with
+        $FutureModifier<List<CounterStrike>>,
+        $StreamProvider<List<CounterStrike>> {
+  const WatchCounterStrikesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchCounterStrikesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchCounterStrikesHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<CounterStrike>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<CounterStrike>> create(Ref ref) {
+    return watchCounterStrikes(ref);
+  }
+}
+
 String _$watchCounterStrikesHash() =>
     r'523856e5651eceea82b3c2d66fb0ebc80b6b91b2';
 
-/// See also [watchCounterStrikes].
-@ProviderFor(watchCounterStrikes)
-final watchCounterStrikesProvider =
-    AutoDisposeStreamProvider<List<CounterStrike>>.internal(
-  watchCounterStrikes,
-  name: r'watchCounterStrikesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchCounterStrikesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(watchPayoutReportCounterStrike)
+const watchPayoutReportCounterStrikeProvider =
+    WatchPayoutReportCounterStrikeProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchCounterStrikesRef
-    = AutoDisposeStreamProviderRef<List<CounterStrike>>;
+final class WatchPayoutReportCounterStrikeProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PayoutReportData>,
+          PayoutReportData,
+          Stream<PayoutReportData>
+        >
+    with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
+  const WatchPayoutReportCounterStrikeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchPayoutReportCounterStrikeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchPayoutReportCounterStrikeHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<PayoutReportData> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<PayoutReportData> create(Ref ref) {
+    return watchPayoutReportCounterStrike(ref);
+  }
+}
+
 String _$watchPayoutReportCounterStrikeHash() =>
     r'07b85248c9b352b8d155d48ddc5fb73cb3611408';
-
-/// See also [watchPayoutReportCounterStrike].
-@ProviderFor(watchPayoutReportCounterStrike)
-final watchPayoutReportCounterStrikeProvider =
-    AutoDisposeStreamProvider<PayoutReportData>.internal(
-  watchPayoutReportCounterStrike,
-  name: r'watchPayoutReportCounterStrikeProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchPayoutReportCounterStrikeHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchPayoutReportCounterStrikeRef
-    = AutoDisposeStreamProviderRef<PayoutReportData>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

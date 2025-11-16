@@ -6,323 +6,231 @@ part of 'savings_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(savingsRepository)
+const savingsRepositoryProvider = SavingsRepositoryProvider._();
+
+final class SavingsRepositoryProvider
+    extends
+        $FunctionalProvider<
+          SavingsRepository,
+          SavingsRepository,
+          SavingsRepository
+        >
+    with $Provider<SavingsRepository> {
+  const SavingsRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'savingsRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$savingsRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<SavingsRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  SavingsRepository create(Ref ref) {
+    return savingsRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SavingsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SavingsRepository>(value),
+    );
+  }
+}
+
 String _$savingsRepositoryHash() => r'f91e71a5fba2ff21e67786f0b95fc4a3a6631b2d';
 
-/// See also [savingsRepository].
-@ProviderFor(savingsRepository)
-final savingsRepositoryProvider = Provider<SavingsRepository>.internal(
-  savingsRepository,
-  name: r'savingsRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$savingsRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef SavingsRepositoryRef = ProviderRef<SavingsRepository>;
-String _$watchSavingsHash() => r'd167f759454c535778290c332f82dbac2388f3c4';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [watchSavings].
 @ProviderFor(watchSavings)
-const watchSavingsProvider = WatchSavingsFamily();
+const watchSavingsProvider = WatchSavingsFamily._();
 
-/// See also [watchSavings].
-class WatchSavingsFamily extends Family<AsyncValue<List<Savings>>> {
-  /// See also [watchSavings].
-  const WatchSavingsFamily();
+final class WatchSavingsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Savings>>,
+          List<Savings>,
+          Stream<List<Savings>>
+        >
+    with $FutureModifier<List<Savings>>, $StreamProvider<List<Savings>> {
+  const WatchSavingsProvider._({
+    required WatchSavingsFamily super.from,
+    required SavingsFilter? super.argument,
+  }) : super(
+         retry: null,
+         name: r'watchSavingsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [watchSavings].
-  WatchSavingsProvider call({
-    SavingsFilter? filter,
-  }) {
-    return WatchSavingsProvider(
-      filter: filter,
-    );
+  @override
+  String debugGetCreateSourceHash() => _$watchSavingsHash();
+
+  @override
+  String toString() {
+    return r'watchSavingsProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  WatchSavingsProvider getProviderOverride(
-    covariant WatchSavingsProvider provider,
-  ) {
-    return call(
-      filter: provider.filter,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  $StreamProviderElement<List<Savings>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'watchSavingsProvider';
-}
-
-/// See also [watchSavings].
-class WatchSavingsProvider extends AutoDisposeStreamProvider<List<Savings>> {
-  /// See also [watchSavings].
-  WatchSavingsProvider({
-    SavingsFilter? filter,
-  }) : this._internal(
-          (ref) => watchSavings(
-            ref as WatchSavingsRef,
-            filter: filter,
-          ),
-          from: watchSavingsProvider,
-          name: r'watchSavingsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$watchSavingsHash,
-          dependencies: WatchSavingsFamily._dependencies,
-          allTransitiveDependencies:
-              WatchSavingsFamily._allTransitiveDependencies,
-          filter: filter,
-        );
-
-  WatchSavingsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.filter,
-  }) : super.internal();
-
-  final SavingsFilter? filter;
-
-  @override
-  Override overrideWith(
-    Stream<List<Savings>> Function(WatchSavingsRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: WatchSavingsProvider._internal(
-        (ref) => create(ref as WatchSavingsRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        filter: filter,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeStreamProviderElement<List<Savings>> createElement() {
-    return _WatchSavingsProviderElement(this);
+  Stream<List<Savings>> create(Ref ref) {
+    final argument = this.argument as SavingsFilter?;
+    return watchSavings(ref, filter: argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is WatchSavingsProvider && other.filter == filter;
+    return other is WatchSavingsProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, filter.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin WatchSavingsRef on AutoDisposeStreamProviderRef<List<Savings>> {
-  /// The parameter `filter` of this provider.
-  SavingsFilter? get filter;
-}
+String _$watchSavingsHash() => r'd167f759454c535778290c332f82dbac2388f3c4';
 
-class _WatchSavingsProviderElement
-    extends AutoDisposeStreamProviderElement<List<Savings>>
-    with WatchSavingsRef {
-  _WatchSavingsProviderElement(super.provider);
+final class WatchSavingsFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<List<Savings>>, SavingsFilter?> {
+  const WatchSavingsFamily._()
+    : super(
+        retry: null,
+        name: r'watchSavingsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  WatchSavingsProvider call({SavingsFilter? filter}) =>
+      WatchSavingsProvider._(argument: filter, from: this);
 
   @override
-  SavingsFilter? get filter => (origin as WatchSavingsProvider).filter;
+  String toString() => r'watchSavingsProvider';
+}
+
+@ProviderFor(getSavings)
+const getSavingsProvider = GetSavingsFamily._();
+
+final class GetSavingsProvider
+    extends
+        $FunctionalProvider<AsyncValue<Savings?>, Savings?, FutureOr<Savings?>>
+    with $FutureModifier<Savings?>, $FutureProvider<Savings?> {
+  const GetSavingsProvider._({
+    required GetSavingsFamily super.from,
+    required SavingsType super.argument,
+  }) : super(
+         retry: null,
+         name: r'getSavingsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$getSavingsHash();
+
+  @override
+  String toString() {
+    return r'getSavingsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Savings?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Savings?> create(Ref ref) {
+    final argument = this.argument as SavingsType;
+    return getSavings(ref, type: argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetSavingsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$getSavingsHash() => r'ed5d6e5976aaed5e202ea478abc353b3ade330ae';
 
-/// See also [getSavings].
-@ProviderFor(getSavings)
-const getSavingsProvider = GetSavingsFamily();
-
-/// See also [getSavings].
-class GetSavingsFamily extends Family<AsyncValue<Savings?>> {
-  /// See also [getSavings].
-  const GetSavingsFamily();
-
-  /// See also [getSavings].
-  GetSavingsProvider call({
-    required SavingsType type,
-  }) {
-    return GetSavingsProvider(
-      type: type,
-    );
-  }
-
-  @override
-  GetSavingsProvider getProviderOverride(
-    covariant GetSavingsProvider provider,
-  ) {
-    return call(
-      type: provider.type,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'getSavingsProvider';
-}
-
-/// See also [getSavings].
-class GetSavingsProvider extends AutoDisposeFutureProvider<Savings?> {
-  /// See also [getSavings].
-  GetSavingsProvider({
-    required SavingsType type,
-  }) : this._internal(
-          (ref) => getSavings(
-            ref as GetSavingsRef,
-            type: type,
-          ),
-          from: getSavingsProvider,
-          name: r'getSavingsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getSavingsHash,
-          dependencies: GetSavingsFamily._dependencies,
-          allTransitiveDependencies:
-              GetSavingsFamily._allTransitiveDependencies,
-          type: type,
-        );
-
-  GetSavingsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.type,
-  }) : super.internal();
-
-  final SavingsType type;
-
-  @override
-  Override overrideWith(
-    FutureOr<Savings?> Function(GetSavingsRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: GetSavingsProvider._internal(
-        (ref) => create(ref as GetSavingsRef),
-        from: from,
-        name: null,
+final class GetSavingsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Savings?>, SavingsType> {
+  const GetSavingsFamily._()
+    : super(
+        retry: null,
+        name: r'getSavingsProvider',
         dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        type: type,
-      ),
-    );
-  }
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetSavingsProvider call({required SavingsType type}) =>
+      GetSavingsProvider._(argument: type, from: this);
 
   @override
-  AutoDisposeFutureProviderElement<Savings?> createElement() {
-    return _GetSavingsProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is GetSavingsProvider && other.type == type;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, type.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
+  String toString() => r'getSavingsProvider';
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin GetSavingsRef on AutoDisposeFutureProviderRef<Savings?> {
-  /// The parameter `type` of this provider.
-  SavingsType get type;
-}
+@ProviderFor(watchPayoutReportSavings)
+const watchPayoutReportSavingsProvider = WatchPayoutReportSavingsProvider._();
 
-class _GetSavingsProviderElement
-    extends AutoDisposeFutureProviderElement<Savings?> with GetSavingsRef {
-  _GetSavingsProviderElement(super.provider);
+final class WatchPayoutReportSavingsProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
+  const WatchPayoutReportSavingsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchPayoutReportSavingsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
-  SavingsType get type => (origin as GetSavingsProvider).type;
+  String debugGetCreateSourceHash() => _$watchPayoutReportSavingsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<double> create(Ref ref) {
+    return watchPayoutReportSavings(ref);
+  }
 }
 
 String _$watchPayoutReportSavingsHash() =>
-    r'acf88e627899607c677e93e4bed1df26fc21a98a';
-
-/// See also [watchPayoutReportSavings].
-@ProviderFor(watchPayoutReportSavings)
-final watchPayoutReportSavingsProvider =
-    AutoDisposeFutureProvider<double>.internal(
-  watchPayoutReportSavings,
-  name: r'watchPayoutReportSavingsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$watchPayoutReportSavingsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef WatchPayoutReportSavingsRef = AutoDisposeFutureProviderRef<double>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+    r'264ee4bf0fbda51f8f7dbd89b30894079149ee9c';
