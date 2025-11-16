@@ -2,7 +2,7 @@ name: monn
 description: "Monn is my personal investment tracking and analysis"
 publish_to: "none"
 
-version: 1.0.0+1
+version: 1.1.2+3
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
@@ -13,8 +13,6 @@ dependencies:
   easy_localization: ^3.0.8
   file_picker: ^10.2.0
   flutter:
-    sdk: flutter
-  flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.4.4
   flutter_riverpod: ^3.0.3
