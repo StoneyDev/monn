@@ -15,9 +15,10 @@ class MonnBottomSheet {
     required BuildContext context,
     required Reit reit,
   }) {
+    final locale = context.locale.toString();
     final dividends = reit.dividends.toList().sorted(
-          (a, b) => b.receivedAt.compareTo(a.receivedAt),
-        );
+      (a, b) => b.receivedAt.compareTo(a.receivedAt),
+    );
 
     return SliverWoltModalSheetPage(
       surfaceTintColor: AppColors.white,
@@ -25,8 +26,8 @@ class MonnBottomSheet {
       topBarTitle: Text(
         '${context.tr('common.dividends')} (${reit.name.toUpperCase()})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+          fontWeight: FontWeight.w900,
+        ),
       ),
       trailingNavBarWidget: Padding(
         padding: const EdgeInsetsDirectional.only(end: 16),
@@ -43,7 +44,6 @@ class MonnBottomSheet {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               final item = dividends[index];
-              final locale = context.locale.toString();
 
               return ListTile(
                 title: Text(
@@ -53,8 +53,8 @@ class MonnBottomSheet {
                 trailing: Text(
                   item.amount.simpleCurrency(locale),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               );
             },
@@ -75,9 +75,9 @@ class MonnBottomSheet {
       topBarTitle: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       isTopBarLayerAlwaysVisible: true,
       trailingNavBarWidget: Padding(
@@ -108,9 +108,9 @@ class MonnBottomSheet {
       topBarTitle: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       isTopBarLayerAlwaysVisible: true,
       mainContentSliversBuilder: (_) => [
