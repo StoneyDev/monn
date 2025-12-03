@@ -17,17 +17,10 @@ const CashSchema = CollectionSchema(
   name: r'Cash',
   id: 7991211310483575652,
   properties: {
-    r'label': PropertySchema(
-      id: 0,
-      name: r'label',
-      type: IsarType.string,
-    ),
-    r'value': PropertySchema(
-      id: 1,
-      name: r'value',
-      type: IsarType.double,
-    )
+    r'label': PropertySchema(id: 0, name: r'label', type: IsarType.string),
+    r'value': PropertySchema(id: 1, name: r'value', type: IsarType.double),
   },
+
   estimateSize: _cashEstimateSize,
   serialize: _cashSerialize,
   deserialize: _cashDeserialize,
@@ -36,10 +29,11 @@ const CashSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {},
+
   getId: _cashGetId,
   getLinks: _cashGetLinks,
   attach: _cashAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _cashEstimateSize(
@@ -68,11 +62,10 @@ Cash _cashDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Cash(
-    id: id,
-    label: reader.readString(offsets[0]),
-    value: reader.readDouble(offsets[1]),
-  );
+  final object = Cash();
+  object.id = id;
+  object.label = reader.readString(offsets[0]);
+  object.value = reader.readDouble(offsets[1]);
   return object;
 }
 
@@ -100,7 +93,9 @@ List<IsarLinkBase<dynamic>> _cashGetLinks(Cash object) {
   return [];
 }
 
-void _cashAttach(IsarCollection<dynamic> col, Id id, Cash object) {}
+void _cashAttach(IsarCollection<dynamic> col, Id id, Cash object) {
+  object.id = id;
+}
 
 extension CashQueryWhereSort on QueryBuilder<Cash, Cash, QWhere> {
   QueryBuilder<Cash, Cash, QAfterWhere> anyId() {
@@ -113,10 +108,7 @@ extension CashQueryWhereSort on QueryBuilder<Cash, Cash, QWhere> {
 extension CashQueryWhere on QueryBuilder<Cash, Cash, QWhereClause> {
   QueryBuilder<Cash, Cash, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
@@ -142,8 +134,10 @@ extension CashQueryWhere on QueryBuilder<Cash, Cash, QWhereClause> {
     });
   }
 
-  QueryBuilder<Cash, Cash, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Cash, Cash, QAfterWhereClause> idGreaterThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -151,8 +145,10 @@ extension CashQueryWhere on QueryBuilder<Cash, Cash, QWhereClause> {
     });
   }
 
-  QueryBuilder<Cash, Cash, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<Cash, Cash, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -167,12 +163,14 @@ extension CashQueryWhere on QueryBuilder<Cash, Cash, QWhereClause> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -180,10 +178,9 @@ extension CashQueryWhere on QueryBuilder<Cash, Cash, QWhereClause> {
 extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
   QueryBuilder<Cash, Cash, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -192,11 +189,13 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -205,11 +204,13 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -220,13 +221,15 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
@@ -235,11 +238,13 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -249,12 +254,14 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -264,12 +271,14 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -281,14 +290,16 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'label',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'label',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -297,11 +308,13 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -310,51 +323,59 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<Cash, Cash, QAfterFilterCondition> labelContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Cash, Cash, QAfterFilterCondition> labelContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'label',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<Cash, Cash, QAfterFilterCondition> labelMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Cash, Cash, QAfterFilterCondition> labelMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'label',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'label',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<Cash, Cash, QAfterFilterCondition> labelIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'label', value: ''),
+      );
     });
   }
 
   QueryBuilder<Cash, Cash, QAfterFilterCondition> labelIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'label',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'label', value: ''),
+      );
     });
   }
 
@@ -363,11 +384,14 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'value',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'value',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -377,12 +401,15 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'value',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'value',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -392,12 +419,15 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'value',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'value',
+          value: value,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
@@ -409,14 +439,17 @@ extension CashQueryFilter on QueryBuilder<Cash, Cash, QFilterCondition> {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'value',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'value',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 }
@@ -490,8 +523,9 @@ extension CashQuerySortThenBy on QueryBuilder<Cash, Cash, QSortThenBy> {
 }
 
 extension CashQueryWhereDistinct on QueryBuilder<Cash, Cash, QDistinct> {
-  QueryBuilder<Cash, Cash, QDistinct> distinctByLabel(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Cash, Cash, QDistinct> distinctByLabel({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'label', caseSensitive: caseSensitive);
     });

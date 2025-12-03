@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/cash/domain/cash.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';

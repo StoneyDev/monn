@@ -6,22 +6,51 @@ part of 'edit_savings_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editSavingsControllerHash() =>
-    r'168c7f26d0a734ef42fe23e78537ece9c661169a';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [EditSavingsController].
 @ProviderFor(EditSavingsController)
-final editSavingsControllerProvider =
-    AutoDisposeAsyncNotifierProvider<EditSavingsController, void>.internal(
-  EditSavingsController.new,
-  name: r'editSavingsControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$editSavingsControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const editSavingsControllerProvider = EditSavingsControllerProvider._();
 
-typedef _$EditSavingsController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class EditSavingsControllerProvider
+    extends $AsyncNotifierProvider<EditSavingsController, void> {
+  const EditSavingsControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'editSavingsControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$editSavingsControllerHash();
+
+  @$internal
+  @override
+  EditSavingsController create() => EditSavingsController();
+}
+
+String _$editSavingsControllerHash() =>
+    r'8ef79a215e87bbb19be183e0a677372179f77632';
+
+abstract class _$EditSavingsController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

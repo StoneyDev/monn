@@ -1,5 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
@@ -51,15 +50,15 @@ Stream<PayoutReportData> watchPayoutReportCrowdfunding(Ref ref) async* {
   );
 
   await for (final results in repository.watchCrowdfundings()) {
-    final (totalNetProfit, totalTaxProfit, totalLoss) =
-        results.fold<(double, double, double)>(
-      (0, 0, 0),
-      (totals, e) => (
-        totals.$1 + (e.netProfit ?? 0),
-        totals.$2 + (e.taxProfit ?? 0),
-        totals.$3 + (e.brutProfit.isNegative ? e.brutProfit : 0)
-      ),
-    );
+    final (totalNetProfit, totalTaxProfit, totalLoss) = results
+        .fold<(double, double, double)>(
+          (0, 0, 0),
+          (totals, e) => (
+            totals.$1 + (e.netProfit ?? 0),
+            totals.$2 + (e.taxProfit ?? 0),
+            totals.$3 + (e.brutProfit.isNegative ? e.brutProfit : 0),
+          ),
+        );
 
     final totalAmount = startAmount + totalNetProfit;
     final finalAmount = totalAmount - totalLoss.abs();

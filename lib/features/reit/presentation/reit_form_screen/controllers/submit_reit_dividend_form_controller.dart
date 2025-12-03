@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_reit_dividend_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitReitDividendFormController
     extends _$SubmitReitDividendFormController {
   @override

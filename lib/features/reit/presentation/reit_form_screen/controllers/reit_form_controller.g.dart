@@ -6,22 +6,59 @@ part of 'reit_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reitFormControllerHash() =>
-    r'480b81fb3f9650dec036bffd9cca649971185564';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ReitFormController].
 @ProviderFor(ReitFormController)
-final reitFormControllerProvider =
-    AutoDisposeNotifierProvider<ReitFormController, ReitForm>.internal(
-  ReitFormController.new,
-  name: r'reitFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$reitFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const reitFormControllerProvider = ReitFormControllerProvider._();
 
-typedef _$ReitFormController = AutoDisposeNotifier<ReitForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ReitFormControllerProvider
+    extends $NotifierProvider<ReitFormController, ReitForm> {
+  const ReitFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reitFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reitFormControllerHash();
+
+  @$internal
+  @override
+  ReitFormController create() => ReitFormController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReitForm value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReitForm>(value),
+    );
+  }
+}
+
+String _$reitFormControllerHash() =>
+    r'77b8247ba97ca00e067b5ff6e917cec436c2c4c0';
+
+abstract class _$ReitFormController extends $Notifier<ReitForm> {
+  ReitForm build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<ReitForm, ReitForm>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ReitForm, ReitForm>,
+              ReitForm,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

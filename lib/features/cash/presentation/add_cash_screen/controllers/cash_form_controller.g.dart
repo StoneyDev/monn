@@ -6,22 +6,59 @@ part of 'cash_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cashFormControllerHash() =>
-    r'868eabdfd4485659f3957cbcb43bd67cca0280ce';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CashFormController].
 @ProviderFor(CashFormController)
-final cashFormControllerProvider =
-    AutoDisposeNotifierProvider<CashFormController, CashForm>.internal(
-  CashFormController.new,
-  name: r'cashFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$cashFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const cashFormControllerProvider = CashFormControllerProvider._();
 
-typedef _$CashFormController = AutoDisposeNotifier<CashForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class CashFormControllerProvider
+    extends $NotifierProvider<CashFormController, CashForm> {
+  const CashFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'cashFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$cashFormControllerHash();
+
+  @$internal
+  @override
+  CashFormController create() => CashFormController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CashForm value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CashForm>(value),
+    );
+  }
+}
+
+String _$cashFormControllerHash() =>
+    r'59aa1a7bd364e46f9e35f83d9c67ee0278453b8c';
+
+abstract class _$CashFormController extends $Notifier<CashForm> {
+  CashForm build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<CashForm, CashForm>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CashForm, CashForm>,
+              CashForm,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

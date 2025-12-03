@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'edit_savings_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class EditSavingsController extends _$EditSavingsController {
   @override
   FutureOr<void> build() async {}

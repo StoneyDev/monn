@@ -6,22 +6,61 @@ part of 'counter_strike_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$counterStrikeFormControllerHash() =>
-    r'7de6e31929dc6039ed48335b22309891846a1895';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CounterStrikeFormController].
 @ProviderFor(CounterStrikeFormController)
-final counterStrikeFormControllerProvider = AutoDisposeNotifierProvider<
-    CounterStrikeFormController, CounterStrikeForm>.internal(
-  CounterStrikeFormController.new,
-  name: r'counterStrikeFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$counterStrikeFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const counterStrikeFormControllerProvider =
+    CounterStrikeFormControllerProvider._();
 
-typedef _$CounterStrikeFormController = AutoDisposeNotifier<CounterStrikeForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class CounterStrikeFormControllerProvider
+    extends $NotifierProvider<CounterStrikeFormController, CounterStrikeForm> {
+  const CounterStrikeFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'counterStrikeFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$counterStrikeFormControllerHash();
+
+  @$internal
+  @override
+  CounterStrikeFormController create() => CounterStrikeFormController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CounterStrikeForm value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CounterStrikeForm>(value),
+    );
+  }
+}
+
+String _$counterStrikeFormControllerHash() =>
+    r'72fd86d0efb0c3275a8e8151dcca10ea82379ac7';
+
+abstract class _$CounterStrikeFormController
+    extends $Notifier<CounterStrikeForm> {
+  CounterStrikeForm build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<CounterStrikeForm, CounterStrikeForm>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CounterStrikeForm, CounterStrikeForm>,
+              CounterStrikeForm,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'counter_strike_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CounterStrikeFormController extends _$CounterStrikeFormController {
   @override
   CounterStrikeForm build() => CounterStrikeForm(

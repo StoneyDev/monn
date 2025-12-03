@@ -4,7 +4,7 @@ part 'coin_market_cap.freezed.dart';
 part 'coin_market_cap.g.dart';
 
 @freezed
-class CoinMarketCapResponse with _$CoinMarketCapResponse {
+abstract class CoinMarketCapResponse with _$CoinMarketCapResponse {
   const factory CoinMarketCapResponse({
     required Map<String, CoinMarketCapCrypto> data,
   }) = _CoinMarketCapResponse;
@@ -14,7 +14,7 @@ class CoinMarketCapResponse with _$CoinMarketCapResponse {
 }
 
 @freezed
-class CoinMarketCapCrypto with _$CoinMarketCapCrypto {
+abstract class CoinMarketCapCrypto with _$CoinMarketCapCrypto {
   const factory CoinMarketCapCrypto({
     required int id,
     required String name,
@@ -28,7 +28,7 @@ class CoinMarketCapCrypto with _$CoinMarketCapCrypto {
 }
 
 @freezed
-class Quote with _$Quote {
+abstract class Quote with _$Quote {
   const factory Quote({
     @JsonKey(name: 'USD') required PriceUsd priceUsd,
   }) = _Quote;
@@ -37,7 +37,7 @@ class Quote with _$Quote {
 }
 
 @freezed
-class PriceUsd with _$PriceUsd {
+abstract class PriceUsd with _$PriceUsd {
   const factory PriceUsd({
     required double price,
     required String lastUpdated,

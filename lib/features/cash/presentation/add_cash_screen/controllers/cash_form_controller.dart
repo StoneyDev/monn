@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cash_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CashFormController extends _$CashFormController {
   @override
   CashForm build() => const CashForm(label: '', value: '');

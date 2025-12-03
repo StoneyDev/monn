@@ -1,3 +1,5 @@
+// dart format width=80
+
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
@@ -5,7 +7,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
+// ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
 import 'package:flutter/widgets.dart';
 
@@ -36,11 +38,13 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/ak_47_legion_of_anubis.png
   AssetGenImage get ak47LegionOfAnubis => const AssetGenImage(
-      'assets/images/counter_strike/ak_47_legion_of_anubis.png');
+    'assets/images/counter_strike/ak_47_legion_of_anubis.png',
+  );
 
   /// File path: assets/images/counter_strike/bayonet_tiger_tooth.png
   AssetGenImage get bayonetTigerTooth => const AssetGenImage(
-      'assets/images/counter_strike/bayonet_tiger_tooth.png');
+    'assets/images/counter_strike/bayonet_tiger_tooth.png',
+  );
 
   /// File path: assets/images/counter_strike/falchion_case.png
   AssetGenImage get falchionCase =>
@@ -52,7 +56,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/glock_18_ramese_s_reach.png
   AssetGenImage get glock18RameseSReach => const AssetGenImage(
-      'assets/images/counter_strike/glock_18_ramese_s_reach.png');
+    'assets/images/counter_strike/glock_18_ramese_s_reach.png',
+  );
 
   /// File path: assets/images/counter_strike/horizon_case.png
   AssetGenImage get horizonCase =>
@@ -60,7 +65,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/m4a1_s_printstream.png
   AssetGenImage get m4a1SPrintstream => const AssetGenImage(
-      'assets/images/counter_strike/m4a1_s_printstream.png');
+    'assets/images/counter_strike/m4a1_s_printstream.png',
+  );
 
   /// File path: assets/images/counter_strike/prisma_2_case.png
   AssetGenImage get prisma2Case =>
@@ -88,7 +94,8 @@ class $AssetsImagesCounterStrikeGen {
 
   /// File path: assets/images/counter_strike/stiletto_slaughter.png
   AssetGenImage get stilettoSlaughter => const AssetGenImage(
-      'assets/images/counter_strike/stiletto_slaughter.png');
+    'assets/images/counter_strike/stiletto_slaughter.png',
+  );
 
   /// File path: assets/images/counter_strike/ursus_fade.png
   AssetGenImage get ursusFade =>
@@ -100,25 +107,25 @@ class $AssetsImagesCounterStrikeGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        ak47Bloodsport,
-        ak47LeetMuseo,
-        ak47LegionOfAnubis,
-        bayonetTigerTooth,
-        falchionCase,
-        gammaCase,
-        glock18RameseSReach,
-        horizonCase,
-        m4a1SPrintstream,
-        prisma2Case,
-        prismaCase,
-        recoilCase,
-        revolutionCase,
-        shadowCase,
-        spectrumCase,
-        stilettoSlaughter,
-        ursusFade,
-        uspSPrintstream
-      ];
+    ak47Bloodsport,
+    ak47LeetMuseo,
+    ak47LegionOfAnubis,
+    bayonetTigerTooth,
+    falchionCase,
+    gammaCase,
+    glock18RameseSReach,
+    horizonCase,
+    m4a1SPrintstream,
+    prisma2Case,
+    prismaCase,
+    recoilCase,
+    revolutionCase,
+    shadowCase,
+    spectrumCase,
+    stilettoSlaughter,
+    ursusFade,
+    uspSPrintstream,
+  ];
 }
 
 class $AssetsImagesCryptoGen {
@@ -145,8 +152,13 @@ class $AssetsImagesCryptoGen {
       const AssetGenImage('assets/images/crypto/usd_coin.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [bitcoin, chainlink, ethereum, tether, usdCoin];
+  List<AssetGenImage> get values => [
+    bitcoin,
+    chainlink,
+    ethereum,
+    tether,
+    usdCoin,
+  ];
 }
 
 class $AssetsImagesIconGen {
@@ -189,16 +201,16 @@ class $AssetsImagesIconGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        bag,
-        calendar,
-        crown,
-        ethCoin,
-        folder,
-        locker,
-        money,
-        moneyBag,
-        umbrella
-      ];
+    bag,
+    calendar,
+    crown,
+    ethCoin,
+    folder,
+    locker,
+    money,
+    moneyBag,
+    umbrella,
+  ];
 }
 
 class MonnAssets {
@@ -212,12 +224,14 @@ class AssetGenImage {
     this._assetName, {
     this.size,
     this.flavors = const {},
+    this.animation,
   });
 
   final String _assetName;
 
   final Size? size;
   final Set<String> flavors;
+  final AssetGenImageAnimation? animation;
 
   Image image({
     Key? key,
@@ -272,18 +286,23 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;
 
   String get keyName => _assetName;
+}
+
+class AssetGenImageAnimation {
+  const AssetGenImageAnimation({
+    required this.isAnimation,
+    required this.duration,
+    required this.frames,
+  });
+
+  final bool isAnimation;
+  final Duration duration;
+  final int frames;
 }

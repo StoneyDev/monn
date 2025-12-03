@@ -6,23 +6,53 @@ part of 'submit_crowdfunding_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitCrowdfundingFormControllerHash() =>
-    r'712472540cad597ef63f178f0e5c9c213ce51224';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitCrowdfundingFormController].
 @ProviderFor(SubmitCrowdfundingFormController)
-final submitCrowdfundingFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitCrowdfundingFormController,
-        void>.internal(
-  SubmitCrowdfundingFormController.new,
-  name: r'submitCrowdfundingFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitCrowdfundingFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitCrowdfundingFormControllerProvider =
+    SubmitCrowdfundingFormControllerProvider._();
 
-typedef _$SubmitCrowdfundingFormController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitCrowdfundingFormControllerProvider
+    extends $AsyncNotifierProvider<SubmitCrowdfundingFormController, void> {
+  const SubmitCrowdfundingFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitCrowdfundingFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$submitCrowdfundingFormControllerHash();
+
+  @$internal
+  @override
+  SubmitCrowdfundingFormController create() =>
+      SubmitCrowdfundingFormController();
+}
+
+String _$submitCrowdfundingFormControllerHash() =>
+    r'73bb87c362bb591ae073b26bc99c70eedd6471e2';
+
+abstract class _$SubmitCrowdfundingFormController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

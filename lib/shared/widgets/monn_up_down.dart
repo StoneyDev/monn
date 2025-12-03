@@ -13,15 +13,15 @@ class MonnUpDown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.valueOrNull),
+      themeSwitchControllerProvider.select((theme) => theme.value),
     );
 
     return CircleAvatar(
       backgroundColor: value.isNegative
           ? AppColors.red50
           : context.isDarkTheme(theme)
-              ? AppColors.gray
-              : AppColors.white600,
+          ? AppColors.gray
+          : AppColors.white600,
       child: value.isNegative
           ? const iconoir.ArrowUpRight(
               width: 16,

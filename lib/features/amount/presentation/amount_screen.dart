@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -40,7 +41,7 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
           child: MonnFieldNumber<double>(
             label:
                 // ignore: lines_longer_than_80_chars
-                '${context.tr('common.amount')}${widget.initialValue > 0 ? ' (${context.tr('common.old_value')}: ${widget.initialValue.simpleCurrency(locale)})' : ''}',
+                '${context.tr(LocaleKeys.common_amount)}${widget.initialValue > 0 ? ' (${context.tr(LocaleKeys.common_old_value)}: ${widget.initialValue.simpleCurrency(locale)})' : ''}',
             required: true,
             autofocus: true,
             onChanged: (newAmount) {

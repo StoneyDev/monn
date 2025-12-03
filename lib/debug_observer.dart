@@ -1,39 +1,31 @@
-// ignore_for_file: avoid_print, lines_longer_than_80_chars .
+// ignore_for_file: lines_longer_than_80_chars .
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/web.dart';
 
-class DebugObserver extends ProviderObserver {
+final class DebugObserver extends ProviderObserver {
   @override
   void didUpdateProvider(
-    ProviderBase<dynamic> provider,
+    ProviderObserverContext context,
     Object? previousValue,
     Object? newValue,
-    ProviderContainer container,
   ) {
     Logger().d(
-      'Provider updated: ${provider.name ?? provider.runtimeType}\nPrevious value: ${previousValue ?? '-'}\nNew value: $newValue',
+      'Provider updated: ${context.provider.name ?? context.provider.runtimeType}\nPrevious value: ${previousValue ?? '-'}\nNew value: $newValue',
     );
   }
 
   @override
-  void didAddProvider(
-    ProviderBase<dynamic> provider,
-    Object? value,
-    ProviderContainer container,
-  ) {
+  void didAddProvider(ProviderObserverContext context, Object? value) {
     Logger().d(
-      'Provider added: ${provider.name ?? provider.runtimeType} ($value).',
+      'Provider added: ${context.provider.name ?? context.provider.runtimeType} ($value).',
     );
   }
 
   @override
-  void didDisposeProvider(
-    ProviderBase<dynamic> provider,
-    ProviderContainer container,
-  ) {
+  void didDisposeProvider(ProviderObserverContext context) {
     Logger().d(
-      'Provider disposed: ${provider.name ?? provider.runtimeType}',
+      'Provider disposed: ${context.provider.name ?? context.provider.runtimeType}',
     );
   }
 }

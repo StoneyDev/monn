@@ -59,7 +59,10 @@
     "export": "Exporter",
     "restore": "Restaurer",
     "successfully_restored": "La base de données a été restaurée avec succès",
-    "failed_to_restore": "Échec de la restauration de la base de données"
+    "failed_to_restore": "Échec de la restauration de la base de données",
+    "rate_of_return": "Taux de rendement",
+    "annual_performance": "Performance annuelle",
+    "per_year": "{}% par an"
   },
   "button": {
     "close": "Fermer",

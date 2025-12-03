@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,304 +9,532 @@ part of 'chart.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$Chart {
-  double get totalAmount => throw _privateConstructorUsedError;
-  List<ChartData> get data => throw _privateConstructorUsedError;
 
-  /// Create a copy of Chart
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ChartCopyWith<Chart> get copyWith => throw _privateConstructorUsedError;
+ double get totalAmount; List<ChartData> get data;
+/// Create a copy of Chart
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ChartCopyWith<Chart> get copyWith => _$ChartCopyWithImpl<Chart>(this as Chart, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chart&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&const DeepCollectionEquality().equals(other.data, data));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,totalAmount,const DeepCollectionEquality().hash(data));
+
+@override
+String toString() {
+  return 'Chart(totalAmount: $totalAmount, data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ChartCopyWith<$Res> {
-  factory $ChartCopyWith(Chart value, $Res Function(Chart) then) =
-      _$ChartCopyWithImpl<$Res, Chart>;
-  @useResult
-  $Res call({double totalAmount, List<ChartData> data});
-}
+abstract mixin class $ChartCopyWith<$Res>  {
+  factory $ChartCopyWith(Chart value, $Res Function(Chart) _then) = _$ChartCopyWithImpl;
+@useResult
+$Res call({
+ double totalAmount, List<ChartData> data
+});
 
+
+
+
+}
 /// @nodoc
-class _$ChartCopyWithImpl<$Res, $Val extends Chart>
+class _$ChartCopyWithImpl<$Res>
     implements $ChartCopyWith<$Res> {
-  _$ChartCopyWithImpl(this._value, this._then);
+  _$ChartCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Chart _self;
+  final $Res Function(Chart) _then;
 
-  /// Create a copy of Chart
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? totalAmount = null,
-    Object? data = null,
-  }) {
-    return _then(_value.copyWith(
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<ChartData>,
-    ) as $Val);
-  }
+/// Create a copy of Chart
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? totalAmount = null,Object? data = null,}) {
+  return _then(_self.copyWith(
+totalAmount: null == totalAmount ? _self.totalAmount : totalAmount // ignore: cast_nullable_to_non_nullable
+as double,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as List<ChartData>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Chart].
+extension ChartPatterns on Chart {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Chart value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Chart() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Chart value)  $default,){
+final _that = this;
+switch (_that) {
+case _Chart():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Chart value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Chart() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double totalAmount,  List<ChartData> data)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Chart() when $default != null:
+return $default(_that.totalAmount,_that.data);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double totalAmount,  List<ChartData> data)  $default,) {final _that = this;
+switch (_that) {
+case _Chart():
+return $default(_that.totalAmount,_that.data);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double totalAmount,  List<ChartData> data)?  $default,) {final _that = this;
+switch (_that) {
+case _Chart() when $default != null:
+return $default(_that.totalAmount,_that.data);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ChartImplCopyWith<$Res> implements $ChartCopyWith<$Res> {
-  factory _$$ChartImplCopyWith(
-          _$ChartImpl value, $Res Function(_$ChartImpl) then) =
-      __$$ChartImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({double totalAmount, List<ChartData> data});
+
+
+class _Chart implements Chart {
+  const _Chart({required this.totalAmount, required final  List<ChartData> data}): _data = data;
+  
+
+@override final  double totalAmount;
+ final  List<ChartData> _data;
+@override List<ChartData> get data {
+  if (_data is EqualUnmodifiableListView) return _data;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_data);
+}
+
+
+/// Create a copy of Chart
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChartCopyWith<_Chart> get copyWith => __$ChartCopyWithImpl<_Chart>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chart&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&const DeepCollectionEquality().equals(other._data, _data));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,totalAmount,const DeepCollectionEquality().hash(_data));
+
+@override
+String toString() {
+  return 'Chart(totalAmount: $totalAmount, data: $data)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ChartImplCopyWithImpl<$Res>
-    extends _$ChartCopyWithImpl<$Res, _$ChartImpl>
-    implements _$$ChartImplCopyWith<$Res> {
-  __$$ChartImplCopyWithImpl(
-      _$ChartImpl _value, $Res Function(_$ChartImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ChartCopyWith<$Res> implements $ChartCopyWith<$Res> {
+  factory _$ChartCopyWith(_Chart value, $Res Function(_Chart) _then) = __$ChartCopyWithImpl;
+@override @useResult
+$Res call({
+ double totalAmount, List<ChartData> data
+});
 
-  /// Create a copy of Chart
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? totalAmount = null,
-    Object? data = null,
-  }) {
-    return _then(_$ChartImpl(
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      data: null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<ChartData>,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$ChartCopyWithImpl<$Res>
+    implements _$ChartCopyWith<$Res> {
+  __$ChartCopyWithImpl(this._self, this._then);
 
-class _$ChartImpl implements _Chart {
-  const _$ChartImpl(
-      {required this.totalAmount, required final List<ChartData> data})
-      : _data = data;
+  final _Chart _self;
+  final $Res Function(_Chart) _then;
 
-  @override
-  final double totalAmount;
-  final List<ChartData> _data;
-  @override
-  List<ChartData> get data {
-    if (_data is EqualUnmodifiableListView) return _data;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
-  }
-
-  @override
-  String toString() {
-    return 'Chart(totalAmount: $totalAmount, data: $data)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChartImpl &&
-            (identical(other.totalAmount, totalAmount) ||
-                other.totalAmount == totalAmount) &&
-            const DeepCollectionEquality().equals(other._data, _data));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, totalAmount, const DeepCollectionEquality().hash(_data));
-
-  /// Create a copy of Chart
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChartImplCopyWith<_$ChartImpl> get copyWith =>
-      __$$ChartImplCopyWithImpl<_$ChartImpl>(this, _$identity);
+/// Create a copy of Chart
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? totalAmount = null,Object? data = null,}) {
+  return _then(_Chart(
+totalAmount: null == totalAmount ? _self.totalAmount : totalAmount // ignore: cast_nullable_to_non_nullable
+as double,data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
+as List<ChartData>,
+  ));
 }
 
-abstract class _Chart implements Chart {
-  const factory _Chart(
-      {required final double totalAmount,
-      required final List<ChartData> data}) = _$ChartImpl;
 
-  @override
-  double get totalAmount;
-  @override
-  List<ChartData> get data;
-
-  /// Create a copy of Chart
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChartImplCopyWith<_$ChartImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$ChartData {
-  double get portion => throw _privateConstructorUsedError;
-  Color get color => throw _privateConstructorUsedError;
 
-  /// Create a copy of ChartData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ChartDataCopyWith<ChartData> get copyWith =>
-      throw _privateConstructorUsedError;
+ double get portion; Color get color;
+/// Create a copy of ChartData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ChartDataCopyWith<ChartData> get copyWith => _$ChartDataCopyWithImpl<ChartData>(this as ChartData, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChartData&&(identical(other.portion, portion) || other.portion == portion)&&(identical(other.color, color) || other.color == color));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,portion,color);
+
+@override
+String toString() {
+  return 'ChartData(portion: $portion, color: $color)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ChartDataCopyWith<$Res> {
-  factory $ChartDataCopyWith(ChartData value, $Res Function(ChartData) then) =
-      _$ChartDataCopyWithImpl<$Res, ChartData>;
-  @useResult
-  $Res call({double portion, Color color});
-}
+abstract mixin class $ChartDataCopyWith<$Res>  {
+  factory $ChartDataCopyWith(ChartData value, $Res Function(ChartData) _then) = _$ChartDataCopyWithImpl;
+@useResult
+$Res call({
+ double portion, Color color
+});
 
+
+
+
+}
 /// @nodoc
-class _$ChartDataCopyWithImpl<$Res, $Val extends ChartData>
+class _$ChartDataCopyWithImpl<$Res>
     implements $ChartDataCopyWith<$Res> {
-  _$ChartDataCopyWithImpl(this._value, this._then);
+  _$ChartDataCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ChartData _self;
+  final $Res Function(ChartData) _then;
 
-  /// Create a copy of ChartData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? portion = null,
-    Object? color = null,
-  }) {
-    return _then(_value.copyWith(
-      portion: null == portion
-          ? _value.portion
-          : portion // ignore: cast_nullable_to_non_nullable
-              as double,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ) as $Val);
-  }
+/// Create a copy of ChartData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? portion = null,Object? color = null,}) {
+  return _then(_self.copyWith(
+portion: null == portion ? _self.portion : portion // ignore: cast_nullable_to_non_nullable
+as double,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as Color,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ChartData].
+extension ChartDataPatterns on ChartData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ChartData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ChartData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ChartData value)  $default,){
+final _that = this;
+switch (_that) {
+case _ChartData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ChartData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ChartData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double portion,  Color color)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ChartData() when $default != null:
+return $default(_that.portion,_that.color);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double portion,  Color color)  $default,) {final _that = this;
+switch (_that) {
+case _ChartData():
+return $default(_that.portion,_that.color);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double portion,  Color color)?  $default,) {final _that = this;
+switch (_that) {
+case _ChartData() when $default != null:
+return $default(_that.portion,_that.color);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ChartDataImplCopyWith<$Res>
-    implements $ChartDataCopyWith<$Res> {
-  factory _$$ChartDataImplCopyWith(
-          _$ChartDataImpl value, $Res Function(_$ChartDataImpl) then) =
-      __$$ChartDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({double portion, Color color});
+
+
+class _ChartData implements ChartData {
+  const _ChartData({required this.portion, required this.color});
+  
+
+@override final  double portion;
+@override final  Color color;
+
+/// Create a copy of ChartData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ChartDataCopyWith<_ChartData> get copyWith => __$ChartDataCopyWithImpl<_ChartData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChartData&&(identical(other.portion, portion) || other.portion == portion)&&(identical(other.color, color) || other.color == color));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,portion,color);
+
+@override
+String toString() {
+  return 'ChartData(portion: $portion, color: $color)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ChartDataImplCopyWithImpl<$Res>
-    extends _$ChartDataCopyWithImpl<$Res, _$ChartDataImpl>
-    implements _$$ChartDataImplCopyWith<$Res> {
-  __$$ChartDataImplCopyWithImpl(
-      _$ChartDataImpl _value, $Res Function(_$ChartDataImpl) _then)
-      : super(_value, _then);
+abstract mixin class _$ChartDataCopyWith<$Res> implements $ChartDataCopyWith<$Res> {
+  factory _$ChartDataCopyWith(_ChartData value, $Res Function(_ChartData) _then) = __$ChartDataCopyWithImpl;
+@override @useResult
+$Res call({
+ double portion, Color color
+});
 
-  /// Create a copy of ChartData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? portion = null,
-    Object? color = null,
-  }) {
-    return _then(_$ChartDataImpl(
-      portion: null == portion
-          ? _value.portion
-          : portion // ignore: cast_nullable_to_non_nullable
-              as double,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ));
-  }
+
+
+
 }
-
 /// @nodoc
+class __$ChartDataCopyWithImpl<$Res>
+    implements _$ChartDataCopyWith<$Res> {
+  __$ChartDataCopyWithImpl(this._self, this._then);
 
-class _$ChartDataImpl implements _ChartData {
-  const _$ChartDataImpl({required this.portion, required this.color});
+  final _ChartData _self;
+  final $Res Function(_ChartData) _then;
 
-  @override
-  final double portion;
-  @override
-  final Color color;
-
-  @override
-  String toString() {
-    return 'ChartData(portion: $portion, color: $color)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChartDataImpl &&
-            (identical(other.portion, portion) || other.portion == portion) &&
-            (identical(other.color, color) || other.color == color));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, portion, color);
-
-  /// Create a copy of ChartData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ChartDataImplCopyWith<_$ChartDataImpl> get copyWith =>
-      __$$ChartDataImplCopyWithImpl<_$ChartDataImpl>(this, _$identity);
+/// Create a copy of ChartData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? portion = null,Object? color = null,}) {
+  return _then(_ChartData(
+portion: null == portion ? _self.portion : portion // ignore: cast_nullable_to_non_nullable
+as double,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as Color,
+  ));
 }
 
-abstract class _ChartData implements ChartData {
-  const factory _ChartData(
-      {required final double portion,
-      required final Color color}) = _$ChartDataImpl;
 
-  @override
-  double get portion;
-  @override
-  Color get color;
-
-  /// Create a copy of ChartData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChartDataImplCopyWith<_$ChartDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+// dart format on

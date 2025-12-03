@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
@@ -18,6 +19,7 @@ import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
+import 'package:monn/utils/formula.dart';
 
 final _currentValueProvider = StateProvider<String>((_) => '');
 
@@ -29,16 +31,12 @@ class CounterStrikeScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final counterStrikes = ref.watch(watchCounterStrikesProvider);
     final report = ref.watch(
-      watchPayoutReportCounterStrikeProvider.select(
-        (data) => data.valueOrNull,
-      ),
+      watchPayoutReportCounterStrikeProvider.select((data) => data.value),
     );
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr(
-          'savings.${SavingsType.csKnives.name.toSnakeCase()}',
-        ),
+        title: context.tr('savings.${SavingsType.csKnives.name.toSnakeCase()}'),
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
@@ -54,42 +52,38 @@ class CounterStrikeScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
           ),
           OutlinedButton(
             onPressed: null,
             child: Text(
               (report?.totalNetProfit ?? 0).simpleCurrency(locale),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.lightGray,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
             ),
           ),
           const SizedBox(height: 32),
-          Divider(
-            color: Theme.of(context).colorScheme.outline,
-            height: 0,
-          ),
+          Divider(color: Theme.of(context).colorScheme.outline, height: 0),
           switch (counterStrikes) {
             AsyncData(:final value) => Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                  itemBuilder: (_, index) => _CounterStrikeItem(value[index]),
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemCount: value.length,
-                ),
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+                itemBuilder: (_, index) => _CounterStrikeItem(value[index]),
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemCount: value.length,
+                cacheExtent: 250,
               ),
+            ),
             AsyncError(:final error) => Text(
-                'Error: $error',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
+              'Error: $error',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
             _ => const Center(
-                child: RepaintBoundary(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              child: RepaintBoundary(child: CircularProgressIndicator()),
+            ),
           },
         ],
       ),
@@ -131,20 +125,17 @@ class _CounterStrikeItem extends ConsumerWidget {
                   children: [
                     Text(
                       '${data.imageId.label}${data.wear != null ? ' | ${data.wear!}' : ''}',
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: AppColors.lightGray,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Row(
                       children: [
                         Text(
                           data.purchaseValue.simpleCurrency(locale),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
+                          style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w900,
@@ -199,16 +190,15 @@ class _CounterStrikeItem extends ConsumerWidget {
         AmountScreen(
           initialValue: data.currentValue,
           onSubmit: () async {
+            final updatedData = data
+              ..lastUpdate = DateTime.now()
+              ..currentValue = double.parse(
+                ref.read(_currentValueProvider)!,
+              );
+
             final success = await ref
                 .read(submitCounterStrikeFormControllerProvider.notifier)
-                .submitNewCurrentValue(
-                  data.copyWith(
-                    lastUpdate: DateTime.now(),
-                    currentValue: double.parse(
-                      ref.read(_currentValueProvider)!,
-                    ),
-                  ),
-                );
+                .submitNewCurrentValue(updatedData);
             if (!context.mounted || !success) return;
 
             ref.invalidate(_currentValueProvider);
@@ -224,7 +214,10 @@ class _CounterStrikeItem extends ConsumerWidget {
   Widget percentageValue() {
     final purchaseValue = data.purchaseValue;
     final currentValue = data.currentValue;
-    final change = ((purchaseValue - currentValue) / purchaseValue) * 100;
+    final change = totalReturnRate(
+      initialValue: purchaseValue,
+      finalValue: currentValue,
+    );
 
     return Text(
       '${change.abs().toStringAsFixed(2)}%',

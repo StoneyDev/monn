@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_api.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/coin_market_cap.dart';
@@ -25,8 +24,9 @@ class CoinMarketCapRepository {
 @Riverpod(keepAlive: true)
 CoinMarketCapRepository coinMarketCapRepository(Ref ref) {
   final dio = Dio();
-  dio.options.headers['X-CMC_PRO_API_KEY'] =
-      const String.fromEnvironment('COIN_MARKET_CAP_KEY');
+  dio.options.headers['X-CMC_PRO_API_KEY'] = const String.fromEnvironment(
+    'COIN_MARKET_CAP_KEY',
+  );
   return CoinMarketCapRepository(CoinMarketCapApi(dio));
 }
 

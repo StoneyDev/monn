@@ -23,10 +23,10 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
     final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.valueOrNull),
+      themeSwitchControllerProvider.select((theme) => theme.value),
     );
     final backupDate = ref.watch(
-      backupControllerProvider.select((theme) => theme.valueOrNull),
+      backupControllerProvider.select((theme) => theme.value),
     );
 
     return Scaffold(
@@ -40,42 +40,40 @@ class SettingsScreen extends ConsumerWidget {
           spacing: 8,
           children: [
             InkWell(
-              onTap: () {
-                WoltModalSheet.show<void>(
-                  context: context,
-                  pageListBuilder: (context) => [
-                    MonnBottomSheet.itemList(
-                      context: context,
-                      title: context.tr('common.theme'),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            final item = ThemeMode.values[index];
+              onTap: () => WoltModalSheet.show<void>(
+                context: context,
+                pageListBuilder: (context) => [
+                  MonnBottomSheet.itemList(
+                    context: context,
+                    title: context.tr('common.theme'),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = ThemeMode.values[index];
 
-                            return RadioListTile<ThemeMode>(
-                              value: item,
-                              groupValue: theme,
-                              title: Text(
-                                context.tr('theme_mode.${item.name}'),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              onChanged: (newTheme) {
-                                ref
-                                    .read(
-                                      themeSwitchControllerProvider.notifier,
-                                    )
-                                    .toggle(newTheme!);
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                          childCount: ThemeMode.values.length,
-                        ),
+                          return RadioListTile<ThemeMode>(
+                            groupValue: theme,
+                            onChanged: (newTheme) async {
+                              await ref
+                                  .read(
+                                    themeSwitchControllerProvider.notifier,
+                                  )
+                                  .toggle(newTheme!);
+                              if (context.mounted) Navigator.pop(context);
+                            },
+                            value: item,
+                            title: Text(
+                              context.tr('theme_mode.${item.name}'),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          );
+                        },
+                        childCount: ThemeMode.values.length,
                       ),
                     ),
-                  ],
-                );
-              },
+                  ),
+                ],
+              ),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -104,38 +102,36 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () {
-                WoltModalSheet.show<void>(
-                  context: context,
-                  pageListBuilder: (context) => [
-                    MonnBottomSheet.itemList(
-                      context: context,
-                      title: context.tr('common.language'),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            final item = context.supportedLocales[index];
+              onTap: () => WoltModalSheet.show<void>(
+                context: context,
+                pageListBuilder: (context) => [
+                  MonnBottomSheet.itemList(
+                    context: context,
+                    title: context.tr('common.language'),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = context.supportedLocales[index];
 
-                            return RadioListTile<Locale>(
-                              value: item,
-                              groupValue: context.locale,
-                              title: Text(
-                                context.tr('languages.$item'),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              onChanged: (newLang) {
-                                context.setLocale(newLang!);
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                          childCount: context.supportedLocales.length,
-                        ),
+                          return RadioListTile<Locale>(
+                            groupValue: context.locale,
+                            onChanged: (newLang) async {
+                              await context.setLocale(newLang!);
+                              if (context.mounted) Navigator.pop(context);
+                            },
+                            value: item,
+                            title: Text(
+                              context.tr('languages.$item'),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          );
+                        },
+                        childCount: context.supportedLocales.length,
                       ),
                     ),
-                  ],
-                );
-              },
+                  ),
+                ],
+              ),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -215,11 +211,11 @@ class _BackupAction extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lastBackupDate = ref.watch(
-      backupControllerProvider.select((backup) => backup.valueOrNull),
+      backupControllerProvider.select((backup) => backup.value),
     );
 
     return MenuAnchor(
-      builder: (_, controller, __) => IconButton(
+      builder: (_, controller, _) => IconButton(
         onPressed: () =>
             controller.isOpen ? controller.close() : controller.open(),
         icon: const iconoir.MoreVert(color: AppColors.white),
@@ -288,8 +284,9 @@ class _BackupAction extends ConsumerWidget {
           // Local restore backup button
           MenuItemButton(
             onPressed: () async {
-              final success =
-                  await ref.read(backupControllerProvider.notifier).restoreDB();
+              final success = await ref
+                  .read(backupControllerProvider.notifier)
+                  .restoreDB();
 
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(

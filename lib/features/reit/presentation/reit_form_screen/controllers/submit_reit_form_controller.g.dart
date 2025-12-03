@@ -6,22 +6,51 @@ part of 'submit_reit_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitReitFormControllerHash() =>
-    r'fab9013e91878ece651a593434977b3267360c86';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitReitFormController].
 @ProviderFor(SubmitReitFormController)
-final submitReitFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitReitFormController, void>.internal(
-  SubmitReitFormController.new,
-  name: r'submitReitFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitReitFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitReitFormControllerProvider = SubmitReitFormControllerProvider._();
 
-typedef _$SubmitReitFormController = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitReitFormControllerProvider
+    extends $AsyncNotifierProvider<SubmitReitFormController, void> {
+  const SubmitReitFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitReitFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$submitReitFormControllerHash();
+
+  @$internal
+  @override
+  SubmitReitFormController create() => SubmitReitFormController();
+}
+
+String _$submitReitFormControllerHash() =>
+    r'13c6d8e56f0a76947df37fdd41517cad980d2a6f';
+
+abstract class _$SubmitReitFormController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

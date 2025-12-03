@@ -6,24 +6,56 @@ part of 'submit_savings_book_interest_form_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$submitSavingsBookInterestFormControllerHash() =>
-    r'1ee1298bc32d1022069fb7d2877bfe35b7fd36dc';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SubmitSavingsBookInterestFormController].
 @ProviderFor(SubmitSavingsBookInterestFormController)
-final submitSavingsBookInterestFormControllerProvider =
-    AutoDisposeAsyncNotifierProvider<SubmitSavingsBookInterestFormController,
-        void>.internal(
-  SubmitSavingsBookInterestFormController.new,
-  name: r'submitSavingsBookInterestFormControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$submitSavingsBookInterestFormControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const submitSavingsBookInterestFormControllerProvider =
+    SubmitSavingsBookInterestFormControllerProvider._();
 
-typedef _$SubmitSavingsBookInterestFormController
-    = AutoDisposeAsyncNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class SubmitSavingsBookInterestFormControllerProvider
+    extends
+        $AsyncNotifierProvider<SubmitSavingsBookInterestFormController, void> {
+  const SubmitSavingsBookInterestFormControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'submitSavingsBookInterestFormControllerProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$submitSavingsBookInterestFormControllerHash();
+
+  @$internal
+  @override
+  SubmitSavingsBookInterestFormController create() =>
+      SubmitSavingsBookInterestFormController();
+}
+
+String _$submitSavingsBookInterestFormControllerHash() =>
+    r'9cef504314d9d789bdb898efe5b58fda31b896c1';
+
+abstract class _$SubmitSavingsBookInterestFormController
+    extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    build();
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, null);
+  }
+}

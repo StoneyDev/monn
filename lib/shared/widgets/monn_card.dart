@@ -29,16 +29,16 @@ class _MonnCardState extends ConsumerState<MonnCard> {
   Widget build(BuildContext context) {
     ref.listen(
       themeSwitchControllerProvider,
-      (_, __) => _duration = Duration.zero,
+      (_, _) => _duration = Duration.zero,
     );
 
     return GestureDetector(
       onLongPress: widget.onLongPress,
       onTapDown: widget.onTap != null
           ? (_) => setState(() {
-                _isPressed = true;
-                _duration = Durations.short2;
-              })
+              _isPressed = true;
+              _duration = Durations.short2;
+            })
           : null,
       onTapCancel: widget.onTap != null
           ? () => setState(() => _isPressed = false)
@@ -49,17 +49,18 @@ class _MonnCardState extends ConsumerState<MonnCard> {
               widget.onTap!();
             }
           : null,
-      child: AnimatedContainer(
+      child: AnimatedScale(
         duration: _duration,
-        transform: Matrix4.identity()..scale(_isPressed ? 0.975 : 1.0),
-        transformAlignment: Alignment.center,
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-          boxShadow: GlobalThemeData.shadow,
+        scale: _isPressed ? 0.975 : 1.0,
+        child: Container(
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            boxShadow: GlobalThemeData.shadow,
+          ),
+          child: widget.child,
         ),
-        child: widget.child,
       ),
     );
   }

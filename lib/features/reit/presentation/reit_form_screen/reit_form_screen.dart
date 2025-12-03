@@ -36,8 +36,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
   Widget build(BuildContext context) {
     final savingsReit = ref.watch(getSavingsProvider(type: SavingsType.reit));
 
-    ref.listen(reitFormControllerProvider, (previous, next) {});
-
     return Scaffold(
       appBar: MonnAppBar(
         title: context.tr('common.add_reit'),
@@ -93,36 +91,38 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
           padding: const EdgeInsets.all(16),
           child: switch (savingsReit) {
             AsyncData(:final value) => MonnButton(
-                text: context.tr('button.validate'),
-                onPressed: () async {
-                  if (!(formKey.currentState?.validate() ?? false)) return;
+              text: context.tr('button.validate'),
+              onPressed: () async {
+                if (!(formKey.currentState?.validate() ?? false)) return;
 
-                  final success = await ref
-                      .read(submitReitFormControllerProvider.notifier)
-                      .submit();
+                final success = await ref
+                    .read(submitReitFormControllerProvider.notifier)
+                    .submit();
 
-                  final formData = ref.read(reitFormControllerProvider);
-                  final newSaving = value?.copyWith(
-                    startAmount: (value.startAmount ?? 0) +
-                        (double.parse(formData.price) *
-                            int.parse(formData.shares)),
-                  );
+                final formData = ref.read(reitFormControllerProvider);
+                final newSaving = value
+                  ?..startAmount =
+                      (value.startAmount ?? 0) +
+                      (double.parse(formData.price) *
+                          int.parse(formData.shares));
 
-                  final updated = await ref
-                      .read(editSavingsControllerProvider.notifier)
-                      .submit(newSaving!);
-                  if (!context.mounted || !success || !updated) return;
+                final updated = await ref
+                    .read(editSavingsControllerProvider.notifier)
+                    .submit(newSaving!);
+                if (!context.mounted || !success || !updated) return;
 
-                  ref
-                    ..invalidate(watchPayoutReportReitProvider)
-                    ..invalidate(getSavingsProvider(type: SavingsType.reit));
-                  Navigator.pop(context);
-                },
-              ),
+                ref
+                  ..invalidate(reitFormControllerProvider)
+                  ..invalidate(submitReitFormControllerProvider)
+                  ..invalidate(watchPayoutReportReitProvider)
+                  ..invalidate(getSavingsProvider(type: SavingsType.reit));
+                Navigator.pop(context);
+              },
+            ),
             _ => const Center(
-                heightFactor: 1,
-                child: RepaintBoundary(child: CircularProgressIndicator()),
-              ),
+              heightFactor: 1,
+              child: RepaintBoundary(child: CircularProgressIndicator()),
+            ),
           },
         ),
       ),

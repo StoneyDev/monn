@@ -1,5 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/shared/local/local_database.dart';
@@ -13,8 +12,10 @@ class CounterStrikeRepository {
   final Isar _localDB;
 
   Stream<List<CounterStrike>> watchCounterStrikes() {
-    final query =
-        _localDB.counterStrikes.where().sortByPurchaseValueDesc().build();
+    final query = _localDB.counterStrikes
+        .where()
+        .sortByPurchaseValueDesc()
+        .build();
     return query.watch(fireImmediately: true);
   }
 
@@ -45,7 +46,7 @@ Stream<PayoutReportData> watchPayoutReportCounterStrike(Ref ref) async* {
       (0, 0),
       (totals, e) => (
         totals.$1 + (e.currentValue * e.quantity),
-        totals.$2 + (e.purchaseValue * e.quantity)
+        totals.$2 + (e.purchaseValue * e.quantity),
       ),
     );
 

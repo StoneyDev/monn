@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'submit_crypto_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SubmitCryptoFormController extends _$SubmitCryptoFormController {
   @override
   FutureOr<void> build() async {}

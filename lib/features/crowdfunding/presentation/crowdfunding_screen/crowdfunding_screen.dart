@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
@@ -23,7 +24,7 @@ import 'package:monn/utils/app_colors.dart';
 final _startAmountProvider = StateProvider<String?>((ref) {
   final crowdfunding = ref
       .refresh(getSavingsProvider(type: SavingsType.crowdfunding))
-      .valueOrNull;
+      .value;
   return (crowdfunding?.startAmount ?? '').toString();
 });
 
@@ -33,16 +34,17 @@ class CrowdfundingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final savingsCrowdfunding =
-        ref.refresh(getSavingsProvider(type: SavingsType.crowdfunding));
+    final savingsCrowdfunding = ref.refresh(
+      getSavingsProvider(type: SavingsType.crowdfunding),
+    );
     final crowdfundingData = ref.watch(
-      getSavingsProvider(type: SavingsType.crowdfunding).select(
-        (data) => data.valueOrNull,
-      ),
+      getSavingsProvider(
+        type: SavingsType.crowdfunding,
+      ).select((data) => data.value),
     );
     final crowdfundings = ref.watch(watchCrowdfundingsProvider);
     final report = ref.watch(
-      watchPayoutReportCrowdfundingProvider.select((data) => data.valueOrNull),
+      watchPayoutReportCrowdfundingProvider.select((data) => data.value),
     );
 
     return Scaffold(
@@ -65,49 +67,48 @@ class CrowdfundingScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
           ),
           switch (savingsCrowdfunding) {
             AsyncData(:final value) => Center(
-                child: OutlinedButton(
-                  child: Text(
-                    (value?.startAmount ?? 0).simpleCurrency(locale),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: AppColors.lightGray,
-                        ),
-                  ),
-                  onPressed: () => context.push(
-                    fullscreenDialog: true,
-                    AmountScreen(
-                      initialValue: crowdfundingData?.startAmount ?? 0,
-                      onChanged: (value) =>
-                          ref.read(_startAmountProvider.notifier).state = value,
-                      onSubmit: () async {
-                        final newValue = ref.read(_startAmountProvider);
-                        final newSaving = value?.copyWith(
-                          startAmount: double.parse(newValue!),
+              child: OutlinedButton(
+                child: Text(
+                  (value?.startAmount ?? 0).simpleCurrency(locale),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
+                ),
+                onPressed: () => context.push(
+                  fullscreenDialog: true,
+                  AmountScreen(
+                    initialValue: crowdfundingData?.startAmount ?? 0,
+                    onChanged: (value) =>
+                        ref.read(_startAmountProvider.notifier).state = value,
+                    onSubmit: () async {
+                      final newValue = ref.read(_startAmountProvider);
+                      final newSaving = value!
+                        ..startAmount = double.parse(newValue!);
+
+                      final success = await ref
+                          .read(editSavingsControllerProvider.notifier)
+                          .submit(newSaving);
+                      if (!context.mounted || !success) return;
+
+                      ref
+                        ..invalidate(_startAmountProvider)
+                        // Refresh finalAmount
+                        ..invalidate(watchPayoutReportCrowdfundingProvider)
+                        ..invalidate(
+                          getSavingsProvider(type: SavingsType.crowdfunding),
                         );
-
-                        final success = await ref
-                            .read(editSavingsControllerProvider.notifier)
-                            .submit(newSaving!);
-                        if (!context.mounted || !success) return;
-
-                        ref
-                          ..invalidate(_startAmountProvider)
-                          // Refresh finalAmount
-                          ..invalidate(watchPayoutReportCrowdfundingProvider)
-                          ..invalidate(
-                            getSavingsProvider(type: SavingsType.crowdfunding),
-                          );
-                        Navigator.pop(context);
-                      },
-                    ),
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
+            ),
             _ => const SizedBox.shrink(),
           },
           const SizedBox(height: 14),
@@ -118,22 +119,21 @@ class CrowdfundingScreen extends ConsumerWidget {
           ),
           switch (crowdfundings) {
             AsyncData(:final value) => Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                  itemBuilder: (_, index) => _RefundTransaction(value[index]),
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemCount: value.length,
-                ),
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+                itemBuilder: (_, index) => _RefundTransaction(value[index]),
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemCount: value.length,
+                cacheExtent: 250,
               ),
+            ),
             AsyncError(:final error) => Text(
-                'Error: $error',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
+              'Error: $error',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
             _ => const Center(
-                child: RepaintBoundary(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              child: RepaintBoundary(child: CircularProgressIndicator()),
+            ),
           },
         ],
       ),
@@ -152,7 +152,7 @@ class _RefundTransaction extends ConsumerWidget {
     final isExempt = (crowdfunding.netProfit ?? 0) != crowdfunding.brutProfit;
 
     return MonnCard(
-      onLongPress: () {
+      onLongPress: () async {
         ref.read(crowdfundingFormControllerProvider.notifier)
           ..id(id: crowdfunding.id)
           ..platformName(platformName: crowdfunding.platformName)
@@ -163,7 +163,7 @@ class _RefundTransaction extends ConsumerWidget {
                 ? '${crowdfunding.taxPercentage}'
                 : null,
           );
-        context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
+        await context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
       },
       child: Row(
         children: [
@@ -177,9 +177,7 @@ class _RefundTransaction extends ConsumerWidget {
                   crowdfunding.platformName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   crowdfunding.receivedAt!.slashFormat(locale),
@@ -203,9 +201,9 @@ class _RefundTransaction extends ConsumerWidget {
               children: [
                 Text(
                   crowdfunding.netProfit!.simpleCurrency(locale),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   isExempt

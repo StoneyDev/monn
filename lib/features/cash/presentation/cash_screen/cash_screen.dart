@@ -25,14 +25,12 @@ class CashScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final cashs = ref.watch(watchCashsProvider);
     final report = ref.watch(
-      watchPayoutReportCashProvider.select((data) => data.valueOrNull),
+      watchPayoutReportCashProvider.select((data) => data.value),
     );
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr(
-          'savings.${SavingsType.cash.name.toSnakeCase()}',
-        ),
+        title: context.tr('savings.${SavingsType.cash.name.toSnakeCase()}'),
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
@@ -46,29 +44,28 @@ class CashScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 14),
           switch (cashs) {
             AsyncData(:final value) => Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                  itemBuilder: (_, index) => _CashCard(value[index]),
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemCount: value.length,
-                ),
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+                itemBuilder: (_, index) => _CashCard(value[index]),
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemCount: value.length,
+                cacheExtent: 250,
               ),
+            ),
             AsyncError(:final error) => Text(
-                'Error: $error',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
+              'Error: $error',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
             _ => const Center(
-                child: RepaintBoundary(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+              child: RepaintBoundary(child: CircularProgressIndicator()),
+            ),
           },
         ],
       ),
@@ -99,9 +96,7 @@ class _CashCard extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Center(
-                      child: Text(context.tr('button.close')),
-                    ),
+                    child: Center(child: Text(context.tr('button.close'))),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -110,9 +105,7 @@ class _CashCard extends ConsumerWidget {
                       if (!context.mounted) return;
                       Navigator.pop(context);
                     },
-                    child: Center(
-                      child: Text(context.tr('button.ok')),
-                    ),
+                    child: Center(child: Text(context.tr('button.ok'))),
                   ),
                 ],
               ),
@@ -153,9 +146,9 @@ class _CashCard extends ConsumerWidget {
             child: Text(
               cash.value.simpleCurrency(locale),
               textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ],

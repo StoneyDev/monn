@@ -71,26 +71,22 @@ void main() {
       () async {
         // Arrange
         final crowdfundings = [
-          Crowdfunding(
-            receivedAt: DateTime(2024, 8, 25),
-            platformName: 'La Première Brique',
-            brutProfit: 0,
-          ),
-          Crowdfunding(
-            receivedAt: DateTime(2024, 2, 14),
-            platformName: 'La Première Brique',
-            brutProfit: 0,
-          ),
-          Crowdfunding(
-            receivedAt: DateTime(2024, 7, 08),
-            platformName: 'La Première Brique',
-            brutProfit: 0,
-          ),
-          Crowdfunding(
-            receivedAt: DateTime(2024, 8, 10),
-            platformName: 'La Première Brique',
-            brutProfit: 0,
-          ),
+          Crowdfunding()
+            ..receivedAt = DateTime(2024, 8, 25)
+            ..platformName = 'La Première Brique'
+            ..brutProfit = 0,
+          Crowdfunding()
+            ..receivedAt = DateTime(2024, 2, 14)
+            ..platformName = 'La Première Brique'
+            ..brutProfit = 0,
+          Crowdfunding()
+            ..receivedAt = DateTime(2024, 7, 08)
+            ..platformName = 'La Première Brique'
+            ..brutProfit = 0,
+          Crowdfunding()
+            ..receivedAt = DateTime(2024, 8, 10)
+            ..platformName = 'La Première Brique'
+            ..brutProfit = 0,
         ];
 
         final sorted = [
@@ -156,36 +152,34 @@ void main() {
     test('should return total netProfit & taxProfit without losses', () async {
       // Arrange
       final crowdfundings = [
-        Crowdfunding(
-          receivedAt: DateTime(2024, 8, 25),
-          netProfit: 70,
-          taxProfit: 30,
-          brutProfit: 100,
-          platformName: 'La Première Brique',
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 2, 14),
-          netProfit: 39.2,
-          taxProfit: 16.8,
-          brutProfit: 56,
-          platformName: 'La Première Brique',
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 7, 08),
-          netProfit: 66.24,
-          taxProfit: 13.76,
-          brutProfit: 80,
-          platformName: 'La Première Brique',
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 8, 10),
-          netProfit: 20,
-          brutProfit: 20,
-          platformName: 'La Première Brique',
-        ),
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 8, 25)
+          ..netProfit = 70
+          ..taxProfit = 30
+          ..brutProfit = 100
+          ..platformName = 'La Première Brique',
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 2, 14)
+          ..netProfit = 39.2
+          ..taxProfit = 16.8
+          ..brutProfit = 56
+          ..platformName = 'La Première Brique',
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 7, 08)
+          ..netProfit = 66.24
+          ..taxProfit = 13.76
+          ..brutProfit = 80
+          ..platformName = 'La Première Brique',
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 8, 10)
+          ..netProfit = 20
+          ..brutProfit = 20
+          ..platformName = 'La Première Brique',
       ];
 
-      const savings = Savings(type: SavingsType.crowdfunding, startAmount: 200);
+      final savings = Savings()
+        ..type = SavingsType.crowdfunding
+        ..startAmount = 200;
       const expectedPayoutReport = PayoutReportData(
         totalNetProfit: 195.44,
         totalTaxProfit: 60.56,
@@ -235,30 +229,26 @@ void main() {
     test('should return total netProfit & taxProfit & loss', () async {
       // Arrange
       final crowdfundings = [
-        Crowdfunding(
-          receivedAt: DateTime(2024, 8, 25),
-          brutProfit: -100,
-          platformName: 'La Première Brique',
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 8, 10),
-          brutProfit: -564.22,
-          platformName: 'La Première Brique',
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 2, 14),
-          netProfit: 39.2,
-          taxProfit: 16.8,
-          platformName: 'La Première Brique',
-          brutProfit: 56,
-        ),
-        Crowdfunding(
-          receivedAt: DateTime(2024, 7, 08),
-          netProfit: 66.24,
-          taxProfit: 13.76,
-          brutProfit: 80,
-          platformName: 'La Première Brique',
-        ),
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 8, 25)
+          ..brutProfit = -100
+          ..platformName = 'La Première Brique',
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 8, 10)
+          ..brutProfit = -564.22
+          ..platformName = 'La Première Brique',
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 2, 14)
+          ..netProfit = 39.2
+          ..taxProfit = 16.8
+          ..platformName = 'La Première Brique'
+          ..brutProfit = 56,
+        Crowdfunding()
+          ..receivedAt = DateTime(2024, 7, 08)
+          ..netProfit = 66.24
+          ..taxProfit = 13.76
+          ..brutProfit = 80
+          ..platformName = 'La Première Brique',
       ];
 
       const payoutReport = PayoutReportData(
@@ -268,10 +258,9 @@ void main() {
         finalAmount: 1441.22,
       );
 
-      const savings = Savings(
-        type: SavingsType.crowdfunding,
-        startAmount: 2000,
-      );
+      final savings = Savings()
+        ..type = SavingsType.crowdfunding
+        ..startAmount = 2000;
 
       final crowdfundingRepository = MockCrowdfundingRepository();
       final savingRepository = MockSavingsRepository();

@@ -207,7 +207,9 @@ class _AddCounterStrikeScreenState
 
                     if (!context.mounted || !success) return;
 
-                    ref.invalidate(counterStrikeFormControllerProvider);
+                    ref
+                      ..invalidate(counterStrikeFormControllerProvider)
+                      ..invalidate(submitCounterStrikeFormControllerProvider);
                     Navigator.pop(context);
                   },
                 ),

@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
@@ -19,8 +18,10 @@ class CryptocurrencyRepository {
   final Isar _localDB;
 
   Stream<List<Cryptocurrency>> watchCryptocurrencies() {
-    final query =
-        _localDB.cryptocurrencys.filter().totalCryptoGreaterThan(0).build();
+    final query = _localDB.cryptocurrencys
+        .filter()
+        .totalCryptoGreaterThan(0)
+        .build();
     return query.watch(fireImmediately: true);
   }
 
@@ -90,8 +91,9 @@ Stream<Chart> watchCryptoChart(Ref ref) async* {
 
     final data = totalCryptoValue > 0
         ? results.map((crypto) {
-            final logValue =
-                log((crypto.totalCrypto * crypto.priceMarket) + 1.2);
+            final logValue = log(
+              (crypto.totalCrypto * crypto.priceMarket) + 1.2,
+            );
             final portion = (logValue * 100) / totalLog;
 
             return ChartData(

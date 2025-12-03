@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crypto_form_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CryptoFormController extends _$CryptoFormController {
   @override
   CryptoForm build() => CryptoForm(amount: '', date: DateTime.now());

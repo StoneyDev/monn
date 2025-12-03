@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
@@ -163,10 +163,9 @@ void main() {
       const finalAmount = 3600;
       final savingsBooks = await isar.savingsBooks.where().findAll();
 
-      const savings = Savings(
-        type: SavingsType.savingsBook,
-        startAmount: 3000,
-      );
+      final savings = Savings()
+        ..type = SavingsType.savingsBook
+        ..startAmount = 3000;
 
       final repository = MockSavingsBookRepository();
       final savingRepository = MockSavingsRepository();

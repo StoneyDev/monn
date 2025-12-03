@@ -20,8 +20,6 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(cashFormControllerProvider, (_, __) {});
-
     return Scaffold(
       appBar: const MonnAppBar(),
       body: SingleChildScrollView(
@@ -65,6 +63,10 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
                   .submit();
 
               if (!context.mounted || !success) return;
+
+              ref
+                ..invalidate(cashFormControllerProvider)
+                ..invalidate(submitCashFormControllerProvider);
               Navigator.pop(context);
             },
           ),
