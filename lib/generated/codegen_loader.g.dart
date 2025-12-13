@@ -78,7 +78,8 @@ class CodegenLoader extends AssetLoader{
     "failed_to_restore": "Database restore failed",
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
-    "per_year": "{}% per year"
+    "per_year": "{}% per year",
+    "api_error": "API error"
   },
   "button": {
     "close": "Close",
@@ -182,7 +183,8 @@ static const Map<String,dynamic> _fr = {
     "failed_to_restore": "Échec de la restauration de la base de données",
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
-    "per_year": "{}% par an"
+    "per_year": "{}% par an",
+    "api_error": "Erreur API"
   },
   "button": {
     "close": "Fermer",

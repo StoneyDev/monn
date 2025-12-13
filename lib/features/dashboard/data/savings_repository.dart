@@ -5,7 +5,7 @@ import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/pea/data/google_finance_repository.dart';
+import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';

@@ -7,7 +7,7 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
-import 'package:monn/features/pea/data/google_finance_repository.dart';
+import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/pea_form_screen.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -32,7 +32,7 @@ class PeaScreen extends ConsumerWidget {
     final openingDate = DateTime(2024, 3, 26);
     final eligibility = openingDate.numberYears() >= 5;
     final peaData = ref.watch(getPeaProvider);
-    final etfPrice = ref.watch(getEtfPriceMarketProvider());
+    final etfPrice = ref.watch(getEtfPriceMarketProvider);
     final savingsPea = ref.refresh(getSavingsProvider(type: SavingsType.pea));
     final report = ref.watch(getPayoutReportPeaProvider).value;
 
@@ -193,7 +193,7 @@ class PeaScreen extends ConsumerWidget {
                                   ?.copyWith(color: AppColors.lightGray),
                             ),
                             AsyncError() => Text(
-                              'Scraping failed',
+                              context.tr('common.api_error'),
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,

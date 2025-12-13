@@ -66,6 +66,7 @@ abstract class  LocaleKeys {
   static const common_rate_of_return = 'common.rate_of_return';
   static const common_annual_performance = 'common.annual_performance';
   static const common_per_year = 'common.per_year';
+  static const common_api_error = 'common.api_error';
   static const common = 'common';
   static const button_close = 'button.close';
   static const button_ok = 'button.ok';

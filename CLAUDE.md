@@ -75,7 +75,7 @@ lib/features/<feature_name>/
 
 **Investment Features:**
 - `cryptocurrency/` - Bitcoin, Ethereum tracking with CoinMarketCap API
-- `pea/` - French stock account tracking with Google Finance scraping
+- `pea/` - French stock account tracking with Alpha Vantage ETF API
 - `reit/` - Real estate investment trusts with dividend tracking
 - `crowdfunding/` - Crowdfunding investments
 - `cash/` - Cash holdings
@@ -504,11 +504,13 @@ Exclude from version control and analysis (configured in `analysis_options.yaml`
 ## Environment Variables
 
 API keys are provided via `api_keys.json` (not in version control):
-- `COIN_MARKET_CAP_KEY` - CoinMarketCap API access
+- `COIN_MARKET_CAP_KEY` - CoinMarketCap API access for cryptocurrency prices
+- `ALPHA_VANTAGE_KEY` - Alpha Vantage API access for ETF quotes (PEA feature)
 
 Access in code:
 ```dart
 const String.fromEnvironment('COIN_MARKET_CAP_KEY')
+const String.fromEnvironment('ALPHA_VANTAGE_KEY')
 ```
 
 ## Linting

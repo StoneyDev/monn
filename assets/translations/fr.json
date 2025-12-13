@@ -62,7 +62,8 @@
     "failed_to_restore": "Échec de la restauration de la base de données",
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
-    "per_year": "{}% par an"
+    "per_year": "{}% par an",
+    "api_error": "Erreur API"
   },
   "button": {
     "close": "Fermer",

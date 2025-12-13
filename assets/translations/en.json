@@ -62,7 +62,8 @@
     "failed_to_restore": "Database restore failed",
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
-    "per_year": "{}% per year"
+    "per_year": "{}% per year",
+    "api_error": "API error"
   },
   "button": {
     "close": "Close",

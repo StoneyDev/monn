@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'google_finance_api.dart';
+part of 'etf_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,9 +8,9 @@ part of 'google_finance_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
-class _GoogleFinanceApi implements GoogleFinanceApi {
-  _GoogleFinanceApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://www.google.com/finance/';
+class _EtfApi implements EtfApi {
+  _EtfApi(this._dio, {this.baseUrl, this.errorLogger}) {
+    baseUrl ??= 'https://www.alphavantage.co/';
   }
 
   final Dio _dio;
@@ -20,25 +20,33 @@ class _GoogleFinanceApi implements GoogleFinanceApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<String> getEftPriceMarket(String stock) async {
+  Future<EtfQuoteResponse> getQuote(
+    String function,
+    String symbol,
+    String apiKey,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'function': function,
+      r'symbol': symbol,
+      r'apikey': apiKey,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<String>(
+    final _options = _setStreamType<EtfQuoteResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/quote/${stock}?hl=fr',
+            '/query',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<String>(_options);
-    late String _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EtfQuoteResponse _value;
     try {
-      _value = _result.data!;
+      _value = EtfQuoteResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
