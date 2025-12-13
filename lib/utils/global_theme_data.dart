@@ -9,15 +9,15 @@ class GlobalThemeData {
   static ThemeData dark = themeData(darkColorScheme);
 
   static ThemeData themeData(ColorScheme colorScheme) => ThemeData(
-        fontFamily: 'DMSans',
-        useMaterial3: true,
-        colorScheme: colorScheme,
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      );
+    fontFamily: 'DMSans',
+    useMaterial3: true,
+    colorScheme: colorScheme,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+  );
 
   static const ColorScheme lightColorScheme = ColorScheme.light(
     primary: AppColors.gray700,

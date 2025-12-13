@@ -223,8 +223,9 @@ void main() {
       when(savingRepository.getSavings(any)).thenThrow(error);
 
       // Act
-      final controller =
-          container.read(watchPayoutReportSavingsBookProvider.future);
+      final controller = container.read(
+        watchPayoutReportSavingsBookProvider.future,
+      );
 
       // Assert
       await expectLater(controller, throwsA(error));

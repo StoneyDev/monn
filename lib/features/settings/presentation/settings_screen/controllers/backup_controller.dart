@@ -51,7 +51,8 @@ class BackupController extends _$BackupController {
       final backupDate = _prefsCache.getString('backupDate');
 
       final dbPath = p.join(dbDirectory.path, 'default.isar');
-      final dbFile = externalBackup ??
+      final dbFile =
+          externalBackup ??
           File('${backupDirectory.path}/backup_$backupDate.isar');
 
       if (dbFile.existsSync()) {

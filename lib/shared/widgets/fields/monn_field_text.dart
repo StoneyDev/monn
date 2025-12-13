@@ -30,15 +30,16 @@ class MonnFieldText extends StatelessWidget {
           child: Text(
             label,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: AppColors.lightGray,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         TextFormField(
           initialValue: initialValue,
-          autovalidateMode:
-              required ? AutovalidateMode.onUserInteraction : null,
+          autovalidateMode: required
+              ? AutovalidateMode.onUserInteraction
+              : null,
           textInputAction: textInputAction,
           decoration: GlobalThemeData.inputDecoration(context),
           onChanged: onChanged,
@@ -53,8 +54,8 @@ class MonnFieldText extends StatelessWidget {
                 }
               : null,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w900,
-              ),
+            fontWeight: FontWeight.w900,
+          ),
         ),
       ],
     );

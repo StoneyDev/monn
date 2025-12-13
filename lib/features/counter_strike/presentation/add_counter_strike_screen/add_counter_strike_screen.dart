@@ -58,10 +58,10 @@ class _AddCounterStrikeScreenState
                               MonnAssets.images.counterStrike.values.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 16,
-                            crossAxisSpacing: 16,
-                          ),
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 16,
+                              ),
                           itemBuilder: (context, index) {
                             final item = CounterStrikeItem.values[index];
 
@@ -82,15 +82,16 @@ class _AddCounterStrikeScreenState
                                       .imageId(imageId: item),
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.outline,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.outline,
                                       border: Border.all(
                                         width: 2,
                                         color: imageId == item
                                             ? AppColors.green
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .outline,
+                                            : Theme.of(
+                                                context,
+                                              ).colorScheme.outline,
                                       ),
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(10),
@@ -140,8 +141,8 @@ class _AddCounterStrikeScreenState
                 imageId?.label ?? '-',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                    ),
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               MonnFieldNumber<double>(
                 label: context.tr('common.wear'),
@@ -189,8 +190,9 @@ class _AddCounterStrikeScreenState
                 child: MonnButton(
                   text: context.tr('button.validate'),
                   onPressed: () async {
-                    final imageId =
-                        ref.watch(counterStrikeFormControllerProvider).imageId;
+                    final imageId = ref
+                        .watch(counterStrikeFormControllerProvider)
+                        .imageId;
                     final isNotValidate =
                         !(formKey.currentState?.validate() ?? false);
 

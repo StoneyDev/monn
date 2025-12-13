@@ -7,9 +7,9 @@ part 'life_insurance_form_controller.g.dart';
 class LifeInsuranceFormController extends _$LifeInsuranceFormController {
   @override
   LifeInsuranceForm build() => const LifeInsuranceForm(
-        invested: '',
-        interests: '',
-      );
+    invested: '',
+    interests: '',
+  );
 
   void invested({required String invested}) {
     state = state.copyWith(invested: invested);

@@ -8,13 +8,13 @@ part 'counter_strike_form_controller.g.dart';
 class CounterStrikeFormController extends _$CounterStrikeFormController {
   @override
   CounterStrikeForm build() => CounterStrikeForm(
-        wear: '',
-        currentValue: '',
-        boughtAt: DateTime.now(),
-        purchaseValue: '',
-        quantity: '1',
-        imageId: null,
-      );
+    wear: '',
+    currentValue: '',
+    boughtAt: DateTime.now(),
+    purchaseValue: '',
+    quantity: '1',
+    imageId: null,
+  );
 
   void wear({String? wear}) {
     state = state.copyWith(wear: wear);

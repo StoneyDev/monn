@@ -7,11 +7,11 @@ part 'reit_form_controller.g.dart';
 class ReitFormController extends _$ReitFormController {
   @override
   ReitForm build() => ReitForm(
-        reitName: '',
-        boughtOn: DateTime.now(),
-        price: '',
-        shares: '',
-      );
+    reitName: '',
+    boughtOn: DateTime.now(),
+    price: '',
+    shares: '',
+  );
 
   void reitName(String reitName) {
     state = state.copyWith(reitName: reitName);

@@ -40,9 +40,9 @@ class PayoutReport extends StatelessWidget {
                 netProfit.simpleCurrency(locale),
                 textAlign: TextAlign.right,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.lightGray,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: AppColors.lightGray,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             MonnLine(
@@ -52,9 +52,9 @@ class PayoutReport extends StatelessWidget {
                 (-tax).simpleCurrency(locale),
                 textAlign: TextAlign.right,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.lightGray,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: AppColors.lightGray,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             MonnLine(
@@ -64,9 +64,9 @@ class PayoutReport extends StatelessWidget {
                 loss.simpleCurrency(locale),
                 textAlign: TextAlign.right,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.lightGray,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: AppColors.lightGray,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

@@ -53,15 +53,16 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
           child: Text(
             widget.label,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: AppColors.lightGray,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         TextFormField(
           controller: _controller,
-          autovalidateMode:
-              widget.required ? AutovalidateMode.onUserInteraction : null,
+          autovalidateMode: widget.required
+              ? AutovalidateMode.onUserInteraction
+              : null,
           readOnly: true,
           decoration: GlobalThemeData.inputDecoration(context),
           onTap: () async {
@@ -91,8 +92,8 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
                 }
               : null,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w900,
-              ),
+            fontWeight: FontWeight.w900,
+          ),
         ),
       ],
     );

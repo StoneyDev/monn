@@ -22,9 +22,9 @@ class MonnError extends StatelessWidget {
               'Oh no !',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.red50,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: AppColors.red50,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               message,

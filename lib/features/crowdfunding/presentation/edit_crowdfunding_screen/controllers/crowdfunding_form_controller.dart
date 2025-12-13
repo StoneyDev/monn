@@ -8,10 +8,10 @@ part 'crowdfunding_form_controller.g.dart';
 class CrowdfundingFormController extends _$CrowdfundingFormController {
   @override
   CrowdfundingForm build() => CrowdfundingForm(
-        platformName: 'LPB',
-        receivedAt: DateTime.now(),
-        brutProfit: '',
-      );
+    platformName: 'LPB',
+    receivedAt: DateTime.now(),
+    brutProfit: '',
+  );
 
   void id({int? id}) {
     // Maintains the value until next page is loaded

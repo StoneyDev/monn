@@ -22,55 +22,57 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
   @override
   Widget build(BuildContext context) {
     final peaData = ref.watch(getPeaProvider);
-    final canSubmit = ref.watch(peaFormControllerProvider).isDirty &&
+    final canSubmit =
+        ref.watch(peaFormControllerProvider).isDirty &&
         (formKey.currentState?.validate() ?? false);
 
     return Scaffold(
       appBar: const MonnAppBar(),
       body: switch (peaData) {
         AsyncData(:final value) => SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: formKey,
-              child: Column(
-                spacing: 16,
-                children: [
-                  MonnFieldNumber<int>(
-                    label: context.tr('common.number_equities'),
-                    required: true,
-                    initialValue: (value?.equity ?? '').toString(),
-                    onChanged: (newEquity) =>
-                        ref.read(peaFormControllerProvider.notifier).equity(
-                              equity: newEquity,
-                              initial: value?.equity,
-                            ),
-                  ),
-                  MonnFieldNumber<double>(
-                    label: context.tr('common.purchase_price'),
-                    required: true,
-                    initialValue: (value?.costAverage ?? '').toString(),
-                    onChanged: (newCostAverage) => ref
-                        .read(peaFormControllerProvider.notifier)
-                        .costAverage(
-                          costAverage: newCostAverage,
-                          initial: value?.costAverage,
-                        ),
-                  ),
-                ],
-              ),
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: formKey,
+            child: Column(
+              spacing: 16,
+              children: [
+                MonnFieldNumber<int>(
+                  label: context.tr('common.number_equities'),
+                  required: true,
+                  initialValue: (value?.equity ?? '').toString(),
+                  onChanged: (newEquity) => ref
+                      .read(peaFormControllerProvider.notifier)
+                      .equity(
+                        equity: newEquity,
+                        initial: value?.equity,
+                      ),
+                ),
+                MonnFieldNumber<double>(
+                  label: context.tr('common.purchase_price'),
+                  required: true,
+                  initialValue: (value?.costAverage ?? '').toString(),
+                  onChanged: (newCostAverage) => ref
+                      .read(peaFormControllerProvider.notifier)
+                      .costAverage(
+                        costAverage: newCostAverage,
+                        initial: value?.costAverage,
+                      ),
+                ),
+              ],
             ),
           ),
+        ),
         AsyncError(:final error) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: MonnError(message: '$error'),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: MonnError(message: '$error'),
           ),
+        ),
         _ => const Center(
-            child: RepaintBoundary(
-              child: CircularProgressIndicator(),
-            ),
-          )
+          child: RepaintBoundary(
+            child: CircularProgressIndicator(),
+          ),
+        ),
       },
       bottomNavigationBar: SafeArea(
         child: Padding(

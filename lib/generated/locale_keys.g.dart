@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const common_dividends = 'common.dividends';
   static const common_dividend = 'common.dividend';
   static const common_filter = 'common.filter';
@@ -53,7 +53,8 @@ abstract class  LocaleKeys {
   static const common_bought_on = 'common.bought_on';
   static const common_without_income_tax = 'common.without_income_tax';
   static const common_purchasing_tracking = 'common.purchasing_tracking';
-  static const common_price_and_purchase_date = 'common.price_and_purchase_date';
+  static const common_price_and_purchase_date =
+      'common.price_and_purchase_date';
   static const common_opening_account = 'common.opening_account';
   static const common_deletion_warning = 'common.deletion_warning';
   static const common_backup = 'common.backup';
@@ -96,12 +97,13 @@ abstract class  LocaleKeys {
   static const savings_reit = 'savings.reit';
   static const savings = 'savings';
   static const life_insurance = 'life_insurance';
-  static const filters_sort_by_start_amount_desc = 'filters.sort_by_start_amount_desc';
-  static const filters_sort_by_start_amount_asc = 'filters.sort_by_start_amount_asc';
+  static const filters_sort_by_start_amount_desc =
+      'filters.sort_by_start_amount_desc';
+  static const filters_sort_by_start_amount_asc =
+      'filters.sort_by_start_amount_asc';
   static const filters = 'filters';
   static const theme_mode_dark = 'theme_mode.dark';
   static const theme_mode_light = 'theme_mode.light';
   static const theme_mode_system = 'theme_mode.system';
   static const theme_mode = 'theme_mode';
-
 }
