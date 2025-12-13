@@ -46,6 +46,7 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16),
@@ -57,7 +58,6 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
                 ),
           ),
         ),
-        const SizedBox(height: 8),
         TextFormField(
           controller: _controller,
           autovalidateMode:

@@ -39,6 +39,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
         child: Form(
           key: formKey,
           child: Column(
+            spacing: 16,
             children: [
               MonnFieldText(
                 label: context.tr('common.savings_book_name'),
@@ -47,7 +48,6 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
                     .read(savingsBookFormControllerProvider.notifier)
                     .name(name: newName),
               ),
-              const SizedBox(height: 16),
               MonnFieldNumber<double>(
                 label: context.tr('common.start_amount'),
                 suffix: '€',

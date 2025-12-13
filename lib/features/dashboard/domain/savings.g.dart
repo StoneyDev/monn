@@ -104,6 +104,7 @@ const _SavingstypeEnumValueMap = {
   r'cryptocurrency': r'cryptocurrency',
   r'csKnives': r'csKnives',
   r'cash': r'cash',
+  r'lifeInsurance': r'lifeInsurance',
   r'pea': r'pea',
   r'reit': r'reit',
 };
@@ -113,6 +114,7 @@ const _SavingstypeValueEnumMap = {
   r'cryptocurrency': SavingsType.cryptocurrency,
   r'csKnives': SavingsType.csKnives,
   r'cash': SavingsType.cash,
+  r'lifeInsurance': SavingsType.lifeInsurance,
   r'pea': SavingsType.pea,
   r'reit': SavingsType.reit,
 };

@@ -45,13 +45,13 @@ class CryptoPageScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 32, left: 16, right: 16),
                 sliver: SliverToBoxAdapter(
                   child: Row(
+                    spacing: 8,
                     children: [
                       Image(
                         image: crypto.type.logo(),
                         height: 40,
                         width: 40,
                       ),
-                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           marketValue.simpleCurrency('en'),

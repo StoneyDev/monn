@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 
@@ -10,6 +11,7 @@ import 'package:monn/features/savings_book/data/savings_book_repository.dart';
   MockSpec<CrowdfundingRepository>(),
   MockSpec<SavingsRepository>(),
   MockSpec<CryptocurrencyRepository>(),
+  MockSpec<LifeInsuranceRepository>(),
   MockSpec<ReitRepository>(),
   MockSpec<SavingsBookRepository>(),
 ])

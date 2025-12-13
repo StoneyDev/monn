@@ -23,6 +23,7 @@ class MonnFieldText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16),
@@ -34,7 +35,6 @@ class MonnFieldText extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: 8),
         TextFormField(
           initialValue: initialValue,
           autovalidateMode:

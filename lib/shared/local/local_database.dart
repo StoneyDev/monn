@@ -4,6 +4,7 @@ import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/pea/domain/pea.dart';
 import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/savings_book/domain/savings_book.dart';
@@ -26,6 +27,7 @@ class LocalDatabase {
         CounterStrikeSchema,
         PeaSchema,
         CashSchema,
+        LifeInsuranceSchema,
       ],
       directory: dir.path,
     );

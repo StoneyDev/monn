@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Mandatory Rules
+
+1. **BEFORE any bug fix** → use `superpowers:systematic-debugging`
+2. **BEFORE any new code** → use `superpowers:brainstorming`
+3. **KISS** → ask "what is the simplest solution?" before coding
+4. **Centralize** → ask "where is the right place for this logic?" before adding code
+5. **Spacing** → use `spacing` on Column/Row instead of `SizedBox(height/width: ...)`
+
 ## Project Overview
 
 Monn is a personal investment tracking and analysis Flutter app that tracks multiple investment types: cryptocurrency, PEA (French stock account), REIT, crowdfunding, cash, Counter-Strike items, and savings books.
@@ -429,6 +437,66 @@ void main() {
 ```
 
 Test utilities in `test/test.dart` and `test/utils.dart`.
+
+## Adding a New Investment Type
+
+When adding a new investment type (e.g., `SavingsType.newType`), update these files:
+
+### Required Changes
+
+1. **Add enum value** in `lib/features/dashboard/domain/savings.dart`:
+```dart
+enum SavingsType {
+  // ... existing types
+  newType,  // Add here
+}
+```
+
+2. **Add to net worth calculation** in `lib/features/dashboard/domain/net_worth_provider.dart`:
+```dart
+// The exhaustive switch will show a compiler error until you add:
+SavingsType.newType => ref
+    .watch(watchPayoutReportNewTypeProvider)
+    .value
+    ?.finalAmount ?? 0,
+```
+
+3. **Add UI mappings** in `lib/shared/extensions/enum_ui.dart`:
+```dart
+// In getReport() switch:
+SavingsType.newType => ref.watch(
+  watchPayoutReportNewTypeProvider.select(
+    (value) => value.value?.finalAmount ?? 0,
+  ),
+),
+
+// In route() switch:
+SavingsType.newType => const NewTypeScreen(),
+
+// In icon() switch:
+SavingsType.newType => MonnAssets.images.icon.newIcon.provider(),
+```
+
+4. **Add Isar schema** in `lib/shared/local/local_database.dart`:
+```dart
+_database = await Isar.open([
+  // ... existing schemas
+  NewTypeSchema,
+], directory: dir.path);
+```
+
+5. **Add translations** in `assets/translations/en.json` and `fr.json`:
+```json
+"savings": {
+  "new_type": "New Type"
+}
+```
+
+### Compiler Safety
+
+The exhaustive `switch` statements on `SavingsType` will produce compile-time errors if you forget to handle the new type in:
+- `net_worth_provider.dart` (net worth calculation)
+- `enum_ui.dart` (getReport, route, icon methods)
 
 ## Important Conventions
 

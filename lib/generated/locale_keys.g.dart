@@ -47,6 +47,7 @@ abstract class  LocaleKeys {
   static const common_crypto_amount = 'common.crypto_amount';
   static const common_old_value = 'common.old_value';
   static const common_total_interest = 'common.total_interest';
+  static const common_interests = 'common.interests';
   static const common_receive_at = 'common.receive_at';
   static const common_sold_on = 'common.sold_on';
   static const common_bought_on = 'common.bought_on';
@@ -67,6 +68,8 @@ abstract class  LocaleKeys {
   static const common_annual_performance = 'common.annual_performance';
   static const common_per_year = 'common.per_year';
   static const common_api_error = 'common.api_error';
+  static const common_replace_value = 'common.replace_value';
+  static const common_new_total = 'common.new_total';
   static const common = 'common';
   static const button_close = 'button.close';
   static const button_ok = 'button.ok';
@@ -87,10 +90,12 @@ abstract class  LocaleKeys {
   static const savings_crowdfunding = 'savings.crowdfunding';
   static const savings_cryptocurrency = 'savings.cryptocurrency';
   static const savings_cs_knives = 'savings.cs_knives';
+  static const savings_life_insurance = 'savings.life_insurance';
   static const savings_pea = 'savings.pea';
   static const savings_cash = 'savings.cash';
   static const savings_reit = 'savings.reit';
   static const savings = 'savings';
+  static const life_insurance = 'life_insurance';
   static const filters_sort_by_start_amount_desc = 'filters.sort_by_start_amount_desc';
   static const filters_sort_by_start_amount_asc = 'filters.sort_by_start_amount_asc';
   static const filters = 'filters';

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
@@ -103,13 +104,13 @@ class DashboardScreen extends ConsumerWidget {
                   return MonnCard(
                     onTap: () => context.push(item.type.route()),
                     child: Row(
+                      spacing: 16,
                       children: [
                         Image(
                           image: item.type.icon(),
                           height: 48,
                           width: 48,
                         ),
-                        const SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,9 +169,7 @@ class _ResizingHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final report = ref.watch(
-      watchPayoutReportSavingsProvider.select((data) => data.value ?? 0),
-    );
+    final total = ref.watch(watchTotalNetWorthProvider);
 
     return SliverResizingHeader(
       maxExtentPrototype: SizedBox(
@@ -204,7 +203,7 @@ class _ResizingHeader extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  report.simpleCurrency(locale),
+                  total.simpleCurrency(locale),
                   style: TextStyle.lerp(
                     Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.w900,

@@ -60,6 +60,7 @@ class CodegenLoader extends AssetLoader{
     "crypto_amount": "Crypto amount",
     "old_value": "Old value",
     "total_interest": "Total interest",
+    "interests": "Interests",
     "receive_at": "Receive at",
     "sold_on": "Sold on",
     "bought_on": "Bought on {}",
@@ -79,7 +80,9 @@ class CodegenLoader extends AssetLoader{
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
     "per_year": "{}% per year",
-    "api_error": "API error"
+    "api_error": "API error",
+    "replace_value": "Replace value",
+    "new_total": "New total"
   },
   "button": {
     "close": "Close",
@@ -105,10 +108,12 @@ class CodegenLoader extends AssetLoader{
     "crowdfunding": "Real estate crowdfunding",
     "cryptocurrency": "Cryptocurrency",
     "cs_knives": "CS knives",
+    "life_insurance": "Life insurance",
     "pea": "PEA",
     "cash": "Cash",
     "reit": "Reit"
   },
+  "life_insurance": {},
   "filters": {
     "sort_by_start_amount_desc": "Initial amount (descending)",
     "sort_by_start_amount_asc": "Initial amount (Ascending)"
@@ -165,6 +170,7 @@ static const Map<String,dynamic> _fr = {
     "crypto_amount": "Montant en crypto",
     "old_value": "Ancienne valeur",
     "total_interest": "Intérêts totaux",
+    "interests": "Intérêts",
     "receive_at": "Reçu le",
     "sold_on": "Vendu le",
     "bought_on": "Acheté le {}",
@@ -184,7 +190,9 @@ static const Map<String,dynamic> _fr = {
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
     "per_year": "{}% par an",
-    "api_error": "Erreur API"
+    "api_error": "Erreur API",
+    "replace_value": "Remplacer la valeur",
+    "new_total": "Nouveau total"
   },
   "button": {
     "close": "Fermer",
@@ -210,10 +218,12 @@ static const Map<String,dynamic> _fr = {
     "crowdfunding": "Crowdfunding Immobilier",
     "cryptocurrency": "Cryptomonnaie",
     "cs_knives": "Couteaux CS",
+    "life_insurance": "Assurance vie",
     "pea": "PEA",
     "cash": "Liquide",
     "reit": "SCPI"
   },
+  "life_insurance": {},
   "filters": {
     "sort_by_start_amount_desc": "Montant initial (Décroissant)",
     "sort_by_start_amount_asc": "Montant initial (Croissant)"

@@ -44,6 +44,7 @@
     "crypto_amount": "Montant en crypto",
     "old_value": "Ancienne valeur",
     "total_interest": "Intérêts totaux",
+    "interests": "Intérêts",
     "receive_at": "Reçu le",
     "sold_on": "Vendu le",
     "bought_on": "Acheté le {}",
@@ -63,7 +64,9 @@
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
     "per_year": "{}% par an",
-    "api_error": "Erreur API"
+    "api_error": "Erreur API",
+    "replace_value": "Remplacer la valeur",
+    "new_total": "Nouveau total"
   },
   "button": {
     "close": "Fermer",
@@ -89,10 +92,12 @@
     "crowdfunding": "Crowdfunding Immobilier",
     "cryptocurrency": "Cryptomonnaie",
     "cs_knives": "Couteaux CS",
+    "life_insurance": "Assurance vie",
     "pea": "PEA",
     "cash": "Liquide",
     "reit": "SCPI"
   },
+  "life_insurance": {},
   "filters": {
     "sort_by_start_amount_desc": "Montant initial (Décroissant)",
     "sort_by_start_amount_asc": "Montant initial (Croissant)"

@@ -200,37 +200,3 @@ final class GetSavingsFamily extends $Family
   @override
   String toString() => r'getSavingsProvider';
 }
-
-@ProviderFor(watchPayoutReportSavings)
-const watchPayoutReportSavingsProvider = WatchPayoutReportSavingsProvider._();
-
-final class WatchPayoutReportSavingsProvider
-    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
-    with $FutureModifier<double>, $FutureProvider<double> {
-  const WatchPayoutReportSavingsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'watchPayoutReportSavingsProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$watchPayoutReportSavingsHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<double> create(Ref ref) {
-    return watchPayoutReportSavings(ref);
-  }
-}
-
-String _$watchPayoutReportSavingsHash() =>
-    r'264ee4bf0fbda51f8f7dbd89b30894079149ee9c';

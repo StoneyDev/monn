@@ -32,31 +32,32 @@ class MonnFieldNumber<T> extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      spacing: 8,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Text(
             label,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.lightGray,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: AppColors.lightGray,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
-        const SizedBox(height: 8),
         TextFormField(
           initialValue: initialValue,
           autofocus: autofocus,
-          autovalidateMode:
-              required ? AutovalidateMode.onUserInteraction : null,
+          autovalidateMode: required
+              ? AutovalidateMode.onUserInteraction
+              : null,
           textInputAction: textInputAction,
           decoration: GlobalThemeData.inputDecoration(context).copyWith(
             suffix: suffix != null
                 ? Text(
                     suffix!,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
+                      fontWeight: FontWeight.w900,
+                    ),
                   )
                 : null,
           ),
@@ -83,8 +84,8 @@ class MonnFieldNumber<T> extends ConsumerWidget {
               : null,
           onChanged: onChanged,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w900,
-              ),
+            fontWeight: FontWeight.w900,
+          ),
         ),
       ],
     );

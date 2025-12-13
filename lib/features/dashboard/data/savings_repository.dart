@@ -1,14 +1,5 @@
 import 'package:isar_community/isar.dart';
-import 'package:monn/features/cash/data/cash_repository.dart';
-import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
-import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
-import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
-import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/pea/data/etf_repository.dart';
-import 'package:monn/features/pea/data/pea_repository.dart';
-import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -59,54 +50,4 @@ Stream<List<Savings>> watchSavings(
 Future<Savings?> getSavings(Ref ref, {required SavingsType type}) {
   final repository = ref.watch(savingsRepositoryProvider);
   return repository.getSavings(type);
-}
-
-@riverpod
-Future<double> watchPayoutReportSavings(Ref ref) async {
-  // Update data on app startup
-  ref
-    ..invalidate(getEtfPriceMarketProvider)
-    ..invalidate(getCryptoPriceMarketProvider);
-
-  final report = await Future.wait([
-    ref.watch(
-      watchPayoutReportCrowdfundingProvider.selectAsync(
-        (crowdfunding) => crowdfunding.finalAmount,
-      ),
-    ),
-    ref.watch(
-      watchPayoutReportCryptoProvider.selectAsync(
-        (crypto) => crypto.finalAmount,
-      ),
-    ),
-    ref.watch(
-      watchPayoutReportSavingsBookProvider.selectAsync(
-        (savingsBook) => savingsBook.finalAmount,
-      ),
-    ),
-    ref.watch(
-      watchPayoutReportReitProvider.selectAsync(
-        (reit) => reit.finalAmount,
-      ),
-    ),
-    ref.watch(
-      getPayoutReportPeaProvider.selectAsync(
-        (pea) => pea.finalAmount,
-      ),
-    ),
-    ref.watch(
-      watchPayoutReportCounterStrikeProvider.selectAsync(
-        (cs) => cs.finalAmount,
-      ),
-    ),
-    ref.watch(
-      watchPayoutReportCashProvider.selectAsync(
-        (cash) => cash.finalAmount,
-      ),
-    ),
-  ]);
-
-  final total = report.fold<double>(0, (total, value) => total + value);
-
-  return total;
 }

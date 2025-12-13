@@ -166,9 +166,9 @@ class _RefundTransaction extends ConsumerWidget {
         await context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
       },
       child: Row(
+        spacing: 16,
         children: [
           MonnUpDown(value: crowdfunding.brutProfit),
-          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

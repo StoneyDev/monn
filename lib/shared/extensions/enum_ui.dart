@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cash/data/cash_repository.dart';
@@ -13,6 +11,8 @@ import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/cryptocurrency_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
+import 'package:monn/features/life_insurance/presentation/life_insurance_screen/life_insurance_screen.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_screen/pea_screen.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
@@ -50,7 +50,11 @@ extension SavingsTypeUI on SavingsType {
         ),
       ),
       // SavingsType.cto => 0,
-      // SavingsType.lifeInsurance => 0,
+      SavingsType.lifeInsurance => ref.watch(
+        watchPayoutReportLifeInsuranceProvider.select(
+          (value) => value.value?.finalAmount ?? 0,
+        ),
+      ),
       SavingsType.pea => ref.watch(
         getPayoutReportPeaProvider.select(
           (value) => value.value?.finalAmount ?? 0,
@@ -73,7 +77,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.csKnives => const CounterStrikeScreen(),
       SavingsType.cash => const CashScreen(),
       // SavingsType.cto => const MonnWip(),
-      // SavingsType.lifeInsurance => const MonnWip(),
+      SavingsType.lifeInsurance => const LifeInsuranceScreen(),
       SavingsType.pea => const PeaScreen(),
       SavingsType.reit => const ReitScreen(),
       // SavingsType.rip => const MonnWip(),
@@ -88,7 +92,7 @@ extension SavingsTypeUI on SavingsType {
       SavingsType.csKnives => MonnAssets.images.icon.crown.provider(),
       SavingsType.cash => MonnAssets.images.icon.money.provider(),
       // SavingsType.cto => MonnAssets.images.icon.bag.provider(),
-      // SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
+      SavingsType.lifeInsurance => MonnAssets.images.icon.umbrella.provider(),
       SavingsType.pea => MonnAssets.images.icon.bag.provider(),
       SavingsType.reit => MonnAssets.images.icon.folder.provider(),
       // SavingsType.rip => MonnAssets.images.icon.calendar.provider(),

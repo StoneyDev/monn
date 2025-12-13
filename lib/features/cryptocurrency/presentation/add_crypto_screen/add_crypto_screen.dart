@@ -33,6 +33,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
         child: Form(
           key: formKey,
           child: Column(
+            spacing: 16,
             children: [
               MonnFieldNumber<double>(
                 label: context.tr('common.crypto_amount'),
@@ -42,7 +43,6 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
                     .read(cryptoFormControllerProvider.notifier)
                     .amount(amount: newAmount),
               ),
-              const SizedBox(height: 16),
               Consumer(
                 builder: (_, ref, _) {
                   final cryptoAmount =

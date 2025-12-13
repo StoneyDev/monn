@@ -1,20 +1,6 @@
-// import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar_community/isar.dart';
 
-// part 'savings.freezed.dart';
 part 'savings.g.dart';
-
-// @freezed
-// abstract class SavingsEntity with _$SavingsEntity {
-//   const factory SavingsEntity({
-//     @Enumerated(EnumType.name) required SavingsType type,
-//     double? startAmount,
-//     @Default(Isar.autoIncrement) Id id,
-//   }) = _SavingsEntity;
-
-//   @override
-//   Id get id;
-// }
 
 @collection
 class Savings {
@@ -30,11 +16,11 @@ enum SavingsType {
   cryptocurrency,
   csKnives,
   cash,
-  // cto('CTO'),
-  // lifeInsurance('Assurance-vie'),
+  // cto,
+  lifeInsurance,
   pea,
   reit,
-  // rip('PER')
+  // rip
 }
 
 enum SavingsFilter {
