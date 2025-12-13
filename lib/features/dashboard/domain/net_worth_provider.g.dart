@@ -49,4 +49,4 @@ final class WatchTotalNetWorthProvider
 }
 
 String _$watchTotalNetWorthHash() =>
-    r'36cd702e3ea48daeb8bcc017da96893a2bdee45b';
+    r'd7a816493b79a2615c41961ba6c0cf7efe71df8e';

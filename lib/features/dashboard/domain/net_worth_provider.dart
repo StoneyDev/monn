@@ -5,6 +5,7 @@ import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
+import 'package:monn/features/per/data/per_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -39,6 +40,8 @@ double watchTotalNetWorth(Ref ref) => SavingsType.values
               0,
         SavingsType.pea =>
           ref.watch(getPayoutReportPeaProvider).value?.finalAmount ?? 0,
+        SavingsType.per =>
+          ref.watch(watchPayoutReportPerProvider).value?.finalAmount ?? 0,
         SavingsType.reit =>
           ref.watch(watchPayoutReportReitProvider).value?.finalAmount ?? 0,
       },

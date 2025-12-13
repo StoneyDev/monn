@@ -106,6 +106,7 @@ const _SavingstypeEnumValueMap = {
   r'cash': r'cash',
   r'lifeInsurance': r'lifeInsurance',
   r'pea': r'pea',
+  r'per': r'per',
   r'reit': r'reit',
 };
 const _SavingstypeValueEnumMap = {
@@ -116,6 +117,7 @@ const _SavingstypeValueEnumMap = {
   r'cash': SavingsType.cash,
   r'lifeInsurance': SavingsType.lifeInsurance,
   r'pea': SavingsType.pea,
+  r'per': SavingsType.per,
   r'reit': SavingsType.reit,
 };
 

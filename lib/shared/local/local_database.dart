@@ -6,6 +6,7 @@ import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/pea/domain/pea.dart';
+import 'package:monn/features/per/domain/per.dart';
 import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/savings_book/domain/savings_book.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +27,7 @@ class LocalDatabase {
         SavingsBookSchema,
         CounterStrikeSchema,
         PeaSchema,
+        PerSchema,
         CashSchema,
         LifeInsuranceSchema,
       ],

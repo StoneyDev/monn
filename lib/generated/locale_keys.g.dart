@@ -93,6 +93,7 @@ abstract class LocaleKeys {
   static const savings_cs_knives = 'savings.cs_knives';
   static const savings_life_insurance = 'savings.life_insurance';
   static const savings_pea = 'savings.pea';
+  static const savings_per = 'savings.per';
   static const savings_cash = 'savings.cash';
   static const savings_reit = 'savings.reit';
   static const savings = 'savings';

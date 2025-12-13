@@ -19,8 +19,8 @@ enum SavingsType {
   // cto,
   lifeInsurance,
   pea,
+  per,
   reit,
-  // rip
 }
 
 enum SavingsFilter {
