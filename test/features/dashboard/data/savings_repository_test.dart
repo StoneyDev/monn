@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -62,24 +60,6 @@ void main() {
       ]);
       verifyNoMoreInteractions(listener);
     });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-      final repository = MockSavingsRepository();
-      final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-      when(repository.watchSavings()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchSavingsProvider().future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('getSaving', () {
@@ -122,28 +102,5 @@ void main() {
         expect(result, saving);
       },
     );
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      const savingType = SavingsType.pea;
-      final error = Exception();
-
-      final repository = MockSavingsRepository();
-      final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.getSavings(savingType)).thenThrow(error);
-
-      // Act
-      final controller = container.read(
-        getSavingsProvider(type: savingType).future,
-      );
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 }

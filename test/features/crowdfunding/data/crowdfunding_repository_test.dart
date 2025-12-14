@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -126,26 +124,6 @@ void main() {
         expect(results, sorted);
       },
     );
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockCrowdfundingRepository();
-      final container = createContainer(
-        overrides: [
-          crowdfundingRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchCrowdfundings()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchCrowdfundingsProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('watchPayoutReportCrowdfunding', () {

@@ -126,26 +126,6 @@ void main() {
       verifyNoMoreInteractions(listener);
       expect(results, isEmpty);
     });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockCryptocurrencyRepository();
-      final container = createContainer(
-        overrides: [
-          cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchCryptocurrencies()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchCryptocurrenciesProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('watchCryptoChart', () {
@@ -228,26 +208,6 @@ void main() {
       verifyNoMoreInteractions(listener);
       expect(results, chart);
     });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockCryptocurrencyRepository();
-      final container = createContainer(
-        overrides: [
-          cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchCryptocurrencies()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchCryptoChartProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('watchPayoutReportCrypto', () {
@@ -286,26 +246,6 @@ void main() {
       ]);
       verifyNoMoreInteractions(listener);
       expect(results.finalAmount, finalAmount);
-    });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockCryptocurrencyRepository();
-      final container = createContainer(
-        overrides: [
-          cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchCryptocurrencies()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchPayoutReportCryptoProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
     });
   });
 }

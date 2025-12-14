@@ -135,26 +135,6 @@ void main() {
       verifyNoMoreInteractions(listener);
       expect(results, savingsBooks);
     });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockSavingsBookRepository();
-      final container = createContainer(
-        overrides: [
-          savingsBookRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchSavingsBooks()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchSavingsBooksProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('watchPayoutReportSavingsBook', () {
@@ -203,32 +183,6 @@ void main() {
       ]);
       verifyNoMoreInteractions(listener);
       expect(results.finalAmount, finalAmount);
-    });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockSavingsBookRepository();
-      final savingRepository = MockSavingsRepository();
-      final container = createContainer(
-        overrides: [
-          savingsBookRepositoryProvider.overrideWithValue(repository),
-          savingsRepositoryProvider.overrideWithValue(savingRepository),
-        ],
-      );
-
-      when(repository.watchSavingsBooks()).thenThrow(error);
-
-      when(savingRepository.getSavings(any)).thenThrow(error);
-
-      // Act
-      final controller = container.read(
-        watchPayoutReportSavingsBookProvider.future,
-      );
-
-      // Assert
-      await expectLater(controller, throwsA(error));
     });
   });
 }

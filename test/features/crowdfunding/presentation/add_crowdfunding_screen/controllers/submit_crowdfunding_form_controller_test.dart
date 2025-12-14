@@ -24,14 +24,6 @@ void main() {
           receivedAt: DateTime(2024, 01, 20),
         );
 
-        final crowdfunding = Crowdfunding()
-          ..platformName = formData.platformName
-          ..brutProfit = double.parse(formData.brutProfit)
-          ..receivedAt = formData.receivedAt
-          ..taxPercentage = double.parse(formData.taxPercentage!)
-          ..taxProfit = 30
-          ..netProfit = 70;
-
         final repository = MockCrowdfundingRepository();
         final container = createContainer(
           overrides: [
@@ -54,13 +46,14 @@ void main() {
 
         // Assert
         expect(result, true);
-        verify(
-          repository.editCrowdfunding(
-            argThat(
-              predicate<Crowdfunding>((predic) => predic == crowdfunding),
-            ),
-          ),
-        );
+        final captured = verify(repository.editCrowdfunding(captureAny))
+            .captured
+            .single as Crowdfunding;
+        expect(captured.platformName, formData.platformName);
+        expect(captured.brutProfit, 100);
+        expect(captured.taxPercentage, 30);
+        expect(captured.taxProfit, 30);
+        expect(captured.netProfit, 70);
       },
     );
 
@@ -74,11 +67,6 @@ void main() {
           receivedAt: DateTime(2024, 01, 20),
         );
 
-        final crowdfunding = Crowdfunding()
-          ..platformName = formData.platformName
-          ..brutProfit = double.parse(formData.brutProfit)
-          ..receivedAt = formData.receivedAt;
-
         final repository = MockCrowdfundingRepository();
         final container = createContainer(
           overrides: [
@@ -101,13 +89,13 @@ void main() {
 
         // Assert
         expect(result, true);
-        verify(
-          repository.editCrowdfunding(
-            argThat(
-              predicate<Crowdfunding>((predict) => predict == crowdfunding),
-            ),
-          ),
-        );
+        final captured = verify(repository.editCrowdfunding(captureAny))
+            .captured
+            .single as Crowdfunding;
+        expect(captured.platformName, formData.platformName);
+        expect(captured.brutProfit, -1999);
+        expect(captured.taxProfit, isNull);
+        expect(captured.netProfit, isNull);
       },
     );
 

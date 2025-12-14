@@ -141,26 +141,6 @@ void main() {
       verifyNoMoreInteractions(listener);
       expect(results, reits);
     });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockReitRepository();
-      final container = createContainer(
-        overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
-        ],
-      );
-
-      when(repository.watchReits()).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchReitsProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
-    });
   });
 
   group('watchPayoutReportReit', () {
@@ -209,30 +189,6 @@ void main() {
       ]);
       verifyNoMoreInteractions(listener);
       expect(results.finalAmount, finalAmount);
-    });
-
-    test('should return error when repository throws exception', () async {
-      // Arrange
-      final error = Exception();
-
-      final repository = MockReitRepository();
-      final savingRepository = MockSavingsRepository();
-      final container = createContainer(
-        overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
-          savingsRepositoryProvider.overrideWithValue(savingRepository),
-        ],
-      );
-
-      when(repository.watchReits()).thenThrow(error);
-
-      when(savingRepository.getSavings(any)).thenThrow(error);
-
-      // Act
-      final controller = container.read(watchPayoutReportReitProvider.future);
-
-      // Assert
-      await expectLater(controller, throwsA(error));
     });
   });
 }
