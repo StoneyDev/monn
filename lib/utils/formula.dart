@@ -4,7 +4,8 @@ double totalReturnRate({
   required double initialValue,
   required double finalValue,
 }) {
-  return ((initialValue - finalValue) / initialValue) * 100;
+  if (initialValue == 0) return 0;
+  return ((finalValue - initialValue) / initialValue) * 100;
 }
 
 double compoundAnnualGrowthRate({
@@ -12,5 +13,6 @@ double compoundAnnualGrowthRate({
   required double finalValue,
   required double duration,
 }) {
-  return pow(finalValue - initialValue, 1 / duration) - 1;
+  if (initialValue <= 0 || finalValue <= 0 || duration <= 0) return 0;
+  return (pow(finalValue / initialValue, 1 / duration) - 1) * 100;
 }
