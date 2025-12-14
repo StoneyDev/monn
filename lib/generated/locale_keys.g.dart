@@ -98,6 +98,26 @@ abstract class LocaleKeys {
   static const savings_reit = 'savings.reit';
   static const savings = 'savings';
   static const life_insurance = 'life_insurance';
+  static const home_savings = 'home.savings';
+  static const home_freelance = 'home.freelance';
+  static const home = 'home';
+  static const freelance_net_imposable = 'freelance.net_imposable';
+  static const freelance_total_charges = 'freelance.total_charges';
+  static const freelance_calculation = 'freelance.calculation';
+  static const freelance_charges = 'freelance.charges';
+  static const freelance_social_fiscal = 'freelance.social_fiscal';
+  static const freelance_income_tax_title = 'freelance.income_tax_title';
+  static const freelance_estimated_deduction = 'freelance.estimated_deduction';
+  static const freelance_after_abatement = 'freelance.after_abatement';
+  static const freelance_gross_revenue = 'freelance.gross_revenue';
+  static const freelance_before_abatement = 'freelance.before_abatement';
+  static const freelance_abatement_title = 'freelance.abatement_title';
+  static const freelance_abatement_rate = 'freelance.abatement_rate';
+  static const freelance_urssaf_label = 'freelance.urssaf_label';
+  static const freelance_urssaf_rate = 'freelance.urssaf_rate';
+  static const freelance_remaining = 'freelance.remaining';
+  static const freelance_deducted = 'freelance.deducted';
+  static const freelance = 'freelance';
   static const filters_sort_by_start_amount_desc =
       'filters.sort_by_start_amount_desc';
   static const filters_sort_by_start_amount_asc =

@@ -205,7 +205,7 @@ final class WatchCryptoChartProvider
   }
 }
 
-String _$watchCryptoChartHash() => r'4997850470e5a362eee30787cca53562f976496d';
+String _$watchCryptoChartHash() => r'23512b99ef663c37f890a7a5854709e3b4ce36b7';
 
 @ProviderFor(watchPayoutReportCrypto)
 const watchPayoutReportCryptoProvider = WatchPayoutReportCryptoProvider._();

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
-import 'package:monn/utils/global_theme_data.dart';
 
-class MonnCard extends ConsumerStatefulWidget {
+class MonnCard extends StatefulWidget {
   const MonnCard({
     required this.child,
     this.padding = const EdgeInsets.all(16),
@@ -18,27 +15,18 @@ class MonnCard extends ConsumerStatefulWidget {
   final void Function()? onLongPress;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MonnCardState();
+  State<MonnCard> createState() => _MonnCardState();
 }
 
-class _MonnCardState extends ConsumerState<MonnCard> {
+class _MonnCardState extends State<MonnCard> {
   bool _isPressed = false;
-  Duration _duration = Durations.short2;
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(
-      themeSwitchControllerProvider,
-      (_, _) => _duration = Duration.zero,
-    );
-
     return GestureDetector(
       onLongPress: widget.onLongPress,
       onTapDown: widget.onTap != null
-          ? (_) => setState(() {
-              _isPressed = true;
-              _duration = Durations.short2;
-            })
+          ? (_) => setState(() => _isPressed = true)
           : null,
       onTapCancel: widget.onTap != null
           ? () => setState(() => _isPressed = false)
@@ -50,14 +38,17 @@ class _MonnCardState extends ConsumerState<MonnCard> {
             }
           : null,
       child: AnimatedScale(
-        duration: _duration,
+        duration: Durations.short2,
         scale: _isPressed ? 0.975 : 1.0,
         child: Container(
           padding: widget.padding,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             color: Theme.of(context).colorScheme.onPrimaryContainer,
-            boxShadow: GlobalThemeData.shadow,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outline,
+              width: 2,
+            ),
           ),
           child: widget.child,
         ),

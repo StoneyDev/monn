@@ -165,7 +165,7 @@ Since form and submit controllers use `keepAlive: true`, they must be manually i
 
 ```dart
 MonnButton(
-  text: context.tr('button.validate'),
+  text: context.tr(LocaleKeys.button_validate),
   onPressed: () async {
     if (!(formKey.currentState?.validate() ?? false)) return;
 
@@ -362,12 +362,7 @@ EasyLocalization(
 )
 ```
 
-**Usage:**
-```dart
-context.tr('common.net_worth')
-context.tr('common.per_year', args: ['5.2'])
-context.tr('savings.${SavingsType.cryptocurrency.name.toSnakeCase()}')
-```
+**CRITICAL:** Always use `context.tr(LocaleKeys.xxx)` - never `.tr()` on LocaleKeys.
 
 Translation files: `assets/translations/en.json`, `assets/translations/fr.json`
 

@@ -1,13 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:isar_community/isar.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
-import 'package:monn/utils/app_colors.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cryptocurrency_repository.g.dart';
@@ -76,9 +73,6 @@ Future<Cryptocurrency> getCryptocurrency(
 @riverpod
 Stream<Chart> watchCryptoChart(Ref ref) async* {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
-  final theme = await ref.watch(
-    themeSwitchControllerProvider.selectAsync((theme) => theme),
-  );
 
   await for (final results in repository.watchCryptocurrencies()) {
     final (totalCryptoValue, totalLog) = results.fold<(double, double)>(
@@ -89,26 +83,17 @@ Stream<Chart> watchCryptoChart(Ref ref) async* {
       ),
     );
 
-    final data = totalCryptoValue > 0
-        ? results.map((crypto) {
-            final logValue = log(
-              (crypto.totalCrypto * crypto.priceMarket) + 1.2,
-            );
-            final portion = (logValue * 100) / totalLog;
+    final data = results.map((crypto) {
+      final logValue = log(
+        (crypto.totalCrypto * crypto.priceMarket) + 1.2,
+      );
+      final portion = (logValue * 100) / totalLog;
 
-            return ChartData(
-              portion: double.parse(portion.toStringAsFixed(2)),
-              color: crypto.type.color,
-            );
-          }).toList()
-        : [
-            ChartData(
-              portion: 100,
-              color: theme == ThemeMode.dark
-                  ? AppColors.gray300
-                  : AppColors.white600,
-            ),
-          ];
+      return ChartData(
+        portion: double.parse(portion.toStringAsFixed(2)),
+        color: crypto.type.color,
+      );
+    }).toList();
 
     yield Chart(
       totalAmount: double.parse(totalCryptoValue.toStringAsFixed(2)),

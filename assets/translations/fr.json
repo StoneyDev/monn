@@ -99,6 +99,28 @@
     "reit": "SCPI"
   },
   "life_insurance": {},
+  "home": {
+    "savings": "Épargne",
+    "freelance": "Freelance"
+  },
+  "freelance": {
+    "net_imposable": "Net imposable",
+    "total_charges": "Total prélèvements",
+    "calculation": "Base fiscale",
+    "charges": "Prélèvements",
+    "social_fiscal": "Social + Fiscal",
+    "income_tax_title": "Impôt revenu",
+    "estimated_deduction": "Prélèvement estimé",
+    "after_abatement": "Après abattement",
+    "gross_revenue": "CA Brut",
+    "before_abatement": "Avant abattement",
+    "abatement_title": "Abattement",
+    "abatement_rate": "Forfaitaire 34%",
+    "urssaf_label": "URSSAF",
+    "urssaf_rate": "Cotisations 24,6%",
+    "remaining": "Restant",
+    "deducted": "Prélevé"
+  },
   "filters": {
     "sort_by_start_amount_desc": "Montant initial (Décroissant)",
     "sort_by_start_amount_asc": "Montant initial (Croissant)"

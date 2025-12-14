@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -155,18 +154,12 @@ void main() {
       () async {
         // Arrange
         const cryptocurrencies = <Cryptocurrency>[];
-        const chart = Chart(
-          totalAmount: 0,
-          data: [ChartData(portion: 100, color: AppColors.gray300)],
-        );
+        const chart = Chart(totalAmount: 0, data: []);
 
         final repository = MockCryptocurrencyRepository();
         final container = createContainer(
           overrides: [
             cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-            themeSwitchControllerProvider.overrideWith(
-              ThemeSwitchControllerMock.new,
-            ),
           ],
         );
 
@@ -210,9 +203,6 @@ void main() {
       final container = createContainer(
         overrides: [
           cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-          themeSwitchControllerProvider.overrideWith(
-            ThemeSwitchControllerMock.new,
-          ),
         ],
       );
 
@@ -247,9 +237,6 @@ void main() {
       final container = createContainer(
         overrides: [
           cryptocurrencyRepositoryProvider.overrideWithValue(repository),
-          themeSwitchControllerProvider.overrideWith(
-            ThemeSwitchControllerMock.new,
-          ),
         ],
       );
 

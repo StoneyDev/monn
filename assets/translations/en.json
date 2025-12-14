@@ -99,6 +99,28 @@
     "reit": "Reit"
   },
   "life_insurance": {},
+  "home": {
+    "savings": "Savings",
+    "freelance": "Freelance"
+  },
+  "freelance": {
+    "net_imposable": "Taxable Income",
+    "total_charges": "Total deductions",
+    "calculation": "Tax base",
+    "charges": "Deductions",
+    "social_fiscal": "Social + Fiscal",
+    "income_tax_title": "Income tax",
+    "estimated_deduction": "Estimated deduction",
+    "after_abatement": "After abatement",
+    "gross_revenue": "Gross Revenue",
+    "before_abatement": "Before abatement",
+    "abatement_title": "Abatement",
+    "abatement_rate": "Flat rate 34%",
+    "urssaf_label": "URSSAF",
+    "urssaf_rate": "Contributions 24.6%",
+    "remaining": "Remaining",
+    "deducted": "Deducted"
+  },
   "filters": {
     "sort_by_start_amount_desc": "Initial amount (descending)",
     "sort_by_start_amount_asc": "Initial amount (Ascending)"

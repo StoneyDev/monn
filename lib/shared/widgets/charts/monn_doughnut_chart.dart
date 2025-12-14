@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
+import 'package:monn/utils/app_colors.dart';
 
 class MonnDoughnutChart extends StatelessWidget {
   const MonnDoughnutChart({
@@ -18,6 +20,17 @@ class MonnDoughnutChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final emptyColor = context.isDarkTheme
+        ? AppColors.gray300
+        : AppColors.white600;
+
+    final displayChart = chart.data.isEmpty
+        ? Chart(
+            totalAmount: chart.totalAmount,
+            data: [ChartData(portion: 100, color: emptyColor)],
+          )
+        : chart;
+
     return GestureDetector(
       onLongPress: onLongPress,
       onTap: onTap,
@@ -25,7 +38,7 @@ class MonnDoughnutChart extends StatelessWidget {
         size: const Size.square(200),
         painter: _DonutPainter(
           textColor: Theme.of(context).colorScheme.primary,
-          chart: chart,
+          chart: displayChart,
         ),
       ),
     );

@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
-import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
-class MonnAppBar extends ConsumerWidget implements PreferredSizeWidget {
+class MonnAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MonnAppBar({this.title, this.actions, super.key});
 
   final String? title;
   final List<Widget>? actions;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.value),
-    );
-
+  Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
-      systemOverlayStyle: context.isDarkTheme(theme)
+      systemOverlayStyle: context.isDarkTheme
           ? GlobalThemeData.lightSystemUi
           : GlobalThemeData.darkSystemUi,
       automaticallyImplyLeading: false,

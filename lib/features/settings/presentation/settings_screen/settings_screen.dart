@@ -23,10 +23,10 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
     final theme = ref.watch(
-      themeSwitchControllerProvider.select((theme) => theme.value),
+      themeSwitchControllerProvider.select((state) => state.value),
     );
     final backupDate = ref.watch(
-      backupControllerProvider.select((theme) => theme.value),
+      backupControllerProvider.select((state) => state.value),
     );
 
     return Scaffold(
@@ -39,68 +39,55 @@ class SettingsScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
           children: [
-            InkWell(
-              onTap: () => WoltModalSheet.show<void>(
-                context: context,
-                pageListBuilder: (context) => [
-                  MonnBottomSheet.itemList(
-                    context: context,
-                    title: context.tr('common.theme'),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final item = ThemeMode.values[index];
-
-                          return RadioListTile<ThemeMode>(
-                            groupValue: theme,
-                            onChanged: (newTheme) async {
-                              await ref
-                                  .read(
-                                    themeSwitchControllerProvider.notifier,
-                                  )
-                                  .toggle(newTheme!);
-                              if (context.mounted) Navigator.pop(context);
-                            },
-                            value: item,
-                            title: Text(
-                              context.tr('theme_mode.${item.name}'),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          );
-                        },
-                        childCount: ThemeMode.values.length,
-                      ),
+            // Theme selector
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 24),
+                    child: iconoir.Sparks(
+                      color: Theme.of(context).colorScheme.primary,
                     ),
+                  ),
+                  Text(
+                    context.tr('common.theme'),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Spacer(),
+                  SegmentedButton<ThemeMode>(
+                    showSelectedIcon: false,
+                    selected: {theme ?? ThemeMode.system},
+                    onSelectionChanged: (selection) async {
+                      await ref
+                          .read(themeSwitchControllerProvider.notifier)
+                          .toggle(selection.first);
+                    },
+                    style: SegmentedButton.styleFrom(
+                      selectedBackgroundColor:
+                          Theme.of(context).colorScheme.primary,
+                      selectedForegroundColor:
+                          Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    segments: const [
+                      ButtonSegment(
+                        value: ThemeMode.light,
+                        icon: Icon(Icons.light_mode, size: 18),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.system,
+                        icon: Icon(Icons.contrast, size: 18),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.dark,
+                        icon: Icon(Icons.dark_mode, size: 18),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 24),
-                      child: iconoir.Sparks(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.tr('common.theme'),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        Text(
-                          context.tr('theme_mode.${theme?.name}'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ),
+            // Language selector
             InkWell(
               onTap: () => WoltModalSheet.show<void>(
                 context: context,
