@@ -44,6 +44,12 @@ void main() {
     test('should return false when repository throws error', () async {
       // Arrange
       final error = Exception();
+      final formData = ReitForm(
+        reitName: 'Random SCPI',
+        price: '200',
+        boughtOn: DateTime.now(),
+        shares: '10',
+      );
 
       final repository = MockReitRepository();
       final container = createContainer(
@@ -52,6 +58,7 @@ void main() {
         ],
       );
 
+      container.read(reitFormControllerProvider.notifier).state = formData;
       when(repository.addReit(any)).thenThrow(error);
 
       // Act

@@ -24,6 +24,8 @@ class SubmitReitFormController extends _$SubmitReitFormController {
       ),
     );
 
+    if (!ref.mounted) return false;
+
     return !state.hasError;
   }
 }

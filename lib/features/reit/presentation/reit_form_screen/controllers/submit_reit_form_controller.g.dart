@@ -34,7 +34,7 @@ final class SubmitReitFormControllerProvider
 }
 
 String _$submitReitFormControllerHash() =>
-    r'13c6d8e56f0a76947df37fdd41517cad980d2a6f';
+    r'0b032f449f9eeeabbacfde98a83a10f2b635204a';
 
 abstract class _$SubmitReitFormController extends $AsyncNotifier<void> {
   FutureOr<void> build();

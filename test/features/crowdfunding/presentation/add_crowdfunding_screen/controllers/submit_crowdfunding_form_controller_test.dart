@@ -46,9 +46,9 @@ void main() {
 
         // Assert
         expect(result, true);
-        final captured = verify(repository.editCrowdfunding(captureAny))
-            .captured
-            .single as Crowdfunding;
+        final captured =
+            verify(repository.editCrowdfunding(captureAny)).captured.single
+                as Crowdfunding;
         expect(captured.platformName, formData.platformName);
         expect(captured.brutProfit, 100);
         expect(captured.taxPercentage, 30);
@@ -89,9 +89,9 @@ void main() {
 
         // Assert
         expect(result, true);
-        final captured = verify(repository.editCrowdfunding(captureAny))
-            .captured
-            .single as Crowdfunding;
+        final captured =
+            verify(repository.editCrowdfunding(captureAny)).captured.single
+                as Crowdfunding;
         expect(captured.platformName, formData.platformName);
         expect(captured.brutProfit, -1999);
         expect(captured.taxProfit, isNull);

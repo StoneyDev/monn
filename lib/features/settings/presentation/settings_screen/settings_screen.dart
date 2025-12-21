@@ -64,10 +64,12 @@ class SettingsScreen extends ConsumerWidget {
                           .toggle(selection.first);
                     },
                     style: SegmentedButton.styleFrom(
-                      selectedBackgroundColor:
-                          Theme.of(context).colorScheme.primary,
-                      selectedForegroundColor:
-                          Theme.of(context).colorScheme.onPrimary,
+                      selectedBackgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.primary,
+                      selectedForegroundColor: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary,
                     ),
                     segments: const [
                       ButtonSegment(

@@ -28,6 +28,8 @@
     "exempt": "Exempt",
     "no_longer_exempt": "No longer exempt",
     "profit": "Profit",
+    "profit_amount": "Profit: {}",
+    "remaining": "Remaining: {}",
     "quantity": "Quantity",
     "total_amount_invested": "Total amount invested",
     "tracking_earnings": "Tracking earnings",
@@ -63,10 +65,17 @@
     "failed_to_restore": "Database restore failed",
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
-    "per_year": "{}% per year",
+    "per_year": "{}/year",
     "api_error": "API error",
     "replace_value": "Replace value",
-    "new_total": "New total"
+    "new_total": "New total",
+    "annual_yield": "Annual yield",
+    "average_yield": "Average yield",
+    "payback": "Payback",
+    "payback_years": "{} years",
+    "payback_recovered": "Recovered",
+    "gross": "Gross",
+    "net": "Net"
   },
   "button": {
     "close": "Close",

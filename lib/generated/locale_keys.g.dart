@@ -31,6 +31,8 @@ abstract class LocaleKeys {
   static const common_exempt = 'common.exempt';
   static const common_no_longer_exempt = 'common.no_longer_exempt';
   static const common_profit = 'common.profit';
+  static const common_profit_amount = 'common.profit_amount';
+  static const common_remaining = 'common.remaining';
   static const common_quantity = 'common.quantity';
   static const common_total_amount_invested = 'common.total_amount_invested';
   static const common_tracking_earnings = 'common.tracking_earnings';
@@ -71,6 +73,13 @@ abstract class LocaleKeys {
   static const common_api_error = 'common.api_error';
   static const common_replace_value = 'common.replace_value';
   static const common_new_total = 'common.new_total';
+  static const common_annual_yield = 'common.annual_yield';
+  static const common_average_yield = 'common.average_yield';
+  static const common_payback = 'common.payback';
+  static const common_payback_years = 'common.payback_years';
+  static const common_payback_recovered = 'common.payback_recovered';
+  static const common_gross = 'common.gross';
+  static const common_net = 'common.net';
   static const common = 'common';
   static const button_close = 'button.close';
   static const button_ok = 'button.ok';

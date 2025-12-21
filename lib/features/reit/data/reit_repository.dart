@@ -2,7 +2,9 @@ import 'package:isar_community/isar.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/freelance/data/freelance_repository.dart';
 import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/features/reit/domain/reit_tax_calculator.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -92,4 +94,26 @@ Stream<PayoutReportData> watchPayoutReportReit(Ref ref) async* {
 
     yield PayoutReportData(finalAmount: finalAmount);
   }
+}
+
+@riverpod
+ReitTaxResult reitTaxCalculation(Ref ref) {
+  final freelance = ref.watch(watchFreelanceProvider).value;
+  final reits = ref.watch(watchReitsProvider).value ?? [];
+
+  final freelanceAnnualRevenue = freelance?.annualRevenue ?? 0;
+  final currentYear = DateTime.now().year;
+
+  // Calculate dividends for current year from all REITs
+  var currentYearDividends = 0.0;
+  for (final reit in reits) {
+    currentYearDividends += reit.dividends
+        .where((d) => d.receivedAt.year == currentYear)
+        .fold<double>(0, (sum, d) => sum + d.amount);
+  }
+
+  return ReitTaxCalculator.calculate(
+    freelanceAnnualRevenue: freelanceAnnualRevenue,
+    reitDividends: currentYearDividends,
+  );
 }

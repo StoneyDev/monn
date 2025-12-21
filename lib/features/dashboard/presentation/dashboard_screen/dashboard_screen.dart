@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
+import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -32,6 +34,11 @@ class DashboardScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final filter = ref.watch(_filterProvider);
     final savings = ref.watch(watchSavingsProvider(filter: filter));
+
+    // Refresh market prices on dashboard load
+    ref
+      ..watch(getCryptoPriceMarketProvider)
+      ..watch(getEtfPriceMarketProvider);
 
     return Scaffold(
       appBar: MonnAppBar(

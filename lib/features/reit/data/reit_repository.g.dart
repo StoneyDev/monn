@@ -196,3 +196,45 @@ final class WatchPayoutReportReitProvider
 
 String _$watchPayoutReportReitHash() =>
     r'fbf8b0068cf70656341875348185f05293b6defd';
+
+@ProviderFor(reitTaxCalculation)
+const reitTaxCalculationProvider = ReitTaxCalculationProvider._();
+
+final class ReitTaxCalculationProvider
+    extends $FunctionalProvider<ReitTaxResult, ReitTaxResult, ReitTaxResult>
+    with $Provider<ReitTaxResult> {
+  const ReitTaxCalculationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'reitTaxCalculationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$reitTaxCalculationHash();
+
+  @$internal
+  @override
+  $ProviderElement<ReitTaxResult> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ReitTaxResult create(Ref ref) {
+    return reitTaxCalculation(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReitTaxResult value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReitTaxResult>(value),
+    );
+  }
+}
+
+String _$reitTaxCalculationHash() =>
+    r'91f76f47fc377af01c43be49923eaf436151bcdf';

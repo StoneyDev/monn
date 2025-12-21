@@ -134,11 +134,11 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           context.tr(
                             'common.per_year',
                             args: [
-                              compoundAnnualGrowthRate(
+                              '${annualGrowthRate(
                                 initialValue: cryptoData?.startAmount ?? 0,
                                 duration: DateTime(2022, 04, 24).numberYears(),
                                 finalValue: chart.value?.totalAmount ?? 0,
-                              ).toStringAsFixed(2),
+                              ).toStringAsFixed(2)}%',
                             ],
                           ),
                           textAlign: TextAlign.right,

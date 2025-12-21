@@ -28,6 +28,8 @@
     "exempt": "Exonérer",
     "no_longer_exempt": "N'est plus exonéré",
     "profit": "Gain",
+    "profit_amount": "Bénéfice: {}",
+    "remaining": "Reste: {}",
     "quantity": "Quantité",
     "total_amount_invested": "Montant total investi",
     "tracking_earnings": "Suivi des gains",
@@ -63,10 +65,17 @@
     "failed_to_restore": "Échec de la restauration de la base de données",
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
-    "per_year": "{}% par an",
+    "per_year": "{}/an",
     "api_error": "Erreur API",
     "replace_value": "Remplacer la valeur",
-    "new_total": "Nouveau total"
+    "new_total": "Nouveau total",
+    "annual_yield": "Rendement annuel",
+    "average_yield": "Rendement moyen",
+    "payback": "Récupération",
+    "payback_years": "{} ans",
+    "payback_recovered": "Récupéré",
+    "gross": "Brut",
+    "net": "Net"
   },
   "button": {
     "close": "Fermer",
