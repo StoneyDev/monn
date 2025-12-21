@@ -49,7 +49,7 @@ class CalculationBreakdown extends ConsumerWidget {
                   barColor: AppColors.lightGray,
                 ),
                 Divider(
-                  color: Theme.of(context).colorScheme.outline,
+                  color: Theme.of(context).colorScheme.outlineVariant,
                   height: 0,
                 ),
                 Row(
@@ -146,7 +146,7 @@ class ChargesBreakdown extends ConsumerWidget {
                   barColor: AppColors.red,
                 ),
                 Divider(
-                  color: Theme.of(context).colorScheme.outline,
+                  color: Theme.of(context).colorScheme.outlineVariant,
                   height: 0,
                 ),
                 Row(

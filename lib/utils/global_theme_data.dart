@@ -34,6 +34,7 @@ class GlobalThemeData {
     surfaceContainerHighest: AppColors.white,
     onSurfaceVariant: AppColors.gray300,
     outline: AppColors.white600,
+    outlineVariant: AppColors.white600,
   );
 
   static const ColorScheme darkColorScheme = ColorScheme.dark(
@@ -51,6 +52,7 @@ class GlobalThemeData {
     surfaceContainerHighest: AppColors.gray700,
     onSurfaceVariant: AppColors.white500,
     outline: AppColors.gray300,
+    outlineVariant: AppColors.lightGray,
   );
 
   static const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
