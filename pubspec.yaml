@@ -2,7 +2,7 @@ name: monn
 description: "Monn is my personal investment tracking and analysis"
 publish_to: "none"
 
-version: 1.2.1+5
+version: 1.2.2+6
 
 environment:
   sdk: ">=3.8.0 <4.0.0"

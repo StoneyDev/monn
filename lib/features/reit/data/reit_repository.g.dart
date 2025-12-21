@@ -237,4 +237,4 @@ final class ReitTaxCalculationProvider
 }
 
 String _$reitTaxCalculationHash() =>
-    r'91f76f47fc377af01c43be49923eaf436151bcdf';
+    r'f69d54ee78e502d12f2db5ca937b8a362174fe6e';
