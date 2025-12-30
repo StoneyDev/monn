@@ -111,14 +111,15 @@ class PeaScreen extends ConsumerWidget {
                                   value,
                           onSubmit: () async {
                             final newValue = ref.read(_startAmountProvider);
-                            final newSaving = value
-                              ?..startAmount = double.parse(newValue);
+                            final newSaving =
+                                (value ?? (Savings()..type = SavingsType.pea))
+                                    ..startAmount = double.parse(newValue);
 
                             final success = await ref
                                 .read(
                                   editSavingsControllerProvider.notifier,
                                 )
-                                .submit(newSaving!);
+                                .submit(newSaving);
                             if (!context.mounted || !success) return;
 
                             ref

@@ -21,7 +21,7 @@ class MonnLine extends StatelessWidget {
           child: Row(
             spacing: 8,
             children: [
-              if (icon != null) icon!,
+              ?icon,
               Flexible(
                 child: Text(
                   title,

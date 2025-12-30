@@ -131,8 +131,10 @@
     "deducted": "Prélevé"
   },
   "filters": {
-    "sort_by_start_amount_desc": "Montant initial (Décroissant)",
-    "sort_by_start_amount_asc": "Montant initial (Croissant)"
+    "sort_by_start_amount_desc": "Montant initial (décroissant)",
+    "sort_by_start_amount_asc": "Montant initial (croissant)",
+    "sort_by_final_amount_desc": "Montant actuel (décroissant)",
+    "sort_by_final_amount_asc": "Montant actuel (croissant)"
   },
   "theme_mode": {
     "dark": "Sombre",

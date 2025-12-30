@@ -70,12 +70,13 @@ class CryptocurrencyScreen extends ConsumerWidget {
                         initialValue: cryptoData?.startAmount ?? 0,
                         onSubmit: () async {
                           final newValue = ref.read(_startAmountProvider);
-                          final newSaving = cryptoData
-                            ?..startAmount = double.parse(newValue);
+                          final newSaving = (cryptoData ??
+                                  (Savings()..type = SavingsType.cryptocurrency))
+                              ..startAmount = double.parse(newValue);
 
                           final success = await ref
                               .read(editSavingsControllerProvider.notifier)
-                              .submit(newSaving!);
+                              .submit(newSaving);
                           if (!context.mounted || !success) return;
 
                           ref

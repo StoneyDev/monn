@@ -74,14 +74,14 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               final formData = ref.read(savingsBookFormControllerProvider);
 
-              final newSaving = savingsBookData
-                ?..startAmount =
-                    (savingsBookData.startAmount ?? 0) +
-                    double.parse(formData.startAmount);
+              final newSaving = savingsBookData ??
+                  (Savings()..type = SavingsType.savingsBook);
+              newSaving.startAmount = (newSaving.startAmount ?? 0) +
+                  double.parse(formData.startAmount);
 
               final updated = await ref
                   .read(editSavingsControllerProvider.notifier)
-                  .submit(newSaving!);
+                  .submit(newSaving);
 
               if (!context.mounted || !success || !updated) return;
 

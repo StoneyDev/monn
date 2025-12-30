@@ -4,10 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/add_savings_screen.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -23,7 +21,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 final StateProvider<SavingsFilter> _filterProvider =
     StateProvider.autoDispose<SavingsFilter>(
-      (_) => SavingsFilter.sortByStartAmountDesc,
+      (_) => SavingsFilter.sortByFinalAmountDesc,
     );
 
 class DashboardScreen extends ConsumerWidget {
@@ -33,7 +31,7 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
     final filter = ref.watch(_filterProvider);
-    final savings = ref.watch(watchSavingsProvider(filter: filter));
+    final savings = ref.watch(watchSortedSavingsProvider(filter: filter));
 
     // Refresh market prices on dashboard load
     ref
@@ -93,77 +91,58 @@ class DashboardScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: IconButton.filled(
-        icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () => context.push(const AddSavingsScreen()),
-      ),
       body: MonnScrollView(
         slivers: [
           const _ResizingHeader(),
-          switch (savings) {
-            AsyncData(:final value) => SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-              sliver: SliverList.separated(
-                itemBuilder: (context, index) {
-                  final item = value[index];
-                  final finalAmount = item.type.getReport(ref);
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
+            sliver: SliverList.separated(
+              itemBuilder: (context, index) {
+                final item = savings[index];
+                final finalAmount = item.type.getReport(ref);
 
-                  return MonnCard(
-                    onTap: () => context.push(item.type.route()),
-                    child: Row(
-                      spacing: 16,
-                      children: [
-                        Image(
-                          image: item.type.icon(),
-                          height: 48,
-                          width: 48,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.tr(
-                                  'savings.${item.type.name.toSnakeCase()}',
-                                ),
-                                style: Theme.of(context).textTheme.titleSmall
-                                    ?.copyWith(
-                                      color: AppColors.lightGray,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                return MonnCard(
+                  onTap: () => context.push(item.type.route()),
+                  child: Row(
+                    spacing: 16,
+                    children: [
+                      Image(
+                        image: item.type.icon(),
+                        height: 48,
+                        width: 48,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr(
+                                'savings.${item.type.name.toSnakeCase()}',
                               ),
-                              Text(
-                                finalAmount.simpleCurrency(locale),
-                                style: Theme.of(context).textTheme.titleLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                              ),
-                            ],
-                          ),
+                              style: Theme.of(context).textTheme.titleSmall
+                                  ?.copyWith(
+                                    color: AppColors.lightGray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Text(
+                              finalAmount.simpleCurrency(locale),
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (_, _) => const SizedBox(height: 16),
-                itemCount: value.length,
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (_, _) => const SizedBox(height: 16),
+              itemCount: savings.length,
             ),
-            AsyncError(:final error) => SliverToBoxAdapter(
-              child: Text(
-                'Error: $error',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ),
-            _ => const SliverFillRemaining(
-              child: Center(
-                child: RepaintBoundary(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-          },
+          ),
         ],
       ),
     );

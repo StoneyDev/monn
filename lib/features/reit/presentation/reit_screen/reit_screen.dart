@@ -254,17 +254,18 @@ class ReitScreen extends ConsumerWidget {
                                     await ref.read(
                                       deleteReitProvider(item).future,
                                     );
+                                    final newSaving =
+                                        savingsReit ??
+                                        (Savings()..type = SavingsType.reit);
+                                    newSaving.startAmount =
+                                        (newSaving.startAmount ?? 0) -
+                                        investedAmount;
                                     final success = await ref
                                         .read(
                                           editSavingsControllerProvider
                                               .notifier,
                                         )
-                                        .submit(
-                                          savingsReit!
-                                            ..startAmount =
-                                                savingsReit.startAmount! -
-                                                investedAmount,
-                                        );
+                                        .submit(newSaving);
                                     if (!context.mounted || !success) return;
                                     ref.invalidate(
                                       getSavingsProvider(

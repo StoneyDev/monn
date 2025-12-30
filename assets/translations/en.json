@@ -132,7 +132,9 @@
   },
   "filters": {
     "sort_by_start_amount_desc": "Initial amount (descending)",
-    "sort_by_start_amount_asc": "Initial amount (Ascending)"
+    "sort_by_start_amount_asc": "Initial amount (ascending)",
+    "sort_by_final_amount_desc": "Current amount (descending)",
+    "sort_by_final_amount_asc": "Current amount (ascending)"
   },
   "theme_mode": {
     "dark": "Dark",

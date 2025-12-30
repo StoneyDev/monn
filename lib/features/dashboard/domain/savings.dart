@@ -26,6 +26,6 @@ enum SavingsType {
 enum SavingsFilter {
   sortByStartAmountDesc,
   sortByStartAmountAsc,
-  // sortByFinalAmountDesc, // TODO(yann): Need refactor for this
-  // sortByFinalAmountAsc,
+  sortByFinalAmountDesc,
+  sortByFinalAmountAsc,
 }

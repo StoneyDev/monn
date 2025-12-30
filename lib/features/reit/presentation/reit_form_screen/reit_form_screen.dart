@@ -100,15 +100,15 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                     .submit();
 
                 final formData = ref.read(reitFormControllerProvider);
-                final newSaving = value
-                  ?..startAmount =
-                      (value.startAmount ?? 0) +
-                      (double.parse(formData.price) *
-                          int.parse(formData.shares));
+                final newSaving =
+                    value ?? (Savings()..type = SavingsType.reit);
+                newSaving.startAmount = (newSaving.startAmount ?? 0) +
+                    (double.parse(formData.price) *
+                        int.parse(formData.shares));
 
                 final updated = await ref
                     .read(editSavingsControllerProvider.notifier)
-                    .submit(newSaving!);
+                    .submit(newSaving);
                 if (!context.mounted || !success || !updated) return;
 
                 ref

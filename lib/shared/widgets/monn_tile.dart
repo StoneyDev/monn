@@ -37,7 +37,7 @@ class MonnTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               trailing,
-              if (subTrailing != null) subTrailing!,
+              ?subTrailing,
             ],
           ),
         ),

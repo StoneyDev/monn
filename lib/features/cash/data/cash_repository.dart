@@ -1,6 +1,7 @@
 import 'package:isar_community/isar.dart';
 import 'package:monn/features/cash/domain/cash.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,15 +17,35 @@ class CashRepository {
     return query.watch(fireImmediately: true);
   }
 
-  Future<void> editCash(Cash newCash) {
-    return _localDB.writeTxn<void>(() async {
+  Future<void> editCash(Cash newCash) async {
+    await _localDB.writeTxn<void>(() async {
       await _localDB.cashs.put(newCash);
     });
+    await _syncStartAmount();
   }
 
-  Future<void> deleteCash(int id) {
-    return _localDB.writeTxn<void>(() async {
+  Future<void> deleteCash(int id) async {
+    await _localDB.writeTxn<void>(() async {
       await _localDB.cashs.delete(id);
+    });
+    await _syncStartAmount();
+  }
+
+  Future<void> _syncStartAmount() async {
+    final cashs = await _localDB.cashs.where().findAll();
+    final total = cashs.fold<double>(0, (sum, e) => sum + e.value);
+    final roundedTotal = double.parse(total.toStringAsFixed(2));
+
+    final existingSavings = await _localDB.savings
+        .filter()
+        .typeEqualTo(SavingsType.cash)
+        .findFirst();
+
+    final savings = (existingSavings ?? (Savings()..type = SavingsType.cash))
+      ..startAmount = roundedTotal;
+
+    await _localDB.writeTxn<void>(() async {
+      await _localDB.savings.put(savings);
     });
   }
 }
