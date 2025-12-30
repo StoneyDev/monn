@@ -2,14 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/amount/presentation/amount_screen.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/per/data/per_repository.dart';
 import 'package:monn/features/per/domain/per.dart';
 import 'package:monn/features/per/presentation/per_screen/controllers/per_form_controller.dart';
 import 'package:monn/features/per/presentation/per_screen/controllers/submit_per_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
@@ -28,7 +27,7 @@ class PerScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('savings.${SavingsType.per.name.toSnakeCase()}'),
+        title: context.tr(LocaleKeys.savings_per),
       ),
       body: MonnScrollView(
         slivers: [
@@ -72,7 +71,7 @@ class PerScreen extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                context.tr('common.interests'),
+                                context.tr(LocaleKeys.common_interests),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),

@@ -8,6 +8,7 @@ import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
@@ -50,7 +51,7 @@ class DashboardScreen extends ConsumerWidget {
               pageListBuilder: (context) => [
                 MonnBottomSheet.itemList(
                   context: context,
-                  title: context.tr('common.filter'),
+                  title: context.tr(LocaleKeys.common_filter),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -180,7 +181,7 @@ class _ResizingHeader extends ConsumerWidget {
                     duration: const Duration(milliseconds: 200),
                     opacity: opacity,
                     child: Text(
-                      context.tr('common.net_worth'),
+                      context.tr(LocaleKeys.common_net_worth),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.lightGray,

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/controllers/pea_form_controller.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/controllers/submit_pea_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
@@ -37,7 +38,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
               spacing: 16,
               children: [
                 MonnFieldNumber<int>(
-                  label: context.tr('common.number_equities'),
+                  label: context.tr(LocaleKeys.common_number_equities),
                   required: true,
                   initialValue: (value?.equity ?? '').toString(),
                   onChanged: (newEquity) => ref
@@ -48,7 +49,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                       ),
                 ),
                 MonnFieldNumber<double>(
-                  label: context.tr('common.purchase_price'),
+                  label: context.tr(LocaleKeys.common_purchase_price),
                   required: true,
                   initialValue: (value?.costAverage ?? '').toString(),
                   onChanged: (newCostAverage) => ref
@@ -78,7 +79,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.save'),
+            text: context.tr(LocaleKeys.button_save),
             onPressed: canSubmit
                 ? () async {
                     final success = await ref

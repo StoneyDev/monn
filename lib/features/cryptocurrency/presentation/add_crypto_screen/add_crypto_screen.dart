@@ -5,6 +5,7 @@ import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dar
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/crypto_form_controller.dart';
 import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/submit_crypto_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -26,7 +27,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.tracking_earnings'),
+        title: context.tr(LocaleKeys.common_tracking_earnings),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -36,7 +37,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
             spacing: 16,
             children: [
               MonnFieldNumber<double>(
-                label: context.tr('common.crypto_amount'),
+                label: context.tr(LocaleKeys.common_crypto_amount),
                 suffix: formData.crypto?.type.symbol ?? '',
                 required: true,
                 onChanged: (newAmount) => ref
@@ -73,7 +74,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.validate'),
+            text: context.tr(LocaleKeys.button_validate),
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 

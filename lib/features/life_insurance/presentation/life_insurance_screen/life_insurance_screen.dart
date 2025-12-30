@@ -8,6 +8,7 @@ import 'package:monn/features/life_insurance/data/life_insurance_repository.dart
 import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/life_insurance_form_controller.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/submit_life_insurance_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -41,7 +42,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 16),
             child: Tooltip(
               message: context.tr(
-                'common.opening_account',
+                LocaleKeys.common_opening_account,
                 args: [
                   '$yearsOpen',
                   if (isFiscallyEligible) '24,7%' else '30%',
@@ -58,7 +59,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    context.tr('common.taxation'),
+                    context.tr(LocaleKeys.common_taxation),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: isFiscallyEligible
@@ -120,7 +121,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                context.tr('common.interests'),
+                                context.tr(LocaleKeys.common_interests),
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),

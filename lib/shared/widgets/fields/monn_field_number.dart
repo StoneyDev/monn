@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
@@ -70,13 +71,13 @@ class MonnFieldNumber<T> extends ConsumerWidget {
                   final amount = double.tryParse(value ?? '');
 
                   if (value == null || value.isEmpty) {
-                    return context.tr('input.error.empty');
+                    return context.tr(LocaleKeys.input_error_empty);
                   } else if (amount == null) {
-                    return context.tr('input.error.wrong_data');
+                    return context.tr(LocaleKeys.input_error_wrong_data);
                   } else if (amount <= 0 && !amount.isNegative) {
-                    return context.tr('input.error.superior');
+                    return context.tr(LocaleKeys.input_error_superior);
                   } else if (amount > 100 && suffix == '%') {
-                    return context.tr('input.error.wrong_percentage');
+                    return context.tr(LocaleKeys.input_error_wrong_percentage);
                   }
 
                   return null;

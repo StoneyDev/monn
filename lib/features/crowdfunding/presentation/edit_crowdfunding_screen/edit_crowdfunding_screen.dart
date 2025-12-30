@@ -5,6 +5,7 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/submit_crowdfunding_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -40,7 +41,7 @@ class _EditCrowdfundingScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.tracking_earnings'),
+        title: context.tr(LocaleKeys.common_tracking_earnings),
       ),
       body: MonnScrollView(
         slivers: [
@@ -53,7 +54,7 @@ class _EditCrowdfundingScreenState
                   spacing: 16,
                   children: [
                     MonnFieldText(
-                      label: context.tr('common.platform'),
+                      label: context.tr(LocaleKeys.common_platform),
                       required: true,
                       initialValue: widget.crowdfunding?.platformName ?? 'LPB',
                       onChanged: (newPlatformName) => ref
@@ -61,7 +62,7 @@ class _EditCrowdfundingScreenState
                           .platformName(platformName: newPlatformName),
                     ),
                     MonnFieldNumber<double>(
-                      label: context.tr('common.profit'),
+                      label: context.tr(LocaleKeys.common_profit),
                       suffix: '€',
                       required: true,
                       initialValue: (widget.crowdfunding?.brutProfit ?? '')
@@ -92,9 +93,11 @@ class _EditCrowdfundingScreenState
                                 Expanded(
                                   child: MonnFieldNumber<double>(
                                     label: context.tr(
-                                      'common.tax',
+                                      LocaleKeys.common_tax,
                                       args: [
-                                        context.tr('common.without_income_tax'),
+                                        context.tr(
+                                          LocaleKeys.common_without_income_tax,
+                                        ),
                                       ],
                                     ),
                                     suffix: '%',
@@ -119,8 +122,10 @@ class _EditCrowdfundingScreenState
                               OutlinedButton.icon(
                                 label: Text(
                                   isTaxFree
-                                      ? context.tr('common.no_longer_exempt')
-                                      : context.tr('common.exempt'),
+                                      ? context.tr(
+                                          LocaleKeys.common_no_longer_exempt,
+                                        )
+                                      : context.tr(LocaleKeys.common_exempt),
                                 ),
                                 onPressed: () {
                                   setState(() => isTaxFree = !isTaxFree);
@@ -147,7 +152,7 @@ class _EditCrowdfundingScreenState
                       },
                     ),
                     MonnFieldDate(
-                      label: context.tr('common.receive_at'),
+                      label: context.tr(LocaleKeys.common_receive_at),
                       required: true,
                       initialValue: widget.crowdfunding?.receivedAt,
                       onChanged: (newReceivedAt) => ref
@@ -165,7 +170,7 @@ class _EditCrowdfundingScreenState
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.validate'),
+            text: context.tr(LocaleKeys.button_validate),
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 

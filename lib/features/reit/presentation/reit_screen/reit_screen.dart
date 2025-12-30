@@ -7,6 +7,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
@@ -76,16 +77,16 @@ class ReitScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MonnFinancialInfo(
-                  title: context.tr('common.gross'),
+                  title: context.tr(LocaleKeys.common_gross),
                   data: context.tr(
-                    'common.per_year',
+                    LocaleKeys.common_per_year,
                     args: [taxResult.reitDividends.simpleCurrency(locale)],
                   ),
                 ),
                 MonnFinancialInfo(
-                  title: context.tr('common.net'),
+                  title: context.tr(LocaleKeys.common_net),
                   data: context.tr(
-                    'common.per_year',
+                    LocaleKeys.common_per_year,
                     args: [taxResult.reitNetAfterTax.simpleCurrency(locale)],
                   ),
                 ),
@@ -144,15 +145,15 @@ class ReitScreen extends ConsumerWidget {
                           spacing: 24,
                           children: [
                             MonnFinancialInfo(
-                              title: context.tr('common.start_amount'),
+                              title: context.tr(LocaleKeys.common_start_amount),
                               data: investedAmount,
                             ),
                             MonnFinancialInfo(
-                              title: context.tr('common.part'),
+                              title: context.tr(LocaleKeys.common_part),
                               data: item.shares,
                             ),
                             MonnFinancialInfo(
-                              title: context.tr('common.worth'),
+                              title: context.tr(LocaleKeys.common_worth),
                               data: item.price,
                             ),
                           ],
@@ -162,17 +163,19 @@ class ReitScreen extends ConsumerWidget {
                           spacing: 24,
                           children: [
                             MonnFinancialInfo(
-                              title: context.tr('common.annual_yield'),
+                              title: context.tr(LocaleKeys.common_annual_yield),
                               data:
                                   '${metrics.annualYield.toStringAsFixed(1)}%',
                             ),
                             MonnFinancialInfo(
-                              title: context.tr('common.payback'),
+                              title: context.tr(LocaleKeys.common_payback),
                               data: metrics.isProfitable
-                                  ? context.tr('common.payback_recovered')
+                                  ? context.tr(
+                                      LocaleKeys.common_payback_recovered,
+                                    )
                                   : metrics.paybackYears != null
                                   ? context.tr(
-                                      'common.payback_years',
+                                      LocaleKeys.common_payback_years,
                                       args: [
                                         metrics.paybackYears!
                                             .round()
@@ -211,14 +214,14 @@ class ReitScreen extends ConsumerWidget {
                         Text(
                           metrics.isProfitable
                               ? context.tr(
-                                  'common.profit_amount',
+                                  LocaleKeys.common_profit_amount,
                                   args: [
                                     (totalDividends - investedAmount)
                                         .simpleCurrency(locale),
                                   ],
                                 )
                               : context.tr(
-                                  'common.remaining',
+                                  LocaleKeys.common_remaining,
                                   args: [
                                     metrics.remaining.simpleCurrency(locale),
                                   ],
@@ -246,7 +249,9 @@ class ReitScreen extends ConsumerWidget {
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
                                   child: Center(
-                                    child: Text(context.tr('button.close')),
+                                    child: Text(
+                                      context.tr(LocaleKeys.button_close),
+                                    ),
                                   ),
                                 ),
                                 TextButton(
@@ -275,7 +280,9 @@ class ReitScreen extends ConsumerWidget {
                                     Navigator.pop(context);
                                   },
                                   child: Center(
-                                    child: Text(context.tr('button.ok')),
+                                    child: Text(
+                                      context.tr(LocaleKeys.button_ok),
+                                    ),
                                   ),
                                 ),
                               ],

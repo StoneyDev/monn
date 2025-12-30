@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
@@ -47,7 +48,7 @@ class MonnFieldText extends StatelessWidget {
           validator: required
               ? (value) {
                   if (value == null || value.isEmpty) {
-                    return context.tr('input.error.empty');
+                    return context.tr(LocaleKeys.input_error_empty);
                   }
 
                   return null;

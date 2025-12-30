@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_dividend_form_controller.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/submit_reit_dividend_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -22,7 +23,9 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MonnAppBar(title: 'Suivi des gains'),
+      appBar: MonnAppBar(
+        title: context.tr(LocaleKeys.common_tracking_earnings),
+      ),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -31,7 +34,7 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
             spacing: 16,
             children: [
               MonnFieldNumber<double>(
-                label: context.tr('common.dividend'),
+                label: context.tr(LocaleKeys.common_dividend),
                 suffix: '€',
                 required: true,
                 onChanged: (newAmount) => ref
@@ -39,7 +42,7 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                     .amount(amount: newAmount),
               ),
               MonnFieldDate(
-                label: context.tr('common.receive_at'),
+                label: context.tr(LocaleKeys.common_receive_at),
                 required: true,
                 onChanged: (newReceivedAt) => ref
                     .read(reitDividendFormControllerProvider.notifier)
@@ -53,7 +56,7 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.validate'),
+            text: context.tr(LocaleKeys.button_validate),
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 

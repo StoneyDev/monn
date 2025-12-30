@@ -11,6 +11,7 @@ import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/add_counter_strike_screen.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/submit_counter_strike_form_controller.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -160,7 +161,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                     ),
                     Text(
                       context.tr(
-                        'common.bought_on',
+                        LocaleKeys.common_bought_on,
                         args: [data.boughtAt.slashFormat(locale)],
                       ),
                       maxLines: 1,
@@ -169,7 +170,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                     ),
                     Text(
                       context.tr(
-                        'common.price_and_purchase_date',
+                        LocaleKeys.common_price_and_purchase_date,
                         args: [
                           data.currentValue.simpleCurrency(locale),
                           data.lastUpdate.slashFormat(locale),

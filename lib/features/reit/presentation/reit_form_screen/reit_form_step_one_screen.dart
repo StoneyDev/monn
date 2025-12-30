@@ -8,6 +8,7 @@ import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_dividend_form_controller.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_screen.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_two_screen.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 
@@ -26,7 +27,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.select_a_reit'),
+        title: context.tr(LocaleKeys.common_select_a_reit),
       ),
       body: switch (reits) {
         AsyncData(:final value) => ListView.builder(
@@ -75,7 +76,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
               ),
               Expanded(
                 child: MonnButton(
-                  text: context.tr('button.validate'),
+                  text: context.tr(LocaleKeys.button_validate),
                   onPressed: selectedReit != null
                       ? () async {
                           ref

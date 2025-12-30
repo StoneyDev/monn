@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/settings/presentation/settings_screen/controllers/backup_controller.dart';
 import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -31,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.settings'),
+        title: context.tr(LocaleKeys.common_settings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -51,7 +52,7 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    context.tr('common.theme'),
+                    context.tr(LocaleKeys.common_theme),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Spacer(),
@@ -96,7 +97,7 @@ class SettingsScreen extends ConsumerWidget {
                 pageListBuilder: (context) => [
                   MonnBottomSheet.itemList(
                     context: context,
-                    title: context.tr('common.language'),
+                    title: context.tr(LocaleKeys.common_language),
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
@@ -136,7 +137,7 @@ class SettingsScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.tr('common.language'),
+                          context.tr(LocaleKeys.common_language),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
@@ -168,7 +169,7 @@ class SettingsScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.tr('common.backup'),
+                          context.tr(LocaleKeys.common_backup),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
@@ -177,7 +178,7 @@ class SettingsScreen extends ConsumerWidget {
                                   locale,
                                   withHour: true,
                                 )
-                              : context.tr('common.no_backup'),
+                              : context.tr(LocaleKeys.common_no_backup),
                         ),
                       ],
                     ),
@@ -228,16 +229,20 @@ class _BackupAction extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 success
                     ? MonnSnackBar.success(
-                        message: context.tr('common.successfully_restored'),
+                        message: context.tr(
+                          LocaleKeys.common_successfully_restored,
+                        ),
                       )
                     : MonnSnackBar.error(
-                        message: context.tr('common.failed_to_restore'),
+                        message: context.tr(
+                          LocaleKeys.common_failed_to_restore,
+                        ),
                       ),
               );
             } else {
               if (!context.mounted) return;
               MonnSnackBar.error(
-                message: context.tr('common.import_failed'),
+                message: context.tr(LocaleKeys.common_import_failed),
               );
             }
           },
@@ -245,7 +250,7 @@ class _BackupAction extends ConsumerWidget {
             spacing: 16,
             children: [
               const iconoir.Import(color: AppColors.white),
-              Text(context.tr('common.import')),
+              Text(context.tr(LocaleKeys.common_import)),
             ],
           ),
         ),
@@ -266,7 +271,7 @@ class _BackupAction extends ConsumerWidget {
               spacing: 16,
               children: [
                 const iconoir.ShareIos(color: AppColors.white),
-                Text(context.tr('common.export')),
+                Text(context.tr(LocaleKeys.common_export)),
               ],
             ),
           ),
@@ -281,10 +286,14 @@ class _BackupAction extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 success
                     ? MonnSnackBar.success(
-                        message: context.tr('common.successfully_restored'),
+                        message: context.tr(
+                          LocaleKeys.common_successfully_restored,
+                        ),
                       )
                     : MonnSnackBar.error(
-                        message: context.tr('common.failed_to_restore'),
+                        message: context.tr(
+                          LocaleKeys.common_failed_to_restore,
+                        ),
                       ),
               );
             },
@@ -292,7 +301,7 @@ class _BackupAction extends ConsumerWidget {
               spacing: 16,
               children: [
                 const iconoir.DatabaseRestore(color: AppColors.white),
-                Text(context.tr('common.restore')),
+                Text(context.tr(LocaleKeys.common_restore)),
               ],
             ),
           ),

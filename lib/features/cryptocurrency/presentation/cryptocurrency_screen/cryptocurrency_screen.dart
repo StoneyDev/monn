@@ -12,6 +12,7 @@ import 'package:monn/features/cryptocurrency/presentation/crypto_page_screen/cry
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -61,7 +62,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                     onTap: () => ScaffoldMessenger.of(context).showSnackBar(
                       MonnSnackBar.info(
                         message:
-                            '${context.tr('common.total_amount_invested')}: ${cryptoData?.startAmount?.simpleCurrency(locale)}',
+                            '${context.tr(LocaleKeys.common_total_amount_invested)}: ${cryptoData?.startAmount?.simpleCurrency(locale)}',
                       ),
                     ),
                     onLongPress: () => context.push(
@@ -70,9 +71,11 @@ class CryptocurrencyScreen extends ConsumerWidget {
                         initialValue: cryptoData?.startAmount ?? 0,
                         onSubmit: () async {
                           final newValue = ref.read(_startAmountProvider);
-                          final newSaving = (cryptoData ??
-                                  (Savings()..type = SavingsType.cryptocurrency))
-                              ..startAmount = double.parse(newValue);
+                          final newSaving =
+                              (cryptoData ??
+                                    (Savings()
+                                      ..type = SavingsType.cryptocurrency))
+                                ..startAmount = double.parse(newValue);
 
                           final success = await ref
                               .read(editSavingsControllerProvider.notifier)
@@ -105,7 +108,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        context.tr('common.loading'),
+                        context.tr(LocaleKeys.common_loading),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -120,7 +123,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                     spacing: 8,
                     children: [
                       MonnLine(
-                        title: context.tr('common.rate_of_return'),
+                        title: context.tr(LocaleKeys.common_rate_of_return),
                         value: Text(
                           '${totalReturnRate(
                             initialValue: cryptoData?.startAmount ?? 0,
@@ -130,10 +133,10 @@ class CryptocurrencyScreen extends ConsumerWidget {
                         ),
                       ),
                       MonnLine(
-                        title: context.tr('common.annual_performance'),
+                        title: context.tr(LocaleKeys.common_annual_performance),
                         value: Text(
                           context.tr(
-                            'common.per_year',
+                            LocaleKeys.common_per_year,
                             args: [
                               '${annualGrowthRate(
                                 initialValue: cryptoData?.startAmount ?? 0,

@@ -9,6 +9,7 @@ import 'package:monn/features/cash/presentation/add_cash_screen/add_cash_screen.
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/submit_cash_form_controller.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
@@ -96,7 +97,9 @@ class _CashCard extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Center(child: Text(context.tr('button.close'))),
+                    child: Center(
+                      child: Text(context.tr(LocaleKeys.button_close)),
+                    ),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -105,7 +108,9 @@ class _CashCard extends ConsumerWidget {
                       if (!context.mounted) return;
                       Navigator.pop(context);
                     },
-                    child: Center(child: Text(context.tr('button.ok'))),
+                    child: Center(
+                      child: Text(context.tr(LocaleKeys.button_ok)),
+                    ),
                   ),
                 ],
               ),

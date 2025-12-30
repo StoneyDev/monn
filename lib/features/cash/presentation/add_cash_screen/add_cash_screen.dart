@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/submit_cash_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -30,7 +31,7 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
             spacing: 16,
             children: [
               MonnFieldText(
-                label: context.tr('common.label'),
+                label: context.tr(LocaleKeys.common_label),
                 required: true,
                 onChanged: (newLabel) => ref
                     .read(cashFormControllerProvider.notifier)
@@ -38,7 +39,7 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
-                label: context.tr('common.worth'),
+                label: context.tr(LocaleKeys.common_worth),
                 suffix: '€',
                 required: true,
                 onChanged: (newValue) => ref
@@ -54,7 +55,7 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.validate'),
+            text: context.tr(LocaleKeys.button_validate),
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 

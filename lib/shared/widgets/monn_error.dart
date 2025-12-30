@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class MonnError extends StatelessWidget {
@@ -19,7 +21,7 @@ class MonnError extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Oh no !',
+              context.tr(LocaleKeys.common_oh_no),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: AppColors.red50,

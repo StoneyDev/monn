@@ -8,6 +8,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/savings_book_form_screen.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
@@ -85,11 +86,13 @@ class SavingsBookScreen extends ConsumerWidget {
                           spacing: 24,
                           children: [
                             MonnFinancialInfo(
-                              title: context.tr('common.total_interest'),
+                              title: context.tr(
+                                LocaleKeys.common_total_interest,
+                              ),
                               data: item.interests,
                             ),
                             MonnFinancialInfo(
-                              title: context.tr('common.withdrawal'),
+                              title: context.tr(LocaleKeys.common_withdrawal),
                               data: item.withdrawal,
                             ),
                           ],

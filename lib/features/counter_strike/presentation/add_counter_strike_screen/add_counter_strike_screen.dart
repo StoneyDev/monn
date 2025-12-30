@@ -5,6 +5,7 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/counter_strike_form_controller.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/submit_counter_strike_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
@@ -36,7 +37,7 @@ class _AddCounterStrikeScreenState
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.purchasing_tracking'),
+        title: context.tr(LocaleKeys.common_purchasing_tracking),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
@@ -124,7 +125,7 @@ class _AddCounterStrikeScreenState
                           },
                         ),
                       ),
-                      title: context.tr('common.image'),
+                      title: context.tr(LocaleKeys.common_image),
                     ),
                   ],
                 ),
@@ -145,14 +146,14 @@ class _AddCounterStrikeScreenState
                 ),
               ),
               MonnFieldNumber<double>(
-                label: context.tr('common.wear'),
+                label: context.tr(LocaleKeys.common_wear),
                 onChanged: (newWear) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .wear(wear: newWear),
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
-                label: context.tr('common.purchase_price'),
+                label: context.tr(LocaleKeys.common_purchase_price),
                 suffix: '€',
                 required: true,
                 onChanged: (newPurchaseValue) => ref
@@ -161,7 +162,7 @@ class _AddCounterStrikeScreenState
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
-                label: context.tr('common.current_price'),
+                label: context.tr(LocaleKeys.common_current_price),
                 suffix: '€',
                 required: true,
                 onChanged: (newCurrentValue) => ref
@@ -170,14 +171,14 @@ class _AddCounterStrikeScreenState
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldDate(
-                label: context.tr('common.bought_on', args: ['']),
+                label: context.tr(LocaleKeys.common_bought_on, args: ['']),
                 required: true,
                 onChanged: (newBoughtAt) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
                     .boughtAt(boughtAt: newBoughtAt),
               ),
               MonnFieldNumber<int>(
-                label: context.tr('common.quantity'),
+                label: context.tr(LocaleKeys.common_quantity),
                 required: true,
                 onChanged: (newQuantity) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
@@ -188,7 +189,7 @@ class _AddCounterStrikeScreenState
               SizedBox(
                 width: double.infinity,
                 child: MonnButton(
-                  text: context.tr('button.validate'),
+                  text: context.tr(LocaleKeys.button_validate),
                   onPressed: () async {
                     final imageId = ref
                         .watch(counterStrikeFormControllerProvider)

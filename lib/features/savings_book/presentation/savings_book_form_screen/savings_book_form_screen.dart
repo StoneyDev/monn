@@ -6,6 +6,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/submit_savings_book_form_controller.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -32,7 +33,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr('common.add_savings_book'),
+        title: context.tr(LocaleKeys.common_add_savings_book),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -42,14 +43,14 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
             spacing: 16,
             children: [
               MonnFieldText(
-                label: context.tr('common.savings_book_name'),
+                label: context.tr(LocaleKeys.common_savings_book_name),
                 required: true,
                 onChanged: (newName) => ref
                     .read(savingsBookFormControllerProvider.notifier)
                     .name(name: newName),
               ),
               MonnFieldNumber<double>(
-                label: context.tr('common.start_amount'),
+                label: context.tr(LocaleKeys.common_start_amount),
                 suffix: '€',
                 required: true,
                 onChanged: (newStartAmount) => ref
@@ -64,7 +65,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.validate'),
+            text: context.tr(LocaleKeys.button_validate),
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 
@@ -74,9 +75,11 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               final formData = ref.read(savingsBookFormControllerProvider);
 
-              final newSaving = savingsBookData ??
+              final newSaving =
+                  savingsBookData ??
                   (Savings()..type = SavingsType.savingsBook);
-              newSaving.startAmount = (newSaving.startAmount ?? 0) +
+              newSaving.startAmount =
+                  (newSaving.startAmount ?? 0) +
                   double.parse(formData.startAmount);
 
               final updated = await ref

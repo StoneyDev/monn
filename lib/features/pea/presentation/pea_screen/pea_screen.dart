@@ -10,6 +10,7 @@ import 'package:monn/features/dashboard/presentation/add_savings_screen/controll
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/pea_form_screen.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -46,7 +47,7 @@ class PeaScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 16),
             child: Tooltip(
               message: context.tr(
-                'common.opening_account',
+                LocaleKeys.common_opening_account,
                 args: [
                   '${openingDate.numberYears()}',
                   if (eligibility) '17,2%' else '30%',
@@ -63,7 +64,7 @@ class PeaScreen extends ConsumerWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    context.tr('common.taxation'),
+                    context.tr(LocaleKeys.common_taxation),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: eligibility ? AppColors.green : AppColors.red,
@@ -113,7 +114,7 @@ class PeaScreen extends ConsumerWidget {
                             final newValue = ref.read(_startAmountProvider);
                             final newSaving =
                                 (value ?? (Savings()..type = SavingsType.pea))
-                                    ..startAmount = double.parse(newValue);
+                                  ..startAmount = double.parse(newValue);
 
                             final success = await ref
                                 .read(
@@ -167,7 +168,7 @@ class PeaScreen extends ConsumerWidget {
                           ),
                         ),
                         MonnLine(
-                          title: context.tr('common.number_equities'),
+                          title: context.tr(LocaleKeys.common_number_equities),
                           value: Text(
                             '${value?.equity ?? 0}',
                             textAlign: TextAlign.right,
@@ -176,7 +177,9 @@ class PeaScreen extends ConsumerWidget {
                           ),
                         ),
                         MonnLine(
-                          title: context.tr('common.average_purchase_price'),
+                          title: context.tr(
+                            LocaleKeys.common_average_purchase_price,
+                          ),
                           value: Text(
                             (value?.costAverage ?? 0).simpleCurrency(locale),
                             textAlign: TextAlign.right,
@@ -185,7 +188,7 @@ class PeaScreen extends ConsumerWidget {
                           ),
                         ),
                         MonnLine(
-                          title: context.tr('common.current_price'),
+                          title: context.tr(LocaleKeys.common_current_price),
                           value: switch (etfPrice) {
                             AsyncData(:final value) => Text(
                               value.simpleCurrency(locale),
@@ -194,14 +197,14 @@ class PeaScreen extends ConsumerWidget {
                                   ?.copyWith(color: AppColors.lightGray),
                             ),
                             AsyncError() => Text(
-                              context.tr('common.api_error'),
+                              context.tr(LocaleKeys.common_api_error),
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,
                               ),
                             ),
                             _ => Text(
-                              context.tr('common.loading'),
+                              context.tr(LocaleKeys.common_loading),
                               textAlign: TextAlign.right,
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(color: AppColors.lightGray),
@@ -209,11 +212,11 @@ class PeaScreen extends ConsumerWidget {
                           },
                         ),
                         MonnLine(
-                          title: context.tr('common.last_update'),
+                          title: context.tr(LocaleKeys.common_last_update),
                           value: Text(
                             value?.lastUpdate == null
                                 ? etfPrice.isLoading
-                                      ? context.tr('common.loading')
+                                      ? context.tr(LocaleKeys.common_loading)
                                       : DateTime.now().slashFormat(
                                           locale,
                                           withHour: true,
@@ -245,7 +248,7 @@ class PeaScreen extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: MonnButton(
-            text: context.tr('button.update_data'),
+            text: context.tr(LocaleKeys.button_update_data),
             onPressed: () => context.push(const PeaFormScreen()),
           ),
         ),

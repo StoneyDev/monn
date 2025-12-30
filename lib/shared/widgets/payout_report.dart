@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/monn_line.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -35,7 +36,7 @@ class PayoutReport extends StatelessWidget {
           children: [
             MonnLine(
               icon: const iconoir.PiggyBank(color: AppColors.green),
-              title: context.tr('common.net_profit'),
+              title: context.tr(LocaleKeys.common_net_profit),
               value: Text(
                 netProfit.simpleCurrency(locale),
                 textAlign: TextAlign.right,
@@ -47,7 +48,7 @@ class PayoutReport extends StatelessWidget {
             ),
             MonnLine(
               icon: const iconoir.Bank(color: AppColors.blue),
-              title: context.tr('common.tax', args: ['']),
+              title: context.tr(LocaleKeys.common_tax, args: ['']),
               value: Text(
                 (-tax).simpleCurrency(locale),
                 textAlign: TextAlign.right,
@@ -59,7 +60,7 @@ class PayoutReport extends StatelessWidget {
             ),
             MonnLine(
               icon: const iconoir.FireFlame(color: AppColors.red),
-              title: context.tr('common.loss'),
+              title: context.tr(LocaleKeys.common_loss),
               value: Text(
                 loss.simpleCurrency(locale),
                 textAlign: TextAlign.right,

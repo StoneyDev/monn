@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -24,7 +25,8 @@ class MonnBottomSheet {
       surfaceTintColor: AppColors.white,
       isTopBarLayerAlwaysVisible: true,
       topBarTitle: Text(
-        '${context.tr('common.dividends')} (${reit.name.toUpperCase()})',
+        // ignore: lines_longer_than_80_chars
+        '${context.tr(LocaleKeys.common_dividends)} (${reit.name.toUpperCase()})',
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w900,
         ),
@@ -117,7 +119,7 @@ class MonnBottomSheet {
         SliverPadding(
           padding: const EdgeInsets.all(16),
           sliver: SliverToBoxAdapter(
-            child: Text(context.tr('common.deletion_warning')),
+            child: Text(context.tr(LocaleKeys.common_deletion_warning)),
           ),
         ),
         SliverPadding(

@@ -75,7 +75,8 @@
     "payback_years": "{} ans",
     "payback_recovered": "Récupéré",
     "gross": "Brut",
-    "net": "Net"
+    "net": "Net",
+    "oh_no": "Oh non !"
   },
   "button": {
     "close": "Fermer",
