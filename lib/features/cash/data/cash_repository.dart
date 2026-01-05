@@ -62,13 +62,8 @@ Future<void> deleteCash(Ref ref, int id) {
 }
 
 @riverpod
-Stream<List<Cash>> watchCashs(Ref ref) async* {
-  final repository = ref.watch(cashRepositoryProvider);
-
-  await for (final results in repository.watchCashs()) {
-    yield results;
-  }
-}
+Stream<List<Cash>> watchCashs(Ref ref) =>
+    ref.watch(cashRepositoryProvider).watchCashs();
 
 @riverpod
 Stream<PayoutReportData> watchPayoutReportCash(Ref ref) async* {

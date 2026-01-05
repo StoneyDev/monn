@@ -1,26 +1,46 @@
+import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/domain/reit.dart';
-import 'package:monn/features/reit/domain/reit_dividend_form.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_dividend_form_controller.g.dart';
 
+typedef ReitDividendForm = ({
+  String amount,
+  DateTime receivedAt,
+  Reit? reit,
+});
+
 @Riverpod(keepAlive: true)
 class ReitDividendFormController extends _$ReitDividendFormController {
   @override
-  ReitDividendForm build() => ReitDividendForm(
+  ReitDividendForm build() => (
     amount: '',
     receivedAt: DateTime.now(),
+    reit: null,
   );
 
-  void reit({required Reit reit}) {
-    state = state.copyWith(reit: reit);
+  void set({String? amount, DateTime? receivedAt, Reit? reit}) {
+    state = (
+      amount: amount ?? state.amount,
+      receivedAt: receivedAt ?? state.receivedAt,
+      reit: reit ?? state.reit,
+    );
   }
 
-  void amount({required String amount}) {
-    state = state.copyWith(amount: amount);
-  }
+  Future<bool> submit() async {
+    final repository = ref.read(reitRepositoryProvider);
 
-  void receivedAt({required DateTime receivedAt}) {
-    state = state.copyWith(receivedAt: receivedAt);
+    final result = await AsyncValue.guard(
+      () => repository.editReit(
+        reit: state.reit!,
+        dividend: ReitDividend()
+          ..amount = double.parse(state.amount)
+          ..receivedAt = state.receivedAt,
+      ),
+    );
+
+    if (!ref.mounted) return false;
+
+    return !result.hasError;
   }
 }

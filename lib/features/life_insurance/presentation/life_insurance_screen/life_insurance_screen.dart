@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,7 +9,6 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
 import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/life_insurance_form_controller.dart';
-import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/submit_life_insurance_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
@@ -166,55 +167,61 @@ class LifeInsuranceScreen extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
     required LifeInsurance? value,
-  }) => context.push(
-    fullscreenDialog: true,
-    AmountScreen(
-      initialValue: value?.invested ?? 0,
-      onSubmit: () async {
-        final success = await ref
-            .read(submitLifeInsuranceFormControllerProvider.notifier)
-            .submit();
+  }) {
+    final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 
-        if (!context.mounted || !success) return;
+    unawaited(
+      context.push(
+        fullscreenDialog: true,
+        AmountScreen(
+          initialValue: value?.invested ?? 0,
+          onSubmit: () async {
+            final success = await formNotifier.submit();
 
-        ref
-          ..invalidate(lifeInsuranceFormControllerProvider)
-          ..invalidate(submitLifeInsuranceFormControllerProvider);
-        Navigator.pop(context);
-      },
-      onChanged: (newAmount) {
-        ref.read(lifeInsuranceFormControllerProvider.notifier)
-          ..invested(invested: newAmount)
-          ..interests(interests: (value?.interests ?? 0).toString());
-      },
-    ),
-  );
+            if (!context.mounted || !success) return;
+
+            ref.invalidate(lifeInsuranceFormControllerProvider);
+            Navigator.pop(context);
+          },
+          onChanged: (newAmount) {
+            formNotifier.set(
+              invested: newAmount,
+              interests: (value?.interests ?? 0).toString(),
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   void _openInterestsAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
     required LifeInsurance? value,
-  }) => context.push(
-    fullscreenDialog: true,
-    AmountScreen(
-      initialValue: value?.interests ?? 0,
-      onSubmit: () async {
-        final success = await ref
-            .read(submitLifeInsuranceFormControllerProvider.notifier)
-            .submit();
+  }) {
+    final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 
-        if (!context.mounted || !success) return;
+    unawaited(
+      context.push(
+        fullscreenDialog: true,
+        AmountScreen(
+          initialValue: value?.interests ?? 0,
+          onSubmit: () async {
+            final success = await formNotifier.submit();
 
-        ref
-          ..invalidate(lifeInsuranceFormControllerProvider)
-          ..invalidate(submitLifeInsuranceFormControllerProvider);
-        Navigator.pop(context);
-      },
-      onChanged: (newAmount) {
-        ref.read(lifeInsuranceFormControllerProvider.notifier)
-          ..interests(interests: newAmount)
-          ..invested(invested: (value?.invested ?? 0).toString());
-      },
-    ),
-  );
+            if (!context.mounted || !success) return;
+
+            ref.invalidate(lifeInsuranceFormControllerProvider);
+            Navigator.pop(context);
+          },
+          onChanged: (newAmount) {
+            formNotifier.set(
+              interests: newAmount,
+              invested: (value?.invested ?? 0).toString(),
+            );
+          },
+        ),
+      ),
+    );
+  }
 }

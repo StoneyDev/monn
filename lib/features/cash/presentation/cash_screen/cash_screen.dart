@@ -7,7 +7,6 @@ import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/cash/domain/cash.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/add_cash_screen.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
-import 'package:monn/features/cash/presentation/add_cash_screen/controllers/submit_cash_form_controller.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -124,17 +123,22 @@ class _CashCard extends ConsumerWidget {
           initialValue: cash.value,
           onSubmit: () async {
             final success = await ref
-                .read(submitCashFormControllerProvider.notifier)
+                .read(cashFormControllerProvider.notifier)
                 .submit();
 
             if (!context.mounted || !success) return;
+
+            ref.invalidate(cashFormControllerProvider);
             Navigator.pop(context);
           },
           onChanged: (newAmount) {
-            ref.read(cashFormControllerProvider.notifier)
-              ..id(id: cash.id)
-              ..label(label: cash.label)
-              ..value(value: newAmount);
+            ref
+                .read(cashFormControllerProvider.notifier)
+                .set(
+                  id: cash.id,
+                  label: cash.label,
+                  value: newAmount,
+                );
           },
         ),
       ),

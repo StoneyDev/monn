@@ -6,7 +6,6 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
-import 'package:monn/features/reit/presentation/reit_form_screen/controllers/submit_reit_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -36,6 +35,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
   @override
   Widget build(BuildContext context) {
     final savingsReit = ref.watch(getSavingsProvider(type: SavingsType.reit));
+    final formNotifier = ref.read(reitFormControllerProvider.notifier);
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -54,24 +54,21 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                     MonnFieldText(
                       label: context.tr(LocaleKeys.common_reit_name),
                       required: true,
-                      onChanged: (newName) => ref
-                          .read(reitFormControllerProvider.notifier)
-                          .reitName(newName),
+                      onChanged: (newName) =>
+                          formNotifier.set(reitName: newName),
                     ),
                     MonnFieldNumber<int>(
                       label: context.tr(LocaleKeys.common_part),
                       required: true,
-                      onChanged: (newShares) => ref
-                          .read(reitFormControllerProvider.notifier)
-                          .shares(newShares),
+                      onChanged: (newShares) =>
+                          formNotifier.set(shares: newShares),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.common_share_price),
                       suffix: '€',
                       required: true,
-                      onChanged: (newPrice) => ref
-                          .read(reitFormControllerProvider.notifier)
-                          .price(newPrice),
+                      onChanged: (newPrice) =>
+                          formNotifier.set(price: newPrice),
                     ),
                     MonnFieldDate(
                       label: context.tr(
@@ -79,9 +76,8 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                         args: [''],
                       ),
                       required: true,
-                      onChanged: (newDate) => ref
-                          .read(reitFormControllerProvider.notifier)
-                          .boughtOn(newDate),
+                      onChanged: (newDate) =>
+                          formNotifier.set(boughtOn: newDate),
                     ),
                   ],
                 ),
@@ -99,9 +95,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
               onPressed: () async {
                 if (!(formKey.currentState?.validate() ?? false)) return;
 
-                final success = await ref
-                    .read(submitReitFormControllerProvider.notifier)
-                    .submit();
+                final success = await formNotifier.submit();
 
                 final formData = ref.read(reitFormControllerProvider);
                 final newSaving = value ?? (Savings()..type = SavingsType.reit);
@@ -116,7 +110,6 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
 
                 ref
                   ..invalidate(reitFormControllerProvider)
-                  ..invalidate(submitReitFormControllerProvider)
                   ..invalidate(watchPayoutReportReitProvider)
                   ..invalidate(getSavingsProvider(type: SavingsType.reit));
                 Navigator.pop(context);

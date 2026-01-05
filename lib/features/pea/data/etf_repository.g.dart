@@ -81,4 +81,4 @@ final class GetEtfPriceMarketProvider
   }
 }
 
-String _$getEtfPriceMarketHash() => r'950d47b0db3081fd7568830b7b20f8a32f7fd53e';
+String _$getEtfPriceMarketHash() => r'8d20197bb2d049297cda9039619d83f7afbd365a';

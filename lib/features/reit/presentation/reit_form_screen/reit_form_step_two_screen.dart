@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_dividend_form_controller.dart';
-import 'package:monn/features/reit/presentation/reit_form_screen/controllers/submit_reit_dividend_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -39,14 +38,14 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
                 required: true,
                 onChanged: (newAmount) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .amount(amount: newAmount),
+                    .set(amount: newAmount),
               ),
               MonnFieldDate(
                 label: context.tr(LocaleKeys.common_receive_at),
                 required: true,
                 onChanged: (newReceivedAt) => ref
                     .read(reitDividendFormControllerProvider.notifier)
-                    .receivedAt(receivedAt: newReceivedAt),
+                    .set(receivedAt: newReceivedAt),
               ),
             ],
           ),
@@ -61,13 +60,11 @@ class _ReitFormStepTwoScreenState extends ConsumerState<ReitFormStepTwoScreen> {
               if (!(formKey.currentState?.validate() ?? false)) return;
 
               final success = await ref
-                  .read(submitReitDividendFormControllerProvider.notifier)
+                  .read(reitDividendFormControllerProvider.notifier)
                   .submit();
               if (!context.mounted || !success) return;
 
-              ref
-                ..invalidate(reitDividendFormControllerProvider)
-                ..invalidate(submitReitDividendFormControllerProvider);
+              ref.invalidate(reitDividendFormControllerProvider);
               Navigator.of(context)
                 ..pop()
                 ..pop();

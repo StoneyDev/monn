@@ -155,7 +155,7 @@ final class WatchCashsProvider
   }
 }
 
-String _$watchCashsHash() => r'b0f3ac255da0ce9f9bb4521a1861a1f1d4de3498';
+String _$watchCashsHash() => r'd1294ceae4ac94b7978b575cd0138a3c4c811e8b';
 
 @ProviderFor(watchPayoutReportCash)
 const watchPayoutReportCashProvider = WatchPayoutReportCashProvider._();

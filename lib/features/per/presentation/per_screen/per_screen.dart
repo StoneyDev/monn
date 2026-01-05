@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +7,6 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/per/data/per_repository.dart';
 import 'package:monn/features/per/domain/per.dart';
 import 'package:monn/features/per/presentation/per_screen/controllers/per_form_controller.dart';
-import 'package:monn/features/per/presentation/per_screen/controllers/submit_per_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -116,55 +117,61 @@ class PerScreen extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
     required Per? value,
-  }) => context.push(
-    fullscreenDialog: true,
-    AmountScreen(
-      initialValue: value?.invested ?? 0,
-      onSubmit: () async {
-        final success = await ref
-            .read(submitPerFormControllerProvider.notifier)
-            .submit();
+  }) {
+    final formNotifier = ref.read(perFormControllerProvider.notifier);
 
-        if (!context.mounted || !success) return;
+    unawaited(
+      context.push(
+        fullscreenDialog: true,
+        AmountScreen(
+          initialValue: value?.invested ?? 0,
+          onSubmit: () async {
+            final success = await formNotifier.submit();
 
-        ref
-          ..invalidate(perFormControllerProvider)
-          ..invalidate(submitPerFormControllerProvider);
-        Navigator.pop(context);
-      },
-      onChanged: (newAmount) {
-        ref.read(perFormControllerProvider.notifier)
-          ..invested(invested: newAmount)
-          ..interests(interests: (value?.interests ?? 0).toString());
-      },
-    ),
-  );
+            if (!context.mounted || !success) return;
+
+            ref.invalidate(perFormControllerProvider);
+            Navigator.pop(context);
+          },
+          onChanged: (newAmount) {
+            formNotifier.set(
+              invested: newAmount,
+              interests: (value?.interests ?? 0).toString(),
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   void _openInterestsAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
     required Per? value,
-  }) => context.push(
-    fullscreenDialog: true,
-    AmountScreen(
-      initialValue: value?.interests ?? 0,
-      onSubmit: () async {
-        final success = await ref
-            .read(submitPerFormControllerProvider.notifier)
-            .submit();
+  }) {
+    final formNotifier = ref.read(perFormControllerProvider.notifier);
 
-        if (!context.mounted || !success) return;
+    unawaited(
+      context.push(
+        fullscreenDialog: true,
+        AmountScreen(
+          initialValue: value?.interests ?? 0,
+          onSubmit: () async {
+            final success = await formNotifier.submit();
 
-        ref
-          ..invalidate(perFormControllerProvider)
-          ..invalidate(submitPerFormControllerProvider);
-        Navigator.pop(context);
-      },
-      onChanged: (newAmount) {
-        ref.read(perFormControllerProvider.notifier)
-          ..interests(interests: newAmount)
-          ..invested(invested: (value?.invested ?? 0).toString());
-      },
-    ),
-  );
+            if (!context.mounted || !success) return;
+
+            ref.invalidate(perFormControllerProvider);
+            Navigator.pop(context);
+          },
+          onChanged: (newAmount) {
+            formNotifier.set(
+              interests: newAmount,
+              invested: (value?.invested ?? 0).toString(),
+            );
+          },
+        ),
+      ),
+    );
+  }
 }

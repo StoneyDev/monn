@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/counter_strike_form_controller.dart';
-import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/submit_counter_strike_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
@@ -80,7 +79,7 @@ class _AddCounterStrikeScreenState
                                         counterStrikeFormControllerProvider
                                             .notifier,
                                       )
-                                      .imageId(imageId: item),
+                                      .set(imageId: item),
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: Theme.of(
@@ -149,7 +148,7 @@ class _AddCounterStrikeScreenState
                 label: context.tr(LocaleKeys.common_wear),
                 onChanged: (newWear) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
-                    .wear(wear: newWear),
+                    .set(wear: newWear),
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
@@ -158,7 +157,7 @@ class _AddCounterStrikeScreenState
                 required: true,
                 onChanged: (newPurchaseValue) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
-                    .purchaseValue(purchaseValue: newPurchaseValue),
+                    .set(purchaseValue: newPurchaseValue),
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
@@ -167,7 +166,7 @@ class _AddCounterStrikeScreenState
                 required: true,
                 onChanged: (newCurrentValue) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
-                    .currentValue(currentValue: newCurrentValue),
+                    .set(currentValue: newCurrentValue),
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldDate(
@@ -175,14 +174,14 @@ class _AddCounterStrikeScreenState
                 required: true,
                 onChanged: (newBoughtAt) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
-                    .boughtAt(boughtAt: newBoughtAt),
+                    .set(boughtAt: newBoughtAt),
               ),
               MonnFieldNumber<int>(
                 label: context.tr(LocaleKeys.common_quantity),
                 required: true,
                 onChanged: (newQuantity) => ref
                     .read(counterStrikeFormControllerProvider.notifier)
-                    .quantity(quantity: newQuantity),
+                    .set(quantity: newQuantity),
                 textInputAction: TextInputAction.done,
               ),
               const SizedBox(height: 16),
@@ -203,16 +202,12 @@ class _AddCounterStrikeScreenState
                     }
 
                     final success = await ref
-                        .read(
-                          submitCounterStrikeFormControllerProvider.notifier,
-                        )
+                        .read(counterStrikeFormControllerProvider.notifier)
                         .submit();
 
                     if (!context.mounted || !success) return;
 
-                    ref
-                      ..invalidate(counterStrikeFormControllerProvider)
-                      ..invalidate(submitCounterStrikeFormControllerProvider);
+                    ref.invalidate(counterStrikeFormControllerProvider);
                     Navigator.pop(context);
                   },
                 ),

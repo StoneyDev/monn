@@ -1,9 +1,10 @@
-// ignore_for_file: cascade_invocations, lines_longer_than_80_chars .
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:monn/features/reit/domain/reit_form.dart';
+import 'package:mockito/mockito.dart';
+import 'package:monn/features/reit/data/reit_repository.dart';
+import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
 
+import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
 
 void main() {
@@ -13,108 +14,179 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        reitFormControllerProvider.notifier,
-      );
+      final controller = container.read(reitFormControllerProvider.notifier);
 
       // Assert
       expect(controller.state, isA<ReitForm>());
       expect(controller.state.reitName, '');
-      expect(controller.state.shares, '');
       expect(controller.state.price, '');
-      expect(controller.state.boughtOn, isA<DateTime>());
+      expect(controller.state.shares, '');
     });
 
-    test('should update reitName when edit is called with new name', () {
+    test('should update reitName when set() is called', () {
       // Arrange
-      const reitName = 'Random SCPI';
+      const reitName = 'My REIT';
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        reitFormControllerProvider.notifier,
-      );
-      controller.reitName(reitName);
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(reitName: reitName);
 
       // Assert
       expect(controller.state.reitName, reitName);
     });
 
-    test('should update shares when edit is called with new shares', () {
+    test('should update price when set() is called', () {
       // Arrange
-      const shares = '12';
-      const expectedShares = '12';
+      const price = '150.50';
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        reitFormControllerProvider.notifier,
-      );
-      controller.shares(shares);
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(price: price);
 
       // Assert
-      expect(controller.state.shares, expectedShares);
+      expect(controller.state.price, price);
     });
 
-    test('should update price when edit is called with new price', () {
+    test('should update shares when set() is called', () {
       // Arrange
-      const price = '77.8';
-      const expectedPrice = '77.8';
+      const shares = '10';
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        reitFormControllerProvider.notifier,
-      );
-      controller.price(price);
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(shares: shares);
 
       // Assert
-      expect(controller.state.price, expectedPrice);
+      expect(controller.state.shares, shares);
     });
 
-    test('should update boughtOn when edit is called with new date', () {
+    test('should update boughtOn when set() is called', () {
       // Arrange
-      final boughtOn = DateTime(2024, 04, 24);
+      final boughtOn = DateTime(2024, 6, 15);
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        reitFormControllerProvider.notifier,
-      );
-      controller.boughtOn(boughtOn);
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(boughtOn: boughtOn);
 
       // Assert
       expect(controller.state.boughtOn, boughtOn);
     });
 
-    test(
-      'should update multiple fields when edit is called with multiple parameters',
-      () {
-        // Arrange
-        const reitName = 'Random SCPI';
-        const shares = '23';
-        const expectedShares = '23';
-        const price = '345';
-        const expectedPrice = '345';
-        final boughtOn = DateTime.now();
-        final container = createContainer();
+    test('should update all fields when set() is called with all', () {
+      // Arrange
+      const reitName = 'Test REIT';
+      const price = '200';
+      const shares = '5';
+      final boughtOn = DateTime(2024);
+      final container = createContainer();
 
-        // Act
-        final controller = container.read(
-          reitFormControllerProvider.notifier,
+      // Act
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(
+          reitName: reitName,
+          price: price,
+          shares: shares,
+          boughtOn: boughtOn,
         );
-        controller
-          ..boughtOn(boughtOn)
-          ..reitName(reitName)
-          ..shares(shares)
-          ..price(price);
 
-        // Assert
-        expect(controller.state.reitName, reitName);
-        expect(controller.state.shares, expectedShares);
-        expect(controller.state.price, expectedPrice);
-        expect(controller.state.boughtOn, boughtOn);
-      },
-    );
+      // Assert
+      expect(controller.state.reitName, reitName);
+      expect(controller.state.price, price);
+      expect(controller.state.shares, shares);
+      expect(controller.state.boughtOn, boughtOn);
+    });
+
+    test('should preserve other fields when only one is updated', () {
+      // Arrange
+      final container = createContainer();
+
+      // Act
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(reitName: 'Initial', price: '100')
+        ..set(reitName: 'Updated');
+
+      // Assert
+      expect(controller.state.reitName, 'Updated');
+      expect(controller.state.price, '100');
+    });
+  });
+
+  group('reitFormController submit', () {
+    test('should return true when submit succeeds', () async {
+      // Arrange
+      final mockRepository = MockReitRepository();
+      when(mockRepository.addReit(any)).thenAnswer((_) async {});
+
+      final container = createContainer(
+        overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
+      );
+
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(reitName: 'Test REIT', price: '150', shares: '10');
+
+      // Act
+      final result = await controller.submit();
+
+      // Assert
+      expect(result, isTrue);
+      verify(mockRepository.addReit(any)).called(1);
+    });
+
+    test('should return false when submit fails', () async {
+      // Arrange
+      final mockRepository = MockReitRepository();
+      when(mockRepository.addReit(any)).thenThrow(Exception('Error'));
+
+      final container = createContainer(
+        overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
+      );
+
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(reitName: 'Test REIT', price: '150', shares: '10');
+
+      // Act
+      final result = await controller.submit();
+
+      // Assert
+      expect(result, isFalse);
+    });
+
+    test('should call repository with correct values', () async {
+      // Arrange
+      final mockRepository = MockReitRepository();
+      when(mockRepository.addReit(any)).thenAnswer((_) async {});
+
+      final container = createContainer(
+        overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
+      );
+
+      final boughtOn = DateTime(2024, 3, 15);
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(
+          reitName: 'My REIT',
+          price: '250.50',
+          shares: '15',
+          boughtOn: boughtOn,
+        );
+
+      // Act
+      await controller.submit();
+
+      // Assert
+      verify(
+        mockRepository.addReit(
+          argThat(
+            isA<Reit>()
+                .having((r) => r.name, 'name', 'My REIT')
+                .having((r) => r.price, 'price', 250.50)
+                .having((r) => r.shares, 'shares', 15)
+                .having((r) => r.boughtOn, 'boughtOn', boughtOn),
+          ),
+        ),
+      ).called(1);
+    });
   });
 }

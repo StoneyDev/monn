@@ -1,31 +1,55 @@
-import 'package:monn/features/reit/domain/reit_form.dart';
+import 'package:monn/features/reit/data/reit_repository.dart';
+import 'package:monn/features/reit/domain/reit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_form_controller.g.dart';
 
+typedef ReitForm = ({
+  String reitName,
+  DateTime boughtOn,
+  String price,
+  String shares,
+});
+
 @Riverpod(keepAlive: true)
 class ReitFormController extends _$ReitFormController {
   @override
-  ReitForm build() => ReitForm(
+  ReitForm build() => (
     reitName: '',
     boughtOn: DateTime.now(),
     price: '',
     shares: '',
   );
 
-  void reitName(String reitName) {
-    state = state.copyWith(reitName: reitName);
+  void set({
+    String? reitName,
+    DateTime? boughtOn,
+    String? price,
+    String? shares,
+  }) {
+    state = (
+      reitName: reitName ?? state.reitName,
+      boughtOn: boughtOn ?? state.boughtOn,
+      price: price ?? state.price,
+      shares: shares ?? state.shares,
+    );
   }
 
-  void boughtOn(DateTime boughtOn) {
-    state = state.copyWith(boughtOn: boughtOn);
-  }
+  Future<bool> submit() async {
+    final repository = ref.read(reitRepositoryProvider);
 
-  void shares(String shares) {
-    state = state.copyWith(shares: shares);
-  }
+    final result = await AsyncValue.guard(
+      () => repository.addReit(
+        Reit()
+          ..name = state.reitName
+          ..price = double.parse(state.price)
+          ..boughtOn = state.boughtOn
+          ..shares = int.parse(state.shares),
+      ),
+    );
 
-  void price(String price) {
-    state = state.copyWith(price: price);
+    if (!ref.mounted) return false;
+
+    return !result.hasError;
   }
 }

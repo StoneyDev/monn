@@ -1,13 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/savings_book_form_screen.dart';
-import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/submit_savings_book_interest_form_controller.dart';
+import 'package:monn/features/savings_book/presentation/savings_book_screen/controllers/savings_book_interest_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -16,8 +15,6 @@ import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_financial_info.dart';
 import 'package:monn/utils/app_colors.dart';
-
-final _newInterestProvider = StateProvider<String>((_) => '');
 
 class SavingsBookScreen extends ConsumerWidget {
   const SavingsBookScreen({super.key});
@@ -99,31 +96,39 @@ class SavingsBookScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    onTap: () => context.push(
-                      fullscreenDialog: true,
-                      AmountScreen(
-                        onChanged: (value) =>
-                            ref.read(_newInterestProvider.notifier).state =
-                                value,
-                        onSubmit: () async {
-                          final success = await ref
+                    onTap: () async {
+                      ref
+                          .read(
+                            savingsBookInterestFormControllerProvider.notifier,
+                          )
+                          .set(savingsBook: item);
+
+                      await context.push(
+                        fullscreenDialog: true,
+                        AmountScreen(
+                          onChanged: (value) => ref
                               .read(
-                                submitSavingsBookInterestFormControllerProvider
+                                savingsBookInterestFormControllerProvider
                                     .notifier,
                               )
-                              .submit(
-                                savingsBook: item,
-                                amount: double.parse(
-                                  ref.read(_newInterestProvider),
-                                ),
-                              );
-                          if (!context.mounted || !success) return;
+                              .set(amount: value),
+                          onSubmit: () async {
+                            final success = await ref
+                                .read(
+                                  savingsBookInterestFormControllerProvider
+                                      .notifier,
+                                )
+                                .submit();
+                            if (!context.mounted || !success) return;
 
-                          ref.invalidate(_newInterestProvider);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
+                            ref.invalidate(
+                              savingsBookInterestFormControllerProvider,
+                            );
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
                   );
                 },
                 separatorBuilder: (_, _) => const SizedBox(height: 16),

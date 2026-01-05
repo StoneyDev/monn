@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
-import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/submit_crowdfunding_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -59,7 +58,7 @@ class _EditCrowdfundingScreenState
                       initialValue: widget.crowdfunding?.platformName ?? 'LPB',
                       onChanged: (newPlatformName) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
-                          .platformName(platformName: newPlatformName),
+                          .set(platformName: newPlatformName),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.common_profit),
@@ -69,7 +68,7 @@ class _EditCrowdfundingScreenState
                           .toString(),
                       onChanged: (newBrutProfit) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
-                          .brutProfit(brutProfit: newBrutProfit),
+                          .set(brutProfit: newBrutProfit),
                     ),
                     Consumer(
                       builder: (_, ref, _) {
@@ -114,7 +113,7 @@ class _EditCrowdfundingScreenState
                                           crowdfundingFormControllerProvider
                                               .notifier,
                                         )
-                                        .taxPercentage(taxPercentage: newTax),
+                                        .set(taxPercentage: newTax),
                                   ),
                                 ),
                                 const SizedBox(width: 16),
@@ -135,7 +134,7 @@ class _EditCrowdfundingScreenState
                                           crowdfundingFormControllerProvider
                                               .notifier,
                                         )
-                                        .taxPercentage();
+                                        .set(clearTax: true);
                                   }
                                 },
                                 icon: isTaxFree
@@ -157,7 +156,7 @@ class _EditCrowdfundingScreenState
                       initialValue: widget.crowdfunding?.receivedAt,
                       onChanged: (newReceivedAt) => ref
                           .read(crowdfundingFormControllerProvider.notifier)
-                          .receivedAt(receivedAt: newReceivedAt),
+                          .set(receivedAt: newReceivedAt),
                     ),
                   ],
                 ),
@@ -175,14 +174,12 @@ class _EditCrowdfundingScreenState
               if (!(formKey.currentState?.validate() ?? false)) return;
 
               final success = await ref
-                  .read(submitCrowdfundingFormControllerProvider.notifier)
+                  .read(crowdfundingFormControllerProvider.notifier)
                   .submit();
 
               if (!context.mounted || !success) return;
 
-              ref
-                ..invalidate(crowdfundingFormControllerProvider)
-                ..invalidate(submitCrowdfundingFormControllerProvider);
+              ref.invalidate(crowdfundingFormControllerProvider);
               Navigator.pop(context);
             },
           ),

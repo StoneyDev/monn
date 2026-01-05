@@ -81,7 +81,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
                       ? () async {
                           ref
                               .read(reitDividendFormControllerProvider.notifier)
-                              .reit(reit: ref.read(_selectedReitProvider)!);
+                              .set(reit: ref.read(_selectedReitProvider));
 
                           await Navigator.push(
                             context,

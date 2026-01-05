@@ -42,7 +42,7 @@ final class ReitFormControllerProvider
 }
 
 String _$reitFormControllerHash() =>
-    r'77b8247ba97ca00e067b5ff6e917cec436c2c4c0';
+    r'5470de06b7422dc2ea823c9e05e9bbeeaa82df5c';
 
 abstract class _$ReitFormController extends $Notifier<ReitForm> {
   ReitForm build();

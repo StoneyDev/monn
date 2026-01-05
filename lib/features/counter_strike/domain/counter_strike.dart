@@ -37,7 +37,8 @@ enum CounterStrikeItem {
   spectrumCase('Spectrum'),
   falchionCase('Falchion'),
   horizonCase('Horizon'),
-  recoilCase('Recoil');
+  recoilCase('Recoil')
+  ;
 
   const CounterStrikeItem(this.label);
 

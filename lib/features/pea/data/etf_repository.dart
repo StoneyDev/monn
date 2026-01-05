@@ -30,9 +30,11 @@ EtfRepository etfRepository(Ref ref) {
 
 @riverpod
 Future<double> getEtfPriceMarket(Ref ref) async {
-  final etfRepository = ref.watch(etfRepositoryProvider);
-  final peaRepository = ref.watch(peaRepositoryProvider);
+  final etfRepository = ref.read(etfRepositoryProvider);
+  final peaRepository = ref.read(peaRepositoryProvider);
   final pea = await ref.refresh(getPeaProvider.future);
+
+  if (!ref.mounted) return 0;
 
   final now = DateTime.now();
   final lastUpdate = (pea?.lastUpdate ?? DateTime(now.year)).add(

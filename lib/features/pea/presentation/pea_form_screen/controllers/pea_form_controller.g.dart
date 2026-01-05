@@ -20,7 +20,7 @@ final class PeaFormControllerProvider
         argument: null,
         retry: null,
         name: r'peaFormControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +41,7 @@ final class PeaFormControllerProvider
   }
 }
 
-String _$peaFormControllerHash() => r'ee339b0de83d83bb66f97420ef3d3f1e8aec220e';
+String _$peaFormControllerHash() => r'6d37e7b3d4b98fe82cdc7930a4d3dcafe6f04f86';
 
 abstract class _$PeaFormController extends $Notifier<PeaForm> {
   PeaForm build();

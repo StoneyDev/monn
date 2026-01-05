@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/controllers/freelance_form_controller.dart';
-import 'package:monn/features/freelance/presentation/freelance_screen/controllers/submit_freelance_form_controller.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/widgets/breakdown_section.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -111,9 +110,6 @@ class _FreelanceHeader extends ConsumerWidget {
     required WidgetRef ref,
     required double annualRevenue,
   }) {
-    final submitNotifier = ref.read(
-      submitFreelanceFormControllerProvider.notifier,
-    );
     final formNotifier = ref.read(freelanceFormControllerProvider.notifier);
 
     unawaited(
@@ -122,16 +118,14 @@ class _FreelanceHeader extends ConsumerWidget {
         AmountScreen(
           initialValue: annualRevenue,
           onSubmit: () async {
-            final success = await submitNotifier.submit();
+            final success = await formNotifier.submit();
 
             if (!context.mounted || !success) return;
 
-            ref
-              ..invalidate(freelanceFormControllerProvider)
-              ..invalidate(submitFreelanceFormControllerProvider);
+            ref.invalidate(freelanceFormControllerProvider);
             Navigator.pop(context);
           },
-          onChanged: formNotifier.annualRevenue,
+          onChanged: (newAmount) => formNotifier.set(annualRevenue: newAmount),
         ),
       ),
     );

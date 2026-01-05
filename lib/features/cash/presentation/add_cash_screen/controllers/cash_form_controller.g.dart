@@ -42,7 +42,7 @@ final class CashFormControllerProvider
 }
 
 String _$cashFormControllerHash() =>
-    r'59aa1a7bd364e46f9e35f83d9c67ee0278453b8c';
+    r'c7d89680f1a495beed80cefc91aeb6bf251b125a';
 
 abstract class _$CashFormController extends $Notifier<CashForm> {
   CashForm build();

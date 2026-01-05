@@ -5,7 +5,6 @@ import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
-import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/submit_savings_book_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -47,7 +46,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
                 required: true,
                 onChanged: (newName) => ref
                     .read(savingsBookFormControllerProvider.notifier)
-                    .name(name: newName),
+                    .set(name: newName),
               ),
               MonnFieldNumber<double>(
                 label: context.tr(LocaleKeys.common_start_amount),
@@ -55,7 +54,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
                 required: true,
                 onChanged: (newStartAmount) => ref
                     .read(savingsBookFormControllerProvider.notifier)
-                    .startAmount(startAmount: newStartAmount),
+                    .set(startAmount: newStartAmount),
               ),
             ],
           ),
@@ -69,11 +68,11 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
             onPressed: () async {
               if (!(formKey.currentState?.validate() ?? false)) return;
 
-              final success = await ref
-                  .read(submitSavingsBookFormControllerProvider.notifier)
-                  .submit();
-
               final formData = ref.read(savingsBookFormControllerProvider);
+
+              final success = await ref
+                  .read(savingsBookFormControllerProvider.notifier)
+                  .submit();
 
               final newSaving =
                   savingsBookData ??
@@ -90,7 +89,6 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
               ref
                 ..invalidate(savingsBookFormControllerProvider)
-                ..invalidate(submitSavingsBookFormControllerProvider)
                 ..invalidate(getSavingsProvider);
               Navigator.pop(context);
             },

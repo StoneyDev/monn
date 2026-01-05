@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/controllers/pea_form_controller.dart';
-import 'package:monn/features/pea/presentation/pea_form_screen/controllers/submit_pea_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -43,9 +42,9 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                   initialValue: (value?.equity ?? '').toString(),
                   onChanged: (newEquity) => ref
                       .read(peaFormControllerProvider.notifier)
-                      .equity(
+                      .set(
                         equity: newEquity,
-                        initial: value?.equity,
+                        initialEquity: value?.equity,
                       ),
                 ),
                 MonnFieldNumber<double>(
@@ -54,9 +53,9 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                   initialValue: (value?.costAverage ?? '').toString(),
                   onChanged: (newCostAverage) => ref
                       .read(peaFormControllerProvider.notifier)
-                      .costAverage(
+                      .set(
                         costAverage: newCostAverage,
-                        initial: value?.costAverage,
+                        initialCostAverage: value?.costAverage,
                       ),
                 ),
               ],
@@ -83,11 +82,12 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
             onPressed: canSubmit
                 ? () async {
                     final success = await ref
-                        .read(submitPeaFormControllerProvider.notifier)
+                        .read(peaFormControllerProvider.notifier)
                         .submit();
                     if (!context.mounted || !success) return;
 
                     ref
+                      ..invalidate(peaFormControllerProvider)
                       ..invalidate(getPeaProvider)
                       ..invalidate(getPayoutReportPeaProvider);
                     Navigator.pop(context);

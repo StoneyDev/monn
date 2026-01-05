@@ -3,13 +3,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/add_counter_strike_screen.dart';
-import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/submit_counter_strike_form_controller.dart';
+import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/counter_strike_form_controller.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -21,8 +20,6 @@ import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/formula.dart';
-
-final _currentValueProvider = StateProvider<String>((_) => '');
 
 class CounterStrikeScreen extends ConsumerWidget {
   const CounterStrikeScreen({super.key});
@@ -191,22 +188,26 @@ class _CounterStrikeItem extends ConsumerWidget {
         AmountScreen(
           initialValue: data.currentValue,
           onSubmit: () async {
-            final updatedData = data
-              ..lastUpdate = DateTime.now()
-              ..currentValue = double.parse(
-                ref.read(_currentValueProvider)!,
-              );
-
             final success = await ref
-                .read(submitCounterStrikeFormControllerProvider.notifier)
-                .submitNewCurrentValue(updatedData);
+                .read(counterStrikeFormControllerProvider.notifier)
+                .submit();
+
             if (!context.mounted || !success) return;
 
-            ref.invalidate(_currentValueProvider);
+            ref.invalidate(counterStrikeFormControllerProvider);
             Navigator.pop(context);
           },
-          onChanged: (value) =>
-              ref.read(_currentValueProvider.notifier).state = value,
+          onChanged: (newCurrentValue) => ref
+              .read(counterStrikeFormControllerProvider.notifier)
+              .set(
+                id: data.id,
+                wear: data.wear?.toString(),
+                purchaseValue: data.purchaseValue.toString(),
+                currentValue: newCurrentValue,
+                boughtAt: data.boughtAt,
+                quantity: data.quantity.toString(),
+                imageId: data.imageId,
+              ),
         ),
       ),
     );

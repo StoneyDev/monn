@@ -75,7 +75,7 @@ class CryptoPageScreen extends ConsumerWidget {
                         onPressed: () async {
                           ref
                               .read(cryptoFormControllerProvider.notifier)
-                              .crypto(crypto: crypto);
+                              .set(crypto: crypto);
 
                           await context.push(const AddCryptoScreen());
                         },

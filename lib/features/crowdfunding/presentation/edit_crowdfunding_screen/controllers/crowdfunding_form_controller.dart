@@ -1,37 +1,94 @@
-import 'package:monn/features/crowdfunding/domain/crowdfunding_form.dart';
-import 'package:monn/shared/extensions/ref_ui.dart';
+import 'package:isar_community/isar.dart';
+import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
+import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_form_controller.g.dart';
 
+typedef CrowdfundingForm = ({
+  String platformName,
+  DateTime receivedAt,
+  String brutProfit,
+  String? taxPercentage,
+  int? id,
+});
+
 @Riverpod(keepAlive: true)
 class CrowdfundingFormController extends _$CrowdfundingFormController {
   @override
-  CrowdfundingForm build() => CrowdfundingForm(
+  CrowdfundingForm build() => (
     platformName: 'LPB',
     receivedAt: DateTime.now(),
     brutProfit: '',
+    taxPercentage: null,
+    id: null,
   );
 
-  void id({int? id}) {
-    // Maintains the value until next page is loaded
-    ref.cacheFor(const Duration(seconds: 2));
-    state = state.copyWith(id: id);
+  void set({
+    String? platformName,
+    DateTime? receivedAt,
+    String? brutProfit,
+    String? taxPercentage,
+    int? id,
+    bool clearTax = false,
+  }) {
+    state = (
+      platformName: platformName ?? state.platformName,
+      receivedAt: receivedAt ?? state.receivedAt,
+      brutProfit: brutProfit ?? state.brutProfit,
+      taxPercentage: clearTax ? null : (taxPercentage ?? state.taxPercentage),
+      id: id ?? state.id,
+    );
   }
 
-  void platformName({required String platformName}) {
-    state = state.copyWith(platformName: platformName);
-  }
+  Future<bool> submit() async {
+    final repository = ref.read(crowdfundingRepositoryProvider);
 
-  void receivedAt({required DateTime receivedAt}) {
-    state = state.copyWith(receivedAt: receivedAt);
-  }
+    final id = state.id ?? Isar.autoIncrement;
+    final platformName = state.platformName;
+    final receivedAt = state.receivedAt;
+    final brutProfit = double.parse(state.brutProfit);
 
-  void brutProfit({required String brutProfit}) {
-    state = state.copyWith(brutProfit: brutProfit);
-  }
+    late Crowdfunding newCrowdfunding;
 
-  void taxPercentage({String? taxPercentage}) {
-    state = state.copyWith(taxPercentage: taxPercentage);
+    if (brutProfit.isNegative) {
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..brutProfit = brutProfit;
+    } else if (state.taxPercentage == null) {
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..brutProfit = brutProfit
+        ..netProfit = brutProfit;
+    } else {
+      final taxPercentage = double.parse(state.taxPercentage!);
+      final taxProfit = double.parse(
+        (brutProfit * (taxPercentage / 100)).toStringAsFixed(2),
+      );
+      final netProfit = double.parse(
+        (brutProfit - taxProfit).toStringAsFixed(2),
+      );
+
+      newCrowdfunding = Crowdfunding()
+        ..id = id
+        ..platformName = platformName
+        ..receivedAt = receivedAt
+        ..taxPercentage = taxPercentage
+        ..taxProfit = taxProfit
+        ..brutProfit = brutProfit
+        ..netProfit = netProfit;
+    }
+
+    final result = await AsyncValue.guard(
+      () => repository.editCrowdfunding(newCrowdfunding),
+    );
+
+    if (!ref.mounted) return false;
+
+    return !result.hasError;
   }
 }

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
-import 'package:monn/features/cash/presentation/add_cash_screen/controllers/submit_cash_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -35,7 +34,7 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
                 required: true,
                 onChanged: (newLabel) => ref
                     .read(cashFormControllerProvider.notifier)
-                    .label(label: newLabel),
+                    .set(label: newLabel),
                 textInputAction: TextInputAction.next,
               ),
               MonnFieldNumber<double>(
@@ -44,7 +43,7 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
                 required: true,
                 onChanged: (newValue) => ref
                     .read(cashFormControllerProvider.notifier)
-                    .value(value: newValue),
+                    .set(value: newValue),
                 textInputAction: TextInputAction.done,
               ),
             ],
@@ -60,14 +59,12 @@ class _AddCashScreenState extends ConsumerState<AddCashScreen> {
               if (!(formKey.currentState?.validate() ?? false)) return;
 
               final success = await ref
-                  .read(submitCashFormControllerProvider.notifier)
+                  .read(cashFormControllerProvider.notifier)
                   .submit();
 
               if (!context.mounted || !success) return;
 
-              ref
-                ..invalidate(cashFormControllerProvider)
-                ..invalidate(submitCashFormControllerProvider);
+              ref.invalidate(cashFormControllerProvider);
               Navigator.pop(context);
             },
           ),

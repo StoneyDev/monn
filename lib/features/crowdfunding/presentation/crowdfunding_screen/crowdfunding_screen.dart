@@ -154,16 +154,17 @@ class _RefundTransaction extends ConsumerWidget {
 
     return MonnCard(
       onLongPress: () async {
-        ref.read(crowdfundingFormControllerProvider.notifier)
-          ..id(id: crowdfunding.id)
-          ..platformName(platformName: crowdfunding.platformName)
-          ..brutProfit(brutProfit: crowdfunding.brutProfit.toString())
-          ..receivedAt(receivedAt: crowdfunding.receivedAt!)
-          ..taxPercentage(
-            taxPercentage: crowdfunding.taxPercentage != null
-                ? '${crowdfunding.taxPercentage}'
-                : null,
-          );
+        ref
+            .read(crowdfundingFormControllerProvider.notifier)
+            .set(
+              id: crowdfunding.id,
+              platformName: crowdfunding.platformName,
+              brutProfit: crowdfunding.brutProfit.toString(),
+              receivedAt: crowdfunding.receivedAt,
+              taxPercentage: crowdfunding.taxPercentage != null
+                  ? '${crowdfunding.taxPercentage}'
+                  : null,
+            );
         await context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
       },
       child: Row(

@@ -43,7 +43,7 @@ final class LifeInsuranceFormControllerProvider
 }
 
 String _$lifeInsuranceFormControllerHash() =>
-    r'c072bd471d3db6dca2ad2d527c351c7e5ec498c6';
+    r'8e7592585f27aa8aa0c427647d13e62a072f0f82';
 
 abstract class _$LifeInsuranceFormController
     extends $Notifier<LifeInsuranceForm> {
