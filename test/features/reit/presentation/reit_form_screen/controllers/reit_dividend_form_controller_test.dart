@@ -21,44 +21,13 @@ void main() {
       // Assert
       expect(controller.state, isA<ReitDividendForm>());
       expect(controller.state.amount, '');
+      expect(controller.state.receivedAt, isA<DateTime>());
       expect(controller.state.reit, isNull);
     });
 
-    test('should update amount when set() is called', () {
+    test('should update reit when set is called with Reit', () {
       // Arrange
-      const amount = '500.50';
-      final container = createContainer();
-
-      // Act
-      final controller = container.read(
-        reitDividendFormControllerProvider.notifier,
-      )..set(amount: amount);
-
-      // Assert
-      expect(controller.state.amount, amount);
-    });
-
-    test('should update receivedAt when set() is called', () {
-      // Arrange
-      final receivedAt = DateTime(2024, 6, 15);
-      final container = createContainer();
-
-      // Act
-      final controller = container.read(
-        reitDividendFormControllerProvider.notifier,
-      )..set(receivedAt: receivedAt);
-
-      // Assert
-      expect(controller.state.receivedAt, receivedAt);
-    });
-
-    test('should update reit when set() is called', () {
-      // Arrange
-      final reit = Reit()
-        ..name = 'Test REIT'
-        ..price = 100
-        ..shares = 10
-        ..boughtOn = DateTime.now();
+      final reit = Reit();
       final container = createContainer();
 
       // Act
@@ -70,49 +39,56 @@ void main() {
       expect(controller.state.reit, reit);
     });
 
-    test('should update all fields when set() is called with all', () {
+    test('should update amount when set is called with new amount', () {
       // Arrange
-      const amount = '750';
-      final receivedAt = DateTime(2024, 3, 1);
-      final reit = Reit()
-        ..name = 'My REIT'
-        ..price = 200
-        ..shares = 5
-        ..boughtOn = DateTime(2024, 1, 1);
+      const amount = '50.7';
+      const expectedAmount = '50.7';
       final container = createContainer();
 
       // Act
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
-      )..set(amount: amount, receivedAt: receivedAt, reit: reit);
+      )..set(amount: amount);
 
       // Assert
-      expect(controller.state.amount, amount);
-      expect(controller.state.receivedAt, receivedAt);
-      expect(controller.state.reit, reit);
+      expect(controller.state.amount, expectedAmount);
     });
 
-    test('should preserve other fields when only one is updated', () {
+    test('should update receivedAt when set is called', () {
       // Arrange
-      final reit = Reit()
-        ..name = 'Test'
-        ..price = 100
-        ..shares = 10
-        ..boughtOn = DateTime.now();
+      final receivedAt = DateTime(2024, 04, 24);
       final container = createContainer();
 
       // Act
-      final controller =
-          container.read(
-              reitDividendFormControllerProvider.notifier,
-            )
-            ..set(amount: '100', reit: reit)
-            ..set(amount: '200');
+      final controller = container.read(
+        reitDividendFormControllerProvider.notifier,
+      )..set(receivedAt: receivedAt);
 
       // Assert
-      expect(controller.state.amount, '200');
-      expect(controller.state.reit, reit);
+      expect(controller.state.receivedAt, receivedAt);
     });
+
+    test(
+      'should update multiple fields when set is called with multiple parameters',
+      () {
+        // Arrange
+        final reit = Reit()..name = 'Random SCPI';
+        const amount = '2.15455';
+        const expectedAmount = '2.15455';
+        final receivedAt = DateTime.now();
+        final container = createContainer();
+
+        // Act
+        final controller = container.read(
+          reitDividendFormControllerProvider.notifier,
+        )..set(reit: reit, amount: amount, receivedAt: receivedAt);
+
+        // Assert
+        expect(controller.state.reit, reit);
+        expect(controller.state.amount, expectedAmount);
+        expect(controller.state.receivedAt, receivedAt);
+      },
+    );
   });
 
   group('reitDividendFormController submit', () {
@@ -130,15 +106,10 @@ void main() {
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()
-        ..name = 'Test REIT'
-        ..price = 100
-        ..shares = 10
-        ..boughtOn = DateTime.now();
-
+      final reit = Reit()..name = 'Random SCPI';
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
-      )..set(amount: '500', reit: reit);
+      )..set(amount: '50.7', reit: reit);
 
       // Act
       final result = await controller.submit();
@@ -167,15 +138,10 @@ void main() {
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()
-        ..name = 'Test REIT'
-        ..price = 100
-        ..shares = 10
-        ..boughtOn = DateTime.now();
-
+      final reit = Reit()..name = 'Random SCPI';
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
-      )..set(amount: '500', reit: reit);
+      )..set(amount: '50.7', reit: reit);
 
       // Act
       final result = await controller.submit();
@@ -198,16 +164,11 @@ void main() {
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()
-        ..name = 'My REIT'
-        ..price = 150
-        ..shares = 8
-        ..boughtOn = DateTime(2024, 1, 1);
-
-      final receivedAt = DateTime(2024, 6, 15);
+      final reit = Reit()..name = 'Random SCPI';
+      final receivedAt = DateTime(2024, 04, 24);
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
-      )..set(amount: '750.25', receivedAt: receivedAt, reit: reit);
+      )..set(amount: '2.15455', receivedAt: receivedAt, reit: reit);
 
       // Act
       await controller.submit();
@@ -218,7 +179,7 @@ void main() {
           reit: argThat(equals(reit), named: 'reit'),
           dividend: argThat(
             isA<ReitDividend>()
-                .having((d) => d.amount, 'amount', 750.25)
+                .having((d) => d.amount, 'amount', 2.15455)
                 .having((d) => d.receivedAt, 'receivedAt', receivedAt),
             named: 'dividend',
           ),

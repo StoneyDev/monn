@@ -19,13 +19,14 @@ void main() {
       // Assert
       expect(controller.state, isA<ReitForm>());
       expect(controller.state.reitName, '');
-      expect(controller.state.price, '');
       expect(controller.state.shares, '');
+      expect(controller.state.price, '');
+      expect(controller.state.boughtOn, isA<DateTime>());
     });
 
-    test('should update reitName when set() is called', () {
+    test('should update reitName when set is called with new name', () {
       // Arrange
-      const reitName = 'My REIT';
+      const reitName = 'Random SCPI';
       final container = createContainer();
 
       // Act
@@ -36,22 +37,10 @@ void main() {
       expect(controller.state.reitName, reitName);
     });
 
-    test('should update price when set() is called', () {
+    test('should update shares when set is called with new shares', () {
       // Arrange
-      const price = '150.50';
-      final container = createContainer();
-
-      // Act
-      final controller = container.read(reitFormControllerProvider.notifier)
-        ..set(price: price);
-
-      // Assert
-      expect(controller.state.price, price);
-    });
-
-    test('should update shares when set() is called', () {
-      // Arrange
-      const shares = '10';
+      const shares = '12';
+      const expectedShares = '12';
       final container = createContainer();
 
       // Act
@@ -59,12 +48,26 @@ void main() {
         ..set(shares: shares);
 
       // Assert
-      expect(controller.state.shares, shares);
+      expect(controller.state.shares, expectedShares);
     });
 
-    test('should update boughtOn when set() is called', () {
+    test('should update price when set is called with new price', () {
       // Arrange
-      final boughtOn = DateTime(2024, 6, 15);
+      const price = '77.8';
+      const expectedPrice = '77.8';
+      final container = createContainer();
+
+      // Act
+      final controller = container.read(reitFormControllerProvider.notifier)
+        ..set(price: price);
+
+      // Assert
+      expect(controller.state.price, expectedPrice);
+    });
+
+    test('should update boughtOn when set is called with new date', () {
+      // Arrange
+      final boughtOn = DateTime(2024, 04, 24);
       final container = createContainer();
 
       // Act
@@ -75,43 +78,34 @@ void main() {
       expect(controller.state.boughtOn, boughtOn);
     });
 
-    test('should update all fields when set() is called with all', () {
-      // Arrange
-      const reitName = 'Test REIT';
-      const price = '200';
-      const shares = '5';
-      final boughtOn = DateTime(2024);
-      final container = createContainer();
+    test(
+      'should update multiple fields when set is called with multiple parameters',
+      () {
+        // Arrange
+        const reitName = 'Random SCPI';
+        const shares = '23';
+        const expectedShares = '23';
+        const price = '345';
+        const expectedPrice = '345';
+        final boughtOn = DateTime.now();
+        final container = createContainer();
 
-      // Act
-      final controller = container.read(reitFormControllerProvider.notifier)
-        ..set(
-          reitName: reitName,
-          price: price,
-          shares: shares,
-          boughtOn: boughtOn,
-        );
+        // Act
+        final controller = container.read(reitFormControllerProvider.notifier)
+          ..set(
+            boughtOn: boughtOn,
+            reitName: reitName,
+            shares: shares,
+            price: price,
+          );
 
-      // Assert
-      expect(controller.state.reitName, reitName);
-      expect(controller.state.price, price);
-      expect(controller.state.shares, shares);
-      expect(controller.state.boughtOn, boughtOn);
-    });
-
-    test('should preserve other fields when only one is updated', () {
-      // Arrange
-      final container = createContainer();
-
-      // Act
-      final controller = container.read(reitFormControllerProvider.notifier)
-        ..set(reitName: 'Initial', price: '100')
-        ..set(reitName: 'Updated');
-
-      // Assert
-      expect(controller.state.reitName, 'Updated');
-      expect(controller.state.price, '100');
-    });
+        // Assert
+        expect(controller.state.reitName, reitName);
+        expect(controller.state.shares, expectedShares);
+        expect(controller.state.price, expectedPrice);
+        expect(controller.state.boughtOn, boughtOn);
+      },
+    );
   });
 
   group('reitFormController submit', () {
@@ -125,7 +119,7 @@ void main() {
       );
 
       final controller = container.read(reitFormControllerProvider.notifier)
-        ..set(reitName: 'Test REIT', price: '150', shares: '10');
+        ..set(reitName: 'Random SCPI', price: '77.8', shares: '12');
 
       // Act
       final result = await controller.submit();
@@ -145,7 +139,7 @@ void main() {
       );
 
       final controller = container.read(reitFormControllerProvider.notifier)
-        ..set(reitName: 'Test REIT', price: '150', shares: '10');
+        ..set(reitName: 'Random SCPI', price: '77.8', shares: '12');
 
       // Act
       final result = await controller.submit();
@@ -163,12 +157,12 @@ void main() {
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final boughtOn = DateTime(2024, 3, 15);
+      final boughtOn = DateTime(2024, 04, 24);
       final controller = container.read(reitFormControllerProvider.notifier)
         ..set(
-          reitName: 'My REIT',
-          price: '250.50',
-          shares: '15',
+          reitName: 'Random SCPI',
+          price: '345',
+          shares: '23',
           boughtOn: boughtOn,
         );
 
@@ -180,9 +174,9 @@ void main() {
         mockRepository.addReit(
           argThat(
             isA<Reit>()
-                .having((r) => r.name, 'name', 'My REIT')
-                .having((r) => r.price, 'price', 250.50)
-                .having((r) => r.shares, 'shares', 15)
+                .having((r) => r.name, 'name', 'Random SCPI')
+                .having((r) => r.price, 'price', 345)
+                .having((r) => r.shares, 'shares', 23)
                 .having((r) => r.boughtOn, 'boughtOn', boughtOn),
           ),
         ),
