@@ -79,6 +79,7 @@ void main() {
     });
 
     test(
+      // ignore: lines_longer_than_80_chars
       'should update multiple fields when set is called with multiple parameters',
       () {
         // Arrange

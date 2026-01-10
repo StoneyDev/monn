@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +61,7 @@ class MonnFieldNumber<T> extends ConsumerWidget {
                 : null,
           ),
           keyboardType: TextInputType.numberWithOptions(
-            signed: Platform.isIOS,
+            signed: true,
             decimal: T == double,
           ),
           validator: required

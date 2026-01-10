@@ -19,6 +19,7 @@ class MonnError extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          spacing: 8,
           children: [
             Text(
               context.tr(LocaleKeys.common_oh_no),

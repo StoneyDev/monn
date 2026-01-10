@@ -3,28 +3,30 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart'
-    as _i2;
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart' as _i4;
+    as _i3;
+import 'package:monn/features/crowdfunding/domain/crowdfunding.dart' as _i5;
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart'
-    as _i7;
-import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i8;
-import 'package:monn/features/dashboard/data/savings_repository.dart' as _i5;
-import 'package:monn/features/dashboard/domain/savings.dart' as _i6;
+    as _i8;
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i9;
+import 'package:monn/features/dashboard/data/savings_repository.dart' as _i6;
+import 'package:monn/features/dashboard/domain/savings.dart' as _i7;
+import 'package:monn/features/expenses/data/expenses_repository.dart' as _i10;
+import 'package:monn/features/expenses/domain/budget.dart' as _i2;
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart'
-    as _i9;
+    as _i11;
 import 'package:monn/features/life_insurance/domain/life_insurance.dart'
-    as _i10;
-import 'package:monn/features/per/data/per_repository.dart' as _i11;
-import 'package:monn/features/per/domain/per.dart' as _i12;
-import 'package:monn/features/reit/data/reit_repository.dart' as _i13;
-import 'package:monn/features/reit/domain/reit.dart' as _i14;
+    as _i12;
+import 'package:monn/features/per/data/per_repository.dart' as _i13;
+import 'package:monn/features/per/domain/per.dart' as _i14;
+import 'package:monn/features/reit/data/reit_repository.dart' as _i15;
+import 'package:monn/features/reit/domain/reit.dart' as _i16;
 import 'package:monn/features/savings_book/data/savings_book_repository.dart'
-    as _i15;
-import 'package:monn/features/savings_book/domain/savings_book.dart' as _i16;
+    as _i17;
+import 'package:monn/features/savings_book/domain/savings_book.dart' as _i18;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -40,218 +42,260 @@ import 'package:monn/features/savings_book/domain/savings_book.dart' as _i16;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeBudget_0 extends _i1.SmartFake implements _i2.Budget {
+  _FakeBudget_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [CrowdfundingRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCrowdfundingRepository extends _i1.Mock
-    implements _i2.CrowdfundingRepository {
+    implements _i3.CrowdfundingRepository {
   @override
-  _i3.Stream<List<_i4.Crowdfunding>> watchCrowdfundings() =>
+  _i4.Stream<List<_i5.Crowdfunding>> watchCrowdfundings() =>
       (super.noSuchMethod(
             Invocation.method(#watchCrowdfundings, []),
-            returnValue: _i3.Stream<List<_i4.Crowdfunding>>.empty(),
+            returnValue: _i4.Stream<List<_i5.Crowdfunding>>.empty(),
             returnValueForMissingStub:
-                _i3.Stream<List<_i4.Crowdfunding>>.empty(),
+                _i4.Stream<List<_i5.Crowdfunding>>.empty(),
           )
-          as _i3.Stream<List<_i4.Crowdfunding>>);
+          as _i4.Stream<List<_i5.Crowdfunding>>);
 
   @override
-  _i3.Future<void> editCrowdfunding(_i4.Crowdfunding? newCrowdfunding) =>
+  _i4.Future<void> editCrowdfunding(_i5.Crowdfunding? newCrowdfunding) =>
       (super.noSuchMethod(
             Invocation.method(#editCrowdfunding, [newCrowdfunding]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [SavingsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSavingsRepository extends _i1.Mock implements _i5.SavingsRepository {
+class MockSavingsRepository extends _i1.Mock implements _i6.SavingsRepository {
   @override
-  _i3.Stream<List<_i6.Savings>> watchSavings({_i6.SavingsFilter? filter}) =>
+  _i4.Stream<List<_i7.Savings>> watchSavings({_i7.SavingsFilter? filter}) =>
       (super.noSuchMethod(
             Invocation.method(#watchSavings, [], {#filter: filter}),
-            returnValue: _i3.Stream<List<_i6.Savings>>.empty(),
-            returnValueForMissingStub: _i3.Stream<List<_i6.Savings>>.empty(),
+            returnValue: _i4.Stream<List<_i7.Savings>>.empty(),
+            returnValueForMissingStub: _i4.Stream<List<_i7.Savings>>.empty(),
           )
-          as _i3.Stream<List<_i6.Savings>>);
+          as _i4.Stream<List<_i7.Savings>>);
 
   @override
-  _i3.Future<_i6.Savings?> getSavings(_i6.SavingsType? type) =>
+  _i4.Future<_i7.Savings?> getSavings(_i7.SavingsType? type) =>
       (super.noSuchMethod(
             Invocation.method(#getSavings, [type]),
-            returnValue: _i3.Future<_i6.Savings?>.value(),
-            returnValueForMissingStub: _i3.Future<_i6.Savings?>.value(),
+            returnValue: _i4.Future<_i7.Savings?>.value(),
+            returnValueForMissingStub: _i4.Future<_i7.Savings?>.value(),
           )
-          as _i3.Future<_i6.Savings?>);
+          as _i4.Future<_i7.Savings?>);
 
   @override
-  _i3.Future<void> editSaving(_i6.Savings? newSaving) =>
+  _i4.Future<void> editSaving(_i7.Savings? newSaving) =>
       (super.noSuchMethod(
             Invocation.method(#editSaving, [newSaving]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [CryptocurrencyRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCryptocurrencyRepository extends _i1.Mock
-    implements _i7.CryptocurrencyRepository {
+    implements _i8.CryptocurrencyRepository {
   @override
-  _i3.Stream<List<_i8.Cryptocurrency>> watchCryptocurrencies() =>
+  _i4.Stream<List<_i9.Cryptocurrency>> watchCryptocurrencies() =>
       (super.noSuchMethod(
             Invocation.method(#watchCryptocurrencies, []),
-            returnValue: _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+            returnValue: _i4.Stream<List<_i9.Cryptocurrency>>.empty(),
             returnValueForMissingStub:
-                _i3.Stream<List<_i8.Cryptocurrency>>.empty(),
+                _i4.Stream<List<_i9.Cryptocurrency>>.empty(),
           )
-          as _i3.Stream<List<_i8.Cryptocurrency>>);
+          as _i4.Stream<List<_i9.Cryptocurrency>>);
 
   @override
-  _i3.Future<_i8.Cryptocurrency?> getCryptocurrency(_i8.CryptoType? type) =>
+  _i4.Future<_i9.Cryptocurrency?> getCryptocurrency(_i9.CryptoType? type) =>
       (super.noSuchMethod(
             Invocation.method(#getCryptocurrency, [type]),
-            returnValue: _i3.Future<_i8.Cryptocurrency?>.value(),
-            returnValueForMissingStub: _i3.Future<_i8.Cryptocurrency?>.value(),
+            returnValue: _i4.Future<_i9.Cryptocurrency?>.value(),
+            returnValueForMissingStub: _i4.Future<_i9.Cryptocurrency?>.value(),
           )
-          as _i3.Future<_i8.Cryptocurrency?>);
+          as _i4.Future<_i9.Cryptocurrency?>);
 
   @override
-  _i3.Future<void> editCryptocurrency({
-    required _i8.Cryptocurrency? crypto,
-    _i8.CryptocurrencyTransaction? transaction,
+  _i4.Future<void> editCryptocurrency({
+    required _i9.Cryptocurrency? crypto,
+    _i9.CryptocurrencyTransaction? transaction,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#editCryptocurrency, [], {
               #crypto: crypto,
               #transaction: transaction,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
+}
+
+/// A class which mocks [ExpensesRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockExpensesRepository extends _i1.Mock
+    implements _i10.ExpensesRepository {
+  @override
+  _i4.Future<_i2.Budget> getOrCreateBudget() =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrCreateBudget, []),
+            returnValue: _i4.Future<_i2.Budget>.value(
+              _FakeBudget_0(this, Invocation.method(#getOrCreateBudget, [])),
+            ),
+            returnValueForMissingStub: _i4.Future<_i2.Budget>.value(
+              _FakeBudget_0(this, Invocation.method(#getOrCreateBudget, [])),
+            ),
+          )
+          as _i4.Future<_i2.Budget>);
+
+  @override
+  _i4.Stream<_i2.Budget?> watchBudget() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchBudget, []),
+            returnValue: _i4.Stream<_i2.Budget?>.empty(),
+            returnValueForMissingStub: _i4.Stream<_i2.Budget?>.empty(),
+          )
+          as _i4.Stream<_i2.Budget?>);
+
+  @override
+  _i4.Future<void> saveBudget(_i2.Budget? budget) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveBudget, [budget]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [LifeInsuranceRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLifeInsuranceRepository extends _i1.Mock
-    implements _i9.LifeInsuranceRepository {
+    implements _i11.LifeInsuranceRepository {
   @override
-  _i3.Stream<_i10.LifeInsurance?> watchLifeInsurance() =>
+  _i4.Stream<_i12.LifeInsurance?> watchLifeInsurance() =>
       (super.noSuchMethod(
             Invocation.method(#watchLifeInsurance, []),
-            returnValue: _i3.Stream<_i10.LifeInsurance?>.empty(),
-            returnValueForMissingStub: _i3.Stream<_i10.LifeInsurance?>.empty(),
+            returnValue: _i4.Stream<_i12.LifeInsurance?>.empty(),
+            returnValueForMissingStub: _i4.Stream<_i12.LifeInsurance?>.empty(),
           )
-          as _i3.Stream<_i10.LifeInsurance?>);
+          as _i4.Stream<_i12.LifeInsurance?>);
 
   @override
-  _i3.Future<void> editLifeInsurance(_i10.LifeInsurance? lifeInsurance) =>
+  _i4.Future<void> editLifeInsurance(_i12.LifeInsurance? lifeInsurance) =>
       (super.noSuchMethod(
             Invocation.method(#editLifeInsurance, [lifeInsurance]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [PerRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPerRepository extends _i1.Mock implements _i11.PerRepository {
+class MockPerRepository extends _i1.Mock implements _i13.PerRepository {
   @override
-  _i3.Stream<_i12.Per?> watchPer() =>
+  _i4.Stream<_i14.Per?> watchPer() =>
       (super.noSuchMethod(
             Invocation.method(#watchPer, []),
-            returnValue: _i3.Stream<_i12.Per?>.empty(),
-            returnValueForMissingStub: _i3.Stream<_i12.Per?>.empty(),
+            returnValue: _i4.Stream<_i14.Per?>.empty(),
+            returnValueForMissingStub: _i4.Stream<_i14.Per?>.empty(),
           )
-          as _i3.Stream<_i12.Per?>);
+          as _i4.Stream<_i14.Per?>);
 
   @override
-  _i3.Future<void> editPer(_i12.Per? per) =>
+  _i4.Future<void> editPer(_i14.Per? per) =>
       (super.noSuchMethod(
             Invocation.method(#editPer, [per]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [ReitRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockReitRepository extends _i1.Mock implements _i13.ReitRepository {
+class MockReitRepository extends _i1.Mock implements _i15.ReitRepository {
   @override
-  _i3.Stream<List<_i14.Reit>> watchReits() =>
+  _i4.Stream<List<_i16.Reit>> watchReits() =>
       (super.noSuchMethod(
             Invocation.method(#watchReits, []),
-            returnValue: _i3.Stream<List<_i14.Reit>>.empty(),
-            returnValueForMissingStub: _i3.Stream<List<_i14.Reit>>.empty(),
+            returnValue: _i4.Stream<List<_i16.Reit>>.empty(),
+            returnValueForMissingStub: _i4.Stream<List<_i16.Reit>>.empty(),
           )
-          as _i3.Stream<List<_i14.Reit>>);
+          as _i4.Stream<List<_i16.Reit>>);
 
   @override
-  _i3.Future<void> addReit(_i14.Reit? reit) =>
+  _i4.Future<void> addReit(_i16.Reit? reit) =>
       (super.noSuchMethod(
             Invocation.method(#addReit, [reit]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 
   @override
-  _i3.Future<void> editReit({
-    required _i14.Reit? reit,
-    required _i14.ReitDividend? dividend,
+  _i4.Future<void> editReit({
+    required _i16.Reit? reit,
+    required _i16.ReitDividend? dividend,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#editReit, [], {
               #reit: reit,
               #dividend: dividend,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 
   @override
-  _i3.Future<void> deleteReit(_i14.Reit? reit) =>
+  _i4.Future<void> deleteReit(_i16.Reit? reit) =>
       (super.noSuchMethod(
             Invocation.method(#deleteReit, [reit]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [SavingsBookRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSavingsBookRepository extends _i1.Mock
-    implements _i15.SavingsBookRepository {
+    implements _i17.SavingsBookRepository {
   @override
-  _i3.Stream<List<_i16.SavingsBook>> watchSavingsBooks() =>
+  _i4.Stream<List<_i18.SavingsBook>> watchSavingsBooks() =>
       (super.noSuchMethod(
             Invocation.method(#watchSavingsBooks, []),
-            returnValue: _i3.Stream<List<_i16.SavingsBook>>.empty(),
+            returnValue: _i4.Stream<List<_i18.SavingsBook>>.empty(),
             returnValueForMissingStub:
-                _i3.Stream<List<_i16.SavingsBook>>.empty(),
+                _i4.Stream<List<_i18.SavingsBook>>.empty(),
           )
-          as _i3.Stream<List<_i16.SavingsBook>>);
+          as _i4.Stream<List<_i18.SavingsBook>>);
 
   @override
-  _i3.Future<void> editSavingsBook(_i16.SavingsBook? savingsBook) =>
+  _i4.Future<void> editSavingsBook(_i18.SavingsBook? savingsBook) =>
       (super.noSuchMethod(
             Invocation.method(#editSavingsBook, [savingsBook]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 }

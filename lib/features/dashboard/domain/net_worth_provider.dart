@@ -13,7 +13,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'net_worth_provider.g.dart';
 
-double _getFinalAmount(Ref ref, SavingsType type) => switch (type) {
+@riverpod
+double getFinalAmount(Ref ref, SavingsType type) => switch (type) {
   SavingsType.savingsBook =>
     ref.watch(watchPayoutReportSavingsBookProvider).value?.finalAmount ?? 0,
   SavingsType.crowdfunding =>
@@ -36,7 +37,7 @@ double _getFinalAmount(Ref ref, SavingsType type) => switch (type) {
 
 @riverpod
 double watchTotalNetWorth(Ref ref) => SavingsType.values
-    .map((type) => _getFinalAmount(ref, type))
+    .map((type) => ref.watch(getFinalAmountProvider(type)))
     .fold<double>(0, (a, b) => a + b);
 
 @riverpod
@@ -69,17 +70,15 @@ List<Savings> watchSortedSavings(
       );
     case SavingsFilter.sortByFinalAmountDesc:
       allSavings.sort(
-        (Savings a, Savings b) => _getFinalAmount(
-          ref,
-          b.type,
-        ).compareTo(_getFinalAmount(ref, a.type)),
+        (Savings a, Savings b) => ref
+            .watch(getFinalAmountProvider(b.type))
+            .compareTo(ref.watch(getFinalAmountProvider(a.type))),
       );
     case SavingsFilter.sortByFinalAmountAsc:
       allSavings.sort(
-        (Savings a, Savings b) => _getFinalAmount(
-          ref,
-          a.type,
-        ).compareTo(_getFinalAmount(ref, b.type)),
+        (Savings a, Savings b) => ref
+            .watch(getFinalAmountProvider(a.type))
+            .compareTo(ref.watch(getFinalAmountProvider(b.type))),
       );
   }
 

@@ -31,8 +31,8 @@ puro flutter pub run build_runner build --delete-conflicting-outputs
 ### Localization
 ```bash
 # Generate locale files
-dart run easy_localization:generate --source-dir "assets/translations"
-dart run easy_localization:generate -f keys -o locale_keys.g.dart --source-dir "assets/translations"
+puro flutter pub run easy_localization:generate --source-dir "assets/translations"
+puro flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart --source-dir "assets/translations"
 ```
 
 ### Build
@@ -92,6 +92,7 @@ lib/features/<feature_name>/
 
 **Core Features:**
 - `dashboard/` - Main screen with portfolio overview and reports
+- `expenses/` - Monthly budget tracking with Sankey diagram visualization
 - `amount/` - Transaction amount entry screen
 - `settings/` - App settings (theme, backup)
 
@@ -121,47 +122,58 @@ Stream<List<Cryptocurrency>> watchCryptocurrencies(Ref ref) {
 ```
 Stream providers auto-dispose when no longer watched, which is the desired behavior.
 
-3. **Form Controllers** (keep-alive with manual disposal):
+3. **Form Controllers** (unified pattern with Dart 3 records):
 ```dart
+// Use Dart 3 records instead of Freezed for form state
+typedef CryptoFormState = ({
+  String amount,
+  DateTime date,
+  Cryptocurrency? crypto,
+});
+
 @Riverpod(keepAlive: true)
 class CryptoFormController extends _$CryptoFormController {
   @override
-  CryptoForm build() => CryptoForm(amount: '', date: DateTime.now());
+  CryptoFormState build() => (amount: '', date: DateTime.now(), crypto: null);
 
-  void amount({required String amount}) {
-    ref.cacheFor(const Duration(seconds: 2)); // Custom extension
-    state = state.copyWith(amount: amount);
+  void update({String? amount, DateTime? date, Cryptocurrency? crypto}) {
+    state = (
+      amount: amount ?? state.amount,
+      date: date ?? state.date,
+      crypto: crypto ?? state.crypto,
+    );
   }
-}
-```
-
-**IMPORTANT**: Form controllers use `keepAlive: true` to prevent premature disposal. They are manually invalidated in the widget's `dispose()` method.
-
-4. **Submit Controllers** (keep-alive with ref.mounted protection):
-```dart
-@Riverpod(keepAlive: true)
-class SubmitCryptoFormController extends _$SubmitCryptoFormController {
-  @override
-  FutureOr<void> build() async {}
 
   Future<bool> submit() async {
     final repository = ref.read(cryptocurrencyRepositoryProvider);
-    final formData = ref.read(cryptoFormControllerProvider);
 
-    state = await AsyncValue.guard(() => repository.editCrypto(...));
+    final result = await AsyncValue.guard(
+      () => repository.editCryptocurrency(
+        crypto: state.crypto!..totalCrypto += double.parse(state.amount),
+        transaction: CryptocurrencyTransaction()
+          ..amount = double.parse(state.amount)
+          ..date = state.date,
+      ),
+    );
 
     // CRITICAL: Always check ref.mounted after async operations
     if (!ref.mounted) return false;
 
-    return !state.hasError;
+    return !result.hasError;
   }
 }
 ```
 
+**IMPORTANT**: Form controllers:
+- Use `keepAlive: true` to prevent premature disposal
+- Use Dart 3 records (not Freezed) for simpler state
+- Combine form state + update + submit in ONE controller
+- Are manually invalidated after successful submit
+
 **CRITICAL PATTERN**: After ANY async operation (`await`), check `if (!ref.mounted) return;` before accessing `ref` or `state`. This prevents errors when the provider disposes during the async gap.
 
 **Manual Provider Invalidation After Submit:**
-Since form and submit controllers use `keepAlive: true`, they must be manually invalidated after successful submission:
+Since form controllers use `keepAlive: true`, they must be manually invalidated after successful submission:
 
 ```dart
 MonnButton(
@@ -170,15 +182,12 @@ MonnButton(
     if (!(formKey.currentState?.validate() ?? false)) return;
 
     final success = await ref
-        .read(submitCashFormControllerProvider.notifier)
+        .read(cashFormControllerProvider.notifier)
         .submit();
 
     if (!context.mounted || !success) return;
 
-    // Invalidate providers after successful submit
-    ref
-      ..invalidate(cashFormControllerProvider)
-      ..invalidate(submitCashFormControllerProvider);
+    ref.invalidate(cashFormControllerProvider);
     Navigator.pop(context);
   },
 )
@@ -192,12 +201,12 @@ When navigating to a generic widget (like `AmountScreen`) that uses callbacks, c
 ```dart
 onTap: () {
   // Capture notifier before navigation to prevent disposal during async operations
-  final submitNotifier = ref.read(submitCashFormControllerProvider.notifier);
+  final formNotifier = ref.read(cashFormControllerProvider.notifier);
 
   context.push(
     AmountScreen(
       onSubmit: () async {
-        final success = await submitNotifier.submit();
+        final success = await formNotifier.submit();
         if (!context.mounted || !success) return;
         Navigator.pop(context);
       },
@@ -218,9 +227,10 @@ ref
 - ❌ Don't use `ref.read()` inside callbacks without capturing the notifier first
 - ❌ Don't forget `if (!ref.mounted) return;` after async operations
 - ❌ Don't use empty `ref.listen()` calls - they serve no purpose and can cause disposal issues
-- ❌ Don't use auto-dispose (`@riverpod`) for form/submit controllers - use `@Riverpod(keepAlive: true)`
+- ❌ Don't use auto-dispose (`@riverpod`) for form controllers - use `@Riverpod(keepAlive: true)`
 - ❌ Don't invalidate providers in `dispose()` method - `ref` is unsafe when widget is unmounting
-- ✅ DO use `@Riverpod(keepAlive: true)` for form and submit controllers
+- ❌ Don't use Freezed for form state - use Dart 3 records instead
+- ✅ DO use `@Riverpod(keepAlive: true)` for form controllers
 - ✅ DO manually invalidate providers after successful submit operations
 - ✅ DO capture notifiers before navigation when using callbacks
 - ✅ DO check `ref.mounted` after every async gap
@@ -309,16 +319,14 @@ if (DateTime.now().isAfter(lastUpdate)) {
 
 ### Forms & Validation
 
-**Form Model (Freezed):**
+**Form State (Dart 3 Records):**
 ```dart
-@freezed
-class CryptoForm with _$CryptoForm {
-  const factory CryptoForm({
-    required String amount,
-    required DateTime date,
-    Cryptocurrency? crypto,
-  }) = _CryptoForm;
-}
+// Define form state as a typedef record - no code generation needed
+typedef CryptoFormState = ({
+  String amount,
+  DateTime date,
+  Cryptocurrency? crypto,
+});
 ```
 
 **Form Screen Pattern:**
@@ -330,12 +338,12 @@ MonnButton(
     if (!(formKey.currentState?.validate() ?? false)) return;
 
     final success = await ref
-      .read(submitCryptoFormControllerProvider.notifier)
+      .read(cryptoFormControllerProvider.notifier)
       .submit();
 
     if (!context.mounted || !success) return;
 
-    ref.invalidate(getCryptocurrencyProvider(type));
+    ref.invalidate(cryptoFormControllerProvider);
     Navigator.pop(context);
   },
 )
@@ -449,7 +457,7 @@ enum SavingsType {
 
 2. **Add to net worth calculation** in `lib/features/dashboard/domain/net_worth_provider.dart`:
 ```dart
-// The exhaustive switch will show a compiler error until you add:
+// In getFinalAmount() switch - the exhaustive switch will show a compiler error:
 SavingsType.newType => ref
     .watch(watchPayoutReportNewTypeProvider)
     .value
@@ -458,13 +466,6 @@ SavingsType.newType => ref
 
 3. **Add UI mappings** in `lib/shared/extensions/enum_ui.dart`:
 ```dart
-// In getReport() switch:
-SavingsType.newType => ref.watch(
-  watchPayoutReportNewTypeProvider.select(
-    (value) => value.value?.finalAmount ?? 0,
-  ),
-),
-
 // In route() switch:
 SavingsType.newType => const NewTypeScreen(),
 
@@ -490,8 +491,8 @@ _database = await Isar.open([
 ### Compiler Safety
 
 The exhaustive `switch` statements on `SavingsType` will produce compile-time errors if you forget to handle the new type in:
-- `net_worth_provider.dart` (net worth calculation)
-- `enum_ui.dart` (getReport, route, icon methods)
+- `net_worth_provider.dart` (getFinalAmount calculation)
+- `enum_ui.dart` (route, icon methods)
 
 ## Important Conventions
 
@@ -504,19 +505,18 @@ All domain models and providers use generators. **Always run `flutter pub run bu
 - Creating/modifying `@RestApi` interfaces
 
 ### Naming Conventions
-- Controllers: `<Name>Controller` (e.g., `CryptoFormController`)
+- Form Controllers: `<Name>FormController` (e.g., `CryptoFormController`) - contains state + update + submit
 - Repositories: `<Name>Repository` (e.g., `CryptocurrencyRepository`)
-- Forms: `<Name>Form` (e.g., `CryptoForm`)
 - Screens: `<Name>Screen` (e.g., `CryptocurrencyScreen`)
 - Providers: Generated automatically with `Provider` suffix
+- Form State: `<Name>FormState` typedef record (e.g., `CryptoFormState`)
 
 ### File Organization
 - Domain models: `domain/<model_name>.dart`
-- Form models: `domain/<model_name>_form.dart`
 - Repositories: `data/<name>_repository.dart`
 - API clients: `data/<name>_api.dart`
 - Screens: `presentation/<screen_name>/<screen_name>.dart`
-- Controllers: `presentation/<screen_name>/controllers/<name>_controller.dart`
+- Form Controllers: `presentation/<screen_name>/controllers/<name>_form_controller.dart`
 
 ### Navigation
 Uses simple push-based navigation (no router):
@@ -582,3 +582,4 @@ Uses `very_good_analysis` package with custom overrides:
 - `public_member_api_docs: false` - No doc comments required
 - `invalid_annotation_target: ignore` - Allow Freezed annotations
 - `document_ignores: ignore` - No need to document ignores
+

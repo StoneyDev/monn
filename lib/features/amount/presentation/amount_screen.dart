@@ -90,7 +90,7 @@ class _AmountScreenState extends State<AmountScreen> {
           child: MonnButton(
             text: context.tr(LocaleKeys.button_validate),
             onPressed:
-                (formKey.currentState?.validate() ?? false) && addedAmount > 0
+                (formKey.currentState?.validate() ?? false) && addedAmount != 0
                 ? widget.onSubmit
                 : null,
           ),

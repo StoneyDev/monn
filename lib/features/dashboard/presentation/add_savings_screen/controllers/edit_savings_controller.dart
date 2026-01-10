@@ -20,6 +20,8 @@ class EditSavingsController extends _$EditSavingsController {
       () => repository.editSaving(saving),
     );
 
+    if (!ref.mounted) return false;
+
     return !state.hasError;
   }
 }

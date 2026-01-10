@@ -100,7 +100,9 @@ class DashboardScreen extends ConsumerWidget {
             sliver: SliverList.separated(
               itemBuilder: (context, index) {
                 final item = savings[index];
-                final finalAmount = item.type.getReport(ref);
+                final finalAmount = ref.watch(
+                  getFinalAmountProvider(item.type),
+                );
 
                 return MonnCard(
                   onTap: () => context.push(item.type.route()),

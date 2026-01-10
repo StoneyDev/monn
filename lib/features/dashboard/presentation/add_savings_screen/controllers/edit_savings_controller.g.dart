@@ -34,7 +34,7 @@ final class EditSavingsControllerProvider
 }
 
 String _$editSavingsControllerHash() =>
-    r'8ef79a215e87bbb19be183e0a677372179f77632';
+    r'23bd8c2f97dc136ac089c2310c69d2ed5833593c';
 
 abstract class _$EditSavingsController extends $AsyncNotifier<void> {
   FutureOr<void> build();

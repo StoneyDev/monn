@@ -11,4 +11,6 @@ extension StringUI on String {
 
   /// Ex: flatTax ➡️ flat_tax
   String toSnakeCase() => _transformCase(this, '_');
+
+  String toCapitalize() => this[0].toUpperCase() + substring(1);
 }

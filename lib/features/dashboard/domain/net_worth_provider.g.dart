@@ -9,6 +9,83 @@ part of 'net_worth_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(getFinalAmount)
+const getFinalAmountProvider = GetFinalAmountFamily._();
+
+final class GetFinalAmountProvider
+    extends $FunctionalProvider<double, double, double>
+    with $Provider<double> {
+  const GetFinalAmountProvider._({
+    required GetFinalAmountFamily super.from,
+    required SavingsType super.argument,
+  }) : super(
+         retry: null,
+         name: r'getFinalAmountProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$getFinalAmountHash();
+
+  @override
+  String toString() {
+    return r'getFinalAmountProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  double create(Ref ref) {
+    final argument = this.argument as SavingsType;
+    return getFinalAmount(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(double value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<double>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetFinalAmountProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$getFinalAmountHash() => r'c04fd76633439b4901b31f8f835e98cba5f7f44a';
+
+final class GetFinalAmountFamily extends $Family
+    with $FunctionalFamilyOverride<double, SavingsType> {
+  const GetFinalAmountFamily._()
+    : super(
+        retry: null,
+        name: r'getFinalAmountProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetFinalAmountProvider call(SavingsType type) =>
+      GetFinalAmountProvider._(argument: type, from: this);
+
+  @override
+  String toString() => r'getFinalAmountProvider';
+}
+
 @ProviderFor(watchTotalNetWorth)
 const watchTotalNetWorthProvider = WatchTotalNetWorthProvider._();
 
@@ -49,7 +126,7 @@ final class WatchTotalNetWorthProvider
 }
 
 String _$watchTotalNetWorthHash() =>
-    r'07dabcc665be091fb16538499eb334511f491e50';
+    r'c8e9e1542c5021f56fd45009e611c5bb1e4a390b';
 
 @ProviderFor(watchSortedSavings)
 const watchSortedSavingsProvider = WatchSortedSavingsFamily._();
@@ -109,7 +186,7 @@ final class WatchSortedSavingsProvider
 }
 
 String _$watchSortedSavingsHash() =>
-    r'e03bc03d5ab7b840613c97632603ba4a01f6b200';
+    r'f2c095e0ce3ef2c56399a040aba31d0d3f9486c1';
 
 final class WatchSortedSavingsFamily extends $Family
     with $FunctionalFamilyOverride<List<Savings>, SavingsFilter> {

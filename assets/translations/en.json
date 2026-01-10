@@ -111,7 +111,34 @@
   "life_insurance": {},
   "home": {
     "savings": "Savings",
-    "freelance": "Freelance"
+    "freelance": "Freelance",
+    "expenses": "Expenses"
+  },
+  "expenses": {
+    "budget": "Monthly expenses",
+    "edit_budget": "Edit budget",
+    "no_data": "No budget recorded",
+    "to_invest": "To invest",
+    "income": "Income",
+    "revenue": "Revenue",
+    "freelance": "Freelance",
+    "housing": "Housing",
+    "rent": "Rent",
+    "electricity": "Electricity",
+    "gas": "Gas",
+    "water": "Water",
+    "internet": "Internet",
+    "home_insurance": "Home insurance",
+    "transport": "Transport",
+    "public_transport": "Public transport",
+    "food": "Food",
+    "groceries": "Groceries",
+    "restaurants": "Restaurants",
+    "health": "Health",
+    "health_insurance": "Health insurance",
+    "subscriptions": "Subscriptions",
+    "phone": "Phone",
+    "ai": "AI"
   },
   "freelance": {
     "net_imposable": "Taxable Income",
