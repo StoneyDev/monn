@@ -6,3 +6,6 @@ splash:
 
 build-runner:
 	puro dart run build_runner build -d
+
+prod:
+	puro flutter build apk --dart-define-from-file=api_keys.json

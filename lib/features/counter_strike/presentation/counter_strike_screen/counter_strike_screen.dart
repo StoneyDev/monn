@@ -224,7 +224,7 @@ class _CounterStrikeItem extends ConsumerWidget {
     return Text(
       '${change.abs().toStringAsFixed(2)}%',
       style: TextStyle(
-        color: change.isNegative ? AppColors.green : AppColors.red,
+        color: change.isNegative ? AppColors.red : AppColors.green,
         fontWeight: FontWeight.bold,
       ),
     );
