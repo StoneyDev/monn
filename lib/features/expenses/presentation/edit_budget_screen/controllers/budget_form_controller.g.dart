@@ -34,7 +34,7 @@ final class BudgetFormControllerProvider
 }
 
 String _$budgetFormControllerHash() =>
-    r'3d70ee1d30409cf81c2a3b6722c64f6c3fffa4d8';
+    r'24af39709ef5d7180f6e13f8450b247e87fd5398';
 
 abstract class _$BudgetFormController extends $AsyncNotifier<BudgetForm> {
   FutureOr<BudgetForm> build();

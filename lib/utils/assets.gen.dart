@@ -88,6 +88,10 @@ class $AssetsImagesCounterStrikeGen {
   AssetGenImage get shadowCase =>
       const AssetGenImage('assets/images/counter_strike/shadow_case.png');
 
+  /// File path: assets/images/counter_strike/skeleton-fade.png
+  AssetGenImage get skeletonFade =>
+      const AssetGenImage('assets/images/counter_strike/skeleton-fade.png');
+
   /// File path: assets/images/counter_strike/spectrum_case.png
   AssetGenImage get spectrumCase =>
       const AssetGenImage('assets/images/counter_strike/spectrum_case.png');
@@ -121,6 +125,7 @@ class $AssetsImagesCounterStrikeGen {
     recoilCase,
     revolutionCase,
     shadowCase,
+    skeletonFade,
     spectrumCase,
     stilettoSlaughter,
     ursusFade,

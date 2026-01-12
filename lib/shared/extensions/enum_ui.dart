@@ -98,6 +98,8 @@ extension CounterStrikeItemUI on CounterStrikeItem {
         MonnAssets.images.counterStrike.ak47LeetMuseo.image(height: height),
       CounterStrikeItem.revolutionCase =>
         MonnAssets.images.counterStrike.revolutionCase.image(height: height),
+      CounterStrikeItem.skeletonFade =>
+        MonnAssets.images.counterStrike.skeletonFade.image(height: height),
     };
   }
 }

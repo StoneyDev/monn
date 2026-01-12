@@ -156,6 +156,7 @@ const _CounterStrikeimageIdEnumValueMap = {
   r'falchionCase': r'falchionCase',
   r'horizonCase': r'horizonCase',
   r'recoilCase': r'recoilCase',
+  r'skeletonFade': r'skeletonFade',
 };
 const _CounterStrikeimageIdValueEnumMap = {
   r'ak47Bloodsport': CounterStrikeItem.ak47Bloodsport,
@@ -176,6 +177,7 @@ const _CounterStrikeimageIdValueEnumMap = {
   r'falchionCase': CounterStrikeItem.falchionCase,
   r'horizonCase': CounterStrikeItem.horizonCase,
   r'recoilCase': CounterStrikeItem.recoilCase,
+  r'skeletonFade': CounterStrikeItem.skeletonFade,
 };
 
 Id _counterStrikeGetId(CounterStrike object) {
