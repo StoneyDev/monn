@@ -5,7 +5,11 @@ part 'reit_tax_calculator.freezed.dart';
 class ReitTaxCalculator {
   const ReitTaxCalculator._();
 
-  static const double socialChargesRate = 0.172;
+  // Social charges rate since January 1, 2026:
+  // - 18.6%: PEA, SCPI, dividends, capital gains
+  // - 17.2%: Life insurance, PEL, CEL, PEP, rental income
+  // Source: https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss
+  static const double socialChargesRate = 0.186;
   static const double freelanceAbatementRate = 0.34;
 
   static const List<_TaxBracket> _taxBrackets = [
@@ -82,7 +86,7 @@ class ReitTaxCalculator {
     // Marginal income tax on SCPI dividends
     final reitIncomeTax = incomeTaxWithReit - incomeTaxWithoutReit;
 
-    // Social charges (17.2% on SCPI dividends)
+    // Social charges (18.6% on SCPI dividends)
     final reitSocialCharges = reitDividends * socialChargesRate;
 
     // Total tax on SCPI

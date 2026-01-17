@@ -50,7 +50,7 @@ class PeaScreen extends ConsumerWidget {
                 LocaleKeys.common_opening_account,
                 args: [
                   '${openingDate.numberYears()}',
-                  if (eligibility) '17,2%' else '30%',
+                  if (eligibility) '18,6%' else '31,4%',
                 ],
               ),
               triggerMode: TooltipTriggerMode.tap,

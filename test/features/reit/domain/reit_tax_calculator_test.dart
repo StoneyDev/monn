@@ -119,10 +119,10 @@ void main() {
 
           // Assert
           expect(result.reitDividends, 1000);
-          expect(result.reitSocialCharges, closeTo(172, 0.01));
+          expect(result.reitSocialCharges, closeTo(186, 0.01));
           expect(result.reitIncomeTax, 0);
-          expect(result.reitTotalTax, closeTo(172, 0.01));
-          expect(result.reitNetAfterTax, closeTo(828, 0.01));
+          expect(result.reitTotalTax, closeTo(186, 0.01));
+          expect(result.reitNetAfterTax, closeTo(814, 0.01));
         });
 
         test('should handle zero REIT dividends', () {
@@ -184,11 +184,11 @@ void main() {
       });
 
       group('social charges', () {
-        test('should apply 17.2% social charges on REIT dividends', () {
+        test('should apply 18.6% social charges on REIT dividends', () {
           // Arrange
           const freelanceRevenue = 50000.0;
           const reitDividends = 10000.0;
-          const expectedSocialCharges = 1720.0; // 10000 * 0.172
+          const expectedSocialCharges = 1860.0; // 10000 * 0.186
 
           // Act
           final result = ReitTaxCalculator.calculate(
@@ -338,7 +338,7 @@ void main() {
           // 30000 * 0.66 = 19800 + 500 = 20300 (11% bracket)
           const freelanceRevenue = 30000.0;
           const reitDividends = 500.0;
-          const expectedSocialCharges = 86.0; // 500 * 0.172
+          const expectedSocialCharges = 93.0; // 500 * 0.186
 
           // Act
           final result = ReitTaxCalculator.calculate(
@@ -357,7 +357,7 @@ void main() {
           // 70000 * 0.66 = 46200 + 3000 = 49200 (30% bracket)
           const freelanceRevenue = 70000.0;
           const reitDividends = 3000.0;
-          const expectedSocialCharges = 516.0; // 3000 * 0.172
+          const expectedSocialCharges = 558.0; // 3000 * 0.186
 
           // Act
           final result = ReitTaxCalculator.calculate(
@@ -375,7 +375,7 @@ void main() {
           // 150000 * 0.66 = 99000 + 20000 = 119000 (41% bracket)
           const freelanceRevenue = 150000.0;
           const reitDividends = 20000.0;
-          const expectedSocialCharges = 3440.0; // 20000 * 0.172
+          const expectedSocialCharges = 3720.0; // 20000 * 0.186
 
           // Act
           final result = ReitTaxCalculator.calculate(
@@ -386,8 +386,8 @@ void main() {
           // Assert
           expect(result.tmi, 0.41);
           expect(result.reitSocialCharges, closeTo(expectedSocialCharges, 0.5));
-          // Effective rate should be > 17.2% (social charges alone)
-          expect(result.effectiveTaxRate, greaterThan(0.172));
+          // Effective rate should be > 18.6% (social charges alone)
+          expect(result.effectiveTaxRate, greaterThan(0.186));
         });
       });
     });
@@ -452,9 +452,9 @@ void main() {
     });
 
     group('constants', () {
-      test('social charges rate should be 17.2%', () {
+      test('social charges rate should be 18.6%', () {
         // Arrange
-        const expectedRate = 0.172;
+        const expectedRate = 0.186;
 
         // Act
         const rate = ReitTaxCalculator.socialChargesRate;
