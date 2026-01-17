@@ -57,7 +57,7 @@ class CryptoPageScreen extends ConsumerWidget {
                         child: Text(
                           marketValue.simpleCurrency('en'),
                           style: Theme.of(context).textTheme.headlineLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                              ?.copyWith(fontWeight: .bold),
                         ),
                       ),
                       IconButton.filled(
@@ -101,22 +101,21 @@ class CryptoPageScreen extends ConsumerWidget {
                                     crypto.type.label,
                                     style: const TextStyle(
                                       color: AppColors.lightGray,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: .w600,
                                     ),
                                   ),
                                   Text(
-                                    crypto.totalCrypto.toDecimal(locale),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                    crypto.totalCrypto.toDecimal(
+                                      locale: locale,
+                                      digit: crypto.totalCrypto > 0 ? 8 : null,
                                     ),
+                                    style: const TextStyle(fontWeight: .bold),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          VerticalDivider(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
+                          const VerticalDivider(color: AppColors.lightGray),
                           Expanded(
                             child: Align(
                               child: Column(

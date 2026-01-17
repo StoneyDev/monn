@@ -125,15 +125,13 @@ class DashboardScreen extends ConsumerWidget {
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     color: AppColors.lightGray,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: .bold,
                                   ),
                             ),
                             Text(
                               finalAmount.simpleCurrency(locale),
                               style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                                  ?.copyWith(fontWeight: .w900),
                             ),
                           ],
                         ),

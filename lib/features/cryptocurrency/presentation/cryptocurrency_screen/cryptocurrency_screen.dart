@@ -231,7 +231,7 @@ class _CryptoCard extends ConsumerWidget {
             style: const TextStyle(color: AppColors.lightGray),
           ),
           trailing: Text(
-            '${crypto.totalCrypto.toDecimal(locale)} ${crypto.type.symbol}',
+            '${crypto.totalCrypto.toDecimal(locale: locale, digit: crypto.totalCrypto > 0 ? 8 : null)} ${crypto.type.symbol}',
             style: TextStyle(
               fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.primary,

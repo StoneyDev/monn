@@ -6,6 +6,9 @@ extension DoubleUI on double {
     return format.replaceAll(RegExp(r'[.,]00(?!\d)'), '');
   }
 
-  String toDecimal(String locale) =>
-      NumberFormat.decimalPattern(locale).format(this);
+  String toDecimal({required String locale, int? digit}) =>
+      NumberFormat.decimalPatternDigits(
+        locale: locale,
+        decimalDigits: digit,
+      ).format(this);
 }

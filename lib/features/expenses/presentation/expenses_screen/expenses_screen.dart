@@ -46,13 +46,19 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
         actions: [
           IconButton(
             icon: switch (_viewMode) {
-              _ViewMode.chart => const iconoir.List(),
-              _ViewMode.list => const iconoir.GraphUp(),
+              _ViewMode.chart => iconoir.List(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              _ViewMode.list => iconoir.GraphUp(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             },
             onPressed: _toggleViewMode,
           ),
           IconButton(
-            icon: const iconoir.EditPencil(),
+            icon: iconoir.EditPencil(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onPressed: () => context.push(const EditBudgetScreen()),
           ),
         ],
