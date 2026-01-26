@@ -36,9 +36,11 @@ class CryptoPageScreen extends ConsumerWidget {
       body: cryptocurrency.when(
         data: (crypto) {
           final marketValue = crypto.totalCrypto * crypto.priceMarket;
-          final sortByPurchase = crypto.transactions.toList().sorted(
-            (a, b) => b.date.compareTo(a.date),
-          );
+          final sortByPurchase = crypto.transactions.toList().sorted((a, b) {
+            final dateCompare = b.date.compareTo(a.date);
+            if (dateCompare != 0) return dateCompare;
+            return (b.id ?? 0).compareTo(a.id ?? 0);
+          });
 
           return MonnScrollView(
             slivers: [

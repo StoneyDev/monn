@@ -17,9 +17,11 @@ class MonnBottomSheet {
     required Reit reit,
   }) {
     final locale = context.locale.toString();
-    final dividends = reit.dividends.toList().sorted(
-      (a, b) => b.receivedAt.compareTo(a.receivedAt),
-    );
+    final dividends = reit.dividends.toList().sorted((a, b) {
+      final dateCompare = b.receivedAt.compareTo(a.receivedAt);
+      if (dateCompare != 0) return dateCompare;
+      return (b.id ?? 0).compareTo(a.id ?? 0);
+    });
 
     return SliverWoltModalSheetPage(
       surfaceTintColor: AppColors.white,

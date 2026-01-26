@@ -232,6 +232,7 @@ class _CryptoCard extends ConsumerWidget {
           ),
           trailing: Text(
             '${crypto.totalCrypto.toDecimal(locale: locale, digit: crypto.totalCrypto > 0 ? 8 : null)} ${crypto.type.symbol}',
+            textAlign: .right,
             style: TextStyle(
               fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.primary,

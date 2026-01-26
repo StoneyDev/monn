@@ -35,7 +35,11 @@ Stream<List<Crowdfunding>> watchCrowdfundings(Ref ref) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
 
   await for (final results in repository.watchCrowdfundings()) {
-    results.sort((a, b) => b.receivedAt!.compareTo(a.receivedAt!));
+    results.sort((a, b) {
+      final dateCompare = b.receivedAt!.compareTo(a.receivedAt!);
+      if (dateCompare != 0) return dateCompare;
+      return b.id.compareTo(a.id);
+    });
     yield results;
   }
 }

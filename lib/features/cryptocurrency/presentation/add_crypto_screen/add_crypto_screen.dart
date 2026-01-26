@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/crypto_form_controller.dart';
+import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -54,14 +56,31 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
                         ),
                       ) ??
                       0;
-                  final id = cryptoAmount.isNegative ? 'sold_on' : 'bought_on';
+                  final isPurchase = cryptoAmount > 0;
 
-                  return MonnFieldDate(
-                    label: context.tr('common.$id', args: ['']),
-                    required: true,
-                    onChanged: (newDate) => ref
-                        .read(cryptoFormControllerProvider.notifier)
-                        .set(date: newDate),
+                  return Column(
+                    spacing: 16,
+                    children: [
+                      if (isPurchase)
+                        MonnFieldNumber<double>(
+                          label: context.tr(LocaleKeys.common_purchase_price),
+                          suffix: '€',
+                          required: true,
+                          onChanged: (newFiatAmount) => ref
+                              .read(cryptoFormControllerProvider.notifier)
+                              .set(fiatAmount: newFiatAmount),
+                        ),
+                      MonnFieldDate(
+                        label: context.tr(
+                          'common.${isPurchase ? 'bought_on' : 'sold_on'}',
+                          args: [''],
+                        ),
+                        required: true,
+                        onChanged: (newDate) => ref
+                            .read(cryptoFormControllerProvider.notifier)
+                            .set(date: newDate),
+                      ),
+                    ],
                   );
                 },
               ),
@@ -88,7 +107,10 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
               ref
                 ..invalidate(cryptoFormControllerProvider)
                 ..invalidate(getCryptocurrencyProvider(formData.crypto!.type))
-                ..invalidate(getCryptoPriceMarketProvider);
+                ..invalidate(getCryptoPriceMarketProvider)
+                ..invalidate(
+                  getSavingsProvider(type: SavingsType.cryptocurrency),
+                );
               Navigator.pop(context);
             },
           ),
