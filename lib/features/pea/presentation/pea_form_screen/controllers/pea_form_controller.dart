@@ -1,4 +1,5 @@
 import 'package:monn/features/pea/data/pea_repository.dart';
+import 'package:monn/features/pea/domain/pea.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pea_form_controller.g.dart';
@@ -48,15 +49,20 @@ class PeaFormController extends _$PeaFormController {
 
   Future<bool> submit() async {
     final repository = ref.read(peaRepositoryProvider);
-    final pea = await ref.refresh(getPeaProvider.future);
+
+    final newEquity = int.parse(state.equity);
+    final newCostAverage = double.parse(state.costAverage);
+
+    final pea = await ref.read(getPeaProvider.future);
 
     if (!ref.mounted) return false;
 
     final result = await AsyncValue.guard(
       () => repository.editPea(
-        pea!
-          ..equity = int.parse(state.equity)
-          ..costAverage = double.parse(state.costAverage),
+        (pea ?? Pea())
+          ..id = 1
+          ..equity = newEquity
+          ..costAverage = newCostAverage,
       ),
     );
 
