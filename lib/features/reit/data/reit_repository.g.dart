@@ -197,6 +197,83 @@ final class WatchPayoutReportReitProvider
 String _$watchPayoutReportReitHash() =>
     r'fbf8b0068cf70656341875348185f05293b6defd';
 
+@ProviderFor(getReitDividends)
+const getReitDividendsProvider = GetReitDividendsFamily._();
+
+final class GetReitDividendsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ReitDividend>>,
+          List<ReitDividend>,
+          FutureOr<List<ReitDividend>>
+        >
+    with
+        $FutureModifier<List<ReitDividend>>,
+        $FutureProvider<List<ReitDividend>> {
+  const GetReitDividendsProvider._({
+    required GetReitDividendsFamily super.from,
+    required Reit super.argument,
+  }) : super(
+         retry: null,
+         name: r'getReitDividendsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$getReitDividendsHash();
+
+  @override
+  String toString() {
+    return r'getReitDividendsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ReitDividend>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ReitDividend>> create(Ref ref) {
+    final argument = this.argument as Reit;
+    return getReitDividends(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetReitDividendsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$getReitDividendsHash() => r'1a2a29ff05707ce9827cb36ee371accf5964b370';
+
+final class GetReitDividendsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<ReitDividend>>, Reit> {
+  const GetReitDividendsFamily._()
+    : super(
+        retry: null,
+        name: r'getReitDividendsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  GetReitDividendsProvider call(Reit reit) =>
+      GetReitDividendsProvider._(argument: reit, from: this);
+
+  @override
+  String toString() => r'getReitDividendsProvider';
+}
+
 @ProviderFor(reitTaxCalculation)
 const reitTaxCalculationProvider = ReitTaxCalculationProvider._();
 

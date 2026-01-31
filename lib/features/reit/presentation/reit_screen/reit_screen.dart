@@ -7,6 +7,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
+import 'package:monn/features/reit/presentation/reit_screen/reit_dividends_bottom_sheet.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
@@ -294,10 +295,7 @@ class ReitScreen extends ConsumerWidget {
                     onTap: () => WoltModalSheet.show<void>(
                       context: context,
                       pageListBuilder: (context) => [
-                        MonnBottomSheet.reitDetails(
-                          context: context,
-                          reit: item,
-                        ),
+                        reitDividendsBottomSheet(context: context, reit: item),
                       ],
                     ),
                   );

@@ -97,6 +97,18 @@ Stream<PayoutReportData> watchPayoutReportReit(Ref ref) async* {
 }
 
 @riverpod
+Future<List<ReitDividend>> getReitDividends(Ref ref, Reit reit) async {
+  await reit.dividends.load();
+
+  return reit.dividends.toList()
+    ..sort((a, b) {
+      final dateCompare = b.receivedAt.compareTo(a.receivedAt);
+      if (dateCompare != 0) return dateCompare;
+      return (b.id ?? 0).compareTo(a.id ?? 0);
+    });
+}
+
+@riverpod
 ReitTaxResult reitTaxCalculation(Ref ref) {
   final freelance = ref.watch(watchFreelanceProvider).value;
   final reits = ref.watch(watchReitsProvider).value ?? [];
