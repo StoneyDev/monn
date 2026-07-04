@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -33,11 +33,13 @@ class CashRepository {
     final total = cashs.fold<double>(0, (sum, e) => sum + e.value);
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    final existingSavings = await (_db.select(_db.savingsEntries)
-          ..where((t) => t.type.equals(SavingsType.cash.name)))
-        .getSingleOrNull();
+    final existingSavings = await (_db.select(
+      _db.savingsEntries,
+    )..where((t) => t.type.equals(SavingsType.cash.name))).getSingleOrNull();
 
-    await _db.into(_db.savingsEntries).insertOnConflictUpdate(
+    await _db
+        .into(_db.savingsEntries)
+        .insertOnConflictUpdate(
           SavingsEntriesCompanion(
             id: existingSavings != null
                 ? Value(existingSavings.id)

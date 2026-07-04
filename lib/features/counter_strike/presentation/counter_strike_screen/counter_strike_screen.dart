@@ -9,8 +9,8 @@ import 'package:monn/features/counter_strike/data/counter_strike_repository.dart
 import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/add_counter_strike_screen.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/counter_strike_form_controller.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';

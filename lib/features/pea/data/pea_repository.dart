@@ -1,6 +1,6 @@
 import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,8 +13,9 @@ class PeaRepository {
   final AppDatabase _db;
 
   Future<PeaEntry?> getPea() {
-    return (_db.select(_db.peaEntries)..where((t) => t.id.equals(1)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.peaEntries,
+    )..where((t) => t.id.equals(1))).getSingleOrNull();
   }
 
   Future<void> editPea(PeaEntriesCompanion newPea) {

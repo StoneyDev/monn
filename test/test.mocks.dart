@@ -14,7 +14,6 @@ import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i9;
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart'
     as _i2;
 import 'package:monn/features/dashboard/data/savings_repository.dart' as _i6;
-import 'package:monn/features/dashboard/domain/savings.dart' as _i7;
 import 'package:monn/features/expenses/data/expenses_repository.dart' as _i10;
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart'
     as _i11;
@@ -23,6 +22,7 @@ import 'package:monn/features/reit/data/reit_repository.dart' as _i13;
 import 'package:monn/features/reit/domain/reit_with_dividends.dart' as _i14;
 import 'package:monn/features/savings_book/data/savings_book_repository.dart'
     as _i15;
+import 'package:monn/shared/domain/savings.dart' as _i7;
 import 'package:monn/shared/local/database.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -84,11 +84,9 @@ class MockCrowdfundingRepository extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockSavingsRepository extends _i1.Mock implements _i6.SavingsRepository {
   @override
-  _i5.Stream<List<_i3.SavingsEntry>> watchSavings({
-    _i7.SavingsFilter? filter,
-  }) =>
+  _i5.Stream<List<_i3.SavingsEntry>> watchSavings() =>
       (super.noSuchMethod(
-            Invocation.method(#watchSavings, [], {#filter: filter}),
+            Invocation.method(#watchSavings, []),
             returnValue: _i5.Stream<List<_i3.SavingsEntry>>.empty(),
             returnValueForMissingStub:
                 _i5.Stream<List<_i3.SavingsEntry>>.empty(),

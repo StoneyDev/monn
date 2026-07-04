@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';

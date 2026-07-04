@@ -1,5 +1,4 @@
-import 'package:drift/drift.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,22 +10,13 @@ class SavingsRepository {
 
   final AppDatabase _db;
 
-  Stream<List<SavingsEntry>> watchSavings({SavingsFilter? filter}) {
-    final query = _db.select(_db.savingsEntries)
-      ..orderBy([
-        (t) => switch (filter) {
-              SavingsFilter.sortByStartAmountAsc =>
-                OrderingTerm.asc(t.startAmount),
-              _ => OrderingTerm.desc(t.startAmount),
-            },
-      ]);
-    return query.watch();
-  }
+  Stream<List<SavingsEntry>> watchSavings() =>
+      _db.select(_db.savingsEntries).watch();
 
   Future<SavingsEntry?> getSavings(SavingsType type) {
-    return (_db.select(_db.savingsEntries)
-          ..where((t) => t.type.equals(type.name)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.savingsEntries,
+    )..where((t) => t.type.equals(type.name))).getSingleOrNull();
   }
 
   Future<void> editSaving(SavingsEntriesCompanion newSaving) {
@@ -40,12 +30,9 @@ SavingsRepository savingsRepository(Ref ref) {
 }
 
 @riverpod
-Stream<List<SavingsEntry>> watchSavings(
-  Ref ref, {
-  SavingsFilter? filter,
-}) {
+Stream<List<SavingsEntry>> watchSavings(Ref ref) {
   final repository = ref.watch(savingsRepositoryProvider);
-  return repository.watchSavings(filter: filter);
+  return repository.watchSavings();
 }
 
 @riverpod

@@ -3,11 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -101,9 +101,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
 
                 final formData = ref.read(reitFormControllerProvider);
                 final newSaving = SavingsEntriesCompanion(
-                  id: value != null
-                      ? Value(value.id)
-                      : const Value.absent(),
+                  id: value != null ? Value(value.id) : const Value.absent(),
                   type: Value(SavingsType.reit.name),
                   startAmount: Value(
                     (value?.startAmount ?? 0) +

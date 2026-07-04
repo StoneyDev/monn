@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -63,8 +63,9 @@ class CryptoFormController extends _$CryptoFormController {
     // Update startAmount only for purchases
     if (isPurchase && state.fiatAmount.isNotEmpty) {
       final fiatAmount = double.parse(state.fiatAmount);
-      final savings =
-          await savingsRepository.getSavings(SavingsType.cryptocurrency);
+      final savings = await savingsRepository.getSavings(
+        SavingsType.cryptocurrency,
+      );
 
       final savingsCompanion = SavingsEntriesCompanion(
         id: savings != null ? Value(savings.id) : const Value.absent(),

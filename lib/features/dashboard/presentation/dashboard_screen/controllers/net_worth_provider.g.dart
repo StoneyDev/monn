@@ -192,7 +192,7 @@ final class WatchSortedSavingsProvider
 }
 
 String _$watchSortedSavingsHash() =>
-    r'3435dc14aeaad25b2c895f3aff9743e9ede09c9f';
+    r'cc13ba1f65e9964bd4067a65dd8900907392aa1e';
 
 final class WatchSortedSavingsFamily extends $Family
     with $FunctionalFamilyOverride<List<SavingsEntry>, SavingsFilter> {

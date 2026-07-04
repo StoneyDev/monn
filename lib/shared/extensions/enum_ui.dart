@@ -5,12 +5,12 @@ import 'package:monn/features/counter_strike/presentation/counter_strike_screen/
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_screen.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/cryptocurrency_screen.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/life_insurance_screen.dart';
 import 'package:monn/features/pea/presentation/pea_screen/pea_screen.dart';
 import 'package:monn/features/per/presentation/per_screen/per_screen.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_screen.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_screen/savings_book_screen.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/utils/assets.gen.dart';
 
 extension SavingsTypeUI on SavingsType {

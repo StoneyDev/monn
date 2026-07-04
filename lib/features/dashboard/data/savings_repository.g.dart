@@ -57,7 +57,7 @@ final class SavingsRepositoryProvider
 String _$savingsRepositoryHash() => r'a94e211295a2b5f5e1020429a0ff4f7905e249b5';
 
 @ProviderFor(watchSavings)
-const watchSavingsProvider = WatchSavingsFamily._();
+const watchSavingsProvider = WatchSavingsProvider._();
 
 final class WatchSavingsProvider
     extends
@@ -69,26 +69,19 @@ final class WatchSavingsProvider
     with
         $FutureModifier<List<SavingsEntry>>,
         $StreamProvider<List<SavingsEntry>> {
-  const WatchSavingsProvider._({
-    required WatchSavingsFamily super.from,
-    required SavingsFilter? super.argument,
-  }) : super(
-         retry: null,
-         name: r'watchSavingsProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
+  const WatchSavingsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchSavingsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$watchSavingsHash();
-
-  @override
-  String toString() {
-    return r'watchSavingsProvider'
-        ''
-        '($argument)';
-  }
 
   @$internal
   @override
@@ -98,40 +91,11 @@ final class WatchSavingsProvider
 
   @override
   Stream<List<SavingsEntry>> create(Ref ref) {
-    final argument = this.argument as SavingsFilter?;
-    return watchSavings(ref, filter: argument);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is WatchSavingsProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
+    return watchSavings(ref);
   }
 }
 
-String _$watchSavingsHash() => r'2b273cb1964e24acaa8a877d518ae14c4a5054c4';
-
-final class WatchSavingsFamily extends $Family
-    with $FunctionalFamilyOverride<Stream<List<SavingsEntry>>, SavingsFilter?> {
-  const WatchSavingsFamily._()
-    : super(
-        retry: null,
-        name: r'watchSavingsProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  WatchSavingsProvider call({SavingsFilter? filter}) =>
-      WatchSavingsProvider._(argument: filter, from: this);
-
-  @override
-  String toString() => r'watchSavingsProvider';
-}
+String _$watchSavingsHash() => r'758ecfefbd2d1032fdda62caf5ea6f93a43802f9';
 
 @ProviderFor(getSavings)
 const getSavingsProvider = GetSavingsFamily._();

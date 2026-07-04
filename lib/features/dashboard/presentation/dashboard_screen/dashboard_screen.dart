@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
-import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/generated/locale_keys.g.dart';
@@ -13,6 +12,7 @@ import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/savings_entry_extensions.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -56,9 +56,9 @@ class DashboardScreen extends ConsumerWidget {
                     builder: (context, ref, _) => SliverToBoxAdapter(
                       child: RadioGroup<SavingsFilter>(
                         groupValue: ref.watch(_filterProvider),
-                        onChanged: (newFilter) => ref
-                            .read(_filterProvider.notifier)
-                            .state = newFilter!,
+                        onChanged: (newFilter) =>
+                            ref.read(_filterProvider.notifier).state =
+                                newFilter!,
                         child: Column(
                           children: [
                             for (final item in SavingsFilter.values)
@@ -68,8 +68,7 @@ class DashboardScreen extends ConsumerWidget {
                                   context.tr(
                                     'filters.${item.name.toSnakeCase()}',
                                   ),
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                           ],
@@ -103,6 +102,8 @@ class DashboardScreen extends ConsumerWidget {
                 final finalAmount = ref.watch(
                   getFinalAmountProvider(item.savingsType),
                 );
+                final savingsKey =
+                    'savings.${item.savingsType.name.toSnakeCase()}';
 
                 return MonnCard(
                   onTap: () => context.push(item.savingsType.route()),
@@ -119,9 +120,7 @@ class DashboardScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              context.tr(
-                                'savings.${item.type.toSnakeCase()}',
-                              ),
+                              context.tr(savingsKey),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     color: AppColors.lightGray,
