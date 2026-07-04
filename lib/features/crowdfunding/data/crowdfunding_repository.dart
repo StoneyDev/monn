@@ -1,37 +1,35 @@
-import 'package:isar_community/isar.dart';
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_repository.g.dart';
 
 class CrowdfundingRepository {
-  const CrowdfundingRepository(this._localDB);
+  const CrowdfundingRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<Crowdfunding>> watchCrowdfundings() {
-    final query = _localDB.crowdfundings.where().build();
-    return query.watch(fireImmediately: true);
+  Stream<List<CrowdfundingEntry>> watchCrowdfundings() {
+    return _db.select(_db.crowdfundingEntries).watch();
   }
 
-  Future<void> editCrowdfunding(Crowdfunding newCrowdfunding) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.crowdfundings.put(newCrowdfunding);
-    });
+  Future<void> editCrowdfunding(CrowdfundingEntriesCompanion newCrowdfunding) {
+    return _db
+        .into(_db.crowdfundingEntries)
+        .insertOnConflictUpdate(newCrowdfunding);
   }
 }
 
 @Riverpod(keepAlive: true)
 CrowdfundingRepository crowdfundingRepository(Ref ref) {
-  return CrowdfundingRepository(LocalDatabase().database);
+  return CrowdfundingRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<Crowdfunding>> watchCrowdfundings(Ref ref) async* {
+Stream<List<CrowdfundingEntry>> watchCrowdfundings(Ref ref) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
 
   await for (final results in repository.watchCrowdfundings()) {

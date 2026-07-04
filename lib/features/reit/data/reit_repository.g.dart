@@ -48,7 +48,7 @@ final class ReitRepositoryProvider
   }
 }
 
-String _$reitRepositoryHash() => r'875422e2e78d82bb0680a7a7ff72315de6a22bd0';
+String _$reitRepositoryHash() => r'a906ea22e118d246b0f76070bff23367b425154c';
 
 @ProviderFor(watchReits)
 const watchReitsProvider = WatchReitsProvider._();
@@ -56,11 +56,13 @@ const watchReitsProvider = WatchReitsProvider._();
 final class WatchReitsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Reit>>,
-          List<Reit>,
-          Stream<List<Reit>>
+          AsyncValue<List<ReitWithDividends>>,
+          List<ReitWithDividends>,
+          Stream<List<ReitWithDividends>>
         >
-    with $FutureModifier<List<Reit>>, $StreamProvider<List<Reit>> {
+    with
+        $FutureModifier<List<ReitWithDividends>>,
+        $StreamProvider<List<ReitWithDividends>> {
   const WatchReitsProvider._()
     : super(
         from: null,
@@ -77,16 +79,17 @@ final class WatchReitsProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Reit>> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $StreamProviderElement<List<ReitWithDividends>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<Reit>> create(Ref ref) {
+  Stream<List<ReitWithDividends>> create(Ref ref) {
     return watchReits(ref);
   }
 }
 
-String _$watchReitsHash() => r'dc0ffb32bab22fa8dfb5ed25d502775b10f7443f';
+String _$watchReitsHash() => r'6b2e7aaa35b42695cc58dff727ed05fbbd73de3c';
 
 @ProviderFor(deleteReit)
 const deleteReitProvider = DeleteReitFamily._();
@@ -96,7 +99,7 @@ final class DeleteReitProvider
     with $FutureModifier<void>, $FutureProvider<void> {
   const DeleteReitProvider._({
     required DeleteReitFamily super.from,
-    required Reit super.argument,
+    required int super.argument,
   }) : super(
          retry: null,
          name: r'deleteReitProvider',
@@ -122,7 +125,7 @@ final class DeleteReitProvider
 
   @override
   FutureOr<void> create(Ref ref) {
-    final argument = this.argument as Reit;
+    final argument = this.argument as int;
     return deleteReit(ref, argument);
   }
 
@@ -137,10 +140,10 @@ final class DeleteReitProvider
   }
 }
 
-String _$deleteReitHash() => r'b7ceda8ee00fdfc3ed262ccf0ff8bcf66b5db0f0';
+String _$deleteReitHash() => r'27c6409aecfe9252b39bcc36f470bc7617ee30b1';
 
 final class DeleteReitFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<void>, Reit> {
+    with $FunctionalFamilyOverride<FutureOr<void>, int> {
   const DeleteReitFamily._()
     : super(
         retry: null,
@@ -150,8 +153,8 @@ final class DeleteReitFamily extends $Family
         isAutoDispose: true,
       );
 
-  DeleteReitProvider call(Reit reit) =>
-      DeleteReitProvider._(argument: reit, from: this);
+  DeleteReitProvider call(int id) =>
+      DeleteReitProvider._(argument: id, from: this);
 
   @override
   String toString() => r'deleteReitProvider';
@@ -196,83 +199,6 @@ final class WatchPayoutReportReitProvider
 
 String _$watchPayoutReportReitHash() =>
     r'fbf8b0068cf70656341875348185f05293b6defd';
-
-@ProviderFor(getReitDividends)
-const getReitDividendsProvider = GetReitDividendsFamily._();
-
-final class GetReitDividendsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<ReitDividend>>,
-          List<ReitDividend>,
-          FutureOr<List<ReitDividend>>
-        >
-    with
-        $FutureModifier<List<ReitDividend>>,
-        $FutureProvider<List<ReitDividend>> {
-  const GetReitDividendsProvider._({
-    required GetReitDividendsFamily super.from,
-    required Reit super.argument,
-  }) : super(
-         retry: null,
-         name: r'getReitDividendsProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$getReitDividendsHash();
-
-  @override
-  String toString() {
-    return r'getReitDividendsProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  $FutureProviderElement<List<ReitDividend>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<ReitDividend>> create(Ref ref) {
-    final argument = this.argument as Reit;
-    return getReitDividends(ref, argument);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is GetReitDividendsProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
-String _$getReitDividendsHash() => r'1a2a29ff05707ce9827cb36ee371accf5964b370';
-
-final class GetReitDividendsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<List<ReitDividend>>, Reit> {
-  const GetReitDividendsFamily._()
-    : super(
-        retry: null,
-        name: r'getReitDividendsProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  GetReitDividendsProvider call(Reit reit) =>
-      GetReitDividendsProvider._(argument: reit, from: this);
-
-  @override
-  String toString() => r'getReitDividendsProvider';
-}
 
 @ProviderFor(reitTaxCalculation)
 const reitTaxCalculationProvider = ReitTaxCalculationProvider._();

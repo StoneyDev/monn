@@ -20,7 +20,7 @@ final class BackupControllerProvider
         argument: null,
         retry: null,
         name: r'backupControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -33,7 +33,7 @@ final class BackupControllerProvider
   BackupController create() => BackupController();
 }
 
-String _$backupControllerHash() => r'75a8ae113791f1a8456bf3c5439b11b66a461608';
+String _$backupControllerHash() => r'64d29685f18aa469ec76823caf51c58d1f1afd9d';
 
 abstract class _$BackupController extends $AsyncNotifier<String?> {
   FutureOr<String?> build();

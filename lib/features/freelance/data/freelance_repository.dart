@@ -1,33 +1,35 @@
-import 'package:isar_community/isar.dart';
-import 'package:monn/features/freelance/domain/freelance.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/freelance/domain/freelance_calculator.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'freelance_repository.g.dart';
 
 class FreelanceRepository {
-  const FreelanceRepository(this._localDB);
+  const FreelanceRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<Freelance?> watchFreelance() =>
-      _localDB.freelances.watchObject(1, fireImmediately: true);
+  Stream<FreelanceEntry?> watchFreelance() {
+    return (_db.select(_db.freelanceEntries)..where((t) => t.id.equals(1)))
+        .watchSingleOrNull();
+  }
 
-  Future<void> editFreelance(Freelance freelance) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.freelances.put(freelance..id = 1);
-    });
+  Future<void> editFreelance(FreelanceEntriesCompanion freelance) {
+    return _db.into(_db.freelanceEntries).insertOnConflictUpdate(
+          freelance.copyWith(id: const Value(1)),
+        );
   }
 }
 
 @Riverpod(keepAlive: true)
 FreelanceRepository freelanceRepository(Ref ref) {
-  return FreelanceRepository(LocalDatabase().database);
+  return FreelanceRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<Freelance?> watchFreelance(Ref ref) {
+Stream<FreelanceEntry?> watchFreelance(Ref ref) {
   final repository = ref.watch(freelanceRepositoryProvider);
   return repository.watchFreelance();
 }

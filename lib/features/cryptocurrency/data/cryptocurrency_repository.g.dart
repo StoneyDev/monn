@@ -55,7 +55,7 @@ final class CryptocurrencyRepositoryProvider
 }
 
 String _$cryptocurrencyRepositoryHash() =>
-    r'1b02d44b0048a8fe0e6d9186929203ace4b6e43f';
+    r'c83eaa4b798e98de8ffc7208ee06451cb959656e';
 
 @ProviderFor(watchCryptocurrencies)
 const watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();
@@ -63,13 +63,13 @@ const watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();
 final class WatchCryptocurrenciesProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Cryptocurrency>>,
-          List<Cryptocurrency>,
-          Stream<List<Cryptocurrency>>
+          AsyncValue<List<CryptocurrencyEntry>>,
+          List<CryptocurrencyEntry>,
+          Stream<List<CryptocurrencyEntry>>
         >
     with
-        $FutureModifier<List<Cryptocurrency>>,
-        $StreamProvider<List<Cryptocurrency>> {
+        $FutureModifier<List<CryptocurrencyEntry>>,
+        $StreamProvider<List<CryptocurrencyEntry>> {
   const WatchCryptocurrenciesProvider._()
     : super(
         from: null,
@@ -86,18 +86,18 @@ final class WatchCryptocurrenciesProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Cryptocurrency>> $createElement(
+  $StreamProviderElement<List<CryptocurrencyEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<Cryptocurrency>> create(Ref ref) {
+  Stream<List<CryptocurrencyEntry>> create(Ref ref) {
     return watchCryptocurrencies(ref);
   }
 }
 
 String _$watchCryptocurrenciesHash() =>
-    r'7d3db601fd12d61dd01ab55609cf157ee9010f6a';
+    r'a7a1bc32ec85e478ccb3e36ad89aca794a642256';
 
 @ProviderFor(getCryptocurrency)
 const getCryptocurrencyProvider = GetCryptocurrencyFamily._();
@@ -105,11 +105,13 @@ const getCryptocurrencyProvider = GetCryptocurrencyFamily._();
 final class GetCryptocurrencyProvider
     extends
         $FunctionalProvider<
-          AsyncValue<Cryptocurrency>,
-          Cryptocurrency,
-          FutureOr<Cryptocurrency>
+          AsyncValue<CryptocurrencyWithTransactions>,
+          CryptocurrencyWithTransactions,
+          FutureOr<CryptocurrencyWithTransactions>
         >
-    with $FutureModifier<Cryptocurrency>, $FutureProvider<Cryptocurrency> {
+    with
+        $FutureModifier<CryptocurrencyWithTransactions>,
+        $FutureProvider<CryptocurrencyWithTransactions> {
   const GetCryptocurrencyProvider._({
     required GetCryptocurrencyFamily super.from,
     required CryptoType super.argument,
@@ -133,12 +135,12 @@ final class GetCryptocurrencyProvider
 
   @$internal
   @override
-  $FutureProviderElement<Cryptocurrency> $createElement(
+  $FutureProviderElement<CryptocurrencyWithTransactions> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Cryptocurrency> create(Ref ref) {
+  FutureOr<CryptocurrencyWithTransactions> create(Ref ref) {
     final argument = this.argument as CryptoType;
     return getCryptocurrency(ref, argument);
   }
@@ -154,10 +156,14 @@ final class GetCryptocurrencyProvider
   }
 }
 
-String _$getCryptocurrencyHash() => r'21b065fd53f7814b6e0d77b3b19cf1847edc3709';
+String _$getCryptocurrencyHash() => r'87fd65d2118bd1c8d688d55c7bde22c8e786c436';
 
 final class GetCryptocurrencyFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Cryptocurrency>, CryptoType> {
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<CryptocurrencyWithTransactions>,
+          CryptoType
+        > {
   const GetCryptocurrencyFamily._()
     : super(
         retry: null,
@@ -205,7 +211,7 @@ final class WatchCryptoChartProvider
   }
 }
 
-String _$watchCryptoChartHash() => r'23512b99ef663c37f890a7a5854709e3b4ce36b7';
+String _$watchCryptoChartHash() => r'00d191bdc380360c058348bbda3b3512b1318d92';
 
 @ProviderFor(watchPayoutReportCrypto)
 const watchPayoutReportCryptoProvider = WatchPayoutReportCryptoProvider._();

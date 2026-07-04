@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/per/data/per_repository.dart';
-import 'package:monn/features/per/domain/per.dart';
 import 'package:monn/features/per/presentation/per_screen/controllers/per_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
@@ -116,7 +116,7 @@ class PerScreen extends ConsumerWidget {
   void _openInvestedAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
-    required Per? value,
+    required PerEntry? value,
   }) {
     final formNotifier = ref.read(perFormControllerProvider.notifier);
 
@@ -147,7 +147,7 @@ class PerScreen extends ConsumerWidget {
   void _openInterestsAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
-    required Per? value,
+    required PerEntry? value,
   }) {
     final formNotifier = ref.read(perFormControllerProvider.notifier);
 

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
-import 'package:monn/features/life_insurance/domain/life_insurance.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../test.dart';
 import '../../../test.mocks.dart';
@@ -43,7 +43,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<LifeInsurance?>>();
+      final listener = MockListener<AsyncValue<LifeInsuranceEntry?>>();
       container.listen(
         watchLifeInsuranceProvider,
         listener.call,
@@ -54,8 +54,11 @@ void main() {
 
       // Assert
       verifyInOrder([
-        listener(null, const AsyncLoading<LifeInsurance?>()),
-        listener(const AsyncLoading<LifeInsurance?>(), const AsyncData(null)),
+        listener(null, const AsyncLoading<LifeInsuranceEntry?>()),
+        listener(
+          const AsyncLoading<LifeInsuranceEntry?>(),
+          const AsyncData(null),
+        ),
       ]);
       verifyNoMoreInteractions(listener);
       expect(result, isNull);
@@ -63,9 +66,11 @@ void main() {
 
     test('should return LifeInsurance when data exists', () async {
       // Arrange
-      final lifeInsurance = LifeInsurance()
-        ..invested = 10000
-        ..interests = 500;
+      const lifeInsurance = LifeInsuranceEntry(
+        id: 1,
+        invested: 10000,
+        interests: 500,
+      );
 
       final repository = MockLifeInsuranceRepository();
       final container = createContainer(
@@ -79,7 +84,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<LifeInsurance?>>();
+      final listener = MockListener<AsyncValue<LifeInsuranceEntry?>>();
       container.listen(
         watchLifeInsuranceProvider,
         listener.call,
@@ -90,10 +95,10 @@ void main() {
 
       // Assert
       verifyInOrder([
-        listener(null, const AsyncLoading<LifeInsurance?>()),
+        listener(null, const AsyncLoading<LifeInsuranceEntry?>()),
         listener(
-          const AsyncLoading<LifeInsurance?>(),
-          AsyncData<LifeInsurance?>(lifeInsurance),
+          const AsyncLoading<LifeInsuranceEntry?>(),
+          const AsyncData<LifeInsuranceEntry?>(lifeInsurance),
         ),
       ]);
       verifyNoMoreInteractions(listener);
@@ -149,9 +154,11 @@ void main() {
       'should return PayoutReportData with finalAmount = invested + interests',
       () async {
         // Arrange
-        final lifeInsurance = LifeInsurance()
-          ..invested = 10000
-          ..interests = 750.50;
+        const lifeInsurance = LifeInsuranceEntry(
+          id: 1,
+          invested: 10000,
+          interests: 750.50,
+        );
 
         const expectedPayoutReport = PayoutReportData(
           finalAmount: 10750.50,
@@ -198,9 +205,11 @@ void main() {
       'should correctly calculate finalAmount with zero interests',
       () async {
         // Arrange
-        final lifeInsurance = LifeInsurance()
-          ..invested = 5000
-          ..interests = 0;
+        const lifeInsurance = LifeInsuranceEntry(
+          id: 1,
+          invested: 5000,
+          interests: 0,
+        );
 
         const expectedPayoutReport = PayoutReportData(
           finalAmount: 5000,

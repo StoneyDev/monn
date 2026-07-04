@@ -1,5 +1,5 @@
-import 'package:isar_community/isar.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:drift/drift.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,33 +8,34 @@ part 'expenses_repository.g.dart';
 class ExpensesRepository {
   const ExpensesRepository(this._db);
 
-  final Isar _db;
+  final AppDatabase _db;
 
-  Future<Budget> getOrCreateBudget() async {
-    var budget = await _db.budgets.get(1);
+  Future<BudgetEntry> getOrCreateBudget() async {
+    final existing = await (_db.select(_db.budgetEntries)
+          ..where((t) => t.id.equals(1)))
+        .getSingleOrNull();
 
-    if (budget == null) {
-      budget = Budget();
-      await _db.writeTxn(() => _db.budgets.put(budget!));
-    }
+    if (existing != null) return existing;
 
-    return budget;
+    await _db.into(_db.budgetEntries).insert(
+          const BudgetEntriesCompanion(id: Value(1)),
+        );
+    return (_db.select(_db.budgetEntries)..where((t) => t.id.equals(1)))
+        .getSingle();
   }
 
-  Stream<Budget?> watchBudget() => _db.budgets
-      .where()
-      .idEqualTo(1)
-      .watch(fireImmediately: true)
-      .map((list) => list.firstOrNull);
+  Stream<BudgetEntry?> watchBudget() => (_db.select(_db.budgetEntries)
+        ..where((t) => t.id.equals(1)))
+      .watchSingleOrNull();
 
-  Future<void> saveBudget(Budget budget) =>
-      _db.writeTxn(() => _db.budgets.put(budget));
+  Future<void> saveBudget(BudgetEntriesCompanion budget) =>
+      _db.into(_db.budgetEntries).insertOnConflictUpdate(budget);
 }
 
 @Riverpod(keepAlive: true)
 ExpensesRepository expensesRepository(Ref ref) =>
-    ExpensesRepository(LocalDatabase().database);
+    ExpensesRepository(ref.watch(appDatabaseProvider));
 
 @riverpod
-Stream<Budget?> watchBudget(Ref ref) =>
+Stream<BudgetEntry?> watchBudget(Ref ref) =>
     ref.watch(expensesRepositoryProvider).watchBudget();

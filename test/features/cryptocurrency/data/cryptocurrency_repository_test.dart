@@ -1,12 +1,14 @@
 // ignore_for_file: lines_longer_than_80_chars .
 
+import 'package:drift/drift.dart' show Value;
+import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:monn/utils/app_colors.dart';
 
@@ -15,63 +17,6 @@ import '../../../test.mocks.dart';
 import '../../../utils.dart';
 
 void main() {
-  late Isar isar;
-
-  setUpAll(() async {
-    await Isar.initializeIsarCore(download: true);
-
-    isar = await Isar.open(
-      [CryptocurrencySchema, CryptocurrencyTransactionSchema],
-      directory: '.',
-    );
-
-    await isar.writeTxn(() async {
-      await isar.cryptocurrencys.clear();
-      await isar.cryptocurrencyTransactions.clear();
-    });
-
-    final bitcoinTransactions = [
-      CryptocurrencyTransaction()
-        ..date = DateTime(2010)
-        ..amount = 0.5,
-      CryptocurrencyTransaction()
-        ..date = DateTime(2012)
-        ..amount = 1.222,
-    ];
-    final bitcoin = Cryptocurrency()
-      ..type = CryptoType.bitcoin
-      ..totalCrypto = 1.722
-      ..priceMarket = 98512.66
-      ..transactions.addAll(bitcoinTransactions);
-
-    final ethereumTransactions = [
-      CryptocurrencyTransaction()
-        ..date = DateTime(2019)
-        ..amount = 0.984,
-      CryptocurrencyTransaction()
-        ..date = DateTime(2022)
-        ..amount = 6.423,
-    ];
-    final ethereum = Cryptocurrency()
-      ..type = CryptoType.ethereum
-      ..totalCrypto = 7.407
-      ..priceMarket = 3254.12
-      ..transactions.addAll(ethereumTransactions);
-
-    await isar.writeTxn(() async {
-      await isar.cryptocurrencys.putAll([bitcoin, ethereum]);
-      await isar.cryptocurrencyTransactions.putAll(
-        [...bitcoinTransactions, ...ethereumTransactions],
-      );
-      await bitcoin.transactions.save();
-      await ethereum.transactions.save();
-    });
-  });
-
-  tearDownAll(() async {
-    await isar.close(deleteFromDisk: true);
-  });
-
   group('cryptocurrencyRepository', () {
     test('should return CryptocurrencyRepository when a call is made', () {
       // Arrange
@@ -90,10 +35,62 @@ void main() {
     });
   });
 
+  group('editCryptocurrency', () {
+    test('attaches transactions to the updated crypto row', () async {
+      // Arrange
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = CryptocurrencyRepository(db);
+      final transactionDate = DateTime(2026, 1, 2);
+
+      final bitcoinId = await db
+          .into(db.cryptocurrencyEntries)
+          .insert(
+            CryptocurrencyEntriesCompanion.insert(
+              type: CryptoType.bitcoin.name,
+              totalCrypto: const Value(1),
+              priceMarket: const Value(100),
+            ),
+          );
+      final ethereumId = await db
+          .into(db.cryptocurrencyEntries)
+          .insert(
+            CryptocurrencyEntriesCompanion.insert(
+              type: CryptoType.ethereum.name,
+              totalCrypto: const Value(2),
+              priceMarket: const Value(200),
+            ),
+          );
+
+      // Act
+      await repository.editCryptocurrency(
+        crypto: CryptocurrencyEntriesCompanion(
+          id: Value(bitcoinId),
+          type: Value(CryptoType.bitcoin.name),
+          totalCrypto: const Value(1.5),
+          priceMarket: const Value(100),
+        ),
+        transactionAmount: 0.5,
+        transactionDate: transactionDate,
+      );
+
+      // Assert
+      final bitcoin = await repository.getCryptocurrency(CryptoType.bitcoin);
+      final ethereum = await repository.getCryptocurrency(CryptoType.ethereum);
+
+      expect(ethereum.crypto.id, ethereumId);
+      expect(bitcoin.transactions, hasLength(1));
+      expect(bitcoin.transactions.single.cryptocurrencyId, bitcoinId);
+      expect(bitcoin.transactions.single.amount, 0.5);
+      expect(bitcoin.transactions.single.date, transactionDate);
+      expect(ethereum.transactions, isEmpty);
+    });
+  });
+
   group('watchCryptocurrencies', () {
     test('should return empty list when no data is found', () async {
       // Arrange
-      const cryptocurrencies = <Cryptocurrency>[];
+      const cryptocurrencies = <CryptocurrencyEntry>[];
 
       final repository = MockCryptocurrencyRepository();
       final container = createContainer(
@@ -107,7 +104,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Cryptocurrency>>>();
+      final listener = MockListener<AsyncValue<List<CryptocurrencyEntry>>>();
       container.listen(
         watchCryptocurrenciesProvider,
         listener.call,
@@ -133,7 +130,7 @@ void main() {
       'should return Chart with extra light gray color list when no data is found',
       () async {
         // Arrange
-        const cryptocurrencies = <Cryptocurrency>[];
+        const cryptocurrencies = <CryptocurrencyEntry>[];
         const chart = Chart(totalAmount: 0, data: []);
 
         final repository = MockCryptocurrencyRepository();
@@ -177,7 +174,20 @@ void main() {
         ],
       );
 
-      final cryptocurrencies = await isar.cryptocurrencys.where().findAll();
+      final cryptocurrencies = [
+        const CryptocurrencyEntry(
+          id: 1,
+          type: 'bitcoin',
+          totalCrypto: 1.722,
+          priceMarket: 98512.66,
+        ),
+        const CryptocurrencyEntry(
+          id: 2,
+          type: 'ethereum',
+          totalCrypto: 7.407,
+          priceMarket: 3254.12,
+        ),
+      ];
 
       final repository = MockCryptocurrencyRepository();
       final container = createContainer(
@@ -214,7 +224,20 @@ void main() {
     test('should return the total amount invested', () async {
       // Arrange
       const finalAmount = 193742.07;
-      final cryptocurrencies = await isar.cryptocurrencys.where().findAll();
+      final cryptocurrencies = [
+        const CryptocurrencyEntry(
+          id: 1,
+          type: 'bitcoin',
+          totalCrypto: 1.722,
+          priceMarket: 98512.66,
+        ),
+        const CryptocurrencyEntry(
+          id: 2,
+          type: 'ethereum',
+          totalCrypto: 7.407,
+          priceMarket: 3254.12,
+        ),
+      ];
 
       final repository = MockCryptocurrencyRepository();
       final container = createContainer(

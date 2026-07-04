@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
-import 'package:monn/features/savings_book/domain/savings_book.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../test.dart';
@@ -13,42 +11,6 @@ import '../../../test.mocks.dart';
 import '../../../utils.dart';
 
 void main() {
-  late Isar isar;
-
-  setUpAll(() async {
-    await Isar.initializeIsarCore(download: true);
-
-    isar = await Isar.open(
-      [SavingsBookSchema],
-      directory: '.',
-    );
-
-    await isar.writeTxn(() async {
-      await isar.savingsBooks.clear();
-    });
-
-    final data = [
-      SavingsBook()
-        ..name = 'Livret 1'
-        ..interests = 800
-        ..withdrawal = 100
-        ..startAmount = 1000,
-      SavingsBook()
-        ..name = 'Livret 2'
-        ..interests = 100
-        ..withdrawal = 200
-        ..startAmount = 2000,
-    ];
-
-    await isar.writeTxn(() async {
-      await isar.savingsBooks.putAll(data);
-    });
-  });
-
-  tearDownAll(() async {
-    await isar.close(deleteFromDisk: true);
-  });
-
   group('cryptocurrencyRepository', () {
     test('should return ReitRepository when a call is made', () {
       // Arrange
@@ -70,7 +32,7 @@ void main() {
   group('watchSavingsBooks', () {
     test('should return empty list when no data is found', () async {
       // Arrange
-      const savingsBooks = <SavingsBook>[];
+      const savingsBooks = <SavingsBookEntry>[];
 
       final repository = MockSavingsBookRepository();
       final container = createContainer(
@@ -84,7 +46,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<SavingsBook>>>();
+      final listener = MockListener<AsyncValue<List<SavingsBookEntry>>>();
       container.listen(
         watchSavingsBooksProvider,
         listener.call,
@@ -104,7 +66,22 @@ void main() {
 
     test('should return data from database', () async {
       // Arrange
-      final savingsBooks = await isar.savingsBooks.where().findAll();
+      final savingsBooks = [
+        const SavingsBookEntry(
+          id: 1,
+          name: 'Livret 1',
+          interests: 800,
+          withdrawal: 100,
+          startAmount: 1000,
+        ),
+        const SavingsBookEntry(
+          id: 2,
+          name: 'Livret 2',
+          interests: 100,
+          withdrawal: 200,
+          startAmount: 2000,
+        ),
+      ];
 
       final repository = MockSavingsBookRepository();
       final container = createContainer(
@@ -118,7 +95,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<SavingsBook>>>();
+      final listener = MockListener<AsyncValue<List<SavingsBookEntry>>>();
       container.listen(
         watchSavingsBooksProvider,
         listener.call,
@@ -141,11 +118,28 @@ void main() {
     test('should return the total amount invested', () async {
       // Arrange
       const finalAmount = 3600;
-      final savingsBooks = await isar.savingsBooks.where().findAll();
+      final savingsBooks = [
+        const SavingsBookEntry(
+          id: 1,
+          name: 'Livret 1',
+          interests: 800,
+          withdrawal: 100,
+          startAmount: 1000,
+        ),
+        const SavingsBookEntry(
+          id: 2,
+          name: 'Livret 2',
+          interests: 100,
+          withdrawal: 200,
+          startAmount: 2000,
+        ),
+      ];
 
-      final savings = Savings()
-        ..type = SavingsType.savingsBook
-        ..startAmount = 3000;
+      const savings = SavingsEntry(
+        id: 1,
+        type: 'savingsBook',
+        startAmount: 3000,
+      );
 
       final repository = MockSavingsBookRepository();
       final savingRepository = MockSavingsRepository();

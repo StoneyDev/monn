@@ -58,7 +58,7 @@
     "backup": "Sauvegarde",
     "no_backup": "Aucune sauvegarde",
     "import": "Importer",
-    "import_failed": "L'importation a échoué, le fichier n'a pas la bonne extension (.isar)",
+    "import_failed": "L'importation a échoué, le fichier n'a pas la bonne extension (.db)",
     "export": "Exporter",
     "restore": "Restaurer",
     "successfully_restored": "La base de données a été restaurée avec succès",

@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/per/data/per_repository.dart';
-import 'package:monn/features/per/domain/per.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'per_form_controller.g.dart';
@@ -23,9 +24,10 @@ class PerFormController extends _$PerFormController {
 
     final result = await AsyncValue.guard(
       () => repository.editPer(
-        Per()
-          ..invested = double.parse(state.invested)
-          ..interests = double.parse(state.interests),
+        PerEntriesCompanion(
+          invested: Value(double.parse(state.invested)),
+          interests: Value(double.parse(state.interests)),
+        ),
       ),
     );
 

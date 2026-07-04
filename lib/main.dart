@@ -7,6 +7,7 @@ import 'package:monn/app.dart';
 import 'package:monn/debug_observer.dart';
 import 'package:monn/generated/codegen_loader.g.dart';
 import 'package:monn/shared/local/local_database.dart';
+import 'package:monn/shared/local/migration_service.dart';
 import 'package:monn/shared/widgets/monn_error.dart';
 
 void main() async {
@@ -32,10 +33,12 @@ void main() async {
   );
 }
 
-Future<void> _initPackages() {
-  return Future.wait<void>(
+Future<void> _initPackages() async {
+  await Future.wait<void>(
     [LocalDatabase().init(), EasyLocalization.ensureInitialized()],
   );
+
+  await MigrationService.migrateIfNeeded(LocalDatabase().database);
 }
 
 // Setting device orientation

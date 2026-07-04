@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../test.dart';
 import '../../../test.mocks.dart';
@@ -30,7 +31,7 @@ void main() {
   group('watchSavings', () {
     test('should return empty list when no data is found', () async {
       // Arrange
-      final savings = <Savings>[];
+      final savings = <SavingsEntry>[];
       final repository = MockSavingsRepository();
 
       final container = createContainer(
@@ -44,7 +45,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Savings>>>();
+      final listener = MockListener<AsyncValue<List<SavingsEntry>>>();
       container.listen(
         watchSavingsProvider(),
         listener.call,
@@ -68,7 +69,7 @@ void main() {
       () async {
         // Arrange
         const savingType = SavingsType.pea;
-        final saving = Savings()..type = savingType;
+        final saving = SavingsEntry(id: 1, type: savingType.name);
 
         final repository = MockSavingsRepository();
         final container = createContainer(
@@ -82,7 +83,7 @@ void main() {
         );
 
         // Act
-        final listener = MockListener<AsyncValue<Savings?>>();
+        final listener = MockListener<AsyncValue<SavingsEntry?>>();
         container.listen(
           getSavingsProvider(type: savingType),
           listener.call,

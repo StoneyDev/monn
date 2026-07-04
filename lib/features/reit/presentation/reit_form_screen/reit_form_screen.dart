@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +8,7 @@ import 'package:monn/features/dashboard/presentation/add_savings_screen/controll
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -98,10 +100,17 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
                 final success = await formNotifier.submit();
 
                 final formData = ref.read(reitFormControllerProvider);
-                final newSaving = value ?? (Savings()..type = SavingsType.reit);
-                newSaving.startAmount =
-                    (newSaving.startAmount ?? 0) +
-                    (double.parse(formData.price) * int.parse(formData.shares));
+                final newSaving = SavingsEntriesCompanion(
+                  id: value != null
+                      ? Value(value.id)
+                      : const Value.absent(),
+                  type: Value(SavingsType.reit.name),
+                  startAmount: Value(
+                    (value?.startAmount ?? 0) +
+                        (double.parse(formData.price) *
+                            int.parse(formData.shares)),
+                  ),
+                );
 
                 final updated = await ref
                     .read(editSavingsControllerProvider.notifier)

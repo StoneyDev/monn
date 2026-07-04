@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
-import 'package:monn/features/savings_book/domain/savings_book.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_form_controller.g.dart';
@@ -23,9 +24,10 @@ class SavingsBookFormController extends _$SavingsBookFormController {
 
     final result = await AsyncValue.guard(
       () => repository.editSavingsBook(
-        SavingsBook()
-          ..name = state.name
-          ..startAmount = double.parse(state.startAmount),
+        SavingsBookEntriesCompanion.insert(
+          name: state.name,
+          startAmount: Value(double.parse(state.startAmount)),
+        ),
       ),
     );
 

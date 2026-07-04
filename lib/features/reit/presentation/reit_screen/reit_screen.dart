@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,7 @@ import 'package:monn/features/reit/presentation/reit_screen/reit_dividends_botto
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -109,7 +111,7 @@ class ReitScreen extends ConsumerWidget {
                     0,
                     (total, div) => total + div.amount,
                   );
-                  final investedAmount = item.shares * item.price;
+                  final investedAmount = item.reit.shares * item.reit.price;
                   final firstDividendDate = item.dividends.isNotEmpty
                       ? item.dividends
                             .reduce(
@@ -130,7 +132,7 @@ class ReitScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.name.toUpperCase(),
+                          item.reit.name.toUpperCase(),
                           style: Theme.of(context).textTheme.titleSmall
                               ?.copyWith(
                                 color: AppColors.lightGray,
@@ -151,11 +153,11 @@ class ReitScreen extends ConsumerWidget {
                             ),
                             MonnFinancialInfo(
                               title: context.tr(LocaleKeys.common_part),
-                              data: item.shares,
+                              data: item.reit.shares,
                             ),
                             MonnFinancialInfo(
                               title: context.tr(LocaleKeys.common_worth),
-                              data: item.price,
+                              data: item.reit.price,
                             ),
                           ],
                         ),
@@ -242,7 +244,7 @@ class ReitScreen extends ConsumerWidget {
                       pageListBuilder: (context) => [
                         MonnBottomSheet.warningDialog(
                           context: context,
-                          title: item.name.toUpperCase(),
+                          title: item.reit.name.toUpperCase(),
                           sliver: SliverToBoxAdapter(
                             child: Column(
                               spacing: 8,
@@ -258,14 +260,18 @@ class ReitScreen extends ConsumerWidget {
                                 TextButton(
                                   onPressed: () async {
                                     await ref.read(
-                                      deleteReitProvider(item).future,
+                                      deleteReitProvider(item.reit.id).future,
                                     );
-                                    final newSaving =
-                                        savingsReit ??
-                                        (Savings()..type = SavingsType.reit);
-                                    newSaving.startAmount =
-                                        (newSaving.startAmount ?? 0) -
-                                        investedAmount;
+                                    final newSaving = SavingsEntriesCompanion(
+                                      id: savingsReit != null
+                                          ? Value(savingsReit.id)
+                                          : const Value.absent(),
+                                      type: Value(SavingsType.reit.name),
+                                      startAmount: Value(
+                                        (savingsReit?.startAmount ?? 0) -
+                                            investedAmount,
+                                      ),
+                                    );
                                     final success = await ref
                                         .read(
                                           editSavingsControllerProvider
@@ -295,7 +301,10 @@ class ReitScreen extends ConsumerWidget {
                     onTap: () => WoltModalSheet.show<void>(
                       context: context,
                       pageListBuilder: (context) => [
-                        reitDividendsBottomSheet(context: context, reit: item),
+                        reitDividendsBottomSheet(
+                          context: context,
+                          reitWithDividends: item,
+                        ),
                       ],
                     ),
                   );

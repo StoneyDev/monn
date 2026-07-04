@@ -55,7 +55,7 @@ final class CrowdfundingRepositoryProvider
 }
 
 String _$crowdfundingRepositoryHash() =>
-    r'b03231041718953e8cf9a85f2c9675487a59d7a4';
+    r'ee5166bcd8aad33bbee8a2274f28a1b1ec61efc4';
 
 @ProviderFor(watchCrowdfundings)
 const watchCrowdfundingsProvider = WatchCrowdfundingsProvider._();
@@ -63,13 +63,13 @@ const watchCrowdfundingsProvider = WatchCrowdfundingsProvider._();
 final class WatchCrowdfundingsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Crowdfunding>>,
-          List<Crowdfunding>,
-          Stream<List<Crowdfunding>>
+          AsyncValue<List<CrowdfundingEntry>>,
+          List<CrowdfundingEntry>,
+          Stream<List<CrowdfundingEntry>>
         >
     with
-        $FutureModifier<List<Crowdfunding>>,
-        $StreamProvider<List<Crowdfunding>> {
+        $FutureModifier<List<CrowdfundingEntry>>,
+        $StreamProvider<List<CrowdfundingEntry>> {
   const WatchCrowdfundingsProvider._()
     : super(
         from: null,
@@ -86,18 +86,18 @@ final class WatchCrowdfundingsProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Crowdfunding>> $createElement(
+  $StreamProviderElement<List<CrowdfundingEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<Crowdfunding>> create(Ref ref) {
+  Stream<List<CrowdfundingEntry>> create(Ref ref) {
     return watchCrowdfundings(ref);
   }
 }
 
 String _$watchCrowdfundingsHash() =>
-    r'd105c9f8373c0a0091da225f0d673198673b9356';
+    r'a48b0cdc090e7c36338c8badf2b6dd8af967aee3';
 
 @ProviderFor(watchPayoutReportCrowdfunding)
 const watchPayoutReportCrowdfundingProvider =

@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/edit_crowdfunding_screen.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
@@ -16,6 +16,7 @@ import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_up_down.dart';
@@ -89,8 +90,11 @@ class CrowdfundingScreen extends ConsumerWidget {
                         ref.read(_startAmountProvider.notifier).state = value,
                     onSubmit: () async {
                       final newValue = ref.read(_startAmountProvider);
-                      final newSaving = value!
-                        ..startAmount = double.parse(newValue!);
+                      final newSaving = SavingsEntriesCompanion(
+                        id: Value(value!.id),
+                        type: Value(value.type),
+                        startAmount: Value(double.parse(newValue!)),
+                      );
 
                       final success = await ref
                           .read(editSavingsControllerProvider.notifier)
@@ -145,7 +149,7 @@ class CrowdfundingScreen extends ConsumerWidget {
 class _RefundTransaction extends ConsumerWidget {
   const _RefundTransaction(this.crowdfunding);
 
-  final Crowdfunding crowdfunding;
+  final CrowdfundingEntry crowdfunding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

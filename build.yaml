@@ -3,6 +3,9 @@ global_options:
     runs_before:
       - isar_community_generator:isar_community_generator
       # - isar_generator:isar_generator
+  drift_dev:not_shared:
+    runs_before:
+      - riverpod_generator:riverpod_generator
 
 targets:
   $default:
@@ -11,3 +14,9 @@ targets:
         options:
           explicit_to_json: true
           field_rename: snake
+      drift_dev:drift_dev:
+        enabled: false
+      drift_dev:not_shared:
+        enabled: true
+        generate_for:
+          - lib/shared/local/database.dart

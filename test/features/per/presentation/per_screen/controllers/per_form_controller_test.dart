@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/per/data/per_repository.dart';
-import 'package:monn/features/per/domain/per.dart';
 import 'package:monn/features/per/presentation/per_screen/controllers/per_form_controller.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
@@ -170,9 +170,9 @@ void main() {
       verify(
         mockRepository.editPer(
           argThat(
-            isA<Per>()
-                .having((p) => p.invested, 'invested', 15000)
-                .having((p) => p.interests, 'interests', 750.50),
+            isA<PerEntriesCompanion>()
+                .having((p) => p.invested.value, 'invested', 15000)
+                .having((p) => p.interests.value, 'interests', 750.50),
           ),
         ),
       ).called(1);

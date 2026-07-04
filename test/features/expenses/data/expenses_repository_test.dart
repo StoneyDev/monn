@@ -1,37 +1,30 @@
+import 'package:drift/drift.dart' hide isNotNull, isNull;
+import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/expenses/data/expenses_repository.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../test.dart';
 import '../../../test.mocks.dart';
 import '../../../utils.dart';
 
 void main() {
-  late Isar isar;
+  late AppDatabase db;
   late ExpensesRepository repository;
 
-  setUpAll(() async {
-    await Isar.initializeIsarCore(download: true);
-
-    isar = await Isar.open(
-      [BudgetSchema],
-      directory: '.',
-    );
-
-    repository = ExpensesRepository(isar);
+  setUpAll(() {
+    db = AppDatabase(NativeDatabase.memory());
+    repository = ExpensesRepository(db);
   });
 
   setUp(() async {
-    await isar.writeTxn(() async {
-      await isar.budgets.clear();
-    });
+    await db.delete(db.budgetEntries).go();
   });
 
   tearDownAll(() async {
-    await isar.close(deleteFromDisk: true);
+    await db.close();
   });
 
   group('ExpensesRepository', () {
@@ -40,17 +33,20 @@ void main() {
       final budget = await repository.getOrCreateBudget();
 
       // Assert
-      expect(budget, isA<Budget>());
+      expect(budget, isA<BudgetEntry>());
       expect(budget.id, 1);
       expect(budget.freelanceIncome, 0);
     });
 
     test('getOrCreateBudget returns existing budget', () async {
       // Arrange
-      final existingBudget = Budget()
-        ..freelanceIncome = 5000
-        ..rent = 1000;
-      await isar.writeTxn(() => isar.budgets.put(existingBudget));
+      await db.into(db.budgetEntries).insertOnConflictUpdate(
+            const BudgetEntriesCompanion(
+              id: Value(1),
+              freelanceIncome: Value(5000),
+              rent: Value(1000),
+            ),
+          );
 
       // Act
       final budget = await repository.getOrCreateBudget();
@@ -62,14 +58,18 @@ void main() {
 
     test('saveBudget persists budget data', () async {
       // Arrange
-      final budget = Budget()
-        ..freelanceIncome = 6000
-        ..rent = 1200
-        ..electricity = 100;
+      const budget = BudgetEntriesCompanion(
+        id: Value(1),
+        freelanceIncome: Value(6000),
+        rent: Value(1200),
+        electricity: Value(100),
+      );
 
       // Act
       await repository.saveBudget(budget);
-      final savedBudget = await isar.budgets.get(1);
+      final savedBudget = await (db.select(db.budgetEntries)
+            ..where((t) => t.id.equals(1)))
+          .getSingleOrNull();
 
       // Assert
       expect(savedBudget, isNotNull);
@@ -80,14 +80,18 @@ void main() {
 
     test('watchBudget emits budget changes', () async {
       // Arrange
-      final budget = Budget()..freelanceIncome = 4000;
-      await isar.writeTxn(() => isar.budgets.put(budget));
+      await db.into(db.budgetEntries).insertOnConflictUpdate(
+            const BudgetEntriesCompanion(
+              id: Value(1),
+              freelanceIncome: Value(4000),
+            ),
+          );
 
       // Act & Assert
       await expectLater(
         repository.watchBudget(),
         emits(
-          isA<Budget>().having(
+          isA<BudgetEntry>().having(
             (b) => b.freelanceIncome,
             'freelanceIncome',
             4000,
@@ -130,7 +134,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<Budget?>>();
+      final listener = MockListener<AsyncValue<BudgetEntry?>>();
       container.listen(
         watchBudgetProvider,
         listener.call,
@@ -145,7 +149,22 @@ void main() {
 
     test('returns budget when it exists', () async {
       // Arrange
-      final budget = Budget()..freelanceIncome = 5000;
+      const budget = BudgetEntry(
+        id: 1,
+        freelanceIncome: 5000,
+        rent: 0,
+        electricity: 0,
+        gas: 0,
+        water: 0,
+        internet: 0,
+        homeInsurance: 0,
+        publicTransport: 0,
+        groceries: 0,
+        restaurants: 0,
+        healthInsurance: 0,
+        phone: 0,
+        ai: 0,
+      );
       final mockRepository = MockExpensesRepository();
       final container = createContainer(
         overrides: [
@@ -158,7 +177,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<Budget?>>();
+      final listener = MockListener<AsyncValue<BudgetEntry?>>();
       container.listen(
         watchBudgetProvider,
         listener.call,

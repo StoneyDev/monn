@@ -48,14 +48,19 @@ final class PeaRepositoryProvider
   }
 }
 
-String _$peaRepositoryHash() => r'46f15a02f111a1eed0834449ccab835e01df9526';
+String _$peaRepositoryHash() => r'b6729e77b19b056b2fcae1676daeb4792b2072bf';
 
 @ProviderFor(getPea)
 const getPeaProvider = GetPeaProvider._();
 
 final class GetPeaProvider
-    extends $FunctionalProvider<AsyncValue<Pea?>, Pea?, FutureOr<Pea?>>
-    with $FutureModifier<Pea?>, $FutureProvider<Pea?> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<PeaEntry?>,
+          PeaEntry?,
+          FutureOr<PeaEntry?>
+        >
+    with $FutureModifier<PeaEntry?>, $FutureProvider<PeaEntry?> {
   const GetPeaProvider._()
     : super(
         from: null,
@@ -72,16 +77,16 @@ final class GetPeaProvider
 
   @$internal
   @override
-  $FutureProviderElement<Pea?> $createElement($ProviderPointer pointer) =>
+  $FutureProviderElement<PeaEntry?> $createElement($ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Pea?> create(Ref ref) {
+  FutureOr<PeaEntry?> create(Ref ref) {
     return getPea(ref);
   }
 }
 
-String _$getPeaHash() => r'36a208facf7acb501ac42cf517c7e569aeccbd9b';
+String _$getPeaHash() => r'527e7f3867342204757630dcf5f7f2e3962bcaa7';
 
 @ProviderFor(getPayoutReportPea)
 const getPayoutReportPeaProvider = GetPayoutReportPeaProvider._();
@@ -121,4 +126,4 @@ final class GetPayoutReportPeaProvider
 }
 
 String _$getPayoutReportPeaHash() =>
-    r'ca5e13700c7d52c8fa16dee3551f969b90c6f20e';
+    r'562f685d7539f5c0ab35903eb86e1ca4f54a57c5';

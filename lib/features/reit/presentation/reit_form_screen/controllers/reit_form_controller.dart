@@ -1,5 +1,5 @@
 import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_form_controller.g.dart';
@@ -40,11 +40,12 @@ class ReitFormController extends _$ReitFormController {
 
     final result = await AsyncValue.guard(
       () => repository.addReit(
-        Reit()
-          ..name = state.reitName
-          ..price = double.parse(state.price)
-          ..boughtOn = state.boughtOn
-          ..shares = int.parse(state.shares),
+        ReitEntriesCompanion.insert(
+          name: state.reitName,
+          price: double.parse(state.price),
+          boughtOn: state.boughtOn,
+          shares: int.parse(state.shares),
+        ),
       ),
     );
 

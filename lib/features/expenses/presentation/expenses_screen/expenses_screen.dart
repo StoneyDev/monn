@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/expenses/data/expenses_repository.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:monn/features/expenses/domain/budget_extension.dart';
 import 'package:monn/features/expenses/presentation/edit_budget_screen/edit_budget_screen.dart';
 import 'package:monn/features/expenses/presentation/expenses_screen/widgets/expense_category_list.dart';
 import 'package:monn/features/expenses/presentation/expenses_screen/widgets/sankey_diagram.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_error.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
@@ -69,7 +70,7 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
               ? _BudgetContent(budget: value, viewMode: _viewMode)
               : const _EmptyBudget(),
         AsyncError(:final error) => Padding(
-          padding: const .all(16),
+          padding: const EdgeInsets.all(16),
           child: MonnError(message: error.toString()),
         ),
         _ => const Center(child: CircularProgressIndicator()),
@@ -84,7 +85,7 @@ class _EmptyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
     child: Column(
-      mainAxisAlignment: .center,
+      mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
       children: [
         const iconoir.Wallet(
@@ -106,7 +107,7 @@ class _EmptyBudget extends StatelessWidget {
 class _BudgetContent extends StatelessWidget {
   const _BudgetContent({required this.budget, required this.viewMode});
 
-  final Budget budget;
+  final BudgetEntry budget;
   final _ViewMode viewMode;
 
   @override
@@ -123,7 +124,7 @@ class _BudgetContent extends StatelessWidget {
         Text(
           budget.totalExpenses.simpleCurrency(locale),
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            fontWeight: .w900,
+            fontWeight: FontWeight.w900,
           ),
         ),
         Text(
@@ -131,7 +132,7 @@ class _BudgetContent extends StatelessWidget {
           '${context.tr(LocaleKeys.expenses_to_invest)} ${budget.balance.simpleCurrency(locale)}',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: AppColors.lightGray,
-            fontWeight: .w600,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],

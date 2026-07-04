@@ -1,44 +1,46 @@
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_repository.g.dart';
 
 class SavingsRepository {
-  const SavingsRepository(this._localDB);
+  const SavingsRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<Savings>> watchSavings({SavingsFilter? filter}) {
-    final query = switch (filter) {
-      SavingsFilter.sortByStartAmountAsc =>
-        _localDB.savings.where().sortByStartAmount().build(),
-      _ => _localDB.savings.where().sortByStartAmountDesc().build(),
-    };
-
-    return query.watch(fireImmediately: true);
+  Stream<List<SavingsEntry>> watchSavings({SavingsFilter? filter}) {
+    final query = _db.select(_db.savingsEntries)
+      ..orderBy([
+        (t) => switch (filter) {
+              SavingsFilter.sortByStartAmountAsc =>
+                OrderingTerm.asc(t.startAmount),
+              _ => OrderingTerm.desc(t.startAmount),
+            },
+      ]);
+    return query.watch();
   }
 
-  Future<Savings?> getSavings(SavingsType type) {
-    final query = _localDB.savings.filter().typeEqualTo(type).build();
-    return query.findFirst();
+  Future<SavingsEntry?> getSavings(SavingsType type) {
+    return (_db.select(_db.savingsEntries)
+          ..where((t) => t.type.equals(type.name)))
+        .getSingleOrNull();
   }
 
-  Future<void> editSaving(Savings newSaving) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.savings.put(newSaving);
-    });
+  Future<void> editSaving(SavingsEntriesCompanion newSaving) {
+    return _db.into(_db.savingsEntries).insertOnConflictUpdate(newSaving);
   }
 }
 
 @Riverpod(keepAlive: true)
 SavingsRepository savingsRepository(Ref ref) {
-  return SavingsRepository(LocalDatabase().database);
+  return SavingsRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<Savings>> watchSavings(
+Stream<List<SavingsEntry>> watchSavings(
   Ref ref, {
   SavingsFilter? filter,
 }) {
@@ -47,7 +49,7 @@ Stream<List<Savings>> watchSavings(
 }
 
 @riverpod
-Future<Savings?> getSavings(Ref ref, {required SavingsType type}) {
+Future<SavingsEntry?> getSavings(Ref ref, {required SavingsType type}) {
   final repository = ref.watch(savingsRepositoryProvider);
   return repository.getSavings(type);
 }

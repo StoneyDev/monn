@@ -43,7 +43,7 @@ final class ReitDividendFormControllerProvider
 }
 
 String _$reitDividendFormControllerHash() =>
-    r'e42f0938766dc12d668a96ec947aa1d650e22002';
+    r'4c60c7f9bb3ca7e609c854f909b2acff461b382d';
 
 abstract class _$ReitDividendFormController
     extends $Notifier<ReitDividendForm> {

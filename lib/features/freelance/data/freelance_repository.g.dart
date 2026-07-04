@@ -55,7 +55,7 @@ final class FreelanceRepositoryProvider
 }
 
 String _$freelanceRepositoryHash() =>
-    r'97bfa5b4c26c2280cce03ee6b09ce171c70ebe42';
+    r'5b4a275f9851fc9fd12e08ade02f80548e7d97e6';
 
 @ProviderFor(watchFreelance)
 const watchFreelanceProvider = WatchFreelanceProvider._();
@@ -63,11 +63,11 @@ const watchFreelanceProvider = WatchFreelanceProvider._();
 final class WatchFreelanceProvider
     extends
         $FunctionalProvider<
-          AsyncValue<Freelance?>,
-          Freelance?,
-          Stream<Freelance?>
+          AsyncValue<FreelanceEntry?>,
+          FreelanceEntry?,
+          Stream<FreelanceEntry?>
         >
-    with $FutureModifier<Freelance?>, $StreamProvider<Freelance?> {
+    with $FutureModifier<FreelanceEntry?>, $StreamProvider<FreelanceEntry?> {
   const WatchFreelanceProvider._()
     : super(
         from: null,
@@ -84,16 +84,17 @@ final class WatchFreelanceProvider
 
   @$internal
   @override
-  $StreamProviderElement<Freelance?> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $StreamProviderElement<FreelanceEntry?> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<Freelance?> create(Ref ref) {
+  Stream<FreelanceEntry?> create(Ref ref) {
     return watchFreelance(ref);
   }
 }
 
-String _$watchFreelanceHash() => r'a8efaf21784508669e629fc9c1e9ebd456f9f34f';
+String _$watchFreelanceHash() => r'1c4fa26d11be91b0055a933e20cfa34333f13076';
 
 @ProviderFor(freelanceCalculation)
 const freelanceCalculationProvider = FreelanceCalculationProvider._();

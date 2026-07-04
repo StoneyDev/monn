@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_api.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/coin_market_cap.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +33,7 @@ CoinMarketCapRepository coinMarketCapRepository(Ref ref) {
 }
 
 @riverpod
-Future<List<Cryptocurrency>> getCryptoPriceMarket(Ref ref) async {
+Future<List<CryptocurrencyEntry>> getCryptoPriceMarket(Ref ref) async {
   final repository = ref.watch(coinMarketCapRepositoryProvider);
   final cryptoRepository = ref.watch(cryptocurrencyRepositoryProvider);
   final now = DateTime.now();
@@ -55,24 +57,33 @@ Future<List<Cryptocurrency>> getCryptoPriceMarket(Ref ref) async {
     await prefs.setString('lastCryptoUpdate', now.toIso8601String());
   }
 
-  final cryptocurrencies = <Cryptocurrency>[];
+  final cryptocurrencies = <CryptocurrencyEntry>[];
   final cryptoMarketMap = {for (final e in cryptoMarket) e.slug: e};
 
   for (final cryptoType in CryptoType.values) {
-    final crypto = await ref.watch(
-      getCryptocurrencyProvider(cryptoType).selectAsync((crypto) => crypto),
+    final cryptoWithTx = await ref.watch(
+      getCryptocurrencyProvider(cryptoType).selectAsync((c) => c),
     );
 
     if (cryptoMarket.isNotEmpty) {
-      final cryptoMarket = cryptoMarketMap[cryptoType.name.toKebabCase()];
-
-      final newCrypto = crypto
-        ..priceMarket = cryptoMarket!.quote.priceUsd.price
-        ..lastUpdate = now;
-      await cryptoRepository.editCryptocurrency(crypto: newCrypto);
-      cryptocurrencies.add(newCrypto);
+      final market = cryptoMarketMap[cryptoType.name.toKebabCase()];
+      final companion = CryptocurrencyEntriesCompanion(
+        id: cryptoWithTx.crypto.id.asPk,
+        type: Value(cryptoWithTx.crypto.type),
+        totalCrypto: Value(cryptoWithTx.crypto.totalCrypto),
+        priceMarket: Value(market!.quote.priceUsd.price),
+        lastUpdate: Value(now),
+      );
+      await cryptoRepository.editCryptocurrency(crypto: companion);
+      cryptocurrencies.add(CryptocurrencyEntry(
+        id: cryptoWithTx.crypto.id,
+        type: cryptoWithTx.crypto.type,
+        totalCrypto: cryptoWithTx.crypto.totalCrypto,
+        priceMarket: market.quote.priceUsd.price,
+        lastUpdate: now,
+      ));
     } else {
-      cryptocurrencies.add(crypto);
+      cryptocurrencies.add(cryptoWithTx.crypto);
     }
   }
 

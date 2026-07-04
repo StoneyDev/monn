@@ -34,12 +34,14 @@ class CryptoPageScreen extends ConsumerWidget {
         title: '${type.label} (${type.symbol})',
       ),
       body: cryptocurrency.when(
-        data: (crypto) {
+        data: (cryptoWithTx) {
+          final crypto = cryptoWithTx.crypto;
+          final transactions = cryptoWithTx.transactions;
           final marketValue = crypto.totalCrypto * crypto.priceMarket;
-          final sortByPurchase = crypto.transactions.toList().sorted((a, b) {
+          final sortByPurchase = transactions.toList().sorted((a, b) {
             final dateCompare = b.date.compareTo(a.date);
             if (dateCompare != 0) return dateCompare;
-            return (b.id ?? 0).compareTo(a.id ?? 0);
+            return b.id.compareTo(a.id);
           });
 
           return MonnScrollView(
@@ -51,7 +53,7 @@ class CryptoPageScreen extends ConsumerWidget {
                     spacing: 8,
                     children: [
                       Image(
-                        image: crypto.type.logo(),
+                        image: crypto.cryptoType.logo(),
                         height: 40,
                         width: 40,
                       ),
@@ -59,7 +61,7 @@ class CryptoPageScreen extends ConsumerWidget {
                         child: Text(
                           marketValue.simpleCurrency('en'),
                           style: Theme.of(context).textTheme.headlineLarge
-                              ?.copyWith(fontWeight: .bold),
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                       IconButton.filled(
@@ -77,7 +79,7 @@ class CryptoPageScreen extends ConsumerWidget {
                         onPressed: () async {
                           ref
                               .read(cryptoFormControllerProvider.notifier)
-                              .set(crypto: crypto);
+                              .set(crypto: cryptoWithTx.crypto);
 
                           await context.push(const AddCryptoScreen());
                         },
@@ -100,10 +102,10 @@ class CryptoPageScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    crypto.type.label,
+                                    crypto.cryptoType.label,
                                     style: const TextStyle(
                                       color: AppColors.lightGray,
-                                      fontWeight: .w600,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
@@ -111,7 +113,9 @@ class CryptoPageScreen extends ConsumerWidget {
                                       locale: locale,
                                       digit: crypto.totalCrypto > 0 ? 8 : null,
                                     ),
-                                    style: const TextStyle(fontWeight: .bold),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -181,7 +185,7 @@ class CryptoPageScreen extends ConsumerWidget {
                       ),
                     );
                   },
-                  itemCount: crypto.transactions.length,
+                  itemCount: transactions.length,
                 ),
               ),
             ],

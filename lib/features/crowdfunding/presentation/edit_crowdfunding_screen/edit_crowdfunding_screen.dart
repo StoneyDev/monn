@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -15,7 +15,7 @@ import 'package:monn/shared/widgets/monn_scroll_view.dart';
 class EditCrowdfundingScreen extends ConsumerStatefulWidget {
   const EditCrowdfundingScreen({this.crowdfunding, super.key});
 
-  final Crowdfunding? crowdfunding;
+  final CrowdfundingEntry? crowdfunding;
 
   @override
   ConsumerState<EditCrowdfundingScreen> createState() =>

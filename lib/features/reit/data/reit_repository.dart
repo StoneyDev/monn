@@ -1,71 +1,78 @@
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/domain/reit_tax_calculator.dart';
+import 'package:monn/features/reit/domain/reit_with_dividends.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_repository.g.dart';
 
 class ReitRepository {
-  const ReitRepository(this._localDB);
+  const ReitRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<Reit>> watchReits() {
-    final query = _localDB.reits.where().build();
-    return query.watch(fireImmediately: true);
-  }
+  Stream<List<ReitWithDividends>> watchReits() {
+    final query = _db.select(_db.reitEntries).join([
+      leftOuterJoin(
+        _db.reitDividendEntries,
+        _db.reitDividendEntries.reitId.equalsExp(_db.reitEntries.id),
+      ),
+    ]);
 
-  Future<void> addReit(Reit reit) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.reits.put(reit);
-    });
-  }
-
-  Future<void> editReit({
-    required Reit reit,
-    required ReitDividend dividend,
-  }) async {
-    reit.dividends.add(dividend);
-
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.reits.put(reit);
-      await _localDB.reitDividends.put(dividend);
-      await reit.dividends.save();
-    });
-  }
-
-  Future<void> deleteReit(Reit reit) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.reits.delete(reit.id!);
-      if (reit.dividends.isNotEmpty) {
-        await _localDB.reitDividends.deleteAll(
-          reit.dividends.map((e) => e.id!).toList(),
-        );
+    return query.watch().map((rows) {
+      final reits = <int, ReitEntry>{};
+      final dividendsByReit = <int, List<ReitDividendEntry>>{};
+      for (final row in rows) {
+        final reit = row.readTable(_db.reitEntries);
+        reits[reit.id] = reit;
+        final dividend = row.readTableOrNull(_db.reitDividendEntries);
+        if (dividend != null) {
+          dividendsByReit.putIfAbsent(reit.id, () => []).add(dividend);
+        }
       }
+      return [
+        for (final reit in reits.values)
+          ReitWithDividends(
+            reit: reit,
+            dividends: List.unmodifiable(dividendsByReit[reit.id] ?? const []),
+          ),
+      ];
     });
+  }
+
+  Future<void> addReit(ReitEntriesCompanion reit) {
+    return _db.into(_db.reitEntries).insert(reit);
+  }
+
+  Future<void> addDividend(ReitDividendEntriesCompanion dividend) {
+    return _db.into(_db.reitDividendEntries).insert(dividend);
+  }
+
+  Future<void> deleteReit(int id) {
+    return (_db.delete(_db.reitEntries)..where((t) => t.id.equals(id))).go();
   }
 }
 
 @Riverpod(keepAlive: true)
 ReitRepository reitRepository(Ref ref) {
-  return ReitRepository(LocalDatabase().database);
+  return ReitRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<Reit>> watchReits(Ref ref) {
+Stream<List<ReitWithDividends>> watchReits(Ref ref) {
   final repository = ref.watch(reitRepositoryProvider);
   return repository.watchReits();
 }
 
 @riverpod
-Future<void> deleteReit(Ref ref, Reit reit) {
+Future<void> deleteReit(Ref ref, int id) {
   final repository = ref.watch(reitRepositoryProvider);
-  return repository.deleteReit(reit);
+  return repository.deleteReit(id);
 }
 
 @riverpod
@@ -97,18 +104,6 @@ Stream<PayoutReportData> watchPayoutReportReit(Ref ref) async* {
 }
 
 @riverpod
-Future<List<ReitDividend>> getReitDividends(Ref ref, Reit reit) async {
-  await reit.dividends.load();
-
-  return reit.dividends.toList()
-    ..sort((a, b) {
-      final dateCompare = b.receivedAt.compareTo(a.receivedAt);
-      if (dateCompare != 0) return dateCompare;
-      return (b.id ?? 0).compareTo(a.id ?? 0);
-    });
-}
-
-@riverpod
 ReitTaxResult reitTaxCalculation(Ref ref) {
   final freelance = ref.watch(watchFreelanceProvider).value;
   final reits = ref.watch(watchReitsProvider).value ?? [];
@@ -116,7 +111,6 @@ ReitTaxResult reitTaxCalculation(Ref ref) {
   final freelanceAnnualRevenue = freelance?.annualRevenue ?? 0;
   final currentYear = DateTime.now().year;
 
-  // Calculate dividends for current year from all REITs
   var currentYearDividends = 0.0;
   for (final reit in reits) {
     currentYearDividends += reit.dividends

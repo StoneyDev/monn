@@ -1,34 +1,36 @@
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/life_insurance/domain/life_insurance.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'life_insurance_repository.g.dart';
 
 class LifeInsuranceRepository {
-  const LifeInsuranceRepository(this._localDB);
+  const LifeInsuranceRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<LifeInsurance?> watchLifeInsurance() {
-    return _localDB.lifeInsurances.watchObject(1, fireImmediately: true);
+  Stream<LifeInsuranceEntry?> watchLifeInsurance() {
+    return (_db.select(_db.lifeInsuranceEntries)
+          ..where((t) => t.id.equals(1)))
+        .watchSingleOrNull();
   }
 
-  Future<void> editLifeInsurance(LifeInsurance lifeInsurance) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.lifeInsurances.put(lifeInsurance..id = 1);
-    });
+  Future<void> editLifeInsurance(LifeInsuranceEntriesCompanion lifeInsurance) {
+    return _db.into(_db.lifeInsuranceEntries).insertOnConflictUpdate(
+          lifeInsurance.copyWith(id: const Value(1)),
+        );
   }
 }
 
 @Riverpod(keepAlive: true)
 LifeInsuranceRepository lifeInsuranceRepository(Ref ref) {
-  return LifeInsuranceRepository(LocalDatabase().database);
+  return LifeInsuranceRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<LifeInsurance?> watchLifeInsurance(Ref ref) {
+Stream<LifeInsuranceEntry?> watchLifeInsurance(Ref ref) {
   final repository = ref.watch(lifeInsuranceRepositoryProvider);
   return repository.watchLifeInsurance();
 }

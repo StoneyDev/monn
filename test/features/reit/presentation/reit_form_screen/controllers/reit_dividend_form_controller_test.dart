@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_dividend_form_controller.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
@@ -27,7 +27,13 @@ void main() {
 
     test('should update reit when set is called with Reit', () {
       // Arrange
-      final reit = Reit();
+      final reit = ReitEntry(
+        id: 1,
+        name: '',
+        boughtOn: DateTime.now(),
+        shares: 0,
+        price: 0,
+      );
       final container = createContainer();
 
       // Act
@@ -73,7 +79,13 @@ void main() {
       'should update multiple fields when set is called with multiple parameters',
       () {
         // Arrange
-        final reit = Reit()..name = 'Random SCPI';
+        final reit = ReitEntry(
+          id: 1,
+          name: 'Random SCPI',
+          boughtOn: DateTime.now(),
+          shares: 0,
+          price: 0,
+        );
         const amount = '2.15455';
         const expectedAmount = '2.15455';
         final receivedAt = DateTime.now();
@@ -96,18 +108,19 @@ void main() {
     test('should return true when submit succeeds', () async {
       // Arrange
       final mockRepository = MockReitRepository();
-      when(
-        mockRepository.editReit(
-          reit: anyNamed('reit'),
-          dividend: anyNamed('dividend'),
-        ),
-      ).thenAnswer((_) async {});
+      when(mockRepository.addDividend(any)).thenAnswer((_) async {});
 
       final container = createContainer(
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()..name = 'Random SCPI';
+      final reit = ReitEntry(
+        id: 1,
+        name: 'Random SCPI',
+        boughtOn: DateTime.now(),
+        shares: 0,
+        price: 0,
+      );
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
       )..set(amount: '50.7', reit: reit);
@@ -117,29 +130,25 @@ void main() {
 
       // Assert
       expect(result, isTrue);
-      verify(
-        mockRepository.editReit(
-          reit: anyNamed('reit'),
-          dividend: anyNamed('dividend'),
-        ),
-      ).called(1);
+      verify(mockRepository.addDividend(any)).called(1);
     });
 
     test('should return false when submit fails', () async {
       // Arrange
       final mockRepository = MockReitRepository();
-      when(
-        mockRepository.editReit(
-          reit: anyNamed('reit'),
-          dividend: anyNamed('dividend'),
-        ),
-      ).thenThrow(Exception('Error'));
+      when(mockRepository.addDividend(any)).thenThrow(Exception('Error'));
 
       final container = createContainer(
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()..name = 'Random SCPI';
+      final reit = ReitEntry(
+        id: 1,
+        name: 'Random SCPI',
+        boughtOn: DateTime.now(),
+        shares: 0,
+        price: 0,
+      );
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
       )..set(amount: '50.7', reit: reit);
@@ -154,18 +163,19 @@ void main() {
     test('should call repository with correct values', () async {
       // Arrange
       final mockRepository = MockReitRepository();
-      when(
-        mockRepository.editReit(
-          reit: anyNamed('reit'),
-          dividend: anyNamed('dividend'),
-        ),
-      ).thenAnswer((_) async {});
+      when(mockRepository.addDividend(any)).thenAnswer((_) async {});
 
       final container = createContainer(
         overrides: [reitRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final reit = Reit()..name = 'Random SCPI';
+      final reit = ReitEntry(
+        id: 1,
+        name: 'Random SCPI',
+        boughtOn: DateTime.now(),
+        shares: 0,
+        price: 0,
+      );
       final receivedAt = DateTime(2024, 04, 24);
       final controller = container.read(
         reitDividendFormControllerProvider.notifier,
@@ -176,13 +186,12 @@ void main() {
 
       // Assert
       verify(
-        mockRepository.editReit(
-          reit: argThat(equals(reit), named: 'reit'),
-          dividend: argThat(
-            isA<ReitDividend>()
-                .having((d) => d.amount, 'amount', 2.15455)
-                .having((d) => d.receivedAt, 'receivedAt', receivedAt),
-            named: 'dividend',
+        mockRepository.addDividend(
+          argThat(
+            isA<ReitDividendEntriesCompanion>()
+                .having((d) => d.amount.value, 'amount', 2.15455)
+                .having((d) => d.receivedAt.value, 'receivedAt', receivedAt)
+                .having((d) => d.reitId.value, 'reitId', 1),
           ),
         ),
       ).called(1);

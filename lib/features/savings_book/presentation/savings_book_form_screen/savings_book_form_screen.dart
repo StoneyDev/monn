@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/savings_book/presentation/savings_book_form_screen/controllers/savings_book_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
@@ -50,7 +52,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
               ),
               MonnFieldNumber<double>(
                 label: context.tr(LocaleKeys.common_start_amount),
-                suffix: '€',
+                suffix: '\u20ac',
                 required: true,
                 onChanged: (newStartAmount) => ref
                     .read(savingsBookFormControllerProvider.notifier)
@@ -74,12 +76,16 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
                   .read(savingsBookFormControllerProvider.notifier)
                   .submit();
 
-              final newSaving =
-                  savingsBookData ??
-                  (Savings()..type = SavingsType.savingsBook);
-              newSaving.startAmount =
-                  (newSaving.startAmount ?? 0) +
-                  double.parse(formData.startAmount);
+              final newSaving = SavingsEntriesCompanion(
+                id: savingsBookData != null
+                    ? Value(savingsBookData.id)
+                    : const Value.absent(),
+                type: Value(SavingsType.savingsBook.name),
+                startAmount: Value(
+                  (savingsBookData?.startAmount ?? 0) +
+                      double.parse(formData.startAmount),
+                ),
+              );
 
               final updated = await ref
                   .read(editSavingsControllerProvider.notifier)

@@ -1,8 +1,10 @@
 import 'dart:math';
 
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,64 +12,90 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'cryptocurrency_repository.g.dart';
 
 class CryptocurrencyRepository {
-  const CryptocurrencyRepository(this._localDB);
+  const CryptocurrencyRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<Cryptocurrency>> watchCryptocurrencies() {
-    final query = _localDB.cryptocurrencys
-        .filter()
-        .totalCryptoGreaterThan(0)
-        .build();
-    return query.watch(fireImmediately: true);
+  Stream<List<CryptocurrencyEntry>> watchCryptocurrencies() {
+    return (_db.select(
+      _db.cryptocurrencyEntries,
+    )..where((t) => t.totalCrypto.isBiggerThanValue(0))).watch();
   }
 
-  Future<Cryptocurrency?> getCryptocurrency(CryptoType type) {
-    final query = _localDB.cryptocurrencys.filter().typeEqualTo(type).build();
-    return query.findFirst();
+  Future<CryptocurrencyWithTransactions> getCryptocurrency(
+    CryptoType type,
+  ) async {
+    final crypto = await (_db.select(
+      _db.cryptocurrencyEntries,
+    )..where((t) => t.type.equals(type.name))).getSingleOrNull();
+
+    if (crypto == null) {
+      return CryptocurrencyWithTransactions(
+        crypto: CryptocurrencyEntry(
+          id: 0,
+          type: type.name,
+          totalCrypto: 0,
+          priceMarket: 0,
+        ),
+        transactions: [],
+      );
+    }
+
+    final transactions =
+        await (_db.select(_db.cryptocurrencyTransactionEntries)
+              ..where((t) => t.cryptocurrencyId.equals(crypto.id))
+              ..orderBy([(t) => OrderingTerm.desc(t.date)]))
+            .get();
+
+    return CryptocurrencyWithTransactions(
+      crypto: crypto,
+      transactions: transactions,
+    );
   }
 
   Future<void> editCryptocurrency({
-    required Cryptocurrency crypto,
-    CryptocurrencyTransaction? transaction,
+    required CryptocurrencyEntriesCompanion crypto,
+    double? transactionAmount,
+    DateTime? transactionDate,
   }) async {
-    if (transaction == null) {
-      await _localDB.writeTxn<void>(() async {
-        await _localDB.cryptocurrencys.put(crypto);
-      });
-    } else {
-      crypto.transactions.add(transaction);
+    await _db.transaction(() async {
+      final writtenCrypto = await _db
+          .into(_db.cryptocurrencyEntries)
+          .insertReturning(crypto, onConflict: DoUpdate((_) => crypto));
 
-      await _localDB.writeTxn<void>(() async {
-        await _localDB.cryptocurrencys.put(crypto);
-        await _localDB.cryptocurrencyTransactions.put(transaction);
-        await crypto.transactions.save();
-      });
-    }
+      if (transactionAmount != null && transactionDate != null) {
+        await _db
+            .into(_db.cryptocurrencyTransactionEntries)
+            .insert(
+              CryptocurrencyTransactionEntriesCompanion(
+                cryptocurrencyId: Value(writtenCrypto.id),
+                amount: Value(transactionAmount),
+                date: Value(transactionDate),
+              ),
+            );
+      }
+    });
   }
 }
 
 @Riverpod(keepAlive: true)
 CryptocurrencyRepository cryptocurrencyRepository(Ref ref) {
-  return CryptocurrencyRepository(LocalDatabase().database);
+  return CryptocurrencyRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<Cryptocurrency>> watchCryptocurrencies(Ref ref) {
+Stream<List<CryptocurrencyEntry>> watchCryptocurrencies(Ref ref) {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
   return repository.watchCryptocurrencies();
 }
 
 @riverpod
-Future<Cryptocurrency> getCryptocurrency(
+Future<CryptocurrencyWithTransactions> getCryptocurrency(
   Ref ref,
   CryptoType type,
-) async {
+) {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
-  final crypto = await repository.getCryptocurrency(type);
-
-  return crypto ?? Cryptocurrency()
-    ..type = type;
+  return repository.getCryptocurrency(type);
 }
 
 @riverpod
@@ -91,7 +119,7 @@ Stream<Chart> watchCryptoChart(Ref ref) async* {
 
       return ChartData(
         portion: double.parse(portion.toStringAsFixed(2)),
-        color: crypto.type.color,
+        color: crypto.cryptoType.color,
       );
     }).toList();
 

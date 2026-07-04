@@ -1,35 +1,31 @@
-import 'package:isar_community/isar.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/savings_book/domain/savings_book.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_repository.g.dart';
 
 class SavingsBookRepository {
-  const SavingsBookRepository(this._localDB);
+  const SavingsBookRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<SavingsBook>> watchSavingsBooks() {
-    final query = _localDB.savingsBooks.where().build();
-    return query.watch(fireImmediately: true);
+  Stream<List<SavingsBookEntry>> watchSavingsBooks() {
+    return _db.select(_db.savingsBookEntries).watch();
   }
 
-  Future<void> editSavingsBook(SavingsBook savingsBook) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.savingsBooks.put(savingsBook);
-    });
+  Future<void> editSavingsBook(SavingsBookEntriesCompanion savingsBook) {
+    return _db.into(_db.savingsBookEntries).insertOnConflictUpdate(savingsBook);
   }
 }
 
 @Riverpod(keepAlive: true)
 SavingsBookRepository savingsBookRepository(Ref ref) {
-  return SavingsBookRepository(LocalDatabase().database);
+  return SavingsBookRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<SavingsBook>> watchSavingsBooks(Ref ref) {
+Stream<List<SavingsBookEntry>> watchSavingsBooks(Ref ref) {
   final repository = ref.watch(savingsBookRepositoryProvider);
   return repository.watchSavingsBooks();
 }

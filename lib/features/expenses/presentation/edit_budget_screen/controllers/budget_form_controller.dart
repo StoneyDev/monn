@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/expenses/data/expenses_repository.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'budget_form_controller.g.dart';
@@ -30,11 +31,27 @@ typedef BudgetForm = ({
 class BudgetFormController extends _$BudgetFormController {
   @override
   Future<BudgetForm> build() async {
-    var budget = await ref
+    final budget = await ref
         .read(expensesRepositoryProvider)
         .getOrCreateBudget();
 
-    if (!ref.mounted) budget = Budget();
+    if (!ref.mounted) {
+      return (
+        freelanceIncome: 0.0,
+        rent: 0.0,
+        electricity: 0.0,
+        gas: 0.0,
+        water: 0.0,
+        internet: 0.0,
+        homeInsurance: 0.0,
+        publicTransport: 0.0,
+        groceries: 0.0,
+        restaurants: 0.0,
+        healthInsurance: 0.0,
+        phone: 0.0,
+        ai: 0.0,
+      );
+    }
 
     return (
       freelanceIncome: budget.freelanceIncome,
@@ -96,21 +113,22 @@ class BudgetFormController extends _$BudgetFormController {
 
     if (formData == null) return false;
 
-    final budget = Budget()
-      ..id = 1
-      ..freelanceIncome = formData.freelanceIncome
-      ..rent = formData.rent
-      ..electricity = formData.electricity
-      ..gas = formData.gas
-      ..water = formData.water
-      ..internet = formData.internet
-      ..homeInsurance = formData.homeInsurance
-      ..publicTransport = formData.publicTransport
-      ..groceries = formData.groceries
-      ..restaurants = formData.restaurants
-      ..healthInsurance = formData.healthInsurance
-      ..phone = formData.phone
-      ..ai = formData.ai;
+    final budget = BudgetEntriesCompanion(
+      id: const Value(1),
+      freelanceIncome: Value(formData.freelanceIncome),
+      rent: Value(formData.rent),
+      electricity: Value(formData.electricity),
+      gas: Value(formData.gas),
+      water: Value(formData.water),
+      internet: Value(formData.internet),
+      homeInsurance: Value(formData.homeInsurance),
+      publicTransport: Value(formData.publicTransport),
+      groceries: Value(formData.groceries),
+      restaurants: Value(formData.restaurants),
+      healthInsurance: Value(formData.healthInsurance),
+      phone: Value(formData.phone),
+      ai: Value(formData.ai),
+    );
 
     final result = await AsyncValue.guard(() => repository.saveBudget(budget));
 

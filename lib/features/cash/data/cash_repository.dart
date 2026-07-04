@@ -1,58 +1,57 @@
-import 'package:isar_community/isar.dart';
-import 'package:monn/features/cash/domain/cash.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cash_repository.g.dart';
 
 class CashRepository {
-  const CashRepository(this._localDB);
+  const CashRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<Cash>> watchCashs() {
-    final query = _localDB.cashs.where().sortByValueDesc().build();
-    return query.watch(fireImmediately: true);
+  Stream<List<CashEntry>> watchCashs() {
+    final query = _db.select(_db.cashEntries)
+      ..orderBy([(t) => OrderingTerm.desc(t.value)]);
+    return query.watch();
   }
 
-  Future<void> editCash(Cash newCash) async {
-    await _localDB.writeTxn<void>(() async {
-      await _localDB.cashs.put(newCash);
-    });
+  Future<void> editCash(CashEntriesCompanion newCash) async {
+    await _db.into(_db.cashEntries).insertOnConflictUpdate(newCash);
     await _syncStartAmount();
   }
 
   Future<void> deleteCash(int id) async {
-    await _localDB.writeTxn<void>(() async {
-      await _localDB.cashs.delete(id);
-    });
+    await (_db.delete(_db.cashEntries)..where((t) => t.id.equals(id))).go();
     await _syncStartAmount();
   }
 
   Future<void> _syncStartAmount() async {
-    final cashs = await _localDB.cashs.where().findAll();
+    final cashs = await _db.select(_db.cashEntries).get();
     final total = cashs.fold<double>(0, (sum, e) => sum + e.value);
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    final existingSavings = await _localDB.savings
-        .filter()
-        .typeEqualTo(SavingsType.cash)
-        .findFirst();
+    final existingSavings = await (_db.select(_db.savingsEntries)
+          ..where((t) => t.type.equals(SavingsType.cash.name)))
+        .getSingleOrNull();
 
-    final savings = (existingSavings ?? (Savings()..type = SavingsType.cash))
-      ..startAmount = roundedTotal;
-
-    await _localDB.writeTxn<void>(() async {
-      await _localDB.savings.put(savings);
-    });
+    await _db.into(_db.savingsEntries).insertOnConflictUpdate(
+          SavingsEntriesCompanion(
+            id: existingSavings != null
+                ? Value(existingSavings.id)
+                : const Value.absent(),
+            type: Value(SavingsType.cash.name),
+            startAmount: Value(roundedTotal),
+          ),
+        );
   }
 }
 
 @Riverpod(keepAlive: true)
 CashRepository cashRepository(Ref ref) {
-  return CashRepository(LocalDatabase().database);
+  return CashRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
@@ -62,7 +61,7 @@ Future<void> deleteCash(Ref ref, int id) {
 }
 
 @riverpod
-Stream<List<Cash>> watchCashs(Ref ref) =>
+Stream<List<CashEntry>> watchCashs(Ref ref) =>
     ref.watch(cashRepositoryProvider).watchCashs();
 
 @riverpod

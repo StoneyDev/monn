@@ -3,30 +3,27 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart'
-    as _i3;
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart' as _i5;
+    as _i4;
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart'
     as _i8;
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i9;
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart'
+    as _i2;
 import 'package:monn/features/dashboard/data/savings_repository.dart' as _i6;
 import 'package:monn/features/dashboard/domain/savings.dart' as _i7;
 import 'package:monn/features/expenses/data/expenses_repository.dart' as _i10;
-import 'package:monn/features/expenses/domain/budget.dart' as _i2;
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart'
     as _i11;
-import 'package:monn/features/life_insurance/domain/life_insurance.dart'
-    as _i12;
-import 'package:monn/features/per/data/per_repository.dart' as _i13;
-import 'package:monn/features/per/domain/per.dart' as _i14;
-import 'package:monn/features/reit/data/reit_repository.dart' as _i15;
-import 'package:monn/features/reit/domain/reit.dart' as _i16;
+import 'package:monn/features/per/data/per_repository.dart' as _i12;
+import 'package:monn/features/reit/data/reit_repository.dart' as _i13;
+import 'package:monn/features/reit/domain/reit_with_dividends.dart' as _i14;
 import 'package:monn/features/savings_book/data/savings_book_repository.dart'
-    as _i17;
-import 'package:monn/features/savings_book/domain/savings_book.dart' as _i18;
+    as _i15;
+import 'package:monn/shared/local/database.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -42,8 +39,16 @@ import 'package:monn/features/savings_book/domain/savings_book.dart' as _i18;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeBudget_0 extends _i1.SmartFake implements _i2.Budget {
-  _FakeBudget_0(Object parent, Invocation parentInvocation)
+class _FakeCryptocurrencyWithTransactions_0 extends _i1.SmartFake
+    implements _i2.CryptocurrencyWithTransactions {
+  _FakeCryptocurrencyWithTransactions_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(parent, parentInvocation);
+}
+
+class _FakeBudgetEntry_1 extends _i1.SmartFake implements _i3.BudgetEntry {
+  _FakeBudgetEntry_1(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -51,25 +56,27 @@ class _FakeBudget_0 extends _i1.SmartFake implements _i2.Budget {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCrowdfundingRepository extends _i1.Mock
-    implements _i3.CrowdfundingRepository {
+    implements _i4.CrowdfundingRepository {
   @override
-  _i4.Stream<List<_i5.Crowdfunding>> watchCrowdfundings() =>
+  _i5.Stream<List<_i3.CrowdfundingEntry>> watchCrowdfundings() =>
       (super.noSuchMethod(
             Invocation.method(#watchCrowdfundings, []),
-            returnValue: _i4.Stream<List<_i5.Crowdfunding>>.empty(),
+            returnValue: _i5.Stream<List<_i3.CrowdfundingEntry>>.empty(),
             returnValueForMissingStub:
-                _i4.Stream<List<_i5.Crowdfunding>>.empty(),
+                _i5.Stream<List<_i3.CrowdfundingEntry>>.empty(),
           )
-          as _i4.Stream<List<_i5.Crowdfunding>>);
+          as _i5.Stream<List<_i3.CrowdfundingEntry>>);
 
   @override
-  _i4.Future<void> editCrowdfunding(_i5.Crowdfunding? newCrowdfunding) =>
+  _i5.Future<void> editCrowdfunding(
+    _i3.CrowdfundingEntriesCompanion? newCrowdfunding,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#editCrowdfunding, [newCrowdfunding]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [SavingsRepository].
@@ -77,31 +84,34 @@ class MockCrowdfundingRepository extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockSavingsRepository extends _i1.Mock implements _i6.SavingsRepository {
   @override
-  _i4.Stream<List<_i7.Savings>> watchSavings({_i7.SavingsFilter? filter}) =>
+  _i5.Stream<List<_i3.SavingsEntry>> watchSavings({
+    _i7.SavingsFilter? filter,
+  }) =>
       (super.noSuchMethod(
             Invocation.method(#watchSavings, [], {#filter: filter}),
-            returnValue: _i4.Stream<List<_i7.Savings>>.empty(),
-            returnValueForMissingStub: _i4.Stream<List<_i7.Savings>>.empty(),
+            returnValue: _i5.Stream<List<_i3.SavingsEntry>>.empty(),
+            returnValueForMissingStub:
+                _i5.Stream<List<_i3.SavingsEntry>>.empty(),
           )
-          as _i4.Stream<List<_i7.Savings>>);
+          as _i5.Stream<List<_i3.SavingsEntry>>);
 
   @override
-  _i4.Future<_i7.Savings?> getSavings(_i7.SavingsType? type) =>
+  _i5.Future<_i3.SavingsEntry?> getSavings(_i7.SavingsType? type) =>
       (super.noSuchMethod(
             Invocation.method(#getSavings, [type]),
-            returnValue: _i4.Future<_i7.Savings?>.value(),
-            returnValueForMissingStub: _i4.Future<_i7.Savings?>.value(),
+            returnValue: _i5.Future<_i3.SavingsEntry?>.value(),
+            returnValueForMissingStub: _i5.Future<_i3.SavingsEntry?>.value(),
           )
-          as _i4.Future<_i7.Savings?>);
+          as _i5.Future<_i3.SavingsEntry?>);
 
   @override
-  _i4.Future<void> editSaving(_i7.Savings? newSaving) =>
+  _i5.Future<void> editSaving(_i3.SavingsEntriesCompanion? newSaving) =>
       (super.noSuchMethod(
             Invocation.method(#editSaving, [newSaving]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [CryptocurrencyRepository].
@@ -110,38 +120,53 @@ class MockSavingsRepository extends _i1.Mock implements _i6.SavingsRepository {
 class MockCryptocurrencyRepository extends _i1.Mock
     implements _i8.CryptocurrencyRepository {
   @override
-  _i4.Stream<List<_i9.Cryptocurrency>> watchCryptocurrencies() =>
+  _i5.Stream<List<_i3.CryptocurrencyEntry>> watchCryptocurrencies() =>
       (super.noSuchMethod(
             Invocation.method(#watchCryptocurrencies, []),
-            returnValue: _i4.Stream<List<_i9.Cryptocurrency>>.empty(),
+            returnValue: _i5.Stream<List<_i3.CryptocurrencyEntry>>.empty(),
             returnValueForMissingStub:
-                _i4.Stream<List<_i9.Cryptocurrency>>.empty(),
+                _i5.Stream<List<_i3.CryptocurrencyEntry>>.empty(),
           )
-          as _i4.Stream<List<_i9.Cryptocurrency>>);
+          as _i5.Stream<List<_i3.CryptocurrencyEntry>>);
 
   @override
-  _i4.Future<_i9.Cryptocurrency?> getCryptocurrency(_i9.CryptoType? type) =>
+  _i5.Future<_i2.CryptocurrencyWithTransactions> getCryptocurrency(
+    _i9.CryptoType? type,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#getCryptocurrency, [type]),
-            returnValue: _i4.Future<_i9.Cryptocurrency?>.value(),
-            returnValueForMissingStub: _i4.Future<_i9.Cryptocurrency?>.value(),
+            returnValue: _i5.Future<_i2.CryptocurrencyWithTransactions>.value(
+              _FakeCryptocurrencyWithTransactions_0(
+                this,
+                Invocation.method(#getCryptocurrency, [type]),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i2.CryptocurrencyWithTransactions>.value(
+                  _FakeCryptocurrencyWithTransactions_0(
+                    this,
+                    Invocation.method(#getCryptocurrency, [type]),
+                  ),
+                ),
           )
-          as _i4.Future<_i9.Cryptocurrency?>);
+          as _i5.Future<_i2.CryptocurrencyWithTransactions>);
 
   @override
-  _i4.Future<void> editCryptocurrency({
-    required _i9.Cryptocurrency? crypto,
-    _i9.CryptocurrencyTransaction? transaction,
+  _i5.Future<void> editCryptocurrency({
+    required _i3.CryptocurrencyEntriesCompanion? crypto,
+    double? transactionAmount,
+    DateTime? transactionDate,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#editCryptocurrency, [], {
               #crypto: crypto,
-              #transaction: transaction,
+              #transactionAmount: transactionAmount,
+              #transactionDate: transactionDate,
             }),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [ExpensesRepository].
@@ -150,35 +175,41 @@ class MockCryptocurrencyRepository extends _i1.Mock
 class MockExpensesRepository extends _i1.Mock
     implements _i10.ExpensesRepository {
   @override
-  _i4.Future<_i2.Budget> getOrCreateBudget() =>
+  _i5.Future<_i3.BudgetEntry> getOrCreateBudget() =>
       (super.noSuchMethod(
             Invocation.method(#getOrCreateBudget, []),
-            returnValue: _i4.Future<_i2.Budget>.value(
-              _FakeBudget_0(this, Invocation.method(#getOrCreateBudget, [])),
+            returnValue: _i5.Future<_i3.BudgetEntry>.value(
+              _FakeBudgetEntry_1(
+                this,
+                Invocation.method(#getOrCreateBudget, []),
+              ),
             ),
-            returnValueForMissingStub: _i4.Future<_i2.Budget>.value(
-              _FakeBudget_0(this, Invocation.method(#getOrCreateBudget, [])),
+            returnValueForMissingStub: _i5.Future<_i3.BudgetEntry>.value(
+              _FakeBudgetEntry_1(
+                this,
+                Invocation.method(#getOrCreateBudget, []),
+              ),
             ),
           )
-          as _i4.Future<_i2.Budget>);
+          as _i5.Future<_i3.BudgetEntry>);
 
   @override
-  _i4.Stream<_i2.Budget?> watchBudget() =>
+  _i5.Stream<_i3.BudgetEntry?> watchBudget() =>
       (super.noSuchMethod(
             Invocation.method(#watchBudget, []),
-            returnValue: _i4.Stream<_i2.Budget?>.empty(),
-            returnValueForMissingStub: _i4.Stream<_i2.Budget?>.empty(),
+            returnValue: _i5.Stream<_i3.BudgetEntry?>.empty(),
+            returnValueForMissingStub: _i5.Stream<_i3.BudgetEntry?>.empty(),
           )
-          as _i4.Stream<_i2.Budget?>);
+          as _i5.Stream<_i3.BudgetEntry?>);
 
   @override
-  _i4.Future<void> saveBudget(_i2.Budget? budget) =>
+  _i5.Future<void> saveBudget(_i3.BudgetEntriesCompanion? budget) =>
       (super.noSuchMethod(
             Invocation.method(#saveBudget, [budget]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [LifeInsuranceRepository].
@@ -187,115 +218,115 @@ class MockExpensesRepository extends _i1.Mock
 class MockLifeInsuranceRepository extends _i1.Mock
     implements _i11.LifeInsuranceRepository {
   @override
-  _i4.Stream<_i12.LifeInsurance?> watchLifeInsurance() =>
+  _i5.Stream<_i3.LifeInsuranceEntry?> watchLifeInsurance() =>
       (super.noSuchMethod(
             Invocation.method(#watchLifeInsurance, []),
-            returnValue: _i4.Stream<_i12.LifeInsurance?>.empty(),
-            returnValueForMissingStub: _i4.Stream<_i12.LifeInsurance?>.empty(),
+            returnValue: _i5.Stream<_i3.LifeInsuranceEntry?>.empty(),
+            returnValueForMissingStub:
+                _i5.Stream<_i3.LifeInsuranceEntry?>.empty(),
           )
-          as _i4.Stream<_i12.LifeInsurance?>);
+          as _i5.Stream<_i3.LifeInsuranceEntry?>);
 
   @override
-  _i4.Future<void> editLifeInsurance(_i12.LifeInsurance? lifeInsurance) =>
+  _i5.Future<void> editLifeInsurance(
+    _i3.LifeInsuranceEntriesCompanion? lifeInsurance,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#editLifeInsurance, [lifeInsurance]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [PerRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPerRepository extends _i1.Mock implements _i13.PerRepository {
+class MockPerRepository extends _i1.Mock implements _i12.PerRepository {
   @override
-  _i4.Stream<_i14.Per?> watchPer() =>
+  _i5.Stream<_i3.PerEntry?> watchPer() =>
       (super.noSuchMethod(
             Invocation.method(#watchPer, []),
-            returnValue: _i4.Stream<_i14.Per?>.empty(),
-            returnValueForMissingStub: _i4.Stream<_i14.Per?>.empty(),
+            returnValue: _i5.Stream<_i3.PerEntry?>.empty(),
+            returnValueForMissingStub: _i5.Stream<_i3.PerEntry?>.empty(),
           )
-          as _i4.Stream<_i14.Per?>);
+          as _i5.Stream<_i3.PerEntry?>);
 
   @override
-  _i4.Future<void> editPer(_i14.Per? per) =>
+  _i5.Future<void> editPer(_i3.PerEntriesCompanion? per) =>
       (super.noSuchMethod(
             Invocation.method(#editPer, [per]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [ReitRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockReitRepository extends _i1.Mock implements _i15.ReitRepository {
+class MockReitRepository extends _i1.Mock implements _i13.ReitRepository {
   @override
-  _i4.Stream<List<_i16.Reit>> watchReits() =>
+  _i5.Stream<List<_i14.ReitWithDividends>> watchReits() =>
       (super.noSuchMethod(
             Invocation.method(#watchReits, []),
-            returnValue: _i4.Stream<List<_i16.Reit>>.empty(),
-            returnValueForMissingStub: _i4.Stream<List<_i16.Reit>>.empty(),
+            returnValue: _i5.Stream<List<_i14.ReitWithDividends>>.empty(),
+            returnValueForMissingStub:
+                _i5.Stream<List<_i14.ReitWithDividends>>.empty(),
           )
-          as _i4.Stream<List<_i16.Reit>>);
+          as _i5.Stream<List<_i14.ReitWithDividends>>);
 
   @override
-  _i4.Future<void> addReit(_i16.Reit? reit) =>
+  _i5.Future<void> addReit(_i3.ReitEntriesCompanion? reit) =>
       (super.noSuchMethod(
             Invocation.method(#addReit, [reit]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i4.Future<void> editReit({
-    required _i16.Reit? reit,
-    required _i16.ReitDividend? dividend,
-  }) =>
+  _i5.Future<void> addDividend(_i3.ReitDividendEntriesCompanion? dividend) =>
       (super.noSuchMethod(
-            Invocation.method(#editReit, [], {
-              #reit: reit,
-              #dividend: dividend,
-            }),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            Invocation.method(#addDividend, [dividend]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i4.Future<void> deleteReit(_i16.Reit? reit) =>
+  _i5.Future<void> deleteReit(int? id) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteReit, [reit]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            Invocation.method(#deleteReit, [id]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [SavingsBookRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSavingsBookRepository extends _i1.Mock
-    implements _i17.SavingsBookRepository {
+    implements _i15.SavingsBookRepository {
   @override
-  _i4.Stream<List<_i18.SavingsBook>> watchSavingsBooks() =>
+  _i5.Stream<List<_i3.SavingsBookEntry>> watchSavingsBooks() =>
       (super.noSuchMethod(
             Invocation.method(#watchSavingsBooks, []),
-            returnValue: _i4.Stream<List<_i18.SavingsBook>>.empty(),
+            returnValue: _i5.Stream<List<_i3.SavingsBookEntry>>.empty(),
             returnValueForMissingStub:
-                _i4.Stream<List<_i18.SavingsBook>>.empty(),
+                _i5.Stream<List<_i3.SavingsBookEntry>>.empty(),
           )
-          as _i4.Stream<List<_i18.SavingsBook>>);
+          as _i5.Stream<List<_i3.SavingsBookEntry>>);
 
   @override
-  _i4.Future<void> editSavingsBook(_i18.SavingsBook? savingsBook) =>
+  _i5.Future<void> editSavingsBook(
+    _i3.SavingsBookEntriesCompanion? savingsBook,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#editSavingsBook, [savingsBook]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }

@@ -55,7 +55,7 @@ final class LifeInsuranceRepositoryProvider
 }
 
 String _$lifeInsuranceRepositoryHash() =>
-    r'165935c6000f4dc3f4071c5076e0efd65824c74c';
+    r'10ebd62b12a576d9ac615ab1df1f6d5f7e3b4476';
 
 @ProviderFor(watchLifeInsurance)
 const watchLifeInsuranceProvider = WatchLifeInsuranceProvider._();
@@ -63,11 +63,13 @@ const watchLifeInsuranceProvider = WatchLifeInsuranceProvider._();
 final class WatchLifeInsuranceProvider
     extends
         $FunctionalProvider<
-          AsyncValue<LifeInsurance?>,
-          LifeInsurance?,
-          Stream<LifeInsurance?>
+          AsyncValue<LifeInsuranceEntry?>,
+          LifeInsuranceEntry?,
+          Stream<LifeInsuranceEntry?>
         >
-    with $FutureModifier<LifeInsurance?>, $StreamProvider<LifeInsurance?> {
+    with
+        $FutureModifier<LifeInsuranceEntry?>,
+        $StreamProvider<LifeInsuranceEntry?> {
   const WatchLifeInsuranceProvider._()
     : super(
         from: null,
@@ -84,18 +86,18 @@ final class WatchLifeInsuranceProvider
 
   @$internal
   @override
-  $StreamProviderElement<LifeInsurance?> $createElement(
+  $StreamProviderElement<LifeInsuranceEntry?> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<LifeInsurance?> create(Ref ref) {
+  Stream<LifeInsuranceEntry?> create(Ref ref) {
     return watchLifeInsurance(ref);
   }
 }
 
 String _$watchLifeInsuranceHash() =>
-    r'5f0c819d3f4749492fa685c933ab783b7e8fca5f';
+    r'06051b023bbaa8e9625eae9acd02e38fe5aea69c';
 
 @ProviderFor(watchPayoutReportLifeInsurance)
 const watchPayoutReportLifeInsuranceProvider =

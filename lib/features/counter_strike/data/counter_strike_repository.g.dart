@@ -55,7 +55,7 @@ final class CounterStrikeRepositoryProvider
 }
 
 String _$counterStrikeRepositoryHash() =>
-    r'e648adf8fb332485d0a64152b76cf79655ad7c20';
+    r'8d9dda1c5ea5e06193424d02f32eeb08ae8fa764';
 
 @ProviderFor(watchCounterStrikes)
 const watchCounterStrikesProvider = WatchCounterStrikesProvider._();
@@ -63,13 +63,13 @@ const watchCounterStrikesProvider = WatchCounterStrikesProvider._();
 final class WatchCounterStrikesProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<CounterStrike>>,
-          List<CounterStrike>,
-          Stream<List<CounterStrike>>
+          AsyncValue<List<CounterStrikeEntry>>,
+          List<CounterStrikeEntry>,
+          Stream<List<CounterStrikeEntry>>
         >
     with
-        $FutureModifier<List<CounterStrike>>,
-        $StreamProvider<List<CounterStrike>> {
+        $FutureModifier<List<CounterStrikeEntry>>,
+        $StreamProvider<List<CounterStrikeEntry>> {
   const WatchCounterStrikesProvider._()
     : super(
         from: null,
@@ -86,18 +86,18 @@ final class WatchCounterStrikesProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<CounterStrike>> $createElement(
+  $StreamProviderElement<List<CounterStrikeEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<CounterStrike>> create(Ref ref) {
+  Stream<List<CounterStrikeEntry>> create(Ref ref) {
     return watchCounterStrikes(ref);
   }
 }
 
 String _$watchCounterStrikesHash() =>
-    r'523856e5651eceea82b3c2d66fb0ebc80b6b91b2';
+    r'aefe4b1c55754c0af8bf3e5ba0af8015c3bb5888';
 
 @ProviderFor(watchPayoutReportCounterStrike)
 const watchPayoutReportCounterStrikeProvider =
