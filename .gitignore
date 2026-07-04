@@ -48,7 +48,3 @@ api_keys.json
 # Signing
 android/key.properties
 android/*.jks
-
-# Isar
-libisar.dylib
-default.isar-lck

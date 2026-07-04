@@ -1,24 +1,4 @@
-import 'package:isar_community/isar.dart';
 import 'package:monn/shared/local/database.dart';
-
-part 'counter_strike.g.dart';
-
-@collection
-class CounterStrike {
-  Id id = Isar.autoIncrement;
-
-  late DateTime boughtAt;
-  late DateTime lastUpdate;
-
-  @Enumerated(EnumType.name)
-  late CounterStrikeItem imageId;
-
-  late double purchaseValue;
-  late double currentValue;
-  late int quantity;
-
-  double? wear;
-}
 
 enum CounterStrikeItem {
   ak47Bloodsport('AK47 Bloodsport'),
