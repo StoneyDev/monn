@@ -1,29 +1,7 @@
 import 'dart:ui';
 
-import 'package:isar_community/isar.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';
-
-part 'cryptocurrency.g.dart';
-
-@collection
-class Cryptocurrency {
-  Id? id;
-  @Enumerated(EnumType.name)
-  late CryptoType type;
-  double totalCrypto = 0;
-  double priceMarket = 0;
-  DateTime? lastUpdate;
-
-  final transactions = IsarLinks<CryptocurrencyTransaction>();
-}
-
-@collection
-class CryptocurrencyTransaction {
-  Id? id;
-  late DateTime date; // withdrawalOn or boughtOn
-  late double amount;
-}
 
 enum CryptoType {
   bitcoin('Bitcoin', 'BTC', AppColors.btc),

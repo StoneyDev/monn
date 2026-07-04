@@ -1,8 +1,4 @@
 global_options:
-  freezed:freezed:
-    runs_before:
-      - isar_community_generator:isar_community_generator
-      # - isar_generator:isar_generator
   drift_dev:not_shared:
     runs_before:
       - riverpod_generator:riverpod_generator

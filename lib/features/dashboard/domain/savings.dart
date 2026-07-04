@@ -1,15 +1,4 @@
-import 'package:isar_community/isar.dart';
 import 'package:monn/shared/local/database.dart';
-
-part 'savings.g.dart';
-
-@collection
-class Savings {
-  Id id = Isar.autoIncrement;
-  @Enumerated(EnumType.name)
-  late SavingsType type;
-  double? startAmount;
-}
 
 enum SavingsType {
   savingsBook,

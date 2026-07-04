@@ -19,8 +19,6 @@ dependencies:
   flutter_riverpod: ^3.0.3
   freezed_annotation: ^3.1.0
   iconoir_flutter: ^7.11.0
-  isar_community: ^3.3.0
-  isar_community_flutter_libs: ^3.3.0
   json_annotation: ^4.9.0
   logger: ^2.6.1
   mockito: ^5.4.4
@@ -42,7 +40,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^3.2.3
-  isar_community_generator: ^3.3.0
   json_serializable: ^6.11.1
   retrofit_generator: ^10.0.0
   riverpod_generator: ^3.0.3

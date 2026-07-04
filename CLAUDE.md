@@ -18,7 +18,7 @@ Monn is a personal investment tracking and analysis Flutter app that tracks mult
 
 ### Code Generation
 ```bash
-# Run code generation for all generators (freezed, riverpod, json_serializable, retrofit, isar)
+# Run code generation for all generators (drift, freezed, riverpod, json_serializable, retrofit)
 puro flutter pub run build_runner build
 
 # Watch mode for continuous generation during development
@@ -235,50 +235,58 @@ ref
 - ✅ DO capture notifiers before navigation when using callbacks
 - ✅ DO check `ref.mounted` after every async gap
 
-### Database - Isar
+### Database - Drift
 
 **Initialization:**
 Global singleton in `lib/shared/local/local_database.dart`:
 ```dart
-late Isar _database;
+late AppDatabase _database;
 
 class LocalDatabase {
   Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
-    _database = await Isar.open([/* all schemas */], directory: dir.path);
+    _database = AppDatabase(
+      NativeDatabase(File(p.join(dir.path, 'monn.db'))),
+    );
   }
-  Isar get database => _database;
+
+  AppDatabase get database => _database;
 }
 ```
 
-**Entity Pattern:**
+**Table Pattern:**
 ```dart
-@collection
-class Cryptocurrency {
-  Id? id;  // Auto-increment primary key
-  @Enumerated(EnumType.name)
-  late CryptoType type;
-  double totalCrypto = 0;
+class CryptocurrencyEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get type => text()();
+  RealColumn get totalCrypto => real().withDefault(const Constant(0))();
 
-  // Relationships
-  final transactions = IsarLinks<CryptocurrencyTransaction>();
+  @override
+  List<String> get customConstraints => ['UNIQUE(type)'];
 }
 ```
 
 **Transaction Pattern:**
 ```dart
-await _localDB.writeTxn(() async {
-  await _localDB.cryptocurrencys.put(crypto);
-  await crypto.transactions.save(); // Save relationships
+await _db.transaction(() async {
+  final writtenCrypto = await _db
+      .into(_db.cryptocurrencyEntries)
+      .insertReturning(crypto, onConflict: DoUpdate((_) => crypto));
+
+  await _db.into(_db.cryptocurrencyTransactionEntries).insert(
+        CryptocurrencyTransactionEntriesCompanion.insert(
+          cryptocurrencyId: writtenCrypto.id,
+          date: transactionDate,
+          amount: transactionAmount,
+        ),
+      );
 });
 ```
 
 **Reactive Queries:**
 ```dart
 Stream<List<Cryptocurrency>> watchCryptocurrencies() {
-  return _localDB.cryptocurrencys
-    .where()
-    .watch(fireImmediately: true);
+  return _db.select(_db.cryptocurrencyEntries).watch();
 }
 ```
 
@@ -399,16 +407,15 @@ Mirrors source code structure in `test/features/<feature>/`
 **Pattern (with Mockito):**
 ```dart
 void main() {
-  late Isar isar;
+  late AppDatabase db;
 
   setUpAll(() async {
-    await Isar.initializeIsarCore(download: true);
-    isar = await Isar.open([/* schemas */], directory: '.');
+    db = AppDatabase(NativeDatabase.memory());
     // Setup test data
   });
 
   tearDownAll(() async {
-    await isar.close(deleteFromDisk: true);
+    await db.close();
   });
 
   group('repositoryTest', () {
@@ -473,12 +480,19 @@ SavingsType.newType => const NewTypeScreen(),
 SavingsType.newType => MonnAssets.images.icon.newIcon.provider(),
 ```
 
-4. **Add Isar schema** in `lib/shared/local/local_database.dart`:
+4. **Add Drift table** in `lib/shared/local/tables.dart` and register it in `lib/shared/local/database.dart`:
 ```dart
-_database = await Isar.open([
-  // ... existing schemas
-  NewTypeSchema,
-], directory: dir.path);
+class NewTypeEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  // Add columns here
+}
+
+@DriftDatabase(
+  tables: [
+    // ... existing tables
+    NewTypeEntries,
+  ],
+)
 ```
 
 5. **Add translations** in `assets/translations/en.json` and `fr.json`:
@@ -500,7 +514,7 @@ The exhaustive `switch` statements on `SavingsType` will produce compile-time er
 All domain models and providers use generators. **Always run `flutter pub run build_runner build` after:**
 - Creating/modifying `@freezed` classes
 - Creating/modifying `@riverpod` providers
-- Creating/modifying `@collection` Isar entities
+- Creating/modifying Drift tables or the `@DriftDatabase` table list
 - Creating/modifying `@JsonSerializable` classes
 - Creating/modifying `@RestApi` interfaces
 
@@ -558,10 +572,11 @@ extension SavingsTypeUI on SavingsType {
 
 ## Generated Files
 
-Exclude from version control and analysis (configured in `analysis_options.yaml`):
+Do not hand-edit generated files:
 - `*.freezed.dart` - Freezed code generation
-- `*.g.dart` - Multiple generators (json_serializable, riverpod, isar)
+- `*.g.dart` - Multiple generators (json_serializable, riverpod, retrofit, assets)
 - `*.gr.dart` - Additional generated files
+- `*.drift.dart` - Drift database code generation
 - `generated_plugin_registrant.dart` - Flutter plugins
 
 ## Environment Variables
@@ -582,4 +597,3 @@ Uses `very_good_analysis` package with custom overrides:
 - `public_member_api_docs: false` - No doc comments required
 - `invalid_annotation_target: ignore` - Allow Freezed annotations
 - `document_ignores: ignore` - No need to document ignores
-
