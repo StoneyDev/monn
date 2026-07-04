@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:isar_community/isar.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';
 
 part 'cryptocurrency.g.dart';
@@ -37,4 +38,8 @@ enum CryptoType {
   final String label;
   final String symbol;
   final Color color;
+}
+
+extension CryptocurrencyEntryX on CryptocurrencyEntry {
+  CryptoType get cryptoType => CryptoType.values.byName(type);
 }

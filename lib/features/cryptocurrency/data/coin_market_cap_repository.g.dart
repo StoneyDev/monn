@@ -63,13 +63,13 @@ const getCryptoPriceMarketProvider = GetCryptoPriceMarketProvider._();
 final class GetCryptoPriceMarketProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Cryptocurrency>>,
-          List<Cryptocurrency>,
-          FutureOr<List<Cryptocurrency>>
+          AsyncValue<List<CryptocurrencyEntry>>,
+          List<CryptocurrencyEntry>,
+          FutureOr<List<CryptocurrencyEntry>>
         >
     with
-        $FutureModifier<List<Cryptocurrency>>,
-        $FutureProvider<List<Cryptocurrency>> {
+        $FutureModifier<List<CryptocurrencyEntry>>,
+        $FutureProvider<List<CryptocurrencyEntry>> {
   const GetCryptoPriceMarketProvider._()
     : super(
         from: null,
@@ -86,15 +86,15 @@ final class GetCryptoPriceMarketProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Cryptocurrency>> $createElement(
+  $FutureProviderElement<List<CryptocurrencyEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Cryptocurrency>> create(Ref ref) {
+  FutureOr<List<CryptocurrencyEntry>> create(Ref ref) {
     return getCryptoPriceMarket(ref);
   }
 }
 
 String _$getCryptoPriceMarketHash() =>
-    r'92313ee49ef9d571f94558cbefa589ba062b22ef';
+    r'3d5a426670920054fce6dc44dcdfd5a50e47a624';

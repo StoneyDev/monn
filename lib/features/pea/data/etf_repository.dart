@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/pea/data/etf_api.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
-import 'package:monn/features/pea/domain/pea.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'etf_repository.g.dart';
@@ -46,9 +47,13 @@ Future<double> getEtfPriceMarket(Ref ref) async {
 
     if (priceMarket != null) {
       await peaRepository.editPea(
-        pea ?? Pea()
-          ..lastPrice = priceMarket
-          ..lastUpdate = now,
+        PeaEntriesCompanion(
+          id: Value(pea?.id ?? 1),
+          equity: Value(pea?.equity),
+          costAverage: Value(pea?.costAverage),
+          lastPrice: Value(priceMarket),
+          lastUpdate: Value(now),
+        ),
       );
       return priceMarket;
     }

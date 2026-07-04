@@ -48,7 +48,7 @@ final class CashRepositoryProvider
   }
 }
 
-String _$cashRepositoryHash() => r'8d0ab430e60024b0bb61b79ac48a4e69746dc01a';
+String _$cashRepositoryHash() => r'a34f3293b0512279a6c1ffc3e0d3f15d81cb9415';
 
 @ProviderFor(deleteCash)
 const deleteCashProvider = DeleteCashFamily._();
@@ -125,11 +125,11 @@ const watchCashsProvider = WatchCashsProvider._();
 final class WatchCashsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Cash>>,
-          List<Cash>,
-          Stream<List<Cash>>
+          AsyncValue<List<CashEntry>>,
+          List<CashEntry>,
+          Stream<List<CashEntry>>
         >
-    with $FutureModifier<List<Cash>>, $StreamProvider<List<Cash>> {
+    with $FutureModifier<List<CashEntry>>, $StreamProvider<List<CashEntry>> {
   const WatchCashsProvider._()
     : super(
         from: null,
@@ -146,16 +146,17 @@ final class WatchCashsProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Cash>> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $StreamProviderElement<List<CashEntry>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<Cash>> create(Ref ref) {
+  Stream<List<CashEntry>> create(Ref ref) {
     return watchCashs(ref);
   }
 }
 
-String _$watchCashsHash() => r'd1294ceae4ac94b7978b575cd0138a3c4c811e8b';
+String _$watchCashsHash() => r'1e6c82dbda350a0b7c40e034626ef97d380042ff';
 
 @ProviderFor(watchPayoutReportCash)
 const watchPayoutReportCashProvider = WatchPayoutReportCashProvider._();

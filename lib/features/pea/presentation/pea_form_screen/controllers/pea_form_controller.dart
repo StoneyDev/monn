@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
-import 'package:monn/features/pea/domain/pea.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pea_form_controller.g.dart';
@@ -53,17 +54,18 @@ class PeaFormController extends _$PeaFormController {
     final newEquity = int.parse(state.equity);
     final newCostAverage = double.parse(state.costAverage);
 
-    final pea = await ref.read(getPeaProvider.future);
+    await ref.read(getPeaProvider.future);
 
     if (!ref.mounted) return false;
 
+    final companion = PeaEntriesCompanion(
+      id: const Value(1),
+      equity: Value(newEquity),
+      costAverage: Value(newCostAverage),
+    );
+
     final result = await AsyncValue.guard(
-      () => repository.editPea(
-        (pea ?? Pea())
-          ..id = 1
-          ..equity = newEquity
-          ..costAverage = newCostAverage,
-      ),
+      () => repository.editPea(companion),
     );
 
     if (!ref.mounted) return false;

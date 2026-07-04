@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/per/data/per_repository.dart';
-import 'package:monn/features/per/domain/per.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../test.dart';
 import '../../../test.mocks.dart';
@@ -43,7 +43,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<Per?>>();
+      final listener = MockListener<AsyncValue<PerEntry?>>();
       container.listen(
         watchPerProvider,
         listener.call,
@@ -54,8 +54,8 @@ void main() {
 
       // Assert
       verifyInOrder([
-        listener(null, const AsyncLoading<Per?>()),
-        listener(const AsyncLoading<Per?>(), const AsyncData(null)),
+        listener(null, const AsyncLoading<PerEntry?>()),
+        listener(const AsyncLoading<PerEntry?>(), const AsyncData(null)),
       ]);
       verifyNoMoreInteractions(listener);
       expect(result, isNull);
@@ -63,9 +63,7 @@ void main() {
 
     test('should return Per when data exists', () async {
       // Arrange
-      final per = Per()
-        ..invested = 10000
-        ..interests = 500;
+      const per = PerEntry(id: 1, invested: 10000, interests: 500);
 
       final repository = MockPerRepository();
       final container = createContainer(
@@ -79,7 +77,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<Per?>>();
+      final listener = MockListener<AsyncValue<PerEntry?>>();
       container.listen(
         watchPerProvider,
         listener.call,
@@ -90,10 +88,10 @@ void main() {
 
       // Assert
       verifyInOrder([
-        listener(null, const AsyncLoading<Per?>()),
+        listener(null, const AsyncLoading<PerEntry?>()),
         listener(
-          const AsyncLoading<Per?>(),
-          AsyncData<Per?>(per),
+          const AsyncLoading<PerEntry?>(),
+          const AsyncData<PerEntry?>(per),
         ),
       ]);
       verifyNoMoreInteractions(listener);
@@ -149,9 +147,7 @@ void main() {
       'should return PayoutReportData with finalAmount = invested + interests',
       () async {
         // Arrange
-        final per = Per()
-          ..invested = 10000
-          ..interests = 750.50;
+        const per = PerEntry(id: 1, invested: 10000, interests: 750.50);
 
         const expectedPayoutReport = PayoutReportData(
           finalAmount: 10750.50,
@@ -198,9 +194,7 @@ void main() {
       'should correctly calculate finalAmount with zero interests',
       () async {
         // Arrange
-        final per = Per()
-          ..invested = 5000
-          ..interests = 0;
+        const per = PerEntry(id: 1, invested: 5000, interests: 0);
 
         const expectedPayoutReport = PayoutReportData(
           finalAmount: 5000,

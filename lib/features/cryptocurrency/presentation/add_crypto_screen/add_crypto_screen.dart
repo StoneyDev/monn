@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/presentation/add_crypto_screen/controllers/crypto_form_controller.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
@@ -39,7 +40,7 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
             children: [
               MonnFieldNumber<double>(
                 label: context.tr(LocaleKeys.common_crypto_amount),
-                suffix: formData.crypto?.type.symbol ?? '',
+                suffix: formData.crypto?.cryptoType.symbol ?? '',
                 required: true,
                 onChanged: (newAmount) => ref
                     .read(cryptoFormControllerProvider.notifier)
@@ -106,7 +107,9 @@ class _AddCryptoScreenState extends ConsumerState<AddCryptoScreen> {
 
               ref
                 ..invalidate(cryptoFormControllerProvider)
-                ..invalidate(getCryptocurrencyProvider(formData.crypto!.type))
+                ..invalidate(
+                  getCryptocurrencyProvider(formData.crypto!.cryptoType),
+                )
                 ..invalidate(getCryptoPriceMarketProvider)
                 ..invalidate(
                   getSavingsProvider(type: SavingsType.cryptocurrency),

@@ -1,4 +1,5 @@
 import 'package:isar_community/isar.dart';
+import 'package:monn/shared/local/database.dart';
 
 part 'savings.g.dart';
 
@@ -28,4 +29,8 @@ enum SavingsFilter {
   sortByStartAmountAsc,
   sortByFinalAmountDesc,
   sortByFinalAmountAsc,
+}
+
+extension SavingsEntryX on SavingsEntry {
+  SavingsType get savingsType => SavingsType.values.byName(type);
 }

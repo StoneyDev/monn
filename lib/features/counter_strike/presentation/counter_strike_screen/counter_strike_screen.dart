@@ -16,6 +16,7 @@ import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
@@ -92,7 +93,7 @@ class CounterStrikeScreen extends ConsumerWidget {
 class _CounterStrikeItem extends ConsumerWidget {
   const _CounterStrikeItem(this.data);
 
-  final CounterStrike data;
+  final CounterStrikeEntry data;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,7 +113,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    child: data.imageId.image(),
+                    child: data.imageItem.image(),
                   ),
                 ),
               ),
@@ -122,7 +123,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${data.imageId.label}${data.wear != null ? ' | ${data.wear!}' : ''}',
+                      '${data.imageItem.label}${data.wear != null ? ' | ${data.wear!}' : ''}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -206,7 +207,7 @@ class _CounterStrikeItem extends ConsumerWidget {
                 currentValue: newCurrentValue,
                 boughtAt: data.boughtAt,
                 quantity: data.quantity.toString(),
-                imageId: data.imageId,
+                imageId: data.imageItem,
               ),
         ),
       ),

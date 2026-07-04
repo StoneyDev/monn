@@ -52,29 +52,29 @@ class DashboardScreen extends ConsumerWidget {
                 MonnBottomSheet.itemList(
                   context: context,
                   title: context.tr(LocaleKeys.common_filter),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final item = SavingsFilter.values[index];
-
-                        return Consumer(
-                          builder: (context, ref, _) =>
+                  sliver: Consumer(
+                    builder: (context, ref, _) => SliverToBoxAdapter(
+                      child: RadioGroup<SavingsFilter>(
+                        groupValue: ref.watch(_filterProvider),
+                        onChanged: (newFilter) => ref
+                            .read(_filterProvider.notifier)
+                            .state = newFilter!,
+                        child: Column(
+                          children: [
+                            for (final item in SavingsFilter.values)
                               RadioListTile<SavingsFilter>(
-                                groupValue: ref.watch(_filterProvider),
-                                onChanged: (newFilter) =>
-                                    ref.read(_filterProvider.notifier).state =
-                                        newFilter!,
                                 value: item,
                                 title: Text(
                                   context.tr(
                                     'filters.${item.name.toSnakeCase()}',
                                   ),
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
-                        );
-                      },
-                      childCount: SavingsFilter.values.length,
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -101,16 +101,16 @@ class DashboardScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final item = savings[index];
                 final finalAmount = ref.watch(
-                  getFinalAmountProvider(item.type),
+                  getFinalAmountProvider(item.savingsType),
                 );
 
                 return MonnCard(
-                  onTap: () => context.push(item.type.route()),
+                  onTap: () => context.push(item.savingsType.route()),
                   child: Row(
                     spacing: 16,
                     children: [
                       Image(
-                        image: item.type.icon(),
+                        image: item.savingsType.icon(),
                         height: 48,
                         width: 48,
                       ),
@@ -120,18 +120,18 @@ class DashboardScreen extends ConsumerWidget {
                           children: [
                             Text(
                               context.tr(
-                                'savings.${item.type.name.toSnakeCase()}',
+                                'savings.${item.type.toSnakeCase()}',
                               ),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     color: AppColors.lightGray,
-                                    fontWeight: .bold,
+                                    fontWeight: FontWeight.bold,
                                   ),
                             ),
                             Text(
                               finalAmount.simpleCurrency(locale),
                               style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(fontWeight: .w900),
+                                  ?.copyWith(fontWeight: FontWeight.w900),
                             ),
                           ],
                         ),

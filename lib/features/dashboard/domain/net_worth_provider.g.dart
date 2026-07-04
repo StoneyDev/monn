@@ -132,8 +132,13 @@ String _$watchTotalNetWorthHash() =>
 const watchSortedSavingsProvider = WatchSortedSavingsFamily._();
 
 final class WatchSortedSavingsProvider
-    extends $FunctionalProvider<List<Savings>, List<Savings>, List<Savings>>
-    with $Provider<List<Savings>> {
+    extends
+        $FunctionalProvider<
+          List<SavingsEntry>,
+          List<SavingsEntry>,
+          List<SavingsEntry>
+        >
+    with $Provider<List<SavingsEntry>> {
   const WatchSortedSavingsProvider._({
     required WatchSortedSavingsFamily super.from,
     required SavingsFilter super.argument,
@@ -157,20 +162,21 @@ final class WatchSortedSavingsProvider
 
   @$internal
   @override
-  $ProviderElement<List<Savings>> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+  $ProviderElement<List<SavingsEntry>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
-  List<Savings> create(Ref ref) {
+  List<SavingsEntry> create(Ref ref) {
     final argument = this.argument as SavingsFilter;
     return watchSortedSavings(ref, filter: argument);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<Savings> value) {
+  Override overrideWithValue(List<SavingsEntry> value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<List<Savings>>(value),
+      providerOverride: $SyncValueProvider<List<SavingsEntry>>(value),
     );
   }
 
@@ -186,10 +192,10 @@ final class WatchSortedSavingsProvider
 }
 
 String _$watchSortedSavingsHash() =>
-    r'f2c095e0ce3ef2c56399a040aba31d0d3f9486c1';
+    r'3435dc14aeaad25b2c895f3aff9743e9ede09c9f';
 
 final class WatchSortedSavingsFamily extends $Family
-    with $FunctionalFamilyOverride<List<Savings>, SavingsFilter> {
+    with $FunctionalFamilyOverride<List<SavingsEntry>, SavingsFilter> {
   const WatchSortedSavingsFamily._()
     : super(
         retry: null,

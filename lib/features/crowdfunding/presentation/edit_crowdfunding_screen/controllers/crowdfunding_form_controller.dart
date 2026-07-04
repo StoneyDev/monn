@@ -1,6 +1,6 @@
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
-import 'package:monn/features/crowdfunding/domain/crowdfunding.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crowdfunding_form_controller.g.dart';
@@ -44,26 +44,27 @@ class CrowdfundingFormController extends _$CrowdfundingFormController {
   Future<bool> submit() async {
     final repository = ref.read(crowdfundingRepositoryProvider);
 
-    final id = state.id ?? Isar.autoIncrement;
     final platformName = state.platformName;
     final receivedAt = state.receivedAt;
     final brutProfit = double.parse(state.brutProfit);
 
-    late Crowdfunding newCrowdfunding;
+    late CrowdfundingEntriesCompanion companion;
 
     if (brutProfit.isNegative) {
-      newCrowdfunding = Crowdfunding()
-        ..id = id
-        ..platformName = platformName
-        ..receivedAt = receivedAt
-        ..brutProfit = brutProfit;
+      companion = CrowdfundingEntriesCompanion(
+        id: state.id != null ? Value(state.id!) : const Value.absent(),
+        platformName: Value(platformName),
+        receivedAt: Value(receivedAt),
+        brutProfit: Value(brutProfit),
+      );
     } else if (state.taxPercentage == null) {
-      newCrowdfunding = Crowdfunding()
-        ..id = id
-        ..platformName = platformName
-        ..receivedAt = receivedAt
-        ..brutProfit = brutProfit
-        ..netProfit = brutProfit;
+      companion = CrowdfundingEntriesCompanion(
+        id: state.id != null ? Value(state.id!) : const Value.absent(),
+        platformName: Value(platformName),
+        receivedAt: Value(receivedAt),
+        brutProfit: Value(brutProfit),
+        netProfit: Value(brutProfit),
+      );
     } else {
       final taxPercentage = double.parse(state.taxPercentage!);
       final taxProfit = double.parse(
@@ -73,18 +74,19 @@ class CrowdfundingFormController extends _$CrowdfundingFormController {
         (brutProfit - taxProfit).toStringAsFixed(2),
       );
 
-      newCrowdfunding = Crowdfunding()
-        ..id = id
-        ..platformName = platformName
-        ..receivedAt = receivedAt
-        ..taxPercentage = taxPercentage
-        ..taxProfit = taxProfit
-        ..brutProfit = brutProfit
-        ..netProfit = netProfit;
+      companion = CrowdfundingEntriesCompanion(
+        id: state.id != null ? Value(state.id!) : const Value.absent(),
+        platformName: Value(platformName),
+        receivedAt: Value(receivedAt),
+        taxPercentage: Value(taxPercentage),
+        taxProfit: Value(taxProfit),
+        brutProfit: Value(brutProfit),
+        netProfit: Value(netProfit),
+      );
     }
 
     final result = await AsyncValue.guard(
-      () => repository.editCrowdfunding(newCrowdfunding),
+      () => repository.editCrowdfunding(companion),
     );
 
     if (!ref.mounted) return false;

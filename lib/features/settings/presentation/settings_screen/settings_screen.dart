@@ -98,25 +98,27 @@ class SettingsScreen extends ConsumerWidget {
                   MonnBottomSheet.itemList(
                     context: context,
                     title: context.tr(LocaleKeys.common_language),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final item = context.supportedLocales[index];
-
-                          return RadioListTile<Locale>(
-                            groupValue: context.locale,
-                            onChanged: (newLang) async {
-                              await context.setLocale(newLang!);
-                              if (context.mounted) Navigator.pop(context);
-                            },
-                            value: item,
-                            title: Text(
-                              context.tr('languages.$item'),
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          );
+                    sliver: SliverToBoxAdapter(
+                      child: RadioGroup<Locale>(
+                        groupValue: context.locale,
+                        onChanged: (newLang) async {
+                          if (newLang == null) return;
+                          await context.setLocale(newLang);
+                          if (context.mounted) Navigator.pop(context);
                         },
-                        childCount: context.supportedLocales.length,
+                        child: Column(
+                          children: [
+                            for (final item in context.supportedLocales)
+                              RadioListTile<Locale>(
+                                value: item,
+                                title: Text(
+                                  context.tr('languages.$item'),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -216,8 +218,7 @@ class _BackupAction extends ConsumerWidget {
           onPressed: () async {
             final result = await FilePicker.platform.pickFiles();
             final filePath = result?.files.single.path;
-            // "allowedExtensions" not working with .isar
-            final isAllowed = filePath?.contains(RegExp('.isar')) ?? false;
+            final isAllowed = filePath?.contains(RegExp(r'\.db$')) ?? false;
 
             if (filePath != null && isAllowed) {
               final dbFile = File(filePath);
@@ -262,7 +263,7 @@ class _BackupAction extends ConsumerWidget {
               await SharePlus.instance.share(
                 ShareParams(
                   files: [
-                    XFile('${backupDir.path}/backup_$lastBackupDate.isar'),
+                    XFile('${backupDir.path}/backup_$lastBackupDate.db'),
                   ],
                 ),
               );

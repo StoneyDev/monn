@@ -1,4 +1,5 @@
 import 'package:isar_community/isar.dart';
+import 'package:monn/shared/local/database.dart';
 
 part 'counter_strike.g.dart';
 
@@ -44,4 +45,8 @@ enum CounterStrikeItem {
   const CounterStrikeItem(this.label);
 
   final String label;
+}
+
+extension CounterStrikeEntryX on CounterStrikeEntry {
+  CounterStrikeItem get imageItem => CounterStrikeItem.values.byName(imageId);
 }

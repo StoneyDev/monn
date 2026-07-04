@@ -1,24 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
-import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/features/reit/domain/reit_with_dividends.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 SliverWoltModalSheetPage reitDividendsBottomSheet({
   required BuildContext context,
-  required Reit reit,
+  required ReitWithDividends reitWithDividends,
 }) {
   return SliverWoltModalSheetPage(
     surfaceTintColor: AppColors.white,
     isTopBarLayerAlwaysVisible: true,
     topBarTitle: Text(
-      '${context.tr(LocaleKeys.common_dividends)} (${reit.name.toUpperCase()})',
+      '${context.tr(LocaleKeys.common_dividends)} '
+      '(${reitWithDividends.reit.name.toUpperCase()})',
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.w900,
       ),
@@ -32,57 +32,44 @@ SliverWoltModalSheetPage reitDividendsBottomSheet({
       ),
     ),
     mainContentSliversBuilder: (context) => [
-      _ReitDividendsSliverList(reit: reit),
+      _ReitDividendsSliverList(
+        dividends: reitWithDividends.dividends,
+      ),
     ],
   );
 }
 
-class _ReitDividendsSliverList extends ConsumerWidget {
-  const _ReitDividendsSliverList({required this.reit});
+class _ReitDividendsSliverList extends StatelessWidget {
+  const _ReitDividendsSliverList({required this.dividends});
 
-  final Reit reit;
+  final List<ReitDividendEntry> dividends;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final locale = context.locale.toString();
-    final asyncDividends = ref.watch(getReitDividendsProvider(reit));
+    final sortedDividends = List<ReitDividendEntry>.from(dividends)
+      ..sort((a, b) => b.receivedAt.compareTo(a.receivedAt));
 
-    return switch (asyncDividends) {
-      AsyncData(:final value) => SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final item = value[index];
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final item = sortedDividends[index];
 
-            return ListTile(
-              title: Text(
-                item.receivedAt.slashFormat(locale),
-                style: Theme.of(context).textTheme.bodyMedium,
+          return ListTile(
+            title: Text(
+              item.receivedAt.slashFormat(locale),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: Text(
+              item.amount.simpleCurrency(locale),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w900,
               ),
-              trailing: Text(
-                item.amount.simpleCurrency(locale),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            );
-          },
-          childCount: value.length,
-        ),
+            ),
+          );
+        },
+        childCount: sortedDividends.length,
       ),
-      AsyncError() => const SliverToBoxAdapter(
-        child: Padding(
-          padding: EdgeInsets.all(32),
-          child: Center(child: Text('Error loading dividends')),
-        ),
-      ),
-      _ => const SliverToBoxAdapter(
-        child: Padding(
-          padding: EdgeInsets.all(32),
-          child: Center(
-            child: RepaintBoundary(child: CircularProgressIndicator()),
-          ),
-        ),
-      ),
-    };
+    );
   }
 }

@@ -1,36 +1,34 @@
-import 'dart:async';
-
-import 'package:isar_community/isar.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/pea/domain/pea.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pea_repository.g.dart';
 
 class PeaRepository {
-  const PeaRepository(this._localDB);
+  const PeaRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Future<Pea?> getPea() => _localDB.peas.get(1);
+  Future<PeaEntry?> getPea() {
+    return (_db.select(_db.peaEntries)..where((t) => t.id.equals(1)))
+        .getSingleOrNull();
+  }
 
-  Future<void> editPea(Pea newPea) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.peas.put(newPea);
-    });
+  Future<void> editPea(PeaEntriesCompanion newPea) {
+    return _db.into(_db.peaEntries).insertOnConflictUpdate(newPea);
   }
 }
 
 @Riverpod(keepAlive: true)
 PeaRepository peaRepository(Ref ref) {
-  return PeaRepository(LocalDatabase().database);
+  return PeaRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Future<Pea?> getPea(Ref ref) {
+Future<PeaEntry?> getPea(Ref ref) {
   final repository = ref.watch(peaRepositoryProvider);
   return repository.getPea();
 }
@@ -47,7 +45,7 @@ Future<PayoutReportData> getPayoutReportPea(Ref ref) async {
   ]);
 
   final startAmount = data[0]! as double;
-  final pea = data[1] as Pea?;
+  final pea = data[1] as PeaEntry?;
 
   if (pea == null) return PayoutReportData(finalAmount: startAmount);
 

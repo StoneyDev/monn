@@ -7,13 +7,13 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
-import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/life_insurance_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
@@ -166,7 +166,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
   void _openInvestedAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
-    required LifeInsurance? value,
+    required LifeInsuranceEntry? value,
   }) {
     final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 
@@ -197,7 +197,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
   void _openInterestsAmountScreen({
     required BuildContext context,
     required WidgetRef ref,
-    required LifeInsurance? value,
+    required LifeInsuranceEntry? value,
   }) {
     final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 

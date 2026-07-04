@@ -4,11 +4,12 @@ import 'dart:ui' as ui;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:monn/features/expenses/domain/budget_extension.dart';
 import 'package:monn/features/expenses/domain/expense_category.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/budget_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -31,7 +32,7 @@ const _kIncomeOpacity = 0.85;
 class SankeyDiagram extends StatelessWidget {
   const SankeyDiagram({required this.budget, super.key});
 
-  final Budget budget;
+  final BudgetEntry budget;
 
   @override
   Widget build(BuildContext context) {

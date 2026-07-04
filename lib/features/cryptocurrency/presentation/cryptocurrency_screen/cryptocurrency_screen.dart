@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/charts/monn_doughnut_chart.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -71,11 +73,13 @@ class CryptocurrencyScreen extends ConsumerWidget {
                         initialValue: cryptoData?.startAmount ?? 0,
                         onSubmit: () async {
                           final newValue = ref.read(_startAmountProvider);
-                          final newSaving =
-                              (cryptoData ??
-                                    (Savings()
-                                      ..type = SavingsType.cryptocurrency))
-                                ..startAmount = double.parse(newValue);
+                          final newSaving = SavingsEntriesCompanion(
+                            id: cryptoData != null
+                                ? Value(cryptoData.id)
+                                : const Value.absent(),
+                            type: Value(SavingsType.cryptocurrency.name),
+                            startAmount: Value(double.parse(newValue)),
+                          );
 
                           final success = await ref
                               .read(editSavingsControllerProvider.notifier)
@@ -166,7 +170,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                   return _CryptoCard(
                     crypto: crypto,
                     onTap: () => context.push(
-                      CryptoPageScreen(type: crypto.type),
+                      CryptoPageScreen(type: crypto.cryptoType),
                     ),
                   );
                 },
@@ -202,7 +206,7 @@ class _CryptoCard extends ConsumerWidget {
     this.onTap,
   });
 
-  final Cryptocurrency crypto;
+  final CryptocurrencyEntry crypto;
   final void Function()? onTap;
 
   @override
@@ -215,15 +219,15 @@ class _CryptoCard extends ConsumerWidget {
         onTap: onTap,
         child: MonnTile(
           icon: Image(
-            image: crypto.type.logo(),
+            image: crypto.cryptoType.logo(),
             height: 40,
             width: 40,
           ),
           content: Text(
-            crypto.type.label,
+            crypto.cryptoType.label,
             style: TextStyle(
               fontWeight: FontWeight.w900,
-              color: crypto.type.color,
+              color: crypto.cryptoType.color,
             ),
           ),
           subContent: Text(
@@ -231,8 +235,8 @@ class _CryptoCard extends ConsumerWidget {
             style: const TextStyle(color: AppColors.lightGray),
           ),
           trailing: Text(
-            '${crypto.totalCrypto.toDecimal(locale: locale, digit: crypto.totalCrypto > 0 ? 8 : null)} ${crypto.type.symbol}',
-            textAlign: .right,
+            '${crypto.totalCrypto.toDecimal(locale: locale, digit: crypto.totalCrypto > 0 ? 8 : null)} ${crypto.cryptoType.symbol}',
+            textAlign: TextAlign.right,
             style: TextStyle(
               fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.primary,

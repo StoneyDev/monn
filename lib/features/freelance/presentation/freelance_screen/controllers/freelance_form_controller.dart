@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
-import 'package:monn/features/freelance/domain/freelance.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'freelance_form_controller.g.dart';
@@ -22,7 +23,9 @@ class FreelanceFormController extends _$FreelanceFormController {
 
     final result = await AsyncValue.guard(
       () => repository.editFreelance(
-        Freelance()..annualRevenue = double.tryParse(state.annualRevenue) ?? 0,
+        FreelanceEntriesCompanion(
+          annualRevenue: Value(double.tryParse(state.annualRevenue) ?? 0),
+        ),
       ),
     );
 

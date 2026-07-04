@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'edit_savings_controller.g.dart';
@@ -11,7 +11,7 @@ class EditSavingsController extends _$EditSavingsController {
   @override
   FutureOr<void> build() async {}
 
-  Future<bool> submit(Savings saving) async {
+  Future<bool> submit(SavingsEntriesCompanion saving) async {
     state = const AsyncLoading();
 
     final repository = ref.read(savingsRepositoryProvider);

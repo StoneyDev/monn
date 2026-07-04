@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
-import 'package:monn/features/life_insurance/domain/life_insurance.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/life_insurance_form_controller.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
@@ -170,9 +170,9 @@ void main() {
       verify(
         mockRepository.editLifeInsurance(
           argThat(
-            isA<LifeInsurance>()
-                .having((l) => l.invested, 'invested', 15000)
-                .having((l) => l.interests, 'interests', 750.50),
+            isA<LifeInsuranceEntriesCompanion>()
+                .having((l) => l.invested.value, 'invested', 15000)
+                .having((l) => l.interests.value, 'interests', 750.50),
           ),
         ),
       ).called(1);

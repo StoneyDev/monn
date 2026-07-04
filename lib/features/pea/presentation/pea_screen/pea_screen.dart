@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
 import 'package:monn/shared/widgets/monn_line.dart';
@@ -112,9 +114,13 @@ class PeaScreen extends ConsumerWidget {
                                   value,
                           onSubmit: () async {
                             final newValue = ref.read(_startAmountProvider);
-                            final newSaving =
-                                (value ?? (Savings()..type = SavingsType.pea))
-                                  ..startAmount = double.parse(newValue);
+                            final newSaving = SavingsEntriesCompanion(
+                              id: value != null
+                                  ? Value(value.id)
+                                  : const Value.absent(),
+                              type: Value(SavingsType.pea.name),
+                              startAmount: Value(double.parse(newValue)),
+                            );
 
                             final success = await ref
                                 .read(

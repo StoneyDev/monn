@@ -1,7 +1,8 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
-import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'crypto_form_controller.g.dart';
@@ -10,7 +11,7 @@ typedef CryptoForm = ({
   String amount,
   String fiatAmount,
   DateTime date,
-  Cryptocurrency? crypto,
+  CryptocurrencyEntry? crypto,
 });
 
 @Riverpod(keepAlive: true)
@@ -23,7 +24,7 @@ class CryptoFormController extends _$CryptoFormController {
     String? amount,
     String? fiatAmount,
     DateTime? date,
-    Cryptocurrency? crypto,
+    CryptocurrencyEntry? crypto,
   }) {
     state = (
       amount: amount ?? state.amount,
@@ -40,12 +41,20 @@ class CryptoFormController extends _$CryptoFormController {
     final cryptoAmount = double.parse(state.amount);
     final isPurchase = cryptoAmount > 0;
 
+    final crypto = state.crypto!;
+    final companion = CryptocurrencyEntriesCompanion(
+      id: crypto.id.asPk,
+      type: Value(crypto.type),
+      totalCrypto: Value(crypto.totalCrypto + cryptoAmount),
+      priceMarket: Value(crypto.priceMarket),
+      lastUpdate: Value(crypto.lastUpdate),
+    );
+
     final result = await AsyncValue.guard(
       () => cryptoRepository.editCryptocurrency(
-        crypto: state.crypto!..totalCrypto += cryptoAmount,
-        transaction: CryptocurrencyTransaction()
-          ..amount = cryptoAmount
-          ..date = state.date,
+        crypto: companion,
+        transactionAmount: cryptoAmount,
+        transactionDate: state.date,
       ),
     );
 
@@ -56,12 +65,15 @@ class CryptoFormController extends _$CryptoFormController {
       final fiatAmount = double.parse(state.fiatAmount);
       final savings =
           await savingsRepository.getSavings(SavingsType.cryptocurrency);
-      final newSavings =
-          (savings ?? (Savings()..type = SavingsType.cryptocurrency))
-            ..startAmount = (savings?.startAmount ?? 0) + fiatAmount;
+
+      final savingsCompanion = SavingsEntriesCompanion(
+        id: savings != null ? Value(savings.id) : const Value.absent(),
+        type: Value(SavingsType.cryptocurrency.name),
+        startAmount: Value((savings?.startAmount ?? 0) + fiatAmount),
+      );
 
       final savingsResult = await AsyncValue.guard(
-        () => savingsRepository.editSaving(newSavings),
+        () => savingsRepository.editSaving(savingsCompanion),
       );
 
       if (!ref.mounted) return false;

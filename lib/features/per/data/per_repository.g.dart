@@ -48,14 +48,15 @@ final class PerRepositoryProvider
   }
 }
 
-String _$perRepositoryHash() => r'ca37ffdbc62c8130c540088e190f313eba8babf9';
+String _$perRepositoryHash() => r'bf7852c2a984bbec5f96222e0a3f1b9ab57c2528';
 
 @ProviderFor(watchPer)
 const watchPerProvider = WatchPerProvider._();
 
 final class WatchPerProvider
-    extends $FunctionalProvider<AsyncValue<Per?>, Per?, Stream<Per?>>
-    with $FutureModifier<Per?>, $StreamProvider<Per?> {
+    extends
+        $FunctionalProvider<AsyncValue<PerEntry?>, PerEntry?, Stream<PerEntry?>>
+    with $FutureModifier<PerEntry?>, $StreamProvider<PerEntry?> {
   const WatchPerProvider._()
     : super(
         from: null,
@@ -72,16 +73,16 @@ final class WatchPerProvider
 
   @$internal
   @override
-  $StreamProviderElement<Per?> $createElement($ProviderPointer pointer) =>
+  $StreamProviderElement<PerEntry?> $createElement($ProviderPointer pointer) =>
       $StreamProviderElement(pointer);
 
   @override
-  Stream<Per?> create(Ref ref) {
+  Stream<PerEntry?> create(Ref ref) {
     return watchPer(ref);
   }
 }
 
-String _$watchPerHash() => r'719299057a11f2037bb2d676f249bdf15c5482a2';
+String _$watchPerHash() => r'f29aae1069ad1e23b65345b56ef107059a2f7f10';
 
 @ProviderFor(watchPayoutReportPer)
 const watchPayoutReportPerProvider = WatchPayoutReportPerProvider._();

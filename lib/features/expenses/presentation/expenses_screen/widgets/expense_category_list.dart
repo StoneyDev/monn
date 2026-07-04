@@ -1,16 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
+import 'package:monn/features/expenses/domain/budget_extension.dart';
 import 'package:monn/features/expenses/domain/expense_category.dart';
 import 'package:monn/shared/extensions/budget_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class ExpenseCategoryList extends StatelessWidget {
   const ExpenseCategoryList({required this.budget, super.key});
 
-  final Budget budget;
+  final BudgetEntry budget;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +56,13 @@ class _CategorySection extends StatelessWidget {
         children: [
           IntrinsicHeight(
             child: Row(
-              crossAxisAlignment: .stretch,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 12,
               children: [
                 DecoratedBox(
                   decoration: BoxDecoration(
                     color: category.color,
-                    borderRadius: .circular(2),
+                    borderRadius: BorderRadius.circular(2),
                   ),
                   child: const SizedBox(width: 4),
                 ),
@@ -69,7 +70,7 @@ class _CategorySection extends StatelessWidget {
                   child: Text(
                     category.name,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: .w600,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -78,7 +79,7 @@ class _CategorySection extends StatelessWidget {
                     Text(
                       category.total.simpleCurrency(locale),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: .w600,
+                        fontWeight: FontWeight.w600,
                         color: category.color,
                       ),
                     ),
@@ -86,7 +87,7 @@ class _CategorySection extends StatelessWidget {
                       width: 40,
                       child: Text(
                         '${percentage.toStringAsFixed(0)}%',
-                        textAlign: .end,
+                        textAlign: TextAlign.end,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(color: category.color),
                       ),
@@ -136,13 +137,13 @@ class _ExpenseLineItem extends StatelessWidget {
 
     return IntrinsicHeight(
       child: Row(
-        crossAxisAlignment: .stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: 12,
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.5),
-              borderRadius: .circular(2),
+              borderRadius: BorderRadius.circular(2),
             ),
             child: const SizedBox(width: 4),
           ),
@@ -155,14 +156,14 @@ class _ExpenseLineItem extends StatelessWidget {
           Text(
             amount.simpleCurrency(locale),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: .w500,
+              fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(
             width: 40,
             child: Text(
               '${percentage.toStringAsFixed(0)}%',
-              textAlign: .end,
+              textAlign: TextAlign.end,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: AppColors.lightGray,
               ),

@@ -9,6 +9,7 @@ import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/per/data/per_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'net_worth_provider.g.dart';
@@ -41,44 +42,50 @@ double watchTotalNetWorth(Ref ref) => SavingsType.values
     .fold<double>(0, (a, b) => a + b);
 
 @riverpod
-List<Savings> watchSortedSavings(
+List<SavingsEntry> watchSortedSavings(
   Ref ref, {
   required SavingsFilter filter,
 }) {
   final savingsAsync = ref.watch(watchSavingsProvider());
-  final savingsFromDb = savingsAsync.value ?? <Savings>[];
+  final savingsFromDb = savingsAsync.value ?? <SavingsEntry>[];
 
   // Create a map of existing savings by type
-  final savingsMap = {for (final s in savingsFromDb) s.type: s};
+  final savingsMap = {
+    for (final s in savingsFromDb) s.savingsType: s,
+  };
 
   // Ensure all SavingsType have an entry
   final allSavings = SavingsType.values
-      .map((type) => savingsMap[type] ?? (Savings()..type = type))
+      .map(
+        (type) =>
+            savingsMap[type] ??
+            SavingsEntry(id: 0, type: type.name),
+      )
       .toList();
 
   // Sort based on filter
   switch (filter) {
     case SavingsFilter.sortByStartAmountDesc:
       allSavings.sort(
-        (Savings a, Savings b) =>
+        (SavingsEntry a, SavingsEntry b) =>
             (b.startAmount ?? 0).compareTo(a.startAmount ?? 0),
       );
     case SavingsFilter.sortByStartAmountAsc:
       allSavings.sort(
-        (Savings a, Savings b) =>
+        (SavingsEntry a, SavingsEntry b) =>
             (a.startAmount ?? 0).compareTo(b.startAmount ?? 0),
       );
     case SavingsFilter.sortByFinalAmountDesc:
       allSavings.sort(
-        (Savings a, Savings b) => ref
-            .watch(getFinalAmountProvider(b.type))
-            .compareTo(ref.watch(getFinalAmountProvider(a.type))),
+        (SavingsEntry a, SavingsEntry b) => ref
+            .watch(getFinalAmountProvider(b.savingsType))
+            .compareTo(ref.watch(getFinalAmountProvider(a.savingsType))),
       );
     case SavingsFilter.sortByFinalAmountAsc:
       allSavings.sort(
-        (Savings a, Savings b) => ref
-            .watch(getFinalAmountProvider(a.type))
-            .compareTo(ref.watch(getFinalAmountProvider(b.type))),
+        (SavingsEntry a, SavingsEntry b) => ref
+            .watch(getFinalAmountProvider(a.savingsType))
+            .compareTo(ref.watch(getFinalAmountProvider(b.savingsType))),
       );
   }
 

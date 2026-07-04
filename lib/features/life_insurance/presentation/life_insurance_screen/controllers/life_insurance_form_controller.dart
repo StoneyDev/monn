@@ -1,5 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
-import 'package:monn/features/life_insurance/domain/life_insurance.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'life_insurance_form_controller.g.dart';
@@ -23,9 +24,10 @@ class LifeInsuranceFormController extends _$LifeInsuranceFormController {
 
     final result = await AsyncValue.guard(
       () => repository.editLifeInsurance(
-        LifeInsurance()
-          ..invested = double.parse(state.invested)
-          ..interests = double.parse(state.interests),
+        LifeInsuranceEntriesCompanion(
+          invested: Value(double.parse(state.invested)),
+          interests: Value(double.parse(state.interests)),
+        ),
       ),
     );
 

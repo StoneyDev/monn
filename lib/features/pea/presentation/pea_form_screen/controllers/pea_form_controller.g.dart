@@ -41,7 +41,7 @@ final class PeaFormControllerProvider
   }
 }
 
-String _$peaFormControllerHash() => r'c7d8539991191ebed26905eaa7c9f1d4cbb8c078';
+String _$peaFormControllerHash() => r'a9353d889fb8e1896eba704d579c583ab3c5caf4';
 
 abstract class _$PeaFormController extends $Notifier<PeaForm> {
   PeaForm build();

@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/expenses/data/expenses_repository.dart';
-import 'package:monn/features/expenses/domain/budget.dart';
 import 'package:monn/features/expenses/presentation/edit_budget_screen/controllers/budget_form_controller.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../../test.dart';
 import '../../../../test.mocks.dart';
@@ -19,11 +19,22 @@ void main() {
 
     test('build() loads initial state from existing budget', () async {
       // Arrange
-      final existingBudget = Budget()
-        ..freelanceIncome = 5000
-        ..rent = 1200
-        ..electricity = 100
-        ..groceries = 400;
+      const existingBudget = BudgetEntry(
+        id: 1,
+        freelanceIncome: 5000,
+        rent: 1200,
+        electricity: 100,
+        gas: 0,
+        water: 0,
+        internet: 0,
+        homeInsurance: 0,
+        publicTransport: 0,
+        groceries: 400,
+        restaurants: 0,
+        healthInsurance: 0,
+        phone: 0,
+        ai: 0,
+      );
 
       when(
         mockRepository.getOrCreateBudget(),
@@ -55,7 +66,22 @@ void main() {
 
     test('build() returns default state when no budget exists', () async {
       // Arrange
-      final emptyBudget = Budget();
+      const emptyBudget = BudgetEntry(
+        id: 1,
+        freelanceIncome: 0,
+        rent: 0,
+        electricity: 0,
+        gas: 0,
+        water: 0,
+        internet: 0,
+        homeInsurance: 0,
+        publicTransport: 0,
+        groceries: 0,
+        restaurants: 0,
+        healthInsurance: 0,
+        phone: 0,
+        ai: 0,
+      );
 
       when(
         mockRepository.getOrCreateBudget(),
@@ -78,9 +104,22 @@ void main() {
 
     test('set() updates specific fields while preserving others', () async {
       // Arrange
-      final existingBudget = Budget()
-        ..freelanceIncome = 5000
-        ..rent = 1200;
+      const existingBudget = BudgetEntry(
+        id: 1,
+        freelanceIncome: 5000,
+        rent: 1200,
+        electricity: 0,
+        gas: 0,
+        water: 0,
+        internet: 0,
+        homeInsurance: 0,
+        publicTransport: 0,
+        groceries: 0,
+        restaurants: 0,
+        healthInsurance: 0,
+        phone: 0,
+        ai: 0,
+      );
 
       when(
         mockRepository.getOrCreateBudget(),
@@ -115,7 +154,22 @@ void main() {
       'submit() saves budget to repository and returns true on success',
       () async {
         // Arrange
-        final existingBudget = Budget()..freelanceIncome = 5000;
+        const existingBudget = BudgetEntry(
+          id: 1,
+          freelanceIncome: 5000,
+          rent: 0,
+          electricity: 0,
+          gas: 0,
+          water: 0,
+          internet: 0,
+          homeInsurance: 0,
+          publicTransport: 0,
+          groceries: 0,
+          restaurants: 0,
+          healthInsurance: 0,
+          phone: 0,
+          ai: 0,
+        );
 
         when(
           mockRepository.getOrCreateBudget(),
@@ -149,9 +203,13 @@ void main() {
         verify(
           mockRepository.saveBudget(
             argThat(
-              isA<Budget>()
-                  .having((b) => b.freelanceIncome, 'freelanceIncome', 6000)
-                  .having((b) => b.rent, 'rent', 1500),
+              isA<BudgetEntriesCompanion>()
+                  .having(
+                    (b) => b.freelanceIncome.value,
+                    'freelanceIncome',
+                    6000,
+                  )
+                  .having((b) => b.rent.value, 'rent', 1500),
             ),
           ),
         ).called(1);
@@ -160,7 +218,22 @@ void main() {
 
     test('submit() returns false when repository throws error', () async {
       // Arrange
-      final existingBudget = Budget()..freelanceIncome = 5000;
+      const existingBudget = BudgetEntry(
+        id: 1,
+        freelanceIncome: 5000,
+        rent: 0,
+        electricity: 0,
+        gas: 0,
+        water: 0,
+        internet: 0,
+        homeInsurance: 0,
+        publicTransport: 0,
+        groceries: 0,
+        restaurants: 0,
+        healthInsurance: 0,
+        phone: 0,
+        ai: 0,
+      );
 
       when(
         mockRepository.getOrCreateBudget(),

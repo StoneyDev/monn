@@ -54,7 +54,7 @@ final class SavingsRepositoryProvider
   }
 }
 
-String _$savingsRepositoryHash() => r'f91e71a5fba2ff21e67786f0b95fc4a3a6631b2d';
+String _$savingsRepositoryHash() => r'a94e211295a2b5f5e1020429a0ff4f7905e249b5';
 
 @ProviderFor(watchSavings)
 const watchSavingsProvider = WatchSavingsFamily._();
@@ -62,11 +62,13 @@ const watchSavingsProvider = WatchSavingsFamily._();
 final class WatchSavingsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Savings>>,
-          List<Savings>,
-          Stream<List<Savings>>
+          AsyncValue<List<SavingsEntry>>,
+          List<SavingsEntry>,
+          Stream<List<SavingsEntry>>
         >
-    with $FutureModifier<List<Savings>>, $StreamProvider<List<Savings>> {
+    with
+        $FutureModifier<List<SavingsEntry>>,
+        $StreamProvider<List<SavingsEntry>> {
   const WatchSavingsProvider._({
     required WatchSavingsFamily super.from,
     required SavingsFilter? super.argument,
@@ -90,12 +92,12 @@ final class WatchSavingsProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Savings>> $createElement(
+  $StreamProviderElement<List<SavingsEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<Savings>> create(Ref ref) {
+  Stream<List<SavingsEntry>> create(Ref ref) {
     final argument = this.argument as SavingsFilter?;
     return watchSavings(ref, filter: argument);
   }
@@ -111,10 +113,10 @@ final class WatchSavingsProvider
   }
 }
 
-String _$watchSavingsHash() => r'd167f759454c535778290c332f82dbac2388f3c4';
+String _$watchSavingsHash() => r'2b273cb1964e24acaa8a877d518ae14c4a5054c4';
 
 final class WatchSavingsFamily extends $Family
-    with $FunctionalFamilyOverride<Stream<List<Savings>>, SavingsFilter?> {
+    with $FunctionalFamilyOverride<Stream<List<SavingsEntry>>, SavingsFilter?> {
   const WatchSavingsFamily._()
     : super(
         retry: null,
@@ -136,8 +138,12 @@ const getSavingsProvider = GetSavingsFamily._();
 
 final class GetSavingsProvider
     extends
-        $FunctionalProvider<AsyncValue<Savings?>, Savings?, FutureOr<Savings?>>
-    with $FutureModifier<Savings?>, $FutureProvider<Savings?> {
+        $FunctionalProvider<
+          AsyncValue<SavingsEntry?>,
+          SavingsEntry?,
+          FutureOr<SavingsEntry?>
+        >
+    with $FutureModifier<SavingsEntry?>, $FutureProvider<SavingsEntry?> {
   const GetSavingsProvider._({
     required GetSavingsFamily super.from,
     required SavingsType super.argument,
@@ -161,11 +167,12 @@ final class GetSavingsProvider
 
   @$internal
   @override
-  $FutureProviderElement<Savings?> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<SavingsEntry?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Savings?> create(Ref ref) {
+  FutureOr<SavingsEntry?> create(Ref ref) {
     final argument = this.argument as SavingsType;
     return getSavings(ref, type: argument);
   }
@@ -181,10 +188,10 @@ final class GetSavingsProvider
   }
 }
 
-String _$getSavingsHash() => r'ed5d6e5976aaed5e202ea478abc353b3ade330ae';
+String _$getSavingsHash() => r'a632fdd1ff27ba185f3903ece5292ed04cc1f8c5';
 
 final class GetSavingsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Savings?>, SavingsType> {
+    with $FunctionalFamilyOverride<FutureOr<SavingsEntry?>, SavingsType> {
   const GetSavingsFamily._()
     : super(
         retry: null,

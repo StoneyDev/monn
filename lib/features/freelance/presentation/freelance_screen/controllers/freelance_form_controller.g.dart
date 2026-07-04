@@ -42,7 +42,7 @@ final class FreelanceFormControllerProvider
 }
 
 String _$freelanceFormControllerHash() =>
-    r'07f22bd68e1a58ae93ce220cbf4eb17ba01559cd';
+    r'd5da41a2b4bf9b4541fd4831384ad3ab84454c4e';
 
 abstract class _$FreelanceFormController extends $Notifier<FreelanceForm> {
   FreelanceForm build();

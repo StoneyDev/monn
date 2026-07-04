@@ -43,7 +43,7 @@ final class CounterStrikeFormControllerProvider
 }
 
 String _$counterStrikeFormControllerHash() =>
-    r'fcc063b5fc3738bd1b4bc4e6319f09491201d442';
+    r'99ca61a58df0cd6e4b72e1a87c6b29f7c93a2a72';
 
 abstract class _$CounterStrikeFormController
     extends $Notifier<CounterStrikeForm> {

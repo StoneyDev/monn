@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
+import 'package:monn/shared/local/database.dart';
 
 import '../../../../../test.mocks.dart';
 import '../../../../../utils.dart';
@@ -174,11 +174,11 @@ void main() {
       verify(
         mockRepository.addReit(
           argThat(
-            isA<Reit>()
-                .having((r) => r.name, 'name', 'Random SCPI')
-                .having((r) => r.price, 'price', 345)
-                .having((r) => r.shares, 'shares', 23)
-                .having((r) => r.boughtOn, 'boughtOn', boughtOn),
+            isA<ReitEntriesCompanion>()
+                .having((r) => r.name.value, 'name', 'Random SCPI')
+                .having((r) => r.price.value, 'price', 345.0)
+                .having((r) => r.shares.value, 'shares', 23)
+                .having((r) => r.boughtOn.value, 'boughtOn', boughtOn),
           ),
         ),
       ).called(1);

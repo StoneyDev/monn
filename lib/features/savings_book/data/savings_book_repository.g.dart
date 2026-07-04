@@ -55,7 +55,7 @@ final class SavingsBookRepositoryProvider
 }
 
 String _$savingsBookRepositoryHash() =>
-    r'690661e5461d384b33d960b9f14ac57ed537b20e';
+    r'e1deb50557b8fa5a464dd8eb05115321ef84e756';
 
 @ProviderFor(watchSavingsBooks)
 const watchSavingsBooksProvider = WatchSavingsBooksProvider._();
@@ -63,13 +63,13 @@ const watchSavingsBooksProvider = WatchSavingsBooksProvider._();
 final class WatchSavingsBooksProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<SavingsBook>>,
-          List<SavingsBook>,
-          Stream<List<SavingsBook>>
+          AsyncValue<List<SavingsBookEntry>>,
+          List<SavingsBookEntry>,
+          Stream<List<SavingsBookEntry>>
         >
     with
-        $FutureModifier<List<SavingsBook>>,
-        $StreamProvider<List<SavingsBook>> {
+        $FutureModifier<List<SavingsBookEntry>>,
+        $StreamProvider<List<SavingsBookEntry>> {
   const WatchSavingsBooksProvider._()
     : super(
         from: null,
@@ -86,17 +86,17 @@ final class WatchSavingsBooksProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<SavingsBook>> $createElement(
+  $StreamProviderElement<List<SavingsBookEntry>> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<List<SavingsBook>> create(Ref ref) {
+  Stream<List<SavingsBookEntry>> create(Ref ref) {
     return watchSavingsBooks(ref);
   }
 }
 
-String _$watchSavingsBooksHash() => r'5661c67a2ce0bebd9c0d3221c3856d9db7f67b09';
+String _$watchSavingsBooksHash() => r'a02d1f4dca3c7b89760415b3d68f31f129b55985';
 
 @ProviderFor(watchPayoutReportSavingsBook)
 const watchPayoutReportSavingsBookProvider =

@@ -43,7 +43,7 @@ final class CrowdfundingFormControllerProvider
 }
 
 String _$crowdfundingFormControllerHash() =>
-    r'6e962a07ea5366874499f133cb1df1d09db21bfc';
+    r'e7b36bfb485a9a53c1102feee37d2981270c4bfb';
 
 abstract class _$CrowdfundingFormController
     extends $Notifier<CrowdfundingForm> {

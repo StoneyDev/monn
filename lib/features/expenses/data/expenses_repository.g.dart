@@ -55,14 +55,19 @@ final class ExpensesRepositoryProvider
 }
 
 String _$expensesRepositoryHash() =>
-    r'ba3352c23d5ce8d3222a52425ad78efbc40a73c9';
+    r'4ef20680e3bed71a34cc3e2988b818c6c7f5c9e7';
 
 @ProviderFor(watchBudget)
 const watchBudgetProvider = WatchBudgetProvider._();
 
 final class WatchBudgetProvider
-    extends $FunctionalProvider<AsyncValue<Budget?>, Budget?, Stream<Budget?>>
-    with $FutureModifier<Budget?>, $StreamProvider<Budget?> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<BudgetEntry?>,
+          BudgetEntry?,
+          Stream<BudgetEntry?>
+        >
+    with $FutureModifier<BudgetEntry?>, $StreamProvider<BudgetEntry?> {
   const WatchBudgetProvider._()
     : super(
         from: null,
@@ -79,13 +84,14 @@ final class WatchBudgetProvider
 
   @$internal
   @override
-  $StreamProviderElement<Budget?> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $StreamProviderElement<BudgetEntry?> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<Budget?> create(Ref ref) {
+  Stream<BudgetEntry?> create(Ref ref) {
     return watchBudget(ref);
   }
 }
 
-String _$watchBudgetHash() => r'd32d4d1dbaf8230b517389b7ebf65d7cd5db0d0f';
+String _$watchBudgetHash() => r'a28d80b3ff47bd17b64f34e9e2576e2d856bf4c6';

@@ -42,7 +42,7 @@ final class CryptoFormControllerProvider
 }
 
 String _$cryptoFormControllerHash() =>
-    r'819cfbd331720d8e44c8ce91373be7e23446aae0';
+    r'7607348aee7204d7db89d4b472ed3cb39f5986bf';
 
 abstract class _$CryptoFormController extends $Notifier<CryptoForm> {
   CryptoForm build();

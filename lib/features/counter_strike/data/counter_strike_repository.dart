@@ -1,38 +1,38 @@
-import 'package:isar_community/isar.dart';
-import 'package:monn/features/counter_strike/domain/counter_strike.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'counter_strike_repository.g.dart';
 
 class CounterStrikeRepository {
-  const CounterStrikeRepository(this._localDB);
+  const CounterStrikeRepository(this._db);
 
-  final Isar _localDB;
+  final AppDatabase _db;
 
-  Stream<List<CounterStrike>> watchCounterStrikes() {
-    final query = _localDB.counterStrikes
-        .where()
-        .sortByPurchaseValueDesc()
-        .build();
-    return query.watch(fireImmediately: true);
+  Stream<List<CounterStrikeEntry>> watchCounterStrikes() {
+    final query = _db.select(_db.counterStrikeEntries)
+      ..orderBy([(t) => OrderingTerm.desc(t.purchaseValue)]);
+    return query.watch();
   }
 
-  Future<void> editCounterStrike(CounterStrike newCounterStrike) {
-    return _localDB.writeTxn<void>(() async {
-      await _localDB.counterStrikes.put(newCounterStrike);
-    });
+  Future<void> editCounterStrike(
+    CounterStrikeEntriesCompanion newCounterStrike,
+  ) {
+    return _db
+        .into(_db.counterStrikeEntries)
+        .insertOnConflictUpdate(newCounterStrike);
   }
 }
 
 @Riverpod(keepAlive: true)
 CounterStrikeRepository counterStrikeRepository(Ref ref) {
-  return CounterStrikeRepository(LocalDatabase().database);
+  return CounterStrikeRepository(ref.watch(appDatabaseProvider));
 }
 
 @riverpod
-Stream<List<CounterStrike>> watchCounterStrikes(Ref ref) {
+Stream<List<CounterStrikeEntry>> watchCounterStrikes(Ref ref) {
   final repository = ref.watch(counterStrikeRepositoryProvider);
   return repository.watchCounterStrikes();
 }

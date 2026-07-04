@@ -1,11 +1,11 @@
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar_community/isar.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/dashboard/data/savings_repository.dart';
 import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
-import 'package:monn/features/reit/domain/reit.dart';
+import 'package:monn/features/reit/domain/reit_with_dividends.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../test.dart';
@@ -13,48 +13,6 @@ import '../../../test.mocks.dart';
 import '../../../utils.dart';
 
 void main() {
-  late Isar isar;
-
-  setUpAll(() async {
-    await Isar.initializeIsarCore(download: true);
-
-    isar = await Isar.open(
-      [ReitSchema, ReitDividendSchema],
-      directory: '.',
-    );
-
-    await isar.writeTxn(() async {
-      await isar.reits.clear();
-      await isar.reitDividends.clear();
-    });
-
-    final dividends = [
-      ReitDividend()
-        ..receivedAt = DateTime(2010)
-        ..amount = 89.21,
-      ReitDividend()
-        ..receivedAt = DateTime(2012)
-        ..amount = 45.67,
-    ];
-
-    final reit = Reit()
-      ..name = 'Random SCPI'
-      ..boughtOn = DateTime.now()
-      ..price = 567
-      ..shares = 10
-      ..dividends.addAll(dividends);
-
-    await isar.writeTxn(() async {
-      await isar.reits.put(reit);
-      await isar.reitDividends.putAll(dividends);
-      await reit.dividends.save();
-    });
-  });
-
-  tearDownAll(() async {
-    await isar.close(deleteFromDisk: true);
-  });
-
   group('reitRepository', () {
     test('should return ReitRepository when a call is made', () {
       // Arrange
@@ -73,10 +31,46 @@ void main() {
     });
   });
 
+  group('deleteReit', () {
+    test('deletes dividends through the foreign-key cascade', () async {
+      // Arrange
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = ReitRepository(db);
+
+      final reitId = await db
+          .into(db.reitEntries)
+          .insert(
+            ReitEntriesCompanion.insert(
+              name: 'Cascade SCPI',
+              boughtOn: DateTime(2026),
+              shares: 2,
+              price: 100,
+            ),
+          );
+      await db
+          .into(db.reitDividendEntries)
+          .insert(
+            ReitDividendEntriesCompanion.insert(
+              reitId: reitId,
+              receivedAt: DateTime(2026, 2),
+              amount: 12,
+            ),
+          );
+
+      // Act
+      await repository.deleteReit(reitId);
+
+      // Assert
+      final dividends = await db.select(db.reitDividendEntries).get();
+      expect(dividends, isEmpty);
+    });
+  });
+
   group('watchReits', () {
     test('should return empty list when no data is found', () async {
       // Arrange
-      const reits = <Reit>[];
+      const reits = <ReitWithDividends>[];
 
       final repository = MockReitRepository();
       final container = createContainer(
@@ -90,7 +84,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Reit>>>();
+      final listener = MockListener<AsyncValue<List<ReitWithDividends>>>();
       container.listen(
         watchReitsProvider,
         listener.call,
@@ -110,7 +104,31 @@ void main() {
 
     test('should return data from database', () async {
       // Arrange
-      final reits = await isar.reits.where().findAll();
+      final reits = [
+        ReitWithDividends(
+          reit: ReitEntry(
+            id: 1,
+            name: 'Random SCPI',
+            boughtOn: DateTime.now(),
+            price: 567,
+            shares: 10,
+          ),
+          dividends: [
+            ReitDividendEntry(
+              id: 1,
+              reitId: 1,
+              receivedAt: DateTime(2010),
+              amount: 89.21,
+            ),
+            ReitDividendEntry(
+              id: 2,
+              reitId: 1,
+              receivedAt: DateTime(2012),
+              amount: 45.67,
+            ),
+          ],
+        ),
+      ];
 
       final repository = MockReitRepository();
       final container = createContainer(
@@ -124,7 +142,7 @@ void main() {
       );
 
       // Act
-      final listener = MockListener<AsyncValue<List<Reit>>>();
+      final listener = MockListener<AsyncValue<List<ReitWithDividends>>>();
       container.listen(
         watchReitsProvider,
         listener.call,
@@ -147,11 +165,37 @@ void main() {
     test('should return the total amount invested', () async {
       // Arrange
       const finalAmount = 2134.88;
-      final reits = await isar.reits.where().findAll();
+      final reits = [
+        ReitWithDividends(
+          reit: ReitEntry(
+            id: 1,
+            name: 'Random SCPI',
+            boughtOn: DateTime.now(),
+            price: 567,
+            shares: 10,
+          ),
+          dividends: [
+            ReitDividendEntry(
+              id: 1,
+              reitId: 1,
+              receivedAt: DateTime(2010),
+              amount: 89.21,
+            ),
+            ReitDividendEntry(
+              id: 2,
+              reitId: 1,
+              receivedAt: DateTime(2012),
+              amount: 45.67,
+            ),
+          ],
+        ),
+      ];
 
-      final savings = Savings()
-        ..type = SavingsType.reit
-        ..startAmount = 2000;
+      const savings = SavingsEntry(
+        id: 1,
+        type: 'reit',
+        startAmount: 2000,
+      );
 
       final repository = MockReitRepository();
       final savingRepository = MockSavingsRepository();

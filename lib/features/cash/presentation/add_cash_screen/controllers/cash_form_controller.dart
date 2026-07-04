@@ -1,6 +1,6 @@
-import 'package:isar_community/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:monn/features/cash/data/cash_repository.dart';
-import 'package:monn/features/cash/domain/cash.dart';
+import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cash_form_controller.g.dart';
@@ -25,10 +25,11 @@ class CashFormController extends _$CashFormController {
 
     final result = await AsyncValue.guard(
       () => repository.editCash(
-        Cash()
-          ..id = state.id ?? Isar.autoIncrement
-          ..label = state.label
-          ..value = double.parse(state.value),
+        CashEntriesCompanion(
+          id: state.id != null ? Value(state.id!) : const Value.absent(),
+          label: Value(state.label),
+          value: Value(double.parse(state.value)),
+        ),
       ),
     );
 

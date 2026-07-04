@@ -42,7 +42,7 @@ final class SavingsBookFormControllerProvider
 }
 
 String _$savingsBookFormControllerHash() =>
-    r'982239f579930b20dc77ab743400f723a3e1c41c';
+    r'5ee1f51f0873341b1d114a61a191f7a1c9a60967';
 
 abstract class _$SavingsBookFormController extends $Notifier<SavingsBookForm> {
   SavingsBookForm build();
