@@ -52,7 +52,9 @@ Stream<PayoutReportData> watchPayoutReportCounterStrike(Ref ref) async* {
 
     yield PayoutReportData(
       finalAmount: double.parse(totalValue.toStringAsFixed(2)),
-      totalNetProfit: double.parse(totalPurchase.toStringAsFixed(2)),
+      totalNetProfit: double.parse(
+        (totalValue - totalPurchase).toStringAsFixed(2),
+      ),
     );
   }
 }

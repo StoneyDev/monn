@@ -61,29 +61,20 @@ Future<List<CryptocurrencyEntry>> getCryptoPriceMarket(Ref ref) async {
   final cryptoMarketMap = {for (final e in cryptoMarket) e.slug: e};
 
   for (final cryptoType in CryptoType.values) {
-    final cryptoWithTx = await ref.watch(
-      getCryptocurrencyProvider(cryptoType).selectAsync((c) => c),
-    );
+    final crypto = await cryptoRepository.getOrCreateCryptocurrency(cryptoType);
 
     if (cryptoMarket.isNotEmpty) {
       final market = cryptoMarketMap[cryptoType.name.toKebabCase()];
       final companion = CryptocurrencyEntriesCompanion(
-        id: cryptoWithTx.crypto.id.asPk,
-        type: Value(cryptoWithTx.crypto.type),
-        totalCrypto: Value(cryptoWithTx.crypto.totalCrypto),
+        type: Value(crypto.type),
+        totalCrypto: Value(crypto.totalCrypto),
         priceMarket: Value(market!.quote.priceUsd.price),
         lastUpdate: Value(now),
       );
       await cryptoRepository.editCryptocurrency(crypto: companion);
-      cryptocurrencies.add(CryptocurrencyEntry(
-        id: cryptoWithTx.crypto.id,
-        type: cryptoWithTx.crypto.type,
-        totalCrypto: cryptoWithTx.crypto.totalCrypto,
-        priceMarket: market.quote.priceUsd.price,
-        lastUpdate: now,
-      ));
+      cryptocurrencies.add(crypto.copyWithCompanion(companion));
     } else {
-      cryptocurrencies.add(cryptoWithTx.crypto);
+      cryptocurrencies.add(crypto);
     }
   }
 

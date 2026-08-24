@@ -3,6 +3,7 @@ import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
+import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cash_repository.g.dart';
@@ -19,35 +20,27 @@ class CashRepository {
   }
 
   Future<void> editCash(CashEntriesCompanion newCash) async {
-    await _db.into(_db.cashEntries).insertOnConflictUpdate(newCash);
-    await _syncStartAmount();
+    await _db.transaction(() async {
+      await _db.into(_db.cashEntries).insertOnConflictUpdate(newCash);
+      await _syncStartAmount();
+    });
   }
 
   Future<void> deleteCash(int id) async {
-    await (_db.delete(_db.cashEntries)..where((t) => t.id.equals(id))).go();
-    await _syncStartAmount();
+    await _db.transaction(() async {
+      await (_db.delete(_db.cashEntries)..where((t) => t.id.equals(id))).go();
+      await _syncStartAmount();
+    });
   }
 
   Future<void> _syncStartAmount() async {
-    final cashs = await _db.select(_db.cashEntries).get();
-    final total = cashs.fold<double>(0, (sum, e) => sum + e.value);
+    final totalExpression = _db.cashEntries.value.sum();
+    final query = _db.selectOnly(_db.cashEntries)
+      ..addColumns([totalExpression]);
+    final total = (await query.getSingle()).read(totalExpression) ?? 0;
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    final existingSavings = await (_db.select(
-      _db.savingsEntries,
-    )..where((t) => t.type.equals(SavingsType.cash.name))).getSingleOrNull();
-
-    await _db
-        .into(_db.savingsEntries)
-        .insertOnConflictUpdate(
-          SavingsEntriesCompanion(
-            id: existingSavings != null
-                ? Value(existingSavings.id)
-                : const Value.absent(),
-            type: Value(SavingsType.cash.name),
-            startAmount: Value(roundedTotal),
-          ),
-        );
+    await _db.setSavingsStartAmount(SavingsType.cash, roundedTotal);
   }
 }
 

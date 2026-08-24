@@ -1,21 +1,17 @@
-import 'dart:ui';
-
 import 'package:monn/shared/local/database.dart';
-import 'package:monn/utils/app_colors.dart';
 
 enum CryptoType {
-  bitcoin('Bitcoin', 'BTC', AppColors.btc),
-  ethereum('Ethereum', 'ETH', AppColors.eth),
-  chainlink('Chainlink', 'LINK', AppColors.link),
-  tether('Tether', 'USDT', AppColors.usdt),
-  usdCoin('USD Coin', 'USDC', AppColors.usdc)
+  bitcoin('Bitcoin', 'BTC'),
+  ethereum('Ethereum', 'ETH'),
+  chainlink('Chainlink', 'LINK'),
+  tether('Tether', 'USDT'),
+  usdCoin('USD Coin', 'USDC')
   ;
 
-  const CryptoType(this.label, this.symbol, this.color);
+  const CryptoType(this.label, this.symbol);
 
   final String label;
   final String symbol;
-  final Color color;
 }
 
 extension CryptocurrencyEntryX on CryptocurrencyEntry {

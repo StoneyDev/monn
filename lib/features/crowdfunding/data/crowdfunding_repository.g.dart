@@ -97,7 +97,7 @@ final class WatchCrowdfundingsProvider
 }
 
 String _$watchCrowdfundingsHash() =>
-    r'a48b0cdc090e7c36338c8badf2b6dd8af967aee3';
+    r'1f1b9a11a2ca29eb50f97006a636a19b33a74b42';
 
 @ProviderFor(watchPayoutReportCrowdfunding)
 const watchPayoutReportCrowdfundingProvider =
