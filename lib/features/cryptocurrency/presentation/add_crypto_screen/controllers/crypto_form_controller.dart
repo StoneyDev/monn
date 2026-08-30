@@ -1,7 +1,5 @@
-import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/shared/domain/savings.dart';
+import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -36,52 +34,24 @@ class CryptoFormController extends _$CryptoFormController {
 
   Future<bool> submit() async {
     final cryptoRepository = ref.read(cryptocurrencyRepositoryProvider);
-    final savingsRepository = ref.read(savingsRepositoryProvider);
 
     final cryptoAmount = double.parse(state.amount);
     final isPurchase = cryptoAmount > 0;
-
-    final crypto = state.crypto!;
-    final companion = CryptocurrencyEntriesCompanion(
-      id: crypto.id.asPk,
-      type: Value(crypto.type),
-      totalCrypto: Value(crypto.totalCrypto + cryptoAmount),
-      priceMarket: Value(crypto.priceMarket),
-      lastUpdate: Value(crypto.lastUpdate),
-    );
+    final investedFiatAmount = isPurchase && state.fiatAmount.isNotEmpty
+        ? double.parse(state.fiatAmount)
+        : null;
 
     final result = await AsyncValue.guard(
-      () => cryptoRepository.editCryptocurrency(
-        crypto: companion,
-        transactionAmount: cryptoAmount,
-        transactionDate: state.date,
+      () => cryptoRepository.recordTransaction(
+        type: state.crypto!.cryptoType,
+        cryptoAmount: cryptoAmount,
+        date: state.date,
+        investedFiatAmount: investedFiatAmount,
       ),
     );
 
-    if (!ref.mounted || result.hasError) return false;
+    if (!ref.mounted) return false;
 
-    // Update startAmount only for purchases
-    if (isPurchase && state.fiatAmount.isNotEmpty) {
-      final fiatAmount = double.parse(state.fiatAmount);
-      final savings = await savingsRepository.getSavings(
-        SavingsType.cryptocurrency,
-      );
-
-      final savingsCompanion = SavingsEntriesCompanion(
-        id: savings != null ? Value(savings.id) : const Value.absent(),
-        type: Value(SavingsType.cryptocurrency.name),
-        startAmount: Value((savings?.startAmount ?? 0) + fiatAmount),
-      );
-
-      final savingsResult = await AsyncValue.guard(
-        () => savingsRepository.editSaving(savingsCompanion),
-      );
-
-      if (!ref.mounted) return false;
-
-      return !savingsResult.hasError;
-    }
-
-    return true;
+    return !result.hasError;
   }
 }
