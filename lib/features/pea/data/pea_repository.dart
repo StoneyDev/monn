@@ -1,4 +1,4 @@
-import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
@@ -42,7 +42,7 @@ Future<PayoutReportData> getPayoutReportPea(Ref ref) async {
         (data) => data?.startAmount ?? 0.0,
       ),
     ),
-    ref.refresh(getPeaProvider.future),
+    ref.watch(getPeaProvider.future),
   ]);
 
   final startAmount = data[0]! as double;

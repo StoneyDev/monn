@@ -1,6 +1,7 @@
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
+import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_repository.g.dart';
@@ -16,6 +17,18 @@ class SavingsBookRepository {
 
   Future<void> editSavingsBook(SavingsBookEntriesCompanion savingsBook) {
     return _db.into(_db.savingsBookEntries).insertOnConflictUpdate(savingsBook);
+  }
+
+  Future<void> addSavingsBook(SavingsBookEntriesCompanion savingsBook) async {
+    await _db.transaction(() async {
+      final inserted = await _db
+          .into(_db.savingsBookEntries)
+          .insertReturning(savingsBook);
+      await _db.incrementSavingsStartAmount(
+        .savingsBook,
+        inserted.startAmount,
+      );
+    });
   }
 }
 

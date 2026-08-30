@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/pea/presentation/pea_form_screen/pea_form_screen.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
+import 'package:monn/features/portfolio/presentation/controllers/edit_savings_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -36,7 +36,7 @@ class PeaScreen extends ConsumerWidget {
     final eligibility = openingDate.numberYears() >= 5;
     final peaData = ref.watch(getPeaProvider);
     final etfPrice = ref.watch(getEtfPriceMarketProvider);
-    final savingsPea = ref.refresh(getSavingsProvider(type: SavingsType.pea));
+    final savingsPea = ref.watch(getSavingsProvider(type: SavingsType.pea));
     final report = ref.watch(getPayoutReportPeaProvider).value;
 
     return Scaffold(

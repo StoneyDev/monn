@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/features/expenses/domain/budget_extension.dart';
-import 'package:monn/features/expenses/domain/expense_category.dart';
+import 'package:monn/features/expenses/presentation/models/expense_category.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';

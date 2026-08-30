@@ -13,8 +13,8 @@ part of 'net_worth_provider.dart';
 const getFinalAmountProvider = GetFinalAmountFamily._();
 
 final class GetFinalAmountProvider
-    extends $FunctionalProvider<double, double, double>
-    with $Provider<double> {
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
   const GetFinalAmountProvider._({
     required GetFinalAmountFamily super.from,
     required SavingsType super.argument,
@@ -38,21 +38,13 @@ final class GetFinalAmountProvider
 
   @$internal
   @override
-  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
 
   @override
-  double create(Ref ref) {
+  FutureOr<double> create(Ref ref) {
     final argument = this.argument as SavingsType;
     return getFinalAmount(ref, argument);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
   }
 
   @override
@@ -66,10 +58,10 @@ final class GetFinalAmountProvider
   }
 }
 
-String _$getFinalAmountHash() => r'c04fd76633439b4901b31f8f835e98cba5f7f44a';
+String _$getFinalAmountHash() => r'ca0ca54b43bd41fe2e420498aa63c3a06b0c8534';
 
 final class GetFinalAmountFamily extends $Family
-    with $FunctionalFamilyOverride<double, SavingsType> {
+    with $FunctionalFamilyOverride<FutureOr<double>, SavingsType> {
   const GetFinalAmountFamily._()
     : super(
         retry: null,
@@ -90,8 +82,8 @@ final class GetFinalAmountFamily extends $Family
 const watchTotalNetWorthProvider = WatchTotalNetWorthProvider._();
 
 final class WatchTotalNetWorthProvider
-    extends $FunctionalProvider<double, double, double>
-    with $Provider<double> {
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
   const WatchTotalNetWorthProvider._()
     : super(
         from: null,
@@ -108,25 +100,17 @@ final class WatchTotalNetWorthProvider
 
   @$internal
   @override
-  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
 
   @override
-  double create(Ref ref) {
+  FutureOr<double> create(Ref ref) {
     return watchTotalNetWorth(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
   }
 }
 
 String _$watchTotalNetWorthHash() =>
-    r'c8e9e1542c5021f56fd45009e611c5bb1e4a390b';
+    r'f3bbc6ee5c6e60de02e373c2f59143bef2783794';
 
 @ProviderFor(watchSortedSavings)
 const watchSortedSavingsProvider = WatchSortedSavingsFamily._();
@@ -134,11 +118,13 @@ const watchSortedSavingsProvider = WatchSortedSavingsFamily._();
 final class WatchSortedSavingsProvider
     extends
         $FunctionalProvider<
-          List<SavingsEntry>,
-          List<SavingsEntry>,
-          List<SavingsEntry>
+          AsyncValue<List<SortedSaving>>,
+          List<SortedSaving>,
+          FutureOr<List<SortedSaving>>
         >
-    with $Provider<List<SavingsEntry>> {
+    with
+        $FutureModifier<List<SortedSaving>>,
+        $FutureProvider<List<SortedSaving>> {
   const WatchSortedSavingsProvider._({
     required WatchSortedSavingsFamily super.from,
     required SavingsFilter super.argument,
@@ -162,22 +148,14 @@ final class WatchSortedSavingsProvider
 
   @$internal
   @override
-  $ProviderElement<List<SavingsEntry>> $createElement(
+  $FutureProviderElement<List<SortedSaving>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<SavingsEntry> create(Ref ref) {
+  FutureOr<List<SortedSaving>> create(Ref ref) {
     final argument = this.argument as SavingsFilter;
     return watchSortedSavings(ref, filter: argument);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<SavingsEntry> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<SavingsEntry>>(value),
-    );
   }
 
   @override
@@ -192,10 +170,11 @@ final class WatchSortedSavingsProvider
 }
 
 String _$watchSortedSavingsHash() =>
-    r'cc13ba1f65e9964bd4067a65dd8900907392aa1e';
+    r'4b207b596c94e95f8adf303d80f07d324919cb4a';
 
 final class WatchSortedSavingsFamily extends $Family
-    with $FunctionalFamilyOverride<List<SavingsEntry>, SavingsFilter> {
+    with
+        $FunctionalFamilyOverride<FutureOr<List<SortedSaving>>, SavingsFilter> {
   const WatchSortedSavingsFamily._()
     : super(
         retry: null,
@@ -211,3 +190,44 @@ final class WatchSortedSavingsFamily extends $Family
   @override
   String toString() => r'watchSortedSavingsProvider';
 }
+
+@ProviderFor(watchFinalAmounts)
+const watchFinalAmountsProvider = WatchFinalAmountsProvider._();
+
+final class WatchFinalAmountsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<SavingsType, double>>,
+          Map<SavingsType, double>,
+          FutureOr<Map<SavingsType, double>>
+        >
+    with
+        $FutureModifier<Map<SavingsType, double>>,
+        $FutureProvider<Map<SavingsType, double>> {
+  const WatchFinalAmountsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchFinalAmountsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$watchFinalAmountsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<SavingsType, double>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<SavingsType, double>> create(Ref ref) {
+    return watchFinalAmounts(ref);
+  }
+}
+
+String _$watchFinalAmountsHash() => r'b0abf2061cf16f87fbf4c8d6abf65c18da147209';

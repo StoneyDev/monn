@@ -1,14 +1,11 @@
-import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/controllers/reit_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/domain/savings.dart';
-import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/fields/monn_field_text.dart';
@@ -27,16 +24,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Forces data retrieval because no data is used in the UI
-    // It's strange, but perhaps normal for the way riverpod works.
-    ref.invalidate(getSavingsProvider(type: SavingsType.reit));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final savingsReit = ref.watch(getSavingsProvider(type: SavingsType.reit));
     final formNotifier = ref.read(reitFormControllerProvider.notifier);
 
     return Scaffold(
@@ -91,42 +79,21 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: switch (savingsReit) {
-            AsyncData(:final value) => MonnButton(
-              text: context.tr(LocaleKeys.button_validate),
-              onPressed: () async {
-                if (!(formKey.currentState?.validate() ?? false)) return;
+          child: MonnButton(
+            text: context.tr(LocaleKeys.button_validate),
+            onPressed: () async {
+              if (!(formKey.currentState?.validate() ?? false)) return;
 
-                final success = await formNotifier.submit();
+              final success = await formNotifier.submit();
+              if (!context.mounted || !success) return;
 
-                final formData = ref.read(reitFormControllerProvider);
-                final newSaving = SavingsEntriesCompanion(
-                  id: value != null ? Value(value.id) : const Value.absent(),
-                  type: Value(SavingsType.reit.name),
-                  startAmount: Value(
-                    (value?.startAmount ?? 0) +
-                        (double.parse(formData.price) *
-                            int.parse(formData.shares)),
-                  ),
-                );
-
-                final updated = await ref
-                    .read(editSavingsControllerProvider.notifier)
-                    .submit(newSaving);
-                if (!context.mounted || !success || !updated) return;
-
-                ref
-                  ..invalidate(reitFormControllerProvider)
-                  ..invalidate(watchPayoutReportReitProvider)
-                  ..invalidate(getSavingsProvider(type: SavingsType.reit));
-                Navigator.pop(context);
-              },
-            ),
-            _ => const Center(
-              heightFactor: 1,
-              child: RepaintBoundary(child: CircularProgressIndicator()),
-            ),
-          },
+              ref
+                ..invalidate(reitFormControllerProvider)
+                ..invalidate(watchPayoutReportReitProvider)
+                ..invalidate(getSavingsProvider(type: SavingsType.reit));
+              Navigator.pop(context);
+            },
+          ),
         ),
       ),
     );

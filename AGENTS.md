@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
 ## Mandatory Rules
 
@@ -9,6 +9,63 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 3. **KISS** → ask "what is the simplest solution?" before coding
 4. **Centralize** → ask "where is the right place for this logic?" before adding code
 5. **Spacing** → use `spacing` on Column/Row instead of `SizedBox(height/width: ...)`
+6. **No diagnostic hacks** → never change a type or identity or disable a diagnostic solely to hide a warning; fix the underlying lifecycle or use a supported scoped solution
+7. **Drift backups** → never overlap production `AppDatabase` instances, introduce an `_StagingDatabase` subtype, use Drift's internal `QueryExecutor`, or disable `dontWarnAboutMultipleDatabases` in the app; validate attached files through the active connection and close it before opening a staging database
+
+## Working Agreement
+
+### Goal
+
+Finish the current task with the minimum sufficient change. Plan thoroughly,
+execute light. Ship no design, abstraction, or test that cannot be justified by
+the requirement.
+
+### Before Coding
+
+Read the relevant code directly; do not infer from search results or guess. Then
+post a short plan covering the goal, non-goals, acceptance criteria, and what
+stays untouched. Ask only when a material ambiguity would change the approach;
+otherwise proceed.
+
+### Autonomy
+
+- For answer, explanation, review, diagnosis, or planning requests: inspect and
+  report without changing code.
+- For change, build, or fix requests: make in-scope local edits and run
+  non-destructive validation without asking.
+- Ask first for external writes, destructive actions, or material scope
+  expansion.
+- Work single-threaded. Use subagents only when the task clearly splits into
+  independent workstreams. Enable only the skills the task needs.
+
+### Stop and Re-plan Smaller
+
+Stop and re-plan if the work starts:
+
+- Fixing a symptom instead of the root cause, or stacking patches,
+  compatibility layers, or a second implementation to keep old logic alive.
+- Adding abstractions, frameworks, or configuration for hypothetical or future
+  needs.
+- Touching unrelated files.
+- Using tests as a reason to keep building.
+
+### Test Scope
+
+Tests verify this change's acceptance criteria and nothing else. Run existing
+related tests first; if they prove the change, add none. Add tests only when
+behavior changed in a way existing tests cannot cover, or when the user asks.
+Limit new coverage to at most one main path and one critical failure path. Do
+not add frameworks, infrastructure, directories, snapshot tests, parametrized
+grids, end-to-end tests, or backfill unrelated modules. If test code is larger
+or more complex than the implementation, re-plan smaller.
+
+### Definition of Done
+
+- Restate the plan, mark non-goals, and confirm the acceptance criteria are met.
+- Change the minimum number of files, keep the diff small, and leave no extra
+  files or debug code.
+- Run the related existing tests. Keep any new tests few and scoped as defined
+  above.
 
 ## Project Overview
 
@@ -18,7 +75,7 @@ Monn is a personal investment tracking and analysis Flutter app that tracks mult
 
 ### Code Generation
 ```bash
-# Run code generation for all generators (drift, freezed, riverpod, json_serializable, retrofit)
+# Run code generation for all generators (Drift, Freezed, Riverpod, JSON, Retrofit)
 puro flutter pub run build_runner build
 
 # Watch mode for continuous generation during development
@@ -108,7 +165,7 @@ In Riverpod 3.x, all `@riverpod` providers are **autodispose by default**. This 
 ```dart
 @Riverpod(keepAlive: true)
 CryptocurrencyRepository cryptocurrencyRepository(Ref ref) {
-  return CryptocurrencyRepository(LocalDatabase().database);
+  return CryptocurrencyRepository(ref.watch(appDatabaseProvider));
 }
 ```
 Use `keepAlive: true` for singletons like repositories, API clients, and database instances.
@@ -116,7 +173,7 @@ Use `keepAlive: true` for singletons like repositories, API clients, and databas
 2. **Stream Providers** (auto-dispose - default):
 ```dart
 @riverpod
-Stream<List<Cryptocurrency>> watchCryptocurrencies(Ref ref) {
+Stream<List<CryptocurrencyEntry>> watchCryptocurrencies(Ref ref) {
   return ref.watch(cryptocurrencyRepositoryProvider).watchCryptocurrencies();
 }
 ```
@@ -237,22 +294,10 @@ ref
 
 ### Database - Drift
 
-**Initialization:**
-Global singleton in `lib/shared/local/local_database.dart`:
-```dart
-late AppDatabase _database;
-
-class LocalDatabase {
-  Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
-    _database = AppDatabase(
-      NativeDatabase(File(p.join(dir.path, 'monn.db'))),
-    );
-  }
-
-  AppDatabase get database => _database;
-}
-```
+The schema lives in `lib/shared/local/tables.dart`, while `AppDatabase`, its
+migration strategy, and table registration live in
+`lib/shared/local/database.dart`. `LocalDatabase` opens the SQLite file and is
+injected into Riverpod from `main.dart`.
 
 **Table Pattern:**
 ```dart
@@ -260,35 +305,26 @@ class CryptocurrencyEntries extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get type => text()();
   RealColumn get totalCrypto => real().withDefault(const Constant(0))();
-
-  @override
-  List<String> get customConstraints => ['UNIQUE(type)'];
 }
 ```
 
 **Transaction Pattern:**
 ```dart
 await _db.transaction(() async {
-  final writtenCrypto = await _db
-      .into(_db.cryptocurrencyEntries)
-      .insertReturning(crypto, onConflict: DoUpdate((_) => crypto));
-
-  await _db.into(_db.cryptocurrencyTransactionEntries).insert(
-        CryptocurrencyTransactionEntriesCompanion.insert(
-          cryptocurrencyId: writtenCrypto.id,
-          date: transactionDate,
-          amount: transactionAmount,
-        ),
-      );
+  await _db.into(_db.cryptocurrencyEntries).insert(companion);
+  await _db.into(_db.cryptocurrencyTransactionEntries).insert(transaction);
 });
 ```
 
 **Reactive Queries:**
 ```dart
-Stream<List<Cryptocurrency>> watchCryptocurrencies() {
+Stream<List<CryptocurrencyEntry>> watchCryptocurrencies() {
   return _db.select(_db.cryptocurrencyEntries).watch();
 }
 ```
+
+Every schema change must increment `schemaVersion`, add an upgrade step, and
+update the generated Drift schemas and migration tests.
 
 ### API Integration
 
@@ -392,7 +428,6 @@ Translation files: `assets/translations/en.json`, `assets/translations/fr.json`
 - `ref_ui.dart` - `ref.cacheFor()` provider lifecycle management
 
 Feature-specific UI extensions stay in their presentation feature:
-
 - `dashboard/presentation/dashboard_screen/savings_type_ui.dart` - savings routes and icons
 - `cryptocurrency/presentation/cryptocurrency_ui.dart` - cryptocurrency logos
 - `counter_strike/presentation/counter_strike_ui.dart` - Counter-Strike item images
@@ -412,16 +447,13 @@ Mirrors source code structure in `test/features/<feature>/`
 **Pattern (with Mockito):**
 ```dart
 void main() {
-  late AppDatabase db;
+  late AppDatabase database;
 
-  setUpAll(() async {
-    db = AppDatabase(NativeDatabase.memory());
-    // Setup test data
+  setUp(() {
+    database = AppDatabase(NativeDatabase.memory());
   });
 
-  tearDownAll(() async {
-    await db.close();
-  });
+  tearDown(() => database.close());
 
   group('repositoryTest', () {
     test('should return expected result', () async {
@@ -484,19 +516,12 @@ SavingsType.newType => const NewTypeScreen(),
 SavingsType.newType => MonnAssets.images.icon.newIcon.provider(),
 ```
 
-4. **Add Drift table** in `lib/shared/local/tables.dart` and register it in `lib/shared/local/database.dart`:
+4. **Add the Drift table** in `lib/shared/local/tables.dart`, register it in
+   `lib/shared/local/database.dart`, then add and test the schema migration:
 ```dart
 class NewTypeEntries extends Table {
   IntColumn get id => integer().autoIncrement()();
-  // Add columns here
 }
-
-@DriftDatabase(
-  tables: [
-    // ... existing tables
-    NewTypeEntries,
-  ],
-)
 ```
 
 5. **Add translations** in `assets/translations/en.json` and `fr.json`:
@@ -510,7 +535,7 @@ class NewTypeEntries extends Table {
 
 The exhaustive `switch` statements on `SavingsType` will produce compile-time errors if you forget to handle the new type in:
 - `net_worth_provider.dart` (getFinalAmount calculation)
-- `savings_type_ui.dart` (route, icon methods)
+- `dashboard_screen/savings_type_ui.dart` (route, icon methods)
 
 ## Important Conventions
 
@@ -518,7 +543,7 @@ The exhaustive `switch` statements on `SavingsType` will produce compile-time er
 All domain models and providers use generators. **Always run `flutter pub run build_runner build` after:**
 - Creating/modifying `@freezed` classes
 - Creating/modifying `@riverpod` providers
-- Creating/modifying Drift tables or the `@DriftDatabase` table list
+- Creating/modifying Drift tables or database declarations
 - Creating/modifying `@JsonSerializable` classes
 - Creating/modifying `@RestApi` interfaces
 
@@ -554,8 +579,8 @@ switch (asyncData) {
 ```
 
 ### Enum Extensions
-Keep enum UI logic in the presentation feature that owns it. For savings, use
-`lib/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart`:
+Keep enum UI logic in the presentation feature that owns it. For savings,
+use `lib/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart`:
 ```dart
 extension SavingsTypeUI on SavingsType {
   Widget route() => switch (this) {
@@ -577,12 +602,19 @@ extension SavingsTypeUI on SavingsType {
 
 ## Generated Files
 
-Do not hand-edit generated files:
+Generated files are version-controlled and must be committed with the source
+change that produced them. They are excluded from direct static analysis where
+configured in `analysis_options.yaml`:
 - `*.freezed.dart` - Freezed code generation
-- `*.g.dart` - Multiple generators (json_serializable, riverpod, retrofit, assets)
+- `*.g.dart` - Multiple generators (json_serializable, Riverpod, Drift)
 - `*.gr.dart` - Additional generated files
-- `*.drift.dart` - Drift database code generation
+- `*.drift.dart` and `database.steps.dart` - Drift database and migration code
+- `test/drift/**/generated/` - Drift schema snapshots used by migration tests
 - `generated_plugin_registrant.dart` - Flutter plugins
+
+After running a generator, include every corresponding generated update in the
+same commit. Do not review generated implementation as handwritten logic; trace
+it back to its source declaration and verify generation consistency instead.
 
 ## Environment Variables
 
