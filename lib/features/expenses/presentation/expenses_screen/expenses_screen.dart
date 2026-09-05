@@ -60,7 +60,7 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
             icon: iconoir.EditPencil(
               color: Theme.of(context).colorScheme.primary,
             ),
-            onPressed: () => context.push(const EditBudgetScreen()),
+            onPressed: () => context.push<void>(const EditBudgetScreen()),
           ),
         ],
       ),

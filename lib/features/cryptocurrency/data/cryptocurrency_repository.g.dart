@@ -55,7 +55,7 @@ final class CryptocurrencyRepositoryProvider
 }
 
 String _$cryptocurrencyRepositoryHash() =>
-    r'c83eaa4b798e98de8ffc7208ee06451cb959656e';
+    r'8ac20e264be6323622d84a1aec23adf53788f7c7';
 
 @ProviderFor(watchCryptocurrencies)
 const watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();

@@ -1,15 +1,16 @@
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'savings_book_repository.g.dart';
 
 class SavingsBookRepository {
-  const SavingsBookRepository(this._db);
+  const SavingsBookRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<SavingsBookEntry>> watchSavingsBooks() {
     return _db.select(_db.savingsBookEntries).watch();
@@ -24,7 +25,7 @@ class SavingsBookRepository {
       final inserted = await _db
           .into(_db.savingsBookEntries)
           .insertReturning(savingsBook);
-      await _db.incrementSavingsStartAmount(
+      await _savingsRepository.incrementSavingsStartAmount(
         .savingsBook,
         inserted.startAmount,
       );
@@ -34,7 +35,10 @@ class SavingsBookRepository {
 
 @Riverpod(keepAlive: true)
 SavingsBookRepository savingsBookRepository(Ref ref) {
-  return SavingsBookRepository(ref.watch(appDatabaseProvider));
+  return SavingsBookRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod

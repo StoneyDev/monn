@@ -1,17 +1,17 @@
 import 'package:drift/drift.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
-import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cash_repository.g.dart';
 
 class CashRepository {
-  const CashRepository(this._db);
+  const CashRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<CashEntry>> watchCashs() {
     final query = _db.select(_db.cashEntries)
@@ -40,13 +40,19 @@ class CashRepository {
     final total = (await query.getSingle()).read(totalExpression) ?? 0;
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    await _db.setSavingsStartAmount(SavingsType.cash, roundedTotal);
+    await _savingsRepository.setSavingsStartAmount(
+      .cash,
+      roundedTotal,
+    );
   }
 }
 
 @Riverpod(keepAlive: true)
 CashRepository cashRepository(Ref ref) {
-  return CashRepository(ref.watch(appDatabaseProvider));
+  return CashRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod

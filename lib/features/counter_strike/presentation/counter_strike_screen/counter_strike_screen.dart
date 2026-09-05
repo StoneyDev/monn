@@ -185,7 +185,7 @@ class _CounterStrikeItem extends ConsumerWidget {
           ),
         ],
       ),
-      onTap: () => context.push(
+      onTap: () => context.push<void>(
         AmountScreen(
           initialValue: data.currentValue,
           onSubmit: () async {

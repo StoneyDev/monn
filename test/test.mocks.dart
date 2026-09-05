@@ -13,11 +13,11 @@ import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart' as _i9;
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart'
     as _i2;
-import 'package:monn/features/dashboard/data/savings_repository.dart' as _i6;
 import 'package:monn/features/expenses/data/expenses_repository.dart' as _i10;
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart'
     as _i11;
 import 'package:monn/features/per/data/per_repository.dart' as _i12;
+import 'package:monn/features/portfolio/data/savings_repository.dart' as _i6;
 import 'package:monn/features/reit/data/reit_repository.dart' as _i13;
 import 'package:monn/features/reit/domain/reit_with_dividends.dart' as _i14;
 import 'package:monn/features/savings_book/data/savings_book_repository.dart'
@@ -47,8 +47,14 @@ class _FakeCryptocurrencyWithTransactions_0 extends _i1.SmartFake
   ) : super(parent, parentInvocation);
 }
 
-class _FakeBudgetEntry_1 extends _i1.SmartFake implements _i3.BudgetEntry {
-  _FakeBudgetEntry_1(Object parent, Invocation parentInvocation)
+class _FakeCryptocurrencyEntry_1 extends _i1.SmartFake
+    implements _i3.CryptocurrencyEntry {
+  _FakeCryptocurrencyEntry_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
+class _FakeBudgetEntry_2 extends _i1.SmartFake implements _i3.BudgetEntry {
+  _FakeBudgetEntry_2(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -110,6 +116,30 @@ class MockSavingsRepository extends _i1.Mock implements _i6.SavingsRepository {
             returnValueForMissingStub: _i5.Future<void>.value(),
           )
           as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> setSavingsStartAmount(
+    _i7.SavingsType? type,
+    double? startAmount,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#setSavingsStartAmount, [type, startAmount]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> incrementSavingsStartAmount(
+    _i7.SavingsType? type,
+    double? delta,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#incrementSavingsStartAmount, [type, delta]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [CryptocurrencyRepository].
@@ -150,6 +180,28 @@ class MockCryptocurrencyRepository extends _i1.Mock
           as _i5.Future<_i2.CryptocurrencyWithTransactions>);
 
   @override
+  _i5.Future<_i3.CryptocurrencyEntry> getOrCreateCryptocurrency(
+    _i9.CryptoType? type,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrCreateCryptocurrency, [type]),
+            returnValue: _i5.Future<_i3.CryptocurrencyEntry>.value(
+              _FakeCryptocurrencyEntry_1(
+                this,
+                Invocation.method(#getOrCreateCryptocurrency, [type]),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i3.CryptocurrencyEntry>.value(
+                  _FakeCryptocurrencyEntry_1(
+                    this,
+                    Invocation.method(#getOrCreateCryptocurrency, [type]),
+                  ),
+                ),
+          )
+          as _i5.Future<_i3.CryptocurrencyEntry>);
+
+  @override
   _i5.Future<void> editCryptocurrency({
     required _i3.CryptocurrencyEntriesCompanion? crypto,
     double? transactionAmount,
@@ -160,6 +212,25 @@ class MockCryptocurrencyRepository extends _i1.Mock
               #crypto: crypto,
               #transactionAmount: transactionAmount,
               #transactionDate: transactionDate,
+            }),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> recordTransaction({
+    required _i9.CryptoType? type,
+    required double? cryptoAmount,
+    required DateTime? date,
+    double? investedFiatAmount,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#recordTransaction, [], {
+              #type: type,
+              #cryptoAmount: cryptoAmount,
+              #date: date,
+              #investedFiatAmount: investedFiatAmount,
             }),
             returnValue: _i5.Future<void>.value(),
             returnValueForMissingStub: _i5.Future<void>.value(),
@@ -177,13 +248,13 @@ class MockExpensesRepository extends _i1.Mock
       (super.noSuchMethod(
             Invocation.method(#getOrCreateBudget, []),
             returnValue: _i5.Future<_i3.BudgetEntry>.value(
-              _FakeBudgetEntry_1(
+              _FakeBudgetEntry_2(
                 this,
                 Invocation.method(#getOrCreateBudget, []),
               ),
             ),
             returnValueForMissingStub: _i5.Future<_i3.BudgetEntry>.value(
-              _FakeBudgetEntry_1(
+              _FakeBudgetEntry_2(
                 this,
                 Invocation.method(#getOrCreateBudget, []),
               ),
@@ -323,6 +394,17 @@ class MockSavingsBookRepository extends _i1.Mock
   ) =>
       (super.noSuchMethod(
             Invocation.method(#editSavingsBook, [savingsBook]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> addSavingsBook(
+    _i3.SavingsBookEntriesCompanion? savingsBook,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addSavingsBook, [savingsBook]),
             returnValue: _i5.Future<void>.value(),
             returnValueForMissingStub: _i5.Future<void>.value(),
           )

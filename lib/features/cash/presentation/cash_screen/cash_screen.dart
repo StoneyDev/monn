@@ -117,7 +117,7 @@ class _CashCard extends ConsumerWidget {
           ),
         ],
       ),
-      onTap: () => context.push(
+      onTap: () => context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: cash.value,

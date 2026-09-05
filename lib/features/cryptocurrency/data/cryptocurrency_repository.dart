@@ -1,19 +1,20 @@
 import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cryptocurrency_repository.g.dart';
 
 class CryptocurrencyRepository {
-  const CryptocurrencyRepository(this._db);
+  const CryptocurrencyRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<CryptocurrencyEntry>> watchCryptocurrencies() {
     return (_db.select(
@@ -92,7 +93,7 @@ class CryptocurrencyRepository {
           );
 
       if (cryptoAmount > 0 && investedFiatAmount != null) {
-        await _db.incrementSavingsStartAmount(
+        await _savingsRepository.incrementSavingsStartAmount(
           SavingsType.cryptocurrency,
           investedFiatAmount,
         );
@@ -139,7 +140,10 @@ class CryptocurrencyRepository {
 
 @Riverpod(keepAlive: true)
 CryptocurrencyRepository cryptocurrencyRepository(Ref ref) {
-  return CryptocurrencyRepository(ref.watch(appDatabaseProvider));
+  return CryptocurrencyRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod

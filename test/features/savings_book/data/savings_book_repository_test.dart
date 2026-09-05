@@ -1,6 +1,8 @@
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/savings_book/data/savings_book_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
@@ -26,6 +28,79 @@ void main() {
 
       // Assert
       expect(controller, isA<SavingsBookRepository>());
+    });
+  });
+
+  group('addSavingsBook', () {
+    test('adds the book and invested amount atomically', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = SavingsBookRepository(db, SavingsRepository(db));
+
+      await repository.addSavingsBook(
+        SavingsBookEntriesCompanion.insert(
+          name: 'Livret A',
+          startAmount: const Value(1000),
+        ),
+      );
+
+      expect(await db.select(db.savingsBookEntries).get(), hasLength(1));
+      expect(
+        (await db.select(db.savingsEntries).getSingle()).startAmount,
+        1000,
+      );
+    });
+
+    test('rolls back the book when savings update fails', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = SavingsBookRepository(db, SavingsRepository(db));
+      await db.customStatement('''
+CREATE TRIGGER fail_savings_book_savings
+BEFORE INSERT ON savings_entries
+BEGIN
+  SELECT RAISE(ABORT, 'forced savings failure');
+END;
+''');
+
+      await expectLater(
+        repository.addSavingsBook(
+          SavingsBookEntriesCompanion.insert(
+            name: 'Livret A',
+            startAmount: const Value(1000),
+          ),
+        ),
+        throwsA(isA<Exception>()),
+      );
+
+      expect(await db.select(db.savingsBookEntries).get(), isEmpty);
+      expect(await db.select(db.savingsEntries).get(), isEmpty);
+    });
+
+    test('editing interests does not change invested amount', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = SavingsBookRepository(db, SavingsRepository(db));
+      await repository.addSavingsBook(
+        SavingsBookEntriesCompanion.insert(
+          name: 'Livret A',
+          startAmount: const Value(1000),
+        ),
+      );
+      final book = await db.select(db.savingsBookEntries).getSingle();
+
+      await repository.editSavingsBook(
+        SavingsBookEntriesCompanion(
+          id: Value(book.id),
+          name: Value(book.name),
+          interests: const Value(25),
+        ),
+      );
+
+      expect(
+        (await db.select(db.savingsEntries).getSingle()).startAmount,
+        1000,
+      );
     });
   });
 

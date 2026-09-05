@@ -121,7 +121,7 @@ class PerScreen extends ConsumerWidget {
     final formNotifier = ref.read(perFormControllerProvider.notifier);
 
     unawaited(
-      context.push(
+      context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: value?.invested ?? 0,
@@ -152,7 +152,7 @@ class PerScreen extends ConsumerWidget {
     final formNotifier = ref.read(perFormControllerProvider.notifier);
 
     unawaited(
-      context.push(
+      context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: value?.interests ?? 0,

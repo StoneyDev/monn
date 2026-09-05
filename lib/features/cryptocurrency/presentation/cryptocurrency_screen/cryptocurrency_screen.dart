@@ -67,7 +67,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                             '${context.tr(LocaleKeys.common_total_amount_invested)}: ${cryptoData?.startAmount?.simpleCurrency(locale)}',
                       ),
                     ),
-                    onLongPress: () => context.push(
+                    onLongPress: () => context.push<void>(
                       fullscreenDialog: true,
                       AmountScreen(
                         initialValue: cryptoData?.startAmount ?? 0,
@@ -169,7 +169,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
 
                   return _CryptoCard(
                     crypto: crypto,
-                    onTap: () => context.push(
+                    onTap: () => context.push<void>(
                       CryptoPageScreen(type: crypto.cryptoType),
                     ),
                   );

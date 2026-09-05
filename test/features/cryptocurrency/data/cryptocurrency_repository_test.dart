@@ -7,6 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
+import 'package:monn/features/cryptocurrency/presentation/cryptocurrency_screen/controllers/crypto_chart_provider.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/charts/chart.dart';
@@ -40,32 +42,13 @@ void main() {
       // Arrange
       final db = AppDatabase(NativeDatabase.memory());
       addTearDown(db.close);
-      final repository = CryptocurrencyRepository(db);
+      final repository = CryptocurrencyRepository(db, SavingsRepository(db));
       final transactionDate = DateTime(2026, 1, 2);
-
-      final bitcoinId = await db
-          .into(db.cryptocurrencyEntries)
-          .insert(
-            CryptocurrencyEntriesCompanion.insert(
-              type: CryptoType.bitcoin.name,
-              totalCrypto: const Value(1),
-              priceMarket: const Value(100),
-            ),
-          );
-      final ethereumId = await db
-          .into(db.cryptocurrencyEntries)
-          .insert(
-            CryptocurrencyEntriesCompanion.insert(
-              type: CryptoType.ethereum.name,
-              totalCrypto: const Value(2),
-              priceMarket: const Value(200),
-            ),
-          );
+      final (:bitcoinId, :ethereumId) = await _insertCryptoFixtures(db);
 
       // Act
       await repository.editCryptocurrency(
         crypto: CryptocurrencyEntriesCompanion(
-          id: Value(bitcoinId),
           type: Value(CryptoType.bitcoin.name),
           totalCrypto: const Value(1.5),
           priceMarket: const Value(100),
@@ -84,6 +67,61 @@ void main() {
       expect(bitcoin.transactions.single.amount, 0.5);
       expect(bitcoin.transactions.single.date, transactionDate);
       expect(ethereum.transactions, isEmpty);
+    });
+  });
+
+  group('recordTransaction', () {
+    test('updates crypto, transaction and invested fiat atomically', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = CryptocurrencyRepository(db, SavingsRepository(db));
+      final date = DateTime(2026, 7, 26);
+
+      await repository.recordTransaction(
+        type: CryptoType.bitcoin,
+        cryptoAmount: 0.25,
+        date: date,
+        investedFiatAmount: 15000,
+      );
+
+      final bitcoin = await repository.getCryptocurrency(CryptoType.bitcoin);
+      final savings = await db.select(db.savingsEntries).getSingle();
+
+      expect(bitcoin.crypto.totalCrypto, 0.25);
+      expect(bitcoin.transactions.single.amount, 0.25);
+      expect(bitcoin.transactions.single.date, date);
+      expect(savings.type, 'cryptocurrency');
+      expect(savings.startAmount, 15000);
+    });
+
+    test('rolls back every write when savings update fails', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = CryptocurrencyRepository(db, SavingsRepository(db));
+      await db.customStatement('''
+CREATE TRIGGER fail_crypto_savings
+BEFORE INSERT ON savings_entries
+BEGIN
+  SELECT RAISE(ABORT, 'forced savings failure');
+END;
+''');
+
+      await expectLater(
+        repository.recordTransaction(
+          type: CryptoType.bitcoin,
+          cryptoAmount: 0.25,
+          date: DateTime(2026, 7, 26),
+          investedFiatAmount: 15000,
+        ),
+        throwsA(isA<Exception>()),
+      );
+
+      expect(await db.select(db.cryptocurrencyEntries).get(), isEmpty);
+      expect(
+        await db.select(db.cryptocurrencyTransactionEntries).get(),
+        isEmpty,
+      );
+      expect(await db.select(db.savingsEntries).get(), isEmpty);
     });
   });
 
@@ -271,4 +309,29 @@ void main() {
       expect(results.finalAmount, finalAmount);
     });
   });
+}
+
+Future<({int bitcoinId, int ethereumId})> _insertCryptoFixtures(
+  AppDatabase db,
+) async {
+  final bitcoinId = await db
+      .into(db.cryptocurrencyEntries)
+      .insert(
+        CryptocurrencyEntriesCompanion.insert(
+          type: CryptoType.bitcoin.name,
+          totalCrypto: const Value(1),
+          priceMarket: const Value(100),
+        ),
+      );
+  final ethereumId = await db
+      .into(db.cryptocurrencyEntries)
+      .insert(
+        CryptocurrencyEntriesCompanion.insert(
+          type: CryptoType.ethereum.name,
+          totalCrypto: const Value(2),
+          priceMarket: const Value(200),
+        ),
+      );
+
+  return (bitcoinId: bitcoinId, ethereumId: ethereumId);
 }

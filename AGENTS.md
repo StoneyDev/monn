@@ -11,6 +11,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 5. **Spacing** → use `spacing` on Column/Row instead of `SizedBox(height/width: ...)`
 6. **No diagnostic hacks** → never change a type or identity or disable a diagnostic solely to hide a warning; fix the underlying lifecycle or use a supported scoped solution
 7. **Drift backups** → never overlap production `AppDatabase` instances, introduce an `_StagingDatabase` subtype, use Drift's internal `QueryExecutor`, or disable `dontWarnAboutMultipleDatabases` in the app; validate attached files through the active connection and close it before opening a staging database
+8. **Inline simple mappings** → keep simple `switch` mappings used in only one place directly at the call site (for example, enum-to-`LocaleKeys` mappings inside `context.tr(...)`); do not extract them into an extension or helper solely to wrap the switch
 
 ## Working Agreement
 

@@ -5,15 +5,15 @@ import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/shared/local/savings_entry_writes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reit_repository.g.dart';
 
 class ReitRepository {
-  const ReitRepository(this._db);
+  const ReitRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<ReitWithDividends>> watchReits() {
     final query = _db.select(_db.reitEntries).join([
@@ -47,7 +47,7 @@ class ReitRepository {
   Future<void> addReit(ReitEntriesCompanion reit) async {
     await _db.transaction(() async {
       final inserted = await _db.into(_db.reitEntries).insertReturning(reit);
-      await _db.incrementSavingsStartAmount(
+      await _savingsRepository.incrementSavingsStartAmount(
         SavingsType.reit,
         inserted.price * inserted.shares,
       );
@@ -69,7 +69,7 @@ class ReitRepository {
       await (_db.delete(
         _db.reitEntries,
       )..where((row) => row.id.equals(id))).go();
-      await _db.incrementSavingsStartAmount(
+      await _savingsRepository.incrementSavingsStartAmount(
         SavingsType.reit,
         -(reit.price * reit.shares),
       );
@@ -79,7 +79,10 @@ class ReitRepository {
 
 @Riverpod(keepAlive: true)
 ReitRepository reitRepository(Ref ref) {
-  return ReitRepository(ref.watch(appDatabaseProvider));
+  return ReitRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod

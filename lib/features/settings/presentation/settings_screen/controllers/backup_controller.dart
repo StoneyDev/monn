@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:monn/shared/local/database_backup.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -33,13 +34,17 @@ class BackupController extends _$BackupController {
 
     await localDatabase.createBackup(backupFile);
     await _prefsCache.setString('backupDate', isoDate);
+    await deleteOlderDatabaseBackups(backupFile);
 
     if (!ref.mounted) return;
 
     state = AsyncData(isoDate);
   }
 
-  Future<bool> restoreDB({File? externalBackup}) async {
+  Future<bool> restoreDB({
+    File? externalBackup,
+    DatabaseRestoreProgress? onProgress,
+  }) async {
     try {
       final localDatabase = await ref.read(localDatabaseProvider.future);
       if (!ref.mounted) return false;
@@ -53,7 +58,10 @@ class BackupController extends _$BackupController {
         dbFile = File(p.join(backupDirectory.path, 'backup_$backupDate.db'));
       }
 
-      final restored = await localDatabase.restore(dbFile);
+      final restored = await localDatabase.restore(
+        dbFile,
+        onProgress: onProgress,
+      );
       if (!ref.mounted) return restored;
 
       // A rollback also replaces the connection even though restore is false.

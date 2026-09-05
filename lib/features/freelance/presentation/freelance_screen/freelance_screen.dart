@@ -113,7 +113,7 @@ class _FreelanceHeader extends ConsumerWidget {
     final formNotifier = ref.read(freelanceFormControllerProvider.notifier);
 
     unawaited(
-      context.push(
+      context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: annualRevenue,

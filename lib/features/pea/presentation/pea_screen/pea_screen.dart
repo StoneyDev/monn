@@ -105,7 +105,7 @@ class PeaScreen extends ConsumerWidget {
                               color: AppColors.lightGray,
                             ),
                       ),
-                      onPressed: () => context.push(
+                      onPressed: () => context.push<void>(
                         fullscreenDialog: true,
                         AmountScreen(
                           initialValue: value?.startAmount ?? 0,
@@ -255,7 +255,7 @@ class PeaScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           child: MonnButton(
             text: context.tr(LocaleKeys.button_update_data),
-            onPressed: () => context.push(const PeaFormScreen()),
+            onPressed: () => context.push<void>(const PeaFormScreen()),
           ),
         ),
       ),

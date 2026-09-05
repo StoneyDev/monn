@@ -82,7 +82,7 @@ class CrowdfundingScreen extends ConsumerWidget {
                     context,
                   ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
                 ),
-                onPressed: () => context.push(
+                onPressed: () => context.push<void>(
                   fullscreenDialog: true,
                   AmountScreen(
                     initialValue: crowdfundingData?.startAmount ?? 0,
@@ -169,7 +169,9 @@ class _RefundTransaction extends ConsumerWidget {
                   ? '${crowdfunding.taxPercentage}'
                   : null,
             );
-        await context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
+        await context.push<void>(
+          EditCrowdfundingScreen(crowdfunding: crowdfunding),
+        );
       },
       child: Row(
         spacing: 16,

@@ -103,7 +103,7 @@ class SavingsBookScreen extends ConsumerWidget {
                           )
                           .set(savingsBook: item);
 
-                      await context.push(
+                      await context.push<void>(
                         fullscreenDialog: true,
                         AmountScreen(
                           onChanged: (value) => ref

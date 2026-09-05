@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
@@ -21,6 +22,40 @@ class SavingsRepository {
 
   Future<void> editSaving(SavingsEntriesCompanion newSaving) {
     return _db.into(_db.savingsEntries).insertOnConflictUpdate(newSaving);
+  }
+
+  Future<void> setSavingsStartAmount(
+    SavingsType type,
+    double startAmount,
+  ) async {
+    final existing = await getSavings(type);
+    await _writeSavingsStartAmount(type, startAmount, existing);
+  }
+
+  Future<void> incrementSavingsStartAmount(
+    SavingsType type,
+    double delta,
+  ) async {
+    final existing = await getSavings(type);
+    await _writeSavingsStartAmount(
+      type,
+      (existing?.startAmount ?? 0) + delta,
+      existing,
+    );
+  }
+
+  Future<void> _writeSavingsStartAmount(
+    SavingsType type,
+    double startAmount,
+    SavingsEntry? existing,
+  ) {
+    return editSaving(
+      SavingsEntriesCompanion(
+        id: existing != null ? Value(existing.id) : const Value.absent(),
+        type: Value(type.name),
+        startAmount: Value(startAmount),
+      ),
+    );
   }
 }
 

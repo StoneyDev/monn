@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
+import 'package:monn/features/portfolio/presentation/controllers/edit_savings_controller.dart';
 import 'package:monn/shared/local/database.dart';
 
-import '../../../../../test.mocks.dart';
-import '../../../../../utils.dart';
+import '../../../../test.mocks.dart';
+import '../../../../utils.dart';
 
 void main() {
   group('editSavingController', () {

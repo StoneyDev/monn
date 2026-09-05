@@ -48,7 +48,7 @@ final class ReitRepositoryProvider
   }
 }
 
-String _$reitRepositoryHash() => r'a906ea22e118d246b0f76070bff23367b425154c';
+String _$reitRepositoryHash() => r'a3e0fae30a474b3e4b6838ceb361c261f33c418a';
 
 @ProviderFor(watchReits)
 const watchReitsProvider = WatchReitsProvider._();

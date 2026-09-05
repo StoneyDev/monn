@@ -48,7 +48,7 @@ final class CashRepositoryProvider
   }
 }
 
-String _$cashRepositoryHash() => r'a34f3293b0512279a6c1ffc3e0d3f15d81cb9415';
+String _$cashRepositoryHash() => r'77c38449e292682eab2827453465df37e7490325';
 
 @ProviderFor(deleteCash)
 const deleteCashProvider = DeleteCashFamily._();

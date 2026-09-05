@@ -7,6 +7,8 @@ import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dar
 import 'package:monn/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
+import 'package:monn/features/settings/presentation/settings_screen/controllers/backup_controller.dart';
+import 'package:monn/features/settings/presentation/settings_screen/database_restore_dialog.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
@@ -86,7 +88,24 @@ class DashboardScreen extends ConsumerWidget {
               icon: iconoir.Settings(
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onPressed: () => context.push(const SettingsScreen()),
+              onPressed: () async {
+                final request = await context.push<DatabaseRestoreRequest>(
+                  const SettingsScreen(),
+                );
+                if (!context.mounted || request == null) return;
+
+                final backupController = ref.read(
+                  backupControllerProvider.notifier,
+                );
+                await showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) => DatabaseRestoreDialog(
+                    request: request,
+                    restore: backupController.restoreDB,
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -103,7 +122,7 @@ class DashboardScreen extends ConsumerWidget {
                   final savingsKey = 'savings.${item.type.name.toSnakeCase()}';
 
                   return MonnCard(
-                    onTap: () => context.push(item.type.route()),
+                    onTap: () => context.push<void>(item.type.route()),
                     child: Row(
                       spacing: 16,
                       children: [
