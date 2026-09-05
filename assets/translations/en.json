@@ -60,9 +60,6 @@
     "import": "Import",
     "import_failed": "Import failed, file has wrong extension (.db)",
     "export": "Export",
-    "restore": "Restore",
-    "successfully_restored": "The database has been successfully restored",
-    "failed_to_restore": "Database restore failed",
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
     "per_year": "{}/year",
@@ -78,8 +75,20 @@
     "net": "Net",
     "oh_no": "Oh no!"
   },
+  "restore": {
+    "title": "Restore",
+    "confirmation": "This backup will replace your current data. A recovery copy will be created before restoring.",
+    "validating": "Checking the backup...",
+    "creating_recovery": "Creating a recovery point...",
+    "replacing": "Restoring data...",
+    "finalizing": "Finalizing...",
+    "success": "The database has been successfully restored",
+    "error": "Database restore failed"
+  },
   "button": {
+    "cancel": "Cancel",
     "close": "Close",
+    "retry": "Retry",
     "ok": "OK",
     "validate": "Validate",
     "save": "Save",

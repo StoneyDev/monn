@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,9 +8,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'cash_repository.g.dart';
 
 class CashRepository {
-  const CashRepository(this._db);
+  const CashRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<CashEntry>> watchCashs() {
     final query = _db.select(_db.cashEntries)
@@ -19,39 +20,39 @@ class CashRepository {
   }
 
   Future<void> editCash(CashEntriesCompanion newCash) async {
-    await _db.into(_db.cashEntries).insertOnConflictUpdate(newCash);
-    await _syncStartAmount();
+    await _db.transaction(() async {
+      await _db.into(_db.cashEntries).insertOnConflictUpdate(newCash);
+      await _syncStartAmount();
+    });
   }
 
   Future<void> deleteCash(int id) async {
-    await (_db.delete(_db.cashEntries)..where((t) => t.id.equals(id))).go();
-    await _syncStartAmount();
+    await _db.transaction(() async {
+      await (_db.delete(_db.cashEntries)..where((t) => t.id.equals(id))).go();
+      await _syncStartAmount();
+    });
   }
 
   Future<void> _syncStartAmount() async {
-    final cashs = await _db.select(_db.cashEntries).get();
-    final total = cashs.fold<double>(0, (sum, e) => sum + e.value);
+    final totalExpression = _db.cashEntries.value.sum();
+    final query = _db.selectOnly(_db.cashEntries)
+      ..addColumns([totalExpression]);
+    final total = (await query.getSingle()).read(totalExpression) ?? 0;
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    final existingSavings = await (_db.select(_db.savingsEntries)
-          ..where((t) => t.type.equals(SavingsType.cash.name)))
-        .getSingleOrNull();
-
-    await _db.into(_db.savingsEntries).insertOnConflictUpdate(
-          SavingsEntriesCompanion(
-            id: existingSavings != null
-                ? Value(existingSavings.id)
-                : const Value.absent(),
-            type: Value(SavingsType.cash.name),
-            startAmount: Value(roundedTotal),
-          ),
-        );
+    await _savingsRepository.setSavingsStartAmount(
+      .cash,
+      roundedTotal,
+    );
   }
 }
 
 @Riverpod(keepAlive: true)
 CashRepository cashRepository(Ref ref) {
-  return CashRepository(ref.watch(appDatabaseProvider));
+  return CashRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod

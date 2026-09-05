@@ -33,7 +33,7 @@ EtfRepository etfRepository(Ref ref) {
 Future<double> getEtfPriceMarket(Ref ref) async {
   final etfRepository = ref.read(etfRepositoryProvider);
   final peaRepository = ref.read(peaRepositoryProvider);
-  final pea = await ref.refresh(getPeaProvider.future);
+  final pea = await ref.watch(getPeaProvider.future);
 
   if (!ref.mounted) return 0;
 
@@ -55,6 +55,11 @@ Future<double> getEtfPriceMarket(Ref ref) async {
           lastUpdate: Value(now),
         ),
       );
+
+      if (!ref.mounted) return priceMarket;
+
+      ref.invalidate(getPeaProvider);
+
       return priceMarket;
     }
   }

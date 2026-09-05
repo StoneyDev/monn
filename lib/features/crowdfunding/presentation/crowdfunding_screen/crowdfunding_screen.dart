@@ -8,10 +8,10 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/edit_crowdfunding_screen.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
+import 'package:monn/features/portfolio/presentation/controllers/edit_savings_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -25,7 +25,7 @@ import 'package:monn/utils/app_colors.dart';
 
 final _startAmountProvider = StateProvider<String?>((ref) {
   final crowdfunding = ref
-      .refresh(getSavingsProvider(type: SavingsType.crowdfunding))
+      .watch(getSavingsProvider(type: SavingsType.crowdfunding))
       .value;
   return (crowdfunding?.startAmount ?? '').toString();
 });
@@ -36,7 +36,7 @@ class CrowdfundingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
-    final savingsCrowdfunding = ref.refresh(
+    final savingsCrowdfunding = ref.watch(
       getSavingsProvider(type: SavingsType.crowdfunding),
     );
     final crowdfundingData = ref.watch(
@@ -82,7 +82,7 @@ class CrowdfundingScreen extends ConsumerWidget {
                     context,
                   ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
                 ),
-                onPressed: () => context.push(
+                onPressed: () => context.push<void>(
                   fullscreenDialog: true,
                   AmountScreen(
                     initialValue: crowdfundingData?.startAmount ?? 0,
@@ -169,7 +169,9 @@ class _RefundTransaction extends ConsumerWidget {
                   ? '${crowdfunding.taxPercentage}'
                   : null,
             );
-        await context.push(EditCrowdfundingScreen(crowdfunding: crowdfunding));
+        await context.push<void>(
+          EditCrowdfundingScreen(crowdfunding: crowdfunding),
+        );
       },
       child: Row(
         spacing: 16,
@@ -186,7 +188,7 @@ class _RefundTransaction extends ConsumerWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  crowdfunding.receivedAt!.slashFormat(locale),
+                  crowdfunding.receivedAt.slashFormat(locale),
                   style: const TextStyle(color: AppColors.lightGray),
                 ),
               ],

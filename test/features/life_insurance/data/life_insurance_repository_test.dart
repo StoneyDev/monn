@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 
 import '../../../test.dart';

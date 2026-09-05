@@ -1,18 +1,16 @@
-import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
-import 'package:monn/features/dashboard/presentation/add_savings_screen/controllers/edit_savings_controller.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/presentation/reit_form_screen/reit_form_step_one_screen.dart';
+import 'package:monn/features/reit/presentation/reit_screen/controllers/reit_tax_provider.dart';
 import 'package:monn/features/reit/presentation/reit_screen/reit_dividends_bottom_sheet.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
-import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
@@ -262,28 +260,14 @@ class ReitScreen extends ConsumerWidget {
                                     await ref.read(
                                       deleteReitProvider(item.reit.id).future,
                                     );
-                                    final newSaving = SavingsEntriesCompanion(
-                                      id: savingsReit != null
-                                          ? Value(savingsReit.id)
-                                          : const Value.absent(),
-                                      type: Value(SavingsType.reit.name),
-                                      startAmount: Value(
-                                        (savingsReit?.startAmount ?? 0) -
-                                            investedAmount,
-                                      ),
-                                    );
-                                    final success = await ref
-                                        .read(
-                                          editSavingsControllerProvider
-                                              .notifier,
-                                        )
-                                        .submit(newSaving);
-                                    if (!context.mounted || !success) return;
-                                    ref.invalidate(
-                                      getSavingsProvider(
-                                        type: SavingsType.reit,
-                                      ),
-                                    );
+                                    if (!context.mounted) return;
+                                    ref
+                                      ..invalidate(
+                                        getSavingsProvider(type: .reit),
+                                      )
+                                      ..invalidate(
+                                        watchPayoutReportReitProvider,
+                                      );
                                     Navigator.pop(context);
                                   },
                                   child: Center(

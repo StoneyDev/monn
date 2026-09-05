@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/features/expenses/domain/budget_extension.dart';
-import 'package:monn/features/expenses/domain/expense_category.dart';
-import 'package:monn/shared/extensions/budget_ui.dart';
+import 'package:monn/features/expenses/presentation/budget_ui.dart';
+import 'package:monn/features/expenses/presentation/models/expense_category.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_card.dart';

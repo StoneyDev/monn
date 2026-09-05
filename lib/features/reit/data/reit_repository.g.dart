@@ -48,7 +48,7 @@ final class ReitRepositoryProvider
   }
 }
 
-String _$reitRepositoryHash() => r'a906ea22e118d246b0f76070bff23367b425154c';
+String _$reitRepositoryHash() => r'a3e0fae30a474b3e4b6838ceb361c261f33c418a';
 
 @ProviderFor(watchReits)
 const watchReitsProvider = WatchReitsProvider._();
@@ -199,45 +199,3 @@ final class WatchPayoutReportReitProvider
 
 String _$watchPayoutReportReitHash() =>
     r'fbf8b0068cf70656341875348185f05293b6defd';
-
-@ProviderFor(reitTaxCalculation)
-const reitTaxCalculationProvider = ReitTaxCalculationProvider._();
-
-final class ReitTaxCalculationProvider
-    extends $FunctionalProvider<ReitTaxResult, ReitTaxResult, ReitTaxResult>
-    with $Provider<ReitTaxResult> {
-  const ReitTaxCalculationProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'reitTaxCalculationProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$reitTaxCalculationHash();
-
-  @$internal
-  @override
-  $ProviderElement<ReitTaxResult> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  ReitTaxResult create(Ref ref) {
-    return reitTaxCalculation(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ReitTaxResult value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<ReitTaxResult>(value),
-    );
-  }
-}
-
-String _$reitTaxCalculationHash() =>
-    r'f69d54ee78e502d12f2db5ca937b8a362174fe6e';

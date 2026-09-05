@@ -6,8 +6,8 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/add_cash_screen.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
@@ -117,7 +117,7 @@ class _CashCard extends ConsumerWidget {
           ),
         ],
       ),
-      onTap: () => context.push(
+      onTap: () => context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: cash.value,

@@ -1,20 +1,20 @@
-import 'dart:math';
-
 import 'package:drift/drift.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency.dart';
 import 'package:monn/features/cryptocurrency/domain/cryptocurrency_with_transactions.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
-import 'package:monn/shared/widgets/charts/chart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cryptocurrency_repository.g.dart';
 
 class CryptocurrencyRepository {
-  const CryptocurrencyRepository(this._db);
+  const CryptocurrencyRepository(this._db, this._savingsRepository);
 
   final AppDatabase _db;
+  final SavingsRepository _savingsRepository;
 
   Stream<List<CryptocurrencyEntry>> watchCryptocurrencies() {
     return (_db.select(
@@ -25,21 +25,7 @@ class CryptocurrencyRepository {
   Future<CryptocurrencyWithTransactions> getCryptocurrency(
     CryptoType type,
   ) async {
-    final crypto = await (_db.select(
-      _db.cryptocurrencyEntries,
-    )..where((t) => t.type.equals(type.name))).getSingleOrNull();
-
-    if (crypto == null) {
-      return CryptocurrencyWithTransactions(
-        crypto: CryptocurrencyEntry(
-          id: 0,
-          type: type.name,
-          totalCrypto: 0,
-          priceMarket: 0,
-        ),
-        transactions: [],
-      );
-    }
+    final crypto = await getOrCreateCryptocurrency(type);
 
     final transactions =
         await (_db.select(_db.cryptocurrencyTransactionEntries)
@@ -53,15 +39,17 @@ class CryptocurrencyRepository {
     );
   }
 
+  Future<CryptocurrencyEntry> getOrCreateCryptocurrency(CryptoType type) {
+    return _getOrCreateCryptocurrency(type);
+  }
+
   Future<void> editCryptocurrency({
     required CryptocurrencyEntriesCompanion crypto,
     double? transactionAmount,
     DateTime? transactionDate,
   }) async {
     await _db.transaction(() async {
-      final writtenCrypto = await _db
-          .into(_db.cryptocurrencyEntries)
-          .insertReturning(crypto, onConflict: DoUpdate((_) => crypto));
+      final writtenCrypto = await _upsertCryptocurrencyByType(crypto);
 
       if (transactionAmount != null && transactionDate != null) {
         await _db
@@ -76,11 +64,86 @@ class CryptocurrencyRepository {
       }
     });
   }
+
+  Future<void> recordTransaction({
+    required CryptoType type,
+    required double cryptoAmount,
+    required DateTime date,
+    double? investedFiatAmount,
+  }) async {
+    await _db.transaction(() async {
+      final current = await _getOrCreateCryptocurrency(type);
+      final writtenCrypto = await _upsertCryptocurrencyByType(
+        CryptocurrencyEntriesCompanion(
+          type: Value(type.name),
+          totalCrypto: Value(current.totalCrypto + cryptoAmount),
+          priceMarket: Value(current.priceMarket),
+          lastUpdate: Value(current.lastUpdate),
+        ),
+      );
+
+      await _db
+          .into(_db.cryptocurrencyTransactionEntries)
+          .insert(
+            CryptocurrencyTransactionEntriesCompanion.insert(
+              cryptocurrencyId: writtenCrypto.id,
+              date: date,
+              amount: cryptoAmount,
+            ),
+          );
+
+      if (cryptoAmount > 0 && investedFiatAmount != null) {
+        await _savingsRepository.incrementSavingsStartAmount(
+          SavingsType.cryptocurrency,
+          investedFiatAmount,
+        );
+      }
+    });
+  }
+
+  Future<CryptocurrencyEntry> _getOrCreateCryptocurrency(
+    CryptoType type,
+  ) async {
+    final crypto = await (_db.select(
+      _db.cryptocurrencyEntries,
+    )..where((t) => t.type.equals(type.name))).getSingleOrNull();
+
+    if (crypto != null) return crypto;
+
+    return _upsertCryptocurrencyByType(
+      CryptocurrencyEntriesCompanion.insert(type: type.name),
+    );
+  }
+
+  Future<CryptocurrencyEntry> _upsertCryptocurrencyByType(
+    CryptocurrencyEntriesCompanion crypto,
+  ) async {
+    final cryptoUpsert = crypto.copyWith(id: const Value.absent());
+    final type = cryptoUpsert.type.value;
+    final updatedRows = await (_db.update(
+      _db.cryptocurrencyEntries,
+    )..where((t) => t.type.equals(type))).writeReturning(cryptoUpsert);
+
+    if (updatedRows.isNotEmpty) return updatedRows.single;
+
+    return _db
+        .into(_db.cryptocurrencyEntries)
+        .insertReturning(
+          cryptoUpsert,
+          onConflict: DoUpdate(
+            (_) => cryptoUpsert,
+            target: [_db.cryptocurrencyEntries.type],
+          ),
+        );
+  }
 }
 
 @Riverpod(keepAlive: true)
 CryptocurrencyRepository cryptocurrencyRepository(Ref ref) {
-  return CryptocurrencyRepository(ref.watch(appDatabaseProvider));
+  return CryptocurrencyRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(savingsRepositoryProvider),
+  );
 }
 
 @riverpod
@@ -96,38 +159,6 @@ Future<CryptocurrencyWithTransactions> getCryptocurrency(
 ) {
   final repository = ref.watch(cryptocurrencyRepositoryProvider);
   return repository.getCryptocurrency(type);
-}
-
-@riverpod
-Stream<Chart> watchCryptoChart(Ref ref) async* {
-  final repository = ref.watch(cryptocurrencyRepositoryProvider);
-
-  await for (final results in repository.watchCryptocurrencies()) {
-    final (totalCryptoValue, totalLog) = results.fold<(double, double)>(
-      (0, 0),
-      (totals, crypto) => (
-        totals.$1 + (crypto.totalCrypto * crypto.priceMarket),
-        totals.$2 + log((crypto.totalCrypto * crypto.priceMarket) + 1.2),
-      ),
-    );
-
-    final data = results.map((crypto) {
-      final logValue = log(
-        (crypto.totalCrypto * crypto.priceMarket) + 1.2,
-      );
-      final portion = (logValue * 100) / totalLog;
-
-      return ChartData(
-        portion: double.parse(portion.toStringAsFixed(2)),
-        color: crypto.cryptoType.color,
-      );
-    }).toList();
-
-    yield Chart(
-      totalAmount: double.parse(totalCryptoValue.toStringAsFixed(2)),
-      data: data,
-    );
-  }
 }
 
 @riverpod

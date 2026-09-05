@@ -23,7 +23,7 @@ class SavingsBookFormController extends _$SavingsBookFormController {
     final repository = ref.read(savingsBookRepositoryProvider);
 
     final result = await AsyncValue.guard(
-      () => repository.editSavingsBook(
+      () => repository.addSavingsBook(
         SavingsBookEntriesCompanion.insert(
           name: state.name,
           startAmount: Value(double.parse(state.startAmount)),

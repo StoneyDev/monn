@@ -4,18 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
-import 'package:monn/features/dashboard/domain/net_worth_provider.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
+import 'package:monn/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart';
+import 'package:monn/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
+import 'package:monn/features/settings/presentation/settings_screen/controllers/backup_controller.dart';
+import 'package:monn/features/settings/presentation/settings_screen/database_restore_dialog.dart';
 import 'package:monn/features/settings/presentation/settings_screen/settings_screen.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
-import 'package:monn/shared/extensions/enum_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
+import 'package:monn/shared/widgets/monn_error.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
 import 'package:monn/utils/app_colors.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -56,9 +58,9 @@ class DashboardScreen extends ConsumerWidget {
                     builder: (context, ref, _) => SliverToBoxAdapter(
                       child: RadioGroup<SavingsFilter>(
                         groupValue: ref.watch(_filterProvider),
-                        onChanged: (newFilter) => ref
-                            .read(_filterProvider.notifier)
-                            .state = newFilter!,
+                        onChanged: (newFilter) =>
+                            ref.read(_filterProvider.notifier).state =
+                                newFilter!,
                         child: Column(
                           children: [
                             for (final item in SavingsFilter.values)
@@ -68,8 +70,7 @@ class DashboardScreen extends ConsumerWidget {
                                   context.tr(
                                     'filters.${item.name.toSnakeCase()}',
                                   ),
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                           ],
@@ -87,7 +88,24 @@ class DashboardScreen extends ConsumerWidget {
               icon: iconoir.Settings(
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onPressed: () => context.push(const SettingsScreen()),
+              onPressed: () async {
+                final request = await context.push<DatabaseRestoreRequest>(
+                  const SettingsScreen(),
+                );
+                if (!context.mounted || request == null) return;
+
+                final backupController = ref.read(
+                  backupControllerProvider.notifier,
+                );
+                await showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) => DatabaseRestoreDialog(
+                    request: request,
+                    restore: backupController.restoreDB,
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -97,52 +115,58 @@ class DashboardScreen extends ConsumerWidget {
           const _ResizingHeader(),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-            sliver: SliverList.separated(
-              itemBuilder: (context, index) {
-                final item = savings[index];
-                final finalAmount = ref.watch(
-                  getFinalAmountProvider(item.savingsType),
-                );
+            sliver: switch (savings) {
+              AsyncData(:final value) => SliverList.separated(
+                itemBuilder: (context, index) {
+                  final item = value[index];
+                  final savingsKey = 'savings.${item.type.name.toSnakeCase()}';
 
-                return MonnCard(
-                  onTap: () => context.push(item.savingsType.route()),
-                  child: Row(
-                    spacing: 16,
-                    children: [
-                      Image(
-                        image: item.savingsType.icon(),
-                        height: 48,
-                        width: 48,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              context.tr(
-                                'savings.${item.type.toSnakeCase()}',
-                              ),
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(
-                                    color: AppColors.lightGray,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              finalAmount.simpleCurrency(locale),
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.w900),
-                            ),
-                          ],
+                  return MonnCard(
+                    onTap: () => context.push<void>(item.type.route()),
+                    child: Row(
+                      spacing: 16,
+                      children: [
+                        Image(
+                          image: item.type.icon(),
+                          height: 48,
+                          width: 48,
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (_, _) => const SizedBox(height: 16),
-              itemCount: savings.length,
-            ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.tr(savingsKey),
+                                style: Theme.of(context).textTheme.titleSmall
+                                    ?.copyWith(
+                                      color: AppColors.lightGray,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                item.finalAmount.simpleCurrency(locale),
+                                style: Theme.of(context).textTheme.titleLarge
+                                    ?.copyWith(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                itemCount: value.length,
+              ),
+              AsyncError(:final error) => SliverToBoxAdapter(
+                child: MonnError(message: error.toString()),
+              ),
+              _ => const SliverToBoxAdapter(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            },
           ),
         ],
       ),
@@ -189,18 +213,24 @@ class _ResizingHeader extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Text(
-                  total.simpleCurrency(locale),
-                  style: TextStyle.lerp(
-                    Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
+                switch (total) {
+                  AsyncData(:final value) => Text(
+                    value.simpleCurrency(locale),
+                    style: TextStyle.lerp(
+                      Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                      Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                      opacity,
                     ),
-                    Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                    ),
-                    opacity,
                   ),
-                ),
+                  AsyncError(:final error) => MonnError(
+                    message: error.toString(),
+                  ),
+                  _ => const CircularProgressIndicator(),
+                },
               ],
             ),
           );

@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/local/local_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,13 +12,15 @@ class LifeInsuranceRepository {
   final AppDatabase _db;
 
   Stream<LifeInsuranceEntry?> watchLifeInsurance() {
-    return (_db.select(_db.lifeInsuranceEntries)
-          ..where((t) => t.id.equals(1)))
-        .watchSingleOrNull();
+    return (_db.select(
+      _db.lifeInsuranceEntries,
+    )..where((t) => t.id.equals(1))).watchSingleOrNull();
   }
 
   Future<void> editLifeInsurance(LifeInsuranceEntriesCompanion lifeInsurance) {
-    return _db.into(_db.lifeInsuranceEntries).insertOnConflictUpdate(
+    return _db
+        .into(_db.lifeInsuranceEntries)
+        .insertOnConflictUpdate(
           lifeInsurance.copyWith(id: const Value(1)),
         );
   }

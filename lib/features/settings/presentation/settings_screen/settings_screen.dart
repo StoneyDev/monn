@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/settings/presentation/settings_screen/controllers/backup_controller.dart';
 import 'package:monn/features/settings/presentation/settings_screen/controllers/theme_switch_controller.dart';
+import 'package:monn/features/settings/presentation/settings_screen/database_restore_dialog.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
@@ -113,8 +114,7 @@ class SettingsScreen extends ConsumerWidget {
                                 value: item,
                                 title: Text(
                                   context.tr('languages.$item'),
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                           ],
@@ -206,39 +206,28 @@ class _BackupAction extends ConsumerWidget {
       backupControllerProvider.select((backup) => backup.value),
     );
 
+    final iconColor = Theme.of(context).colorScheme.onSurface;
+
     return MenuAnchor(
       builder: (_, controller, _) => IconButton(
         onPressed: () =>
             controller.isOpen ? controller.close() : controller.open(),
-        icon: const iconoir.MoreVert(color: AppColors.white),
+        icon: iconoir.MoreVert(color: iconColor),
       ),
       menuChildren: [
         // Import button
         MenuItemButton(
           onPressed: () async {
             final result = await FilePicker.platform.pickFiles();
+            if (!context.mounted) return;
+
             final filePath = result?.files.single.path;
             final isAllowed = filePath?.contains(RegExp(r'\.db$')) ?? false;
 
             if (filePath != null && isAllowed) {
-              final dbFile = File(filePath);
-              final success = await ref
-                  .read(backupControllerProvider.notifier)
-                  .restoreDB(externalBackup: dbFile);
-
-              if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                success
-                    ? MonnSnackBar.success(
-                        message: context.tr(
-                          LocaleKeys.common_successfully_restored,
-                        ),
-                      )
-                    : MonnSnackBar.error(
-                        message: context.tr(
-                          LocaleKeys.common_failed_to_restore,
-                        ),
-                      ),
+              await _requestRestore(
+                context,
+                externalBackup: File(filePath),
               );
             } else {
               if (!context.mounted) return;
@@ -250,7 +239,7 @@ class _BackupAction extends ConsumerWidget {
           child: Row(
             spacing: 16,
             children: [
-              const iconoir.Import(color: AppColors.white),
+              iconoir.Import(color: iconColor),
               Text(context.tr(LocaleKeys.common_import)),
             ],
           ),
@@ -271,43 +260,55 @@ class _BackupAction extends ConsumerWidget {
             child: Row(
               spacing: 16,
               children: [
-                const iconoir.ShareIos(color: AppColors.white),
+                iconoir.ShareIos(color: iconColor),
                 Text(context.tr(LocaleKeys.common_export)),
               ],
             ),
           ),
           // Local restore backup button
           MenuItemButton(
-            onPressed: () async {
-              final success = await ref
-                  .read(backupControllerProvider.notifier)
-                  .restoreDB();
-
-              if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                success
-                    ? MonnSnackBar.success(
-                        message: context.tr(
-                          LocaleKeys.common_successfully_restored,
-                        ),
-                      )
-                    : MonnSnackBar.error(
-                        message: context.tr(
-                          LocaleKeys.common_failed_to_restore,
-                        ),
-                      ),
-              );
-            },
+            onPressed: () => _requestRestore(context),
             child: Row(
               spacing: 16,
               children: [
-                const iconoir.DatabaseRestore(color: AppColors.white),
-                Text(context.tr(LocaleKeys.common_restore)),
+                iconoir.DatabaseRestore(color: iconColor),
+                Text(context.tr(LocaleKeys.restore_title)),
               ],
             ),
           ),
         ],
       ],
+    );
+  }
+
+  Future<void> _requestRestore(
+    BuildContext context, {
+    File? externalBackup,
+  }) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.tr(LocaleKeys.restore_title)),
+        content: Text(
+          context.tr(LocaleKeys.restore_confirmation),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.tr(LocaleKeys.button_cancel)),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: AppColors.red),
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.tr(LocaleKeys.restore_title)),
+          ),
+        ],
+      ),
+    );
+    if (!context.mounted || confirmed != true) return;
+
+    Navigator.of(context).pop<DatabaseRestoreRequest>(
+      (externalBackup: externalBackup),
     );
   }
 }

@@ -76,9 +76,6 @@ class CodegenLoader extends AssetLoader{
     "import": "Import",
     "import_failed": "Import failed, file has wrong extension (.db)",
     "export": "Export",
-    "restore": "Restore",
-    "successfully_restored": "The database has been successfully restored",
-    "failed_to_restore": "Database restore failed",
     "rate_of_return": "Rate of return",
     "annual_performance": "Annual performance",
     "per_year": "{}/year",
@@ -94,8 +91,20 @@ class CodegenLoader extends AssetLoader{
     "net": "Net",
     "oh_no": "Oh no!"
   },
+  "restore": {
+    "title": "Restore",
+    "confirmation": "This backup will replace your current data. A recovery copy will be created before restoring.",
+    "validating": "Checking the backup...",
+    "creating_recovery": "Creating a recovery point...",
+    "replacing": "Restoring data...",
+    "finalizing": "Finalizing...",
+    "success": "The database has been successfully restored",
+    "error": "Database restore failed"
+  },
   "button": {
+    "cancel": "Cancel",
     "close": "Close",
+    "retry": "Retry",
     "ok": "OK",
     "validate": "Validate",
     "save": "Save",
@@ -248,9 +257,6 @@ static const Map<String,dynamic> _fr = {
     "import": "Importer",
     "import_failed": "L'importation a échoué, le fichier n'a pas la bonne extension (.db)",
     "export": "Exporter",
-    "restore": "Restaurer",
-    "successfully_restored": "La base de données a été restaurée avec succès",
-    "failed_to_restore": "Échec de la restauration de la base de données",
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
     "per_year": "{}/an",
@@ -266,8 +272,20 @@ static const Map<String,dynamic> _fr = {
     "net": "Net",
     "oh_no": "Oh non !"
   },
+  "restore": {
+    "title": "Restaurer",
+    "confirmation": "Cette sauvegarde remplacera vos données actuelles. Une copie de récupération sera créée avant la restauration.",
+    "validating": "Vérification de la sauvegarde...",
+    "creating_recovery": "Création du point de récupération...",
+    "replacing": "Restauration des données...",
+    "finalizing": "Finalisation...",
+    "success": "La base de données a été restaurée avec succès",
+    "error": "Échec de la restauration de la base de données"
+  },
   "button": {
+    "cancel": "Annuler",
     "close": "Fermer",
+    "retry": "Réessayer",
     "ok": "OK",
     "validate": "Valider",
     "save": "Sauvegarder",

@@ -22,7 +22,7 @@ class CrowdfundingEntries extends Table {
   RealColumn get netProfit => real().nullable()();
   RealColumn get taxProfit => real().nullable()();
   RealColumn get taxPercentage => real().nullable()();
-  DateTimeColumn get receivedAt => dateTime().nullable()();
+  DateTimeColumn get receivedAt => dateTime()();
 }
 
 class SavingsBookEntries extends Table {
@@ -97,10 +97,17 @@ class CryptocurrencyEntries extends Table {
   List<String> get customConstraints => ['UNIQUE(type)'];
 }
 
+@TableIndex(
+  name: 'cryptocurrency_transaction_crypto_date',
+  columns: {#cryptocurrencyId, #date},
+)
 class CryptocurrencyTransactionEntries extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get cryptocurrencyId => integer()
-      .references(CryptocurrencyEntries, #id, onDelete: KeyAction.cascade)();
+  IntColumn get cryptocurrencyId => integer().references(
+    CryptocurrencyEntries,
+    #id,
+    onDelete: KeyAction.cascade,
+  )();
   DateTimeColumn get date => dateTime()();
   RealColumn get amount => real()();
 }
@@ -113,6 +120,7 @@ class ReitEntries extends Table {
   RealColumn get price => real()();
 }
 
+@TableIndex(name: 'reit_dividend_reit', columns: {#reitId})
 class ReitDividendEntries extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get reitId =>

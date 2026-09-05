@@ -389,8 +389,13 @@ Translation files: `assets/translations/en.json`, `assets/translations/fr.json`
 - `double_ui.dart` - Currency and decimal formatting
 - `date_ui.dart` - Date formatting and calculations
 - `string_ui.dart` - Case conversions (kebab, snake)
-- `enum_ui.dart` - UI logic for enums (routes, icons, colors)
 - `ref_ui.dart` - `ref.cacheFor()` provider lifecycle management
+
+Feature-specific UI extensions stay in their presentation feature:
+
+- `dashboard/presentation/dashboard_screen/savings_type_ui.dart` - savings routes and icons
+- `cryptocurrency/presentation/cryptocurrency_ui.dart` - cryptocurrency logos
+- `counter_strike/presentation/counter_strike_ui.dart` - Counter-Strike item images
 
 **Widgets** (`lib/shared/widgets/`):
 - Fields: `monn_field_number.dart`, `monn_field_text.dart`, `monn_field_date.dart`
@@ -454,7 +459,7 @@ When adding a new investment type (e.g., `SavingsType.newType`), update these fi
 
 ### Required Changes
 
-1. **Add enum value** in `lib/features/dashboard/domain/savings.dart`:
+1. **Add enum value** in `lib/shared/domain/savings.dart`:
 ```dart
 enum SavingsType {
   // ... existing types
@@ -462,16 +467,15 @@ enum SavingsType {
 }
 ```
 
-2. **Add to net worth calculation** in `lib/features/dashboard/domain/net_worth_provider.dart`:
+2. **Add to net worth calculation** in `lib/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart`:
 ```dart
 // In getFinalAmount() switch - the exhaustive switch will show a compiler error:
-SavingsType.newType => ref
-    .watch(watchPayoutReportNewTypeProvider)
-    .value
-    ?.finalAmount ?? 0,
+SavingsType.newType => ref.watch(
+  watchPayoutReportNewTypeProvider.future,
+),
 ```
 
-3. **Add UI mappings** in `lib/shared/extensions/enum_ui.dart`:
+3. **Add UI mappings** in `lib/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart`:
 ```dart
 // In route() switch:
 SavingsType.newType => const NewTypeScreen(),
@@ -506,7 +510,7 @@ class NewTypeEntries extends Table {
 
 The exhaustive `switch` statements on `SavingsType` will produce compile-time errors if you forget to handle the new type in:
 - `net_worth_provider.dart` (getFinalAmount calculation)
-- `enum_ui.dart` (route, icon methods)
+- `savings_type_ui.dart` (route, icon methods)
 
 ## Important Conventions
 
@@ -550,7 +554,8 @@ switch (asyncData) {
 ```
 
 ### Enum Extensions
-Attach UI logic to enums via extensions in `lib/shared/extensions/enum_ui.dart`:
+Keep enum UI logic in the presentation feature that owns it. For savings, use
+`lib/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart`:
 ```dart
 extension SavingsTypeUI on SavingsType {
   Widget route() => switch (this) {

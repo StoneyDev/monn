@@ -55,7 +55,7 @@ final class SavingsBookRepositoryProvider
 }
 
 String _$savingsBookRepositoryHash() =>
-    r'e1deb50557b8fa5a464dd8eb05115321ef84e756';
+    r'04a97e740feedcb41ff39ce13f65524fb9c50d8b';
 
 @ProviderFor(watchSavingsBooks)
 const watchSavingsBooksProvider = WatchSavingsBooksProvider._();

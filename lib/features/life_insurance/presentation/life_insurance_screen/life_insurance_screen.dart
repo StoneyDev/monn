@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
-import 'package:monn/features/dashboard/domain/savings.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
 import 'package:monn/features/life_insurance/presentation/life_insurance_screen/controllers/life_insurance_form_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -171,7 +171,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
     final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 
     unawaited(
-      context.push(
+      context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: value?.invested ?? 0,
@@ -202,7 +202,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
     final formNotifier = ref.read(lifeInsuranceFormControllerProvider.notifier);
 
     unawaited(
-      context.push(
+      context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
           initialValue: value?.interests ?? 0,

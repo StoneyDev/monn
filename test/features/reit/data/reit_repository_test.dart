@@ -1,10 +1,10 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:monn/features/dashboard/data/savings_repository.dart';
-import 'package:monn/features/dashboard/domain/payout_report_data.dart';
+import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/reit/data/reit_repository.dart';
 import 'package:monn/features/reit/domain/reit_with_dividends.dart';
+import 'package:monn/shared/domain/payout_report_data.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,22 +32,20 @@ void main() {
   });
 
   group('deleteReit', () {
-    test('deletes dividends through the foreign-key cascade', () async {
-      // Arrange
+    test('deletes dividends and decrements savings atomically', () async {
       final db = AppDatabase(NativeDatabase.memory());
       addTearDown(db.close);
-      final repository = ReitRepository(db);
+      final repository = ReitRepository(db, SavingsRepository(db));
 
-      final reitId = await db
-          .into(db.reitEntries)
-          .insert(
-            ReitEntriesCompanion.insert(
-              name: 'Cascade SCPI',
-              boughtOn: DateTime(2026),
-              shares: 2,
-              price: 100,
-            ),
-          );
+      await repository.addReit(
+        ReitEntriesCompanion.insert(
+          name: 'Cascade SCPI',
+          boughtOn: DateTime(2026),
+          shares: 2,
+          price: 100,
+        ),
+      );
+      final reitId = (await db.select(db.reitEntries).getSingle()).id;
       await db
           .into(db.reitDividendEntries)
           .insert(
@@ -58,12 +56,47 @@ void main() {
             ),
           );
 
-      // Act
       await repository.deleteReit(reitId);
 
-      // Assert
+      final reits = await db.select(db.reitEntries).get();
       final dividends = await db.select(db.reitDividendEntries).get();
+      final savings = await db.select(db.savingsEntries).getSingle();
+      expect(reits, isEmpty);
       expect(dividends, isEmpty);
+      expect(savings.startAmount, 0);
+    });
+
+    test('rolls back deletion when savings update fails', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final repository = ReitRepository(db, SavingsRepository(db));
+      await repository.addReit(
+        ReitEntriesCompanion.insert(
+          name: 'Rollback SCPI',
+          boughtOn: DateTime(2026),
+          shares: 2,
+          price: 100,
+        ),
+      );
+      final reitId = (await db.select(db.reitEntries).getSingle()).id;
+      await db.customStatement('''
+CREATE TRIGGER fail_reit_savings
+BEFORE UPDATE ON savings_entries
+BEGIN
+  SELECT RAISE(ABORT, 'forced savings failure');
+END;
+''');
+
+      await expectLater(
+        repository.deleteReit(reitId),
+        throwsA(isA<Exception>()),
+      );
+
+      expect(await db.select(db.reitEntries).get(), hasLength(1));
+      expect(
+        (await db.select(db.savingsEntries).getSingle()).startAmount,
+        200,
+      );
     });
   });
 

@@ -6,17 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/app.dart';
 import 'package:monn/debug_observer.dart';
 import 'package:monn/generated/codegen_loader.g.dart';
-import 'package:monn/shared/local/local_database.dart';
 import 'package:monn/shared/widgets/monn_error.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await _initPackages();
-
+  await (EasyLocalization.ensureInitialized(), _systemChrome()).wait;
   _registerErrorHandlers();
-
-  await _systemChrome();
 
   runApp(
     ProviderScope(
@@ -29,12 +25,6 @@ void main() async {
         child: const App(),
       ),
     ),
-  );
-}
-
-Future<void> _initPackages() async {
-  await Future.wait<void>(
-    [LocalDatabase().init(), EasyLocalization.ensureInitialized()],
   );
 }
 

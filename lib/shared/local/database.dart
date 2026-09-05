@@ -1,14 +1,8 @@
 import 'package:drift/drift.dart';
+import 'package:monn/shared/local/database.steps.dart';
 import 'package:monn/shared/local/tables.dart';
 
 part 'database.drift.dart';
-
-extension DriftPkX on int {
-  /// Wraps an autoIncrement primary key for a Drift companion. Treats 0 as
-  /// "not persisted yet" so `insertOnConflictUpdate` inserts a fresh row
-  /// instead of forcing rowid=0 (which would collide between unsaved rows).
-  Value<int> get asPk => this != 0 ? Value(this) : const Value.absent();
-}
 
 @DriftDatabase(
   tables: [
@@ -32,10 +26,27 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: stepByStep(
+      from1To2: (m, schema) async {
+        await m.alterTable(
+          TableMigration(
+            schema.crowdfundingEntries,
+            columnTransformer: {
+              schema.crowdfundingEntries.receivedAt: coalesce([
+                crowdfundingEntries.receivedAt,
+                Constant(DateTime.fromMillisecondsSinceEpoch(0)),
+              ]),
+            },
+          ),
+        );
+        await m.create(schema.cryptocurrencyTransactionCryptoDate);
+        await m.create(schema.reitDividendReit);
+      },
+    ),
     beforeOpen: (_) async {
       await customStatement('PRAGMA foreign_keys = ON');
     },

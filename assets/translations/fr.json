@@ -60,9 +60,6 @@
     "import": "Importer",
     "import_failed": "L'importation a échoué, le fichier n'a pas la bonne extension (.db)",
     "export": "Exporter",
-    "restore": "Restaurer",
-    "successfully_restored": "La base de données a été restaurée avec succès",
-    "failed_to_restore": "Échec de la restauration de la base de données",
     "rate_of_return": "Taux de rendement",
     "annual_performance": "Performance annuelle",
     "per_year": "{}/an",
@@ -78,8 +75,20 @@
     "net": "Net",
     "oh_no": "Oh non !"
   },
+  "restore": {
+    "title": "Restaurer",
+    "confirmation": "Cette sauvegarde remplacera vos données actuelles. Une copie de récupération sera créée avant la restauration.",
+    "validating": "Vérification de la sauvegarde...",
+    "creating_recovery": "Création du point de récupération...",
+    "replacing": "Restauration des données...",
+    "finalizing": "Finalisation...",
+    "success": "La base de données a été restaurée avec succès",
+    "error": "Échec de la restauration de la base de données"
+  },
   "button": {
+    "cancel": "Annuler",
     "close": "Fermer",
+    "retry": "Réessayer",
     "ok": "OK",
     "validate": "Valider",
     "save": "Sauvegarder",

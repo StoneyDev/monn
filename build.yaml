@@ -14,5 +14,10 @@ targets:
         enabled: false
       drift_dev:not_shared:
         enabled: true
+        options:
+          databases:
+            app_database: lib/shared/local/database.dart
+          schema_dir: drift_schemas/
+          test_dir: test/drift/
         generate_for:
           - lib/shared/local/database.dart

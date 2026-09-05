@@ -579,9 +579,9 @@ class $CrowdfundingEntriesTable extends CrowdfundingEntries
   late final GeneratedColumn<DateTime> receivedAt = GeneratedColumn<DateTime>(
     'received_at',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
+    requiredDuringInsert: true,
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -653,6 +653,8 @@ class $CrowdfundingEntriesTable extends CrowdfundingEntries
         _receivedAtMeta,
         receivedAt.isAcceptableOrUnknown(data['received_at']!, _receivedAtMeta),
       );
+    } else if (isInserting) {
+      context.missing(_receivedAtMeta);
     }
     return context;
   }
@@ -690,7 +692,7 @@ class $CrowdfundingEntriesTable extends CrowdfundingEntries
       receivedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}received_at'],
-      ),
+      )!,
     );
   }
 
@@ -708,7 +710,7 @@ class CrowdfundingEntry extends DataClass
   final double? netProfit;
   final double? taxProfit;
   final double? taxPercentage;
-  final DateTime? receivedAt;
+  final DateTime receivedAt;
   const CrowdfundingEntry({
     required this.id,
     required this.brutProfit,
@@ -716,7 +718,7 @@ class CrowdfundingEntry extends DataClass
     this.netProfit,
     this.taxProfit,
     this.taxPercentage,
-    this.receivedAt,
+    required this.receivedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -733,9 +735,7 @@ class CrowdfundingEntry extends DataClass
     if (!nullToAbsent || taxPercentage != null) {
       map['tax_percentage'] = Variable<double>(taxPercentage);
     }
-    if (!nullToAbsent || receivedAt != null) {
-      map['received_at'] = Variable<DateTime>(receivedAt);
-    }
+    map['received_at'] = Variable<DateTime>(receivedAt);
     return map;
   }
 
@@ -753,9 +753,7 @@ class CrowdfundingEntry extends DataClass
       taxPercentage: taxPercentage == null && nullToAbsent
           ? const Value.absent()
           : Value(taxPercentage),
-      receivedAt: receivedAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(receivedAt),
+      receivedAt: Value(receivedAt),
     );
   }
 
@@ -771,7 +769,7 @@ class CrowdfundingEntry extends DataClass
       netProfit: serializer.fromJson<double?>(json['netProfit']),
       taxProfit: serializer.fromJson<double?>(json['taxProfit']),
       taxPercentage: serializer.fromJson<double?>(json['taxPercentage']),
-      receivedAt: serializer.fromJson<DateTime?>(json['receivedAt']),
+      receivedAt: serializer.fromJson<DateTime>(json['receivedAt']),
     );
   }
   @override
@@ -784,7 +782,7 @@ class CrowdfundingEntry extends DataClass
       'netProfit': serializer.toJson<double?>(netProfit),
       'taxProfit': serializer.toJson<double?>(taxProfit),
       'taxPercentage': serializer.toJson<double?>(taxPercentage),
-      'receivedAt': serializer.toJson<DateTime?>(receivedAt),
+      'receivedAt': serializer.toJson<DateTime>(receivedAt),
     };
   }
 
@@ -795,7 +793,7 @@ class CrowdfundingEntry extends DataClass
     Value<double?> netProfit = const Value.absent(),
     Value<double?> taxProfit = const Value.absent(),
     Value<double?> taxPercentage = const Value.absent(),
-    Value<DateTime?> receivedAt = const Value.absent(),
+    DateTime? receivedAt,
   }) => CrowdfundingEntry(
     id: id ?? this.id,
     brutProfit: brutProfit ?? this.brutProfit,
@@ -805,7 +803,7 @@ class CrowdfundingEntry extends DataClass
     taxPercentage: taxPercentage.present
         ? taxPercentage.value
         : this.taxPercentage,
-    receivedAt: receivedAt.present ? receivedAt.value : this.receivedAt,
+    receivedAt: receivedAt ?? this.receivedAt,
   );
   CrowdfundingEntry copyWithCompanion(CrowdfundingEntriesCompanion data) {
     return CrowdfundingEntry(
@@ -871,7 +869,7 @@ class CrowdfundingEntriesCompanion extends UpdateCompanion<CrowdfundingEntry> {
   final Value<double?> netProfit;
   final Value<double?> taxProfit;
   final Value<double?> taxPercentage;
-  final Value<DateTime?> receivedAt;
+  final Value<DateTime> receivedAt;
   const CrowdfundingEntriesCompanion({
     this.id = const Value.absent(),
     this.brutProfit = const Value.absent(),
@@ -888,9 +886,10 @@ class CrowdfundingEntriesCompanion extends UpdateCompanion<CrowdfundingEntry> {
     this.netProfit = const Value.absent(),
     this.taxProfit = const Value.absent(),
     this.taxPercentage = const Value.absent(),
-    this.receivedAt = const Value.absent(),
+    required DateTime receivedAt,
   }) : brutProfit = Value(brutProfit),
-       platformName = Value(platformName);
+       platformName = Value(platformName),
+       receivedAt = Value(receivedAt);
   static Insertable<CrowdfundingEntry> custom({
     Expression<int>? id,
     Expression<double>? brutProfit,
@@ -918,7 +917,7 @@ class CrowdfundingEntriesCompanion extends UpdateCompanion<CrowdfundingEntry> {
     Value<double?>? netProfit,
     Value<double?>? taxProfit,
     Value<double?>? taxPercentage,
-    Value<DateTime?>? receivedAt,
+    Value<DateTime>? receivedAt,
   }) {
     return CrowdfundingEntriesCompanion(
       id: id ?? this.id,
@@ -5034,6 +5033,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ReitEntriesTable reitEntries = $ReitEntriesTable(this);
   late final $ReitDividendEntriesTable reitDividendEntries =
       $ReitDividendEntriesTable(this);
+  late final Index cryptocurrencyTransactionCryptoDate = Index(
+    'cryptocurrency_transaction_crypto_date',
+    'CREATE INDEX cryptocurrency_transaction_crypto_date ON cryptocurrency_transaction_entries (cryptocurrency_id, date)',
+  );
+  late final Index reitDividendReit = Index(
+    'reit_dividend_reit',
+    'CREATE INDEX reit_dividend_reit ON reit_dividend_entries (reit_id)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5053,6 +5060,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     cryptocurrencyTransactionEntries,
     reitEntries,
     reitDividendEntries,
+    cryptocurrencyTransactionCryptoDate,
+    reitDividendReit,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -5395,7 +5404,7 @@ typedef $$CrowdfundingEntriesTableCreateCompanionBuilder =
       Value<double?> netProfit,
       Value<double?> taxProfit,
       Value<double?> taxPercentage,
-      Value<DateTime?> receivedAt,
+      required DateTime receivedAt,
     });
 typedef $$CrowdfundingEntriesTableUpdateCompanionBuilder =
     CrowdfundingEntriesCompanion Function({
@@ -5405,7 +5414,7 @@ typedef $$CrowdfundingEntriesTableUpdateCompanionBuilder =
       Value<double?> netProfit,
       Value<double?> taxProfit,
       Value<double?> taxPercentage,
-      Value<DateTime?> receivedAt,
+      Value<DateTime> receivedAt,
     });
 
 class $$CrowdfundingEntriesTableFilterComposer
@@ -5586,7 +5595,7 @@ class $$CrowdfundingEntriesTableTableManager
                 Value<double?> netProfit = const Value.absent(),
                 Value<double?> taxProfit = const Value.absent(),
                 Value<double?> taxPercentage = const Value.absent(),
-                Value<DateTime?> receivedAt = const Value.absent(),
+                Value<DateTime> receivedAt = const Value.absent(),
               }) => CrowdfundingEntriesCompanion(
                 id: id,
                 brutProfit: brutProfit,
@@ -5604,7 +5613,7 @@ class $$CrowdfundingEntriesTableTableManager
                 Value<double?> netProfit = const Value.absent(),
                 Value<double?> taxProfit = const Value.absent(),
                 Value<double?> taxPercentage = const Value.absent(),
-                Value<DateTime?> receivedAt = const Value.absent(),
+                required DateTime receivedAt,
               }) => CrowdfundingEntriesCompanion.insert(
                 id: id,
                 brutProfit: brutProfit,

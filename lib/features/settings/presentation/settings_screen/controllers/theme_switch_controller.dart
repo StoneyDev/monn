@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mockito/mockito.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,11 +30,4 @@ class ThemeSwitchController extends _$ThemeSwitchController {
     state = AsyncData(theme);
     await _prefsCache.setString('theme', theme.name);
   }
-}
-
-class ThemeSwitchControllerMock extends _$ThemeSwitchController
-    with Mock
-    implements ThemeSwitchController {
-  @override
-  Future<ThemeMode> build() => Future.value(ThemeMode.dark);
 }
