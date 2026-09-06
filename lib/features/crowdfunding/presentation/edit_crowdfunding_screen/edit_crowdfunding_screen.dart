@@ -86,28 +86,21 @@ class _EditCrowdfundingScreenState
                           return const SizedBox.shrink();
                         } else {
                           return Row(
+                            spacing: 16,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               if (!isTaxFree) ...[
                                 Expanded(
                                   child: MonnFieldNumber<double>(
-                                    label: context.tr(
-                                      LocaleKeys.common_tax,
-                                      args: [
-                                        context.tr(
-                                          LocaleKeys.common_without_income_tax,
-                                        ),
-                                      ],
-                                    ),
+                                    label: context.tr(LocaleKeys.common_tax),
                                     suffix: '%',
                                     required:
                                         !brutProfit.isNegative && !isTaxFree,
-                                    initialValue:
-                                        widget.crowdfunding?.taxPercentage !=
-                                            null
-                                        // ignore: lines_longer_than_80_chars
-                                        ? '${widget.crowdfunding!.taxPercentage}'
-                                        : null,
+                                    initialValue: ref.watch(
+                                      crowdfundingFormControllerProvider.select(
+                                        (value) => value.taxPercentage,
+                                      ),
+                                    ),
                                     onChanged: (newTax) => ref
                                         .read(
                                           crowdfundingFormControllerProvider
@@ -116,7 +109,6 @@ class _EditCrowdfundingScreenState
                                         .set(taxPercentage: newTax),
                                   ),
                                 ),
-                                const SizedBox(width: 16),
                               ],
                               OutlinedButton.icon(
                                 label: Text(
@@ -128,14 +120,18 @@ class _EditCrowdfundingScreenState
                                 ),
                                 onPressed: () {
                                   setState(() => isTaxFree = !isTaxFree);
-                                  if (isTaxFree) {
-                                    ref
-                                        .read(
-                                          crowdfundingFormControllerProvider
-                                              .notifier,
-                                        )
-                                        .set(clearTax: true);
-                                  }
+                                  ref
+                                      .read(
+                                        crowdfundingFormControllerProvider
+                                            .notifier,
+                                      )
+                                      .set(
+                                        clearTax: isTaxFree,
+                                        taxPercentage:
+                                            widget.crowdfunding?.taxPercentage
+                                                ?.toString() ??
+                                            '31.4',
+                                      );
                                 },
                                 icon: isTaxFree
                                     ? const Text('💔')

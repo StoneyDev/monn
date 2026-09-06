@@ -20,7 +20,7 @@ class CrowdfundingFormController extends _$CrowdfundingFormController {
     platformName: 'LPB',
     receivedAt: DateTime.now(),
     brutProfit: '',
-    taxPercentage: null,
+    taxPercentage: '31.4',
     id: null,
   );
 

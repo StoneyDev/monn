@@ -26,7 +26,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -45,6 +45,18 @@ class AppDatabase extends _$AppDatabase {
         );
         await m.create(schema.cryptocurrencyTransactionCryptoDate);
         await m.create(schema.reitDividendReit);
+      },
+      from2To3: (m, schema) async {
+        await customStatement('''
+          UPDATE crowdfunding_entries
+          SET tax_percentage = CASE tax_percentage
+                WHEN 17.2 THEN 30.0 ELSE 31.4 END,
+              tax_profit = ROUND(brut_profit * CASE tax_percentage
+                WHEN 17.2 THEN 0.30 ELSE 0.314 END, 2),
+              net_profit = ROUND(brut_profit - ROUND(brut_profit *
+                CASE tax_percentage WHEN 17.2 THEN 0.30 ELSE 0.314 END, 2), 2)
+          WHERE tax_percentage IN (17.2, 18.6) AND brut_profit >= 0
+        ''');
       },
     ),
     beforeOpen: (_) async {

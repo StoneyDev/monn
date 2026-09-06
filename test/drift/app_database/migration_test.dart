@@ -38,6 +38,65 @@ void main() {
     }
   });
 
+  test('migrates crowdfunding social charges to full flat tax', () async {
+    final schema = await verifier.schemaAt(2);
+    final oldDb = v2.DatabaseAtV2(schema.newConnection());
+    for (final rate in <double?>[17.2, 18.6, 30, 31.4, null]) {
+      await oldDb
+          .into(oldDb.crowdfundingEntries)
+          .insert(
+            v2.CrowdfundingEntriesCompanion.insert(
+              platformName: 'LPB',
+              receivedAt: DateTime(2026),
+              brutProfit: 123.45,
+              taxPercentage: Value(rate),
+              taxProfit: Value(rate == null ? null : 20),
+              netProfit: Value(rate == null ? 123.45 : 103.45),
+            ),
+          );
+    }
+    final db = AppDatabase(schema.newConnection());
+    addTearDown(db.close);
+    addTearDown(oldDb.close);
+
+    final entries = await db.select(db.crowdfundingEntries).get();
+    expect(entries.map((e) => e.taxPercentage), [30, 31.4, 30, 31.4, null]);
+    expect(entries.map((e) => e.taxProfit), [37.03, 38.76, 20, 20, null]);
+    expect(entries.map((e) => e.netProfit), [
+      86.42,
+      84.69,
+      103.45,
+      103.45,
+      123.45,
+    ]);
+  });
+
+  test('preserves legacy losses during flat tax migration', () async {
+    final schema = await verifier.schemaAt(2);
+    final oldDb = v2.DatabaseAtV2(schema.newConnection());
+    addTearDown(oldDb.close);
+    await oldDb
+        .into(oldDb.crowdfundingEntries)
+        .insert(
+          v2.CrowdfundingEntriesCompanion.insert(
+            platformName: 'LPB',
+            receivedAt: DateTime(2025),
+            brutProfit: -100,
+            taxPercentage: const Value(17.2),
+            taxProfit: const Value(17.2),
+            netProfit: const Value(82.8),
+          ),
+        );
+    final db = AppDatabase(schema.newConnection());
+    addTearDown(db.close);
+
+    final entry = await db.select(db.crowdfundingEntries).getSingle();
+    expect(entry.brutProfit, -100);
+    expect(entry.taxPercentage, 17.2);
+    expect(entry.taxProfit, 17.2);
+    expect(entry.netProfit, 82.8);
+  });
+
   test('backfills missing crowdfunding dates during v1 to v2', () async {
     const legacyCrowdfunding = v1.CrowdfundingEntriesData(
       id: 1,

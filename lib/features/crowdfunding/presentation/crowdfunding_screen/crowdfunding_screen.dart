@@ -165,6 +165,7 @@ class _RefundTransaction extends ConsumerWidget {
               platformName: crowdfunding.platformName,
               brutProfit: crowdfunding.brutProfit.toString(),
               receivedAt: crowdfunding.receivedAt,
+              clearTax: crowdfunding.taxPercentage == null,
               taxPercentage: crowdfunding.taxPercentage != null
                   ? '${crowdfunding.taxPercentage}'
                   : null,
