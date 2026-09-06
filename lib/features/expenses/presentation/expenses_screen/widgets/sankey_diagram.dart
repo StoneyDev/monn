@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/features/expenses/domain/budget_extension.dart';
 import 'package:monn/features/expenses/presentation/budget_ui.dart';
@@ -244,8 +243,8 @@ class _SankeyLayout {
   final double width;
 
   double get incomeBlockRight => 30;
-  double get catBlockX => width * 0.26;
-  double get catLabelX => catBlockX + _kBlockWidth + _kLabelPadding;
+  double get catBlockX => width * 0.40;
+  double get catLabelX => incomeBlockRight + _kLabelPadding;
   double get subBlockX => width * 0.61;
   double get subLabelX => subBlockX + _kBlockWidth + 5;
   double get amountMaxWidth => math.max(0, (width - subLabelX - 13) / 2);
@@ -303,11 +302,11 @@ class _SankeyLabels extends StatelessWidget {
         for (final pos in positions.categories)
           Positioned(
             left: layout.catLabelX,
-            width: layout.subBlockX - layout.catLabelX - _kLabelPadding,
+            width: layout.catBlockX - layout.catLabelX - _kLabelPadding,
             top: (pos.top + pos.bottom - categoryLabelHeight) / 2,
             height: categoryLabelHeight,
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.centerRight,
               child: Text(
                 pos.category.name,
                 maxLines: 1,
@@ -366,8 +365,6 @@ class _SankeyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (positions.categories.isEmpty) return;
-
     _drawFlowsToCategories(canvas);
     _drawFlowsToSubItems(canvas);
 
@@ -504,7 +501,5 @@ class _SankeyPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _SankeyPainter oldDelegate) =>
-      !listEquals(positions.categories, oldDelegate.positions.categories) ||
-      !listEquals(positions.subItems, oldDelegate.positions.subItems);
+  bool shouldRepaint(covariant _SankeyPainter oldDelegate) => true;
 }
