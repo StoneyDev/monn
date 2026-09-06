@@ -179,7 +179,7 @@ class CodegenLoader extends AssetLoader{
     "abatement_title": "Abatement",
     "abatement_rate": "Flat rate 34%",
     "urssaf_label": "URSSAF",
-    "urssaf_rate": "Contributions 24.6%",
+    "urssaf_rate": "Contributions 25.6%",
     "remaining": "Remaining",
     "deducted": "Deducted"
   },
@@ -368,7 +368,7 @@ static const Map<String,dynamic> _fr = {
     "abatement_title": "Abattement",
     "abatement_rate": "Forfaitaire 34%",
     "urssaf_label": "URSSAF",
-    "urssaf_rate": "Cotisations 24,6%",
+    "urssaf_rate": "Cotisations 25,6%",
     "remaining": "Restant",
     "deducted": "Prélevé"
   },

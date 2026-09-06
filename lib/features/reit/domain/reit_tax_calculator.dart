@@ -12,16 +12,17 @@ class ReitTaxCalculator {
   static const double socialChargesRate = 0.186;
   static const double freelanceAbatementRate = 0.34;
 
+  // 2026 income tax on 2025 income, for one tax share.
+  // Used as an estimate for 2026 income until the 2027 scale is published.
   static const List<_TaxBracket> _taxBrackets = [
-    _TaxBracket(threshold: 11497, rate: 0),
-    _TaxBracket(threshold: 29315, rate: 0.11),
-    _TaxBracket(threshold: 83823, rate: 0.30),
-    _TaxBracket(threshold: 180294, rate: 0.41),
+    _TaxBracket(threshold: 11600, rate: 0),
+    _TaxBracket(threshold: 29579, rate: 0.11),
+    _TaxBracket(threshold: 84577, rate: 0.30),
+    _TaxBracket(threshold: 181917, rate: 0.41),
     _TaxBracket(threshold: double.infinity, rate: 0.45),
   ];
 
-  static const double _decoteThreshold = 1964;
-  static const double _decoteCoefficient = 1929.17;
+  static const double _decoteCoefficient = 897;
 
   static double _calculateIncomeTax(double netImposable) {
     if (netImposable <= 0) return 0;
@@ -46,12 +47,11 @@ class ReitTaxCalculator {
 
   static double _applyDecote(double grossTax) {
     if (grossTax <= 0) return 0;
-    if (grossTax >= _decoteThreshold) return grossTax;
-
-    final decote = _decoteCoefficient - (grossTax * 0.4525);
-    final taxAfterDecote = grossTax - decote;
-
-    return taxAfterDecote > 0 ? taxAfterDecote : 0;
+    final decote = (_decoteCoefficient - grossTax * 0.4525).clamp(
+      0,
+      grossTax,
+    );
+    return grossTax - decote;
   }
 
   /// Get the marginal tax rate (TMI) for a given taxable income

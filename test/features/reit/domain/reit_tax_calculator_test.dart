@@ -18,10 +18,10 @@ void main() {
         expect(resultNegative, 0);
       });
 
-      test('should return 0% for income in first bracket (<= 11497)', () {
+      test('should return 0% for income in first bracket (<= 11600)', () {
         // Arrange
         const lowIncome = 5000.0;
-        const bracketLimit = 11497.0;
+        const bracketLimit = 11600.0;
 
         // Act
         final resultLow = ReitTaxCalculator.getTMI(lowIncome);
@@ -33,12 +33,12 @@ void main() {
       });
 
       test(
-        'should return 11% for income in second bracket (11498 - 29315)',
+        'should return 11% for income in second bracket (11601 - 29579)',
         () {
           // Arrange
-          const bracketStart = 11498.0;
+          const bracketStart = 11601.0;
           const midBracket = 20000.0;
-          const bracketEnd = 29315.0;
+          const bracketEnd = 29579.0;
 
           // Act
           final resultStart = ReitTaxCalculator.getTMI(bracketStart);
@@ -52,11 +52,11 @@ void main() {
         },
       );
 
-      test('should return 30% for income in third bracket (29316 - 83823)', () {
+      test('should return 30% for income in third bracket (29580 - 84577)', () {
         // Arrange
-        const bracketStart = 29316.0;
+        const bracketStart = 29580.0;
         const midBracket = 50000.0;
-        const bracketEnd = 83823.0;
+        const bracketEnd = 84577.0;
 
         // Act
         final resultStart = ReitTaxCalculator.getTMI(bracketStart);
@@ -70,12 +70,12 @@ void main() {
       });
 
       test(
-        'should return 41% for income in fourth bracket (83824 - 180294)',
+        'should return 41% for income in fourth bracket (84578 - 181917)',
         () {
           // Arrange
-          const bracketStart = 83824.0;
+          const bracketStart = 84578.0;
           const midBracket = 100000.0;
-          const bracketEnd = 180294.0;
+          const bracketEnd = 181917.0;
 
           // Act
           final resultStart = ReitTaxCalculator.getTMI(bracketStart);
@@ -89,9 +89,9 @@ void main() {
         },
       );
 
-      test('should return 45% for income above 180294', () {
+      test('should return 45% for income above 181917', () {
         // Arrange
-        const aboveBracket = 180295.0;
+        const aboveBracket = 181918.0;
         const highIncome = 500000.0;
 
         // Act
@@ -168,7 +168,7 @@ void main() {
         test('should apply 34% abatement to freelance revenue', () {
           // Arrange
           // 50000 * (1 - 0.34) = 33000 net imposable freelance
-          // TMI should be 30% (33000 is in 29316-83823 bracket)
+          // TMI should be 30% (33000 is in 29580-84577 bracket)
           const freelanceRevenue = 50000.0;
           const reitDividends = 1000.0;
 
@@ -317,7 +317,7 @@ void main() {
         test('should return TMI based on total income', () {
           // Arrange
           // Freelance: 100000 * 0.66 = 66000 + REIT 20000 = 86000
-          // 86000 is in 41% bracket (83824 - 180294)
+          // 86000 is in 41% bracket (84578 - 181917)
           const freelanceRevenue = 100000.0;
           const reitDividends = 20000.0;
 

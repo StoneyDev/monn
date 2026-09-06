@@ -52,7 +52,7 @@ void main() {
     });
 
     group('calculateUrssaf', () {
-      test('should return 24.6% of annual revenue', () {
+      test('should return 25.6% of annual revenue', () {
         // Arrange
         const annualRevenue = 10000.0;
 
@@ -60,7 +60,7 @@ void main() {
         final result = FreelanceCalculator.calculateUrssaf(annualRevenue);
 
         // Assert
-        expect(result, closeTo(2460, 0.01));
+        expect(result, closeTo(2560, 0.01));
       });
 
       test('should return 0 when revenue is 0', () {
@@ -78,7 +78,7 @@ void main() {
     group('calculateIncomeTax', () {
       test('should return 0 for income below first bracket', () {
         // Arrange
-        const netImposable = 11497.0;
+        const netImposable = 11600.0;
 
         // Act
         final result = FreelanceCalculator.calculateIncomeTax(netImposable);
@@ -95,7 +95,7 @@ void main() {
         final result = FreelanceCalculator.calculateIncomeTax(netImposable);
 
         // Assert
-        expect(result, lessThan(935.22));
+        expect(result, closeTo(445.11, 0.01));
       });
 
       test('should calculate tax correctly crossing into 30% bracket', () {
@@ -106,7 +106,7 @@ void main() {
         final result = FreelanceCalculator.calculateIncomeTax(netImposable);
 
         // Assert
-        expect(result, closeTo(6665.07, 1));
+        expect(result, closeTo(6603.99, 0.01));
       });
 
       test('should return 0 when income is 0', () {
@@ -158,20 +158,20 @@ void main() {
     });
 
     group('calculate', () {
-      test('should return complete result for given revenue', () {
+      test('should calculate all revenue above the micro threshold', () {
         // Arrange
-        const annualRevenue = 45000.0;
+        const annualRevenue = 100000.0;
 
         // Act
         final result = FreelanceCalculator.calculate(annualRevenue);
 
         // Assert
-        expect(result.annualRevenue, 45000);
-        expect(result.abatement, closeTo(15300, 0.01));
-        expect(result.netImposable, closeTo(29700, 0.01));
-        expect(result.urssaf, closeTo(11070, 0.01));
-        expect(result.incomeTax, greaterThan(0));
-        expect(result.netAfterAll, greaterThan(0));
+        expect(result.annualRevenue, 100000);
+        expect(result.abatement, closeTo(34000, 0.01));
+        expect(result.netImposable, closeTo(66000, 0.01));
+        expect(result.urssaf, closeTo(25600, 0.01));
+        expect(result.incomeTax, closeTo(12903.99, 0.01));
+        expect(result.netAfterAll, closeTo(61496.01, 0.01));
       });
 
       test('should return zeros when revenue is 0', () {
@@ -200,7 +200,7 @@ void main() {
         final result = FreelanceCalculator.calculateIncomeTax(netImposable);
 
         // Assert
-        expect(result, lessThan(385.33));
+        expect(result, 0);
       });
 
       test('should not apply decote for high tax amounts', () {
@@ -211,7 +211,7 @@ void main() {
         final result = FreelanceCalculator.calculateIncomeTax(netImposable);
 
         // Assert
-        expect(result, greaterThan(1964));
+        expect(result, closeTo(24800.52, 0.01));
       });
     });
   });
