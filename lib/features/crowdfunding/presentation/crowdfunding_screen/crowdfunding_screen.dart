@@ -6,48 +6,77 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
-import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
+import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_filters_sheet.dart';
+import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_transaction_card.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/edit_crowdfunding_screen.dart';
 import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/portfolio/presentation/controllers/edit_savings_controller.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
-import 'package:monn/shared/extensions/date_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
-import 'package:monn/shared/widgets/monn_card.dart';
-import 'package:monn/shared/widgets/monn_up_down.dart';
 import 'package:monn/shared/widgets/payout_report.dart';
 import 'package:monn/utils/app_colors.dart';
 
 final _startAmountProvider = StateProvider<String?>((ref) {
-  final crowdfunding = ref
-      .watch(getSavingsProvider(type: SavingsType.crowdfunding))
-      .value;
+  final crowdfunding = ref.watch(getSavingsProvider(type: .crowdfunding)).value;
   return (crowdfunding?.startAmount ?? '').toString();
 });
 
-class CrowdfundingScreen extends ConsumerWidget {
+class CrowdfundingScreen extends ConsumerStatefulWidget {
   const CrowdfundingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CrowdfundingScreen> createState() => _CrowdfundingScreenState();
+}
+
+class _CrowdfundingScreenState extends ConsumerState<CrowdfundingScreen> {
+  int? _year;
+  Set<int> _months = {};
+
+  Future<void> _showFilters(BuildContext context, List<int> years) async {
+    final selection = await CrowdfundingFiltersSheet.show(
+      context: context,
+      years: years,
+      year: _year,
+      months: _months,
+    );
+    if (!mounted || selection == null) return;
+    setState(() {
+      _year = selection.year;
+      _months = selection.months;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locale = context.locale.toString();
     final savingsCrowdfunding = ref.watch(
-      getSavingsProvider(type: SavingsType.crowdfunding),
+      getSavingsProvider(type: .crowdfunding),
     );
     final crowdfundingData = ref.watch(
       getSavingsProvider(
-        type: SavingsType.crowdfunding,
+        type: .crowdfunding,
       ).select((data) => data.value),
     );
     final crowdfundings = ref.watch(watchCrowdfundingsProvider);
     final report = ref.watch(
       watchPayoutReportCrowdfundingProvider.select((data) => data.value),
     );
+
+    final entries = crowdfundings.value ?? <CrowdfundingEntry>[];
+    final years = {
+      for (final entry in entries) entry.receivedAt.year,
+      ?_year,
+    }.toList()..sort((a, b) => b.compareTo(a));
+    final filterCount = (_year != null ? 1 : 0) + (_months.isNotEmpty ? 1 : 0);
+    final filteredEntries = entries.where((entry) {
+      return (_year == null || entry.receivedAt.year == _year) &&
+          (_months.isEmpty || _months.contains(entry.receivedAt.month));
+    }).toList();
 
     return Scaffold(
       appBar: MonnAppBar(
@@ -122,13 +151,64 @@ class CrowdfundingScreen extends ConsumerWidget {
             tax: report?.totalTaxProfit ?? 0,
             loss: report?.totalLoss ?? 0,
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Row(
+              spacing: 16,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 4,
+                    children: [
+                      Text(
+                        context.tr(LocaleKeys.filters_transactions),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      if (_year != null)
+                        Text(
+                          [
+                            '$_year',
+                            if (_months.isNotEmpty)
+                              (_months.toList()..sort())
+                                  .map(
+                                    (month) => DateFormat.MMM(
+                                      locale,
+                                    ).format(DateTime(_year!, month)),
+                                  )
+                                  .join(', '),
+                          ].join(' · '),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                    ],
+                  ),
+                ),
+                OutlinedButton.icon(
+                  icon: const iconoir.FilterList(),
+                  label: Text(
+                    [
+                      context.tr(LocaleKeys.common_filter),
+                      if (_year != null) '$filterCount',
+                    ].join(' · '),
+                  ),
+                  onPressed: () => _showFilters(context, years),
+                ),
+              ],
+            ),
+          ),
           switch (crowdfundings) {
-            AsyncData(:final value) => Expanded(
+            AsyncData() when filteredEntries.isEmpty => Expanded(
+              child: Center(
+                child: Text(context.tr(LocaleKeys.filters_no_results)),
+              ),
+            ),
+            AsyncData() => Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                itemBuilder: (_, index) => _RefundTransaction(value[index]),
+                itemBuilder: (_, index) =>
+                    CrowdfundingTransactionCard(filteredEntries[index]),
                 separatorBuilder: (_, _) => const SizedBox(height: 16),
-                itemCount: value.length,
+                itemCount: filteredEntries.length,
                 cacheExtent: 250,
               ),
             ),
@@ -140,90 +220,6 @@ class CrowdfundingScreen extends ConsumerWidget {
               child: RepaintBoundary(child: CircularProgressIndicator()),
             ),
           },
-        ],
-      ),
-    );
-  }
-}
-
-class _RefundTransaction extends ConsumerWidget {
-  const _RefundTransaction(this.crowdfunding);
-
-  final CrowdfundingEntry crowdfunding;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
-    final isExempt = (crowdfunding.netProfit ?? 0) != crowdfunding.brutProfit;
-
-    return MonnCard(
-      onLongPress: () async {
-        ref
-            .read(crowdfundingFormControllerProvider.notifier)
-            .set(
-              id: crowdfunding.id,
-              platformName: crowdfunding.platformName,
-              brutProfit: crowdfunding.brutProfit.toString(),
-              receivedAt: crowdfunding.receivedAt,
-              clearTax: crowdfunding.taxPercentage == null,
-              taxPercentage: crowdfunding.taxPercentage != null
-                  ? '${crowdfunding.taxPercentage}'
-                  : null,
-            );
-        await context.push<void>(
-          EditCrowdfundingScreen(crowdfunding: crowdfunding),
-        );
-      },
-      child: Row(
-        spacing: 16,
-        children: [
-          MonnUpDown(value: crowdfunding.brutProfit),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  crowdfunding.platformName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  crowdfunding.receivedAt.slashFormat(locale),
-                  style: const TextStyle(color: AppColors.lightGray),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          if (crowdfunding.brutProfit.isNegative)
-            Text(
-              crowdfunding.brutProfit.simpleCurrency(locale),
-              style: const TextStyle(
-                color: AppColors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          else
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  crowdfunding.netProfit!.simpleCurrency(locale),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  isExempt
-                      ? '(${crowdfunding.brutProfit})'
-                      : context.tr(LocaleKeys.common_exempt),
-                  style: TextStyle(
-                    color: isExempt ? AppColors.lightGray : AppColors.green,
-                  ),
-                ),
-              ],
-            ),
         ],
       ),
     );

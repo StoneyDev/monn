@@ -184,6 +184,14 @@ class CodegenLoader extends AssetLoader{
     "deducted": "Deducted"
   },
   "filters": {
+    "month": "Month",
+    "all_months": "All months",
+    "transactions": "Transactions",
+    "year": "Year",
+    "show_results": "Show results",
+    "reset": "Reset",
+    "all_years": "All years",
+    "no_results": "No matching transactions",
     "sort_by_start_amount_desc": "Initial amount (descending)",
     "sort_by_start_amount_asc": "Initial amount (ascending)",
     "sort_by_final_amount_desc": "Current amount (descending)",
@@ -365,6 +373,14 @@ static const Map<String,dynamic> _fr = {
     "deducted": "Prélevé"
   },
   "filters": {
+    "month": "Mois",
+    "all_months": "Tous les mois",
+    "transactions": "Transactions",
+    "year": "Année",
+    "show_results": "Afficher les résultats",
+    "reset": "Réinitialiser",
+    "all_years": "Toutes les années",
+    "no_results": "Aucune transaction correspondante",
     "sort_by_start_amount_desc": "Montant initial (décroissant)",
     "sort_by_start_amount_asc": "Montant initial (croissant)",
     "sort_by_final_amount_desc": "Montant actuel (décroissant)",

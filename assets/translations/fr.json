@@ -168,6 +168,14 @@
     "deducted": "Prélevé"
   },
   "filters": {
+    "month": "Mois",
+    "all_months": "Tous les mois",
+    "transactions": "Transactions",
+    "year": "Année",
+    "show_results": "Afficher les résultats",
+    "reset": "Réinitialiser",
+    "all_years": "Toutes les années",
+    "no_results": "Aucune transaction correspondante",
     "sort_by_start_amount_desc": "Montant initial (décroissant)",
     "sort_by_start_amount_asc": "Montant initial (croissant)",
     "sort_by_final_amount_desc": "Montant actuel (décroissant)",

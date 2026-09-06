@@ -168,6 +168,14 @@
     "deducted": "Deducted"
   },
   "filters": {
+    "month": "Month",
+    "all_months": "All months",
+    "transactions": "Transactions",
+    "year": "Year",
+    "show_results": "Show results",
+    "reset": "Reset",
+    "all_years": "All years",
+    "no_results": "No matching transactions",
     "sort_by_start_amount_desc": "Initial amount (descending)",
     "sort_by_start_amount_asc": "Initial amount (ascending)",
     "sort_by_final_amount_desc": "Current amount (descending)",

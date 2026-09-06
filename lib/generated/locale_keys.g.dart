@@ -161,6 +161,14 @@ abstract class  LocaleKeys {
   static const freelance_remaining = 'freelance.remaining';
   static const freelance_deducted = 'freelance.deducted';
   static const freelance = 'freelance';
+  static const filters_month = 'filters.month';
+  static const filters_all_months = 'filters.all_months';
+  static const filters_transactions = 'filters.transactions';
+  static const filters_year = 'filters.year';
+  static const filters_show_results = 'filters.show_results';
+  static const filters_reset = 'filters.reset';
+  static const filters_all_years = 'filters.all_years';
+  static const filters_no_results = 'filters.no_results';
   static const filters_sort_by_start_amount_desc = 'filters.sort_by_start_amount_desc';
   static const filters_sort_by_start_amount_asc = 'filters.sort_by_start_amount_asc';
   static const filters_sort_by_final_amount_desc = 'filters.sort_by_final_amount_desc';
