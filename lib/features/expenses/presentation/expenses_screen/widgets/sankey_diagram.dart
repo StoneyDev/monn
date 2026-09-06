@@ -12,20 +12,17 @@ import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:monn/utils/app_colors.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Design constants
-// ─────────────────────────────────────────────────────────────────────────────
-
-const _kBlockWidth = 14.0;
-const _kGap = 8.0;
+const _kBlockWidth = 7.0;
+const _kGap = 4.0;
+const _kCategoryGap = 6.0;
+const _kSourceGap = 1.5;
 const _kMinBlockHeight = 18.0;
-const _kBorderRadius = 4.0;
-const _kIncomeBarWidth = 10.0;
-const _kLabelPadding = 12.0;
+const _kProportionalHeight = 230.0;
+const _kBorderRadius = 3.0;
+const _kIncomeBarWidth = 6.0;
+const _kLabelPadding = 4.0;
 
-// Opacity values
-const _kBlockOpacity = 0.95;
-const _kFlowOpacity = 0.35;
+const _kFlowOpacity = 0.40;
 const _kIncomeOpacity = 0.85;
 
 class SankeyDiagram extends StatelessWidget {
@@ -35,7 +32,10 @@ class SankeyDiagram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = budget.toCategories(context);
+    final categories = budget
+        .toCategories(context)
+        .where((category) => category.total > 0)
+        .toList();
     final totalIncome = budget.freelanceIncome;
 
     if (categories.isEmpty || totalIncome <= 0) {
@@ -46,21 +46,78 @@ class SankeyDiagram extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final layout = _SankeyLayout(width: constraints.maxWidth);
-          final positions = _calculatePositions(
+          final labelStyle = Theme.of(context).textTheme.labelMedium!.copyWith(
+            fontSize: 11.5,
+            height: 1.13,
+            letterSpacing: 0,
+            fontWeight: FontWeight.w500,
+          );
+          final textScaler = MediaQuery.textScalerOf(context);
+          final locale = context.locale.toString();
+          final pixelsPerAmount = _kProportionalHeight / budget.totalExpenses;
+          final textPainter = TextPainter(
+            textDirection: Directionality.of(context),
+            textScaler: textScaler,
+          );
+          final itemHeights = <ExpenseCategoryItem, double>{};
+          for (final item in categories.expand((c) => c.nonEmptyItems)) {
+            textPainter
+              ..text = TextSpan(
+                text: item.amount.simpleCurrency(locale),
+                style: labelStyle.copyWith(fontWeight: FontWeight.w600),
+              )
+              ..layout();
+            final amountWidth = math.min(
+              textPainter.width,
+              layout.amountMaxWidth,
+            );
+            textPainter
+              ..text = TextSpan(text: item.name, style: labelStyle)
+              ..layout(
+                maxWidth: math.max(
+                  1,
+                  constraints.maxWidth - layout.subLabelX - amountWidth - 13,
+                ),
+              );
+            itemHeights[item] = math.max(
+              math.max(textScaler.scale(_kMinBlockHeight), textPainter.height),
+              item.amount * pixelsPerAmount,
+            );
+          }
+          textPainter.dispose();
+          var positions = _calculatePositions(
             categories: categories,
-            totalExpenses: budget.totalExpenses,
-            height: constraints.maxHeight,
+            itemHeights: itemHeights,
           );
 
-          return CustomPaint(
-            painter: _SankeyPainter(
-              layout: layout,
-              positions: positions,
-            ),
-            child: _SankeyLabels(
-              layout: layout,
-              positions: positions,
-              totalIncome: totalIncome,
+          if (constraints.hasBoundedHeight &&
+              positions.height < constraints.maxHeight * 0.92) {
+            final extraHeight = constraints.maxHeight * 0.92 - positions.height;
+            itemHeights.updateAll(
+              (item, height) =>
+                  height + extraHeight * item.amount / budget.totalExpenses,
+            );
+            positions = _calculatePositions(
+              categories: categories,
+              itemHeights: itemHeights,
+            );
+          }
+
+          return SingleChildScrollView(
+            child: SizedBox(
+              height: positions.height,
+              child: CustomPaint(
+                painter: _SankeyPainter(
+                  layout: layout,
+                  positions: positions,
+                ),
+                child: _SankeyLabels(
+                  layout: layout,
+                  positions: positions,
+                  totalIncome: totalIncome,
+                  labelStyle: labelStyle,
+                ),
+              ),
             ),
           );
         },
@@ -69,10 +126,6 @@ class SankeyDiagram extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Position models
-// ─────────────────────────────────────────────────────────────────────────────
-
 sealed class _NodePosition {
   const _NodePosition({required this.top, required this.bottom});
 
@@ -80,7 +133,6 @@ sealed class _NodePosition {
   final double bottom;
 
   double get height => bottom - top;
-  double get center => (top + bottom) / 2;
 
   Color get color;
 }
@@ -88,11 +140,13 @@ sealed class _NodePosition {
 class _CategoryPosition extends _NodePosition {
   const _CategoryPosition({
     required this.category,
+    required this.incomeOffset,
     required super.top,
     required super.bottom,
   });
 
   final ExpenseCategory category;
+  final double incomeOffset;
 
   @override
   Color get color => category.color;
@@ -122,96 +176,60 @@ class _SankeyPositions {
   final List<_CategoryPosition> categories;
   final List<_SubItemPosition> subItems;
 
-  double get incomeTop => categories.isNotEmpty ? categories.first.top : 0;
-  double get incomeBottom => categories.isNotEmpty ? categories.last.bottom : 0;
-  double get incomeHeight => incomeBottom - incomeTop;
-
-  double get totalExpenses =>
-      categories.fold<double>(0, (sum, p) => sum + p.category.total);
+  double get incomeTop =>
+      (categories.first.top + categories.last.bottom - incomeHeight) / 2;
+  double get incomeHeight =>
+      categories.last.incomeOffset + categories.last.height;
+  double get height =>
+      math.max(subItems.last.bottom, categories.last.bottom) + 12;
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Position calculation
-// ─────────────────────────────────────────────────────────────────────────────
 
 _SankeyPositions _calculatePositions({
   required List<ExpenseCategory> categories,
-  required double totalExpenses,
-  required double height,
+  required Map<ExpenseCategoryItem, double> itemHeights,
 }) {
-  final allSubItems = categories
-      .expand((c) => c.nonEmptyItems.map((i) => (c, i)))
-      .toList();
-
-  // Calculate gaps
-  final catGapsTotal = _kGap * (categories.length - 1);
-  final subGapsTotal = _kGap * (allSubItems.length - 1);
-
-  // Calculate proportional heights
-  final catProportionalHeights = categories
-      .map((c) => (height - catGapsTotal) * c.total / totalExpenses)
-      .toList();
-  final subProportionalHeights = allSubItems
-      .map((item) => (height - subGapsTotal) * item.$2.amount / totalExpenses)
-      .toList();
-
-  // Apply minBlockHeight
-  final catActualHeights = catProportionalHeights
-      .map((h) => math.max(_kMinBlockHeight, h))
-      .toList();
-  final subActualHeights = subProportionalHeights
-      .map((h) => math.max(_kMinBlockHeight, h))
-      .toList();
-
-  final catTotalHeight =
-      catActualHeights.fold<double>(0, (a, b) => a + b) + catGapsTotal;
-  final subTotalHeight =
-      subActualHeights.fold<double>(0, (a, b) => a + b) + subGapsTotal;
-
-  // Scale if needed
-  final maxNeededHeight = math.max(catTotalHeight, subTotalHeight);
-  final scale = maxNeededHeight > height ? height / maxNeededHeight : 1.0;
-
-  // Center vertically
-  final scaledCatHeight = catTotalHeight * scale;
-  final scaledSubHeight = subTotalHeight * scale;
-  final maxScaledHeight = math.max(scaledCatHeight, scaledSubHeight);
-  final verticalOffset = (height - maxScaledHeight) / 2;
-
-  // Build category positions
-  final catOffset = verticalOffset + (maxScaledHeight - scaledCatHeight) / 2;
   final categoryPositions = <_CategoryPosition>[];
-  var catY = catOffset;
+  final subPositions = <_SubItemPosition>[];
+  var subY = 12.0;
+  var packedIncomeY = 0.0;
 
-  for (var i = 0; i < categories.length; i++) {
-    final catHeight = catActualHeights[i] * scale;
+  for (final category in categories) {
+    var categoryHeight = 0.0;
+    final categoryStart = subY;
+
+    for (final item in category.nonEmptyItems) {
+      // Use the same visible thickness throughout each ribbon, including
+      // the minimum height that keeps small expenses legible.
+      final itemHeight = itemHeights[item]!;
+      subPositions.add(
+        _SubItemPosition(
+          category: category,
+          item: item,
+          top: subY,
+          bottom: subY + itemHeight,
+        ),
+      );
+      categoryHeight += itemHeight + _kSourceGap;
+      subY += itemHeight + _kGap;
+    }
+
+    categoryHeight -= _kSourceGap;
+    // Center each source on its leaves, with a small vertical shift so the
+    // tightly packed ribbons keep a gentle curve.
+    final categoryTop =
+        categoryStart +
+        (subY - _kGap - categoryStart - categoryHeight) / 2 +
+        10;
     categoryPositions.add(
       _CategoryPosition(
-        category: categories[i],
-        top: catY,
-        bottom: catY + catHeight,
-      ),
-    );
-    catY += catHeight + _kGap * scale;
-  }
-
-  // Build sub-item positions
-  final subOffset = verticalOffset + (maxScaledHeight - scaledSubHeight) / 2;
-  final subPositions = <_SubItemPosition>[];
-  var subY = subOffset;
-
-  for (var i = 0; i < allSubItems.length; i++) {
-    final (category, item) = allSubItems[i];
-    final subHeight = subActualHeights[i] * scale;
-    subPositions.add(
-      _SubItemPosition(
         category: category,
-        item: item,
-        top: subY,
-        bottom: subY + subHeight,
+        incomeOffset: packedIncomeY,
+        top: categoryTop,
+        bottom: categoryTop + categoryHeight,
       ),
     );
-    subY += subHeight + _kGap * scale;
+    packedIncomeY += categoryHeight;
+    subY += _kCategoryGap - _kGap;
   }
 
   return _SankeyPositions(
@@ -220,119 +238,115 @@ _SankeyPositions _calculatePositions({
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Layout
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _SankeyLayout {
-  _SankeyLayout({required double width}) {
-    const margin = 8.0;
-    final usable = width - margin * 2;
+  const _SankeyLayout({required this.width});
 
-    // Proportions for each zone
-    const incomeP = 0.18;
-    const flow1P = 0.06;
-    const catP = 0.20;
-    const flow2P = 0.08;
+  final double width;
 
-    incomeBlockRight = margin + usable * incomeP;
-    catBlockX = incomeBlockRight + usable * flow1P;
-    catLabelX = catBlockX + _kBlockWidth + _kLabelPadding;
-    subBlockX = catBlockX + usable * catP + usable * flow2P;
-    subLabelX = subBlockX + _kBlockWidth + _kLabelPadding;
-  }
-
-  late final double incomeBlockRight;
-  late final double catBlockX;
-  late final double catLabelX;
-  late final double subBlockX;
-  late final double subLabelX;
+  double get incomeBlockRight => 30;
+  double get catBlockX => width * 0.26;
+  double get catLabelX => catBlockX + _kBlockWidth + _kLabelPadding;
+  double get subBlockX => width * 0.61;
+  double get subLabelX => subBlockX + _kBlockWidth + 5;
+  double get amountMaxWidth => math.max(0, (width - subLabelX - 13) / 2);
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Labels widget
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SankeyLabels extends StatelessWidget {
   const _SankeyLabels({
     required this.layout,
     required this.positions,
     required this.totalIncome,
+    required this.labelStyle,
   });
 
   final _SankeyLayout layout;
   final _SankeyPositions positions;
   final double totalIncome;
+  final TextStyle labelStyle;
 
   @override
   Widget build(BuildContext context) {
     final locale = context.locale.toString();
-    final theme = Theme.of(context);
-
-    final incomeLabelStyle = theme.textTheme.labelLarge?.copyWith(
-      fontWeight: FontWeight.w700,
+    final incomeLabelStyle = labelStyle.copyWith(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
       color: AppColors.lightGray,
       height: 1.3,
     );
 
-    final categoryLabelStyle = theme.textTheme.labelLarge?.copyWith(
+    final categoryLabelHeight = MediaQuery.textScalerOf(context).scale(20);
+    final categoryLabelStyle = labelStyle.copyWith(
       fontWeight: FontWeight.w700,
-    );
-
-    final subItemLabelStyle = theme.textTheme.labelMedium?.copyWith(
-      fontWeight: FontWeight.w600,
     );
 
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        // Income label
         Positioned(
           left: 0,
           top: positions.incomeTop,
           height: positions.incomeHeight,
           width: layout.incomeBlockRight - _kLabelPadding - _kIncomeBarWidth,
           child: Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              '${context.tr(LocaleKeys.expenses_income)}\n'
-              '${totalIncome.simpleCurrency(locale)}',
-              style: incomeLabelStyle,
-              textAlign: TextAlign.right,
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: Text(
+                '${context.tr(LocaleKeys.expenses_income)} · '
+                '${totalIncome.simpleCurrency(locale)}',
+                style: incomeLabelStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ),
-        // Category labels
         for (final pos in positions.categories)
           Positioned(
             left: layout.catLabelX,
-            top: pos.top,
-            height: pos.height,
+            width: layout.subBlockX - layout.catLabelX - _kLabelPadding,
+            top: (pos.top + pos.bottom - categoryLabelHeight) / 2,
+            height: categoryLabelHeight,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 pos.category.name,
-                style: categoryLabelStyle?.copyWith(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: categoryLabelStyle.copyWith(
                   color: pos.color,
                 ),
               ),
             ),
           ),
-        // Sub-item labels
         for (final pos in positions.subItems)
           Positioned(
             left: layout.subLabelX,
             top: pos.top,
             height: pos.height,
-            right: 4,
+            right: 9,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                '${pos.item.name} ${pos.item.amount.simpleCurrency(locale)}',
-                style: subItemLabelStyle?.copyWith(
-                  color: pos.color,
+              child: DefaultTextStyle(
+                style: labelStyle.copyWith(color: pos.color),
+                child: Row(
+                  spacing: 4,
+                  children: [
+                    Expanded(
+                      child: Text(pos.item.name),
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: layout.amountMaxWidth,
+                      ),
+                      child: Text(
+                        pos.item.amount.simpleCurrency(locale),
+                        maxLines: 1,
+                        overflow: .ellipsis,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
@@ -340,10 +354,6 @@ class _SankeyLabels extends StatelessWidget {
     );
   }
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Custom painter
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SankeyPainter extends CustomPainter {
   _SankeyPainter({
@@ -358,17 +368,9 @@ class _SankeyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (positions.categories.isEmpty) return;
 
-    // Draw flows first (behind blocks)
     _drawFlowsToCategories(canvas);
     _drawFlowsToSubItems(canvas);
 
-    // Draw blocks on top
-    _drawIncomeBlock(canvas);
-    _drawCategoryBlocks(canvas);
-    _drawSubItemBlocks(canvas);
-  }
-
-  void _drawIncomeBlock(Canvas canvas) {
     _drawBlock(
       canvas,
       x: layout.incomeBlockRight - _kIncomeBarWidth,
@@ -377,90 +379,64 @@ class _SankeyPainter extends CustomPainter {
       height: positions.incomeHeight,
       color: AppColors.lightGray.withValues(alpha: _kIncomeOpacity),
     );
+    _drawBlocks(canvas, positions.categories, x: layout.catBlockX);
+    _drawBlocks(canvas, positions.subItems, x: layout.subBlockX);
   }
 
-  void _drawCategoryBlocks(Canvas canvas) {
-    for (final pos in positions.categories) {
+  void _drawBlocks(
+    Canvas canvas,
+    List<_NodePosition> nodes, {
+    required double x,
+  }) {
+    for (final pos in nodes) {
       _drawBlock(
         canvas,
-        x: layout.catBlockX,
+        x: x,
         top: pos.top,
         width: _kBlockWidth,
         height: pos.height,
-        color: pos.color.withValues(alpha: _kBlockOpacity),
-      );
-    }
-  }
-
-  void _drawSubItemBlocks(Canvas canvas) {
-    for (final pos in positions.subItems) {
-      _drawBlock(
-        canvas,
-        x: layout.subBlockX,
-        top: pos.top,
-        width: _kBlockWidth,
-        height: pos.height,
-        color: pos.color.withValues(alpha: _kBlockOpacity),
+        color: pos.color,
       );
     }
   }
 
   void _drawFlowsToCategories(Canvas canvas) {
-    var incomeY = positions.incomeTop;
-
     for (final pos in positions.categories) {
-      final ratio = pos.category.total / positions.totalExpenses;
-      final incomeSliceHeight = positions.incomeHeight * ratio;
-
       // Flows extend slightly under the blocks for clean visual transition
       _drawGradientFlow(
         canvas,
-        startX: layout.incomeBlockRight - _kBorderRadius,
-        startTop: incomeY,
-        startBottom: incomeY + incomeSliceHeight,
+        startX: layout.incomeBlockRight - 2,
+        startTop: positions.incomeTop + pos.incomeOffset,
+        startBottom: positions.incomeTop + pos.incomeOffset + pos.height,
         endX: layout.catBlockX + _kBorderRadius,
         endTop: pos.top,
         endBottom: pos.bottom,
-        startColor: pos.color.withValues(alpha: 0.3),
-        endColor: pos.color.withValues(alpha: 0.5),
+        color: pos.color,
       );
-
-      incomeY += incomeSliceHeight;
     }
   }
 
   void _drawFlowsToSubItems(Canvas canvas) {
     for (final catPos in positions.categories) {
-      final catSubItems = positions.subItems
-          .where((s) => s.category.name == catPos.category.name)
-          .toList();
-
-      if (catSubItems.isEmpty) continue;
-
-      var catY = catPos.top;
-      final catTotal = catSubItems.fold<double>(
-        0,
-        (sum, s) => sum + s.item.amount,
+      final catSubItems = positions.subItems.where(
+        (s) => s.category == catPos.category,
       );
 
+      var catY = catPos.top;
       for (final subPos in catSubItems) {
-        final ratio = subPos.item.amount / catTotal;
-        final catSliceHeight = catPos.height * ratio;
-
         // Flows extend slightly under the blocks for clean visual transition
         _drawGradientFlow(
           canvas,
           startX: layout.catBlockX + _kBlockWidth - _kBorderRadius,
           startTop: catY,
-          startBottom: catY + catSliceHeight,
+          startBottom: catY + subPos.height,
           endX: layout.subBlockX + _kBorderRadius,
           endTop: subPos.top,
           endBottom: subPos.bottom,
-          startColor: catPos.color.withValues(alpha: _kFlowOpacity),
-          endColor: subPos.color.withValues(alpha: _kFlowOpacity * 0.8),
+          color: subPos.color,
         );
 
-        catY += catSliceHeight;
+        catY += subPos.height + _kSourceGap;
       }
     }
   }
@@ -490,39 +466,40 @@ class _SankeyPainter extends CustomPainter {
     required double endX,
     required double endTop,
     required double endBottom,
-    required Color startColor,
-    required Color endColor,
+    required Color color,
   }) {
-    final dx = endX - startX;
-
-    // Smoother curves with adjusted control points
-    final cp1x = startX + dx * 0.4;
-    final cp2x = endX - dx * 0.4;
-
-    // Vertical interpolation for more natural flow
-    final cp1yTop = startTop + (endTop - startTop) * 0.15;
-    final cp1yBottom = startBottom + (endBottom - startBottom) * 0.15;
-    final cp2yTop = endTop - (endTop - startTop) * 0.15;
-    final cp2yBottom = endBottom - (endBottom - startBottom) * 0.15;
-
+    // Horizontal tangents keep both ends flush with their vertical nodes.
+    final controlOffset = (endX - startX) * 0.36;
     final path = Path()
       ..moveTo(startX, startTop)
-      ..cubicTo(cp1x, cp1yTop, cp2x, cp2yTop, endX, endTop)
+      ..cubicTo(
+        startX + controlOffset,
+        startTop,
+        endX - controlOffset,
+        endTop,
+        endX,
+        endTop,
+      )
       ..lineTo(endX, endBottom)
-      ..cubicTo(cp2x, cp2yBottom, cp1x, cp1yBottom, startX, startBottom)
+      ..cubicTo(
+        endX - controlOffset,
+        endBottom,
+        startX + controlOffset,
+        startBottom,
+        startX,
+        startBottom,
+      )
       ..close();
 
     final gradient = ui.Gradient.linear(
       Offset(startX, 0),
       Offset(endX, 0),
-      [startColor, endColor],
+      [color.withValues(alpha: _kFlowOpacity), color.withValues(alpha: 0.25)],
     );
 
     canvas.drawPath(
       path,
-      Paint()
-        ..shader = gradient
-        ..style = PaintingStyle.fill,
+      Paint()..shader = gradient,
     );
   }
 

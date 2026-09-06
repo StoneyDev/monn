@@ -148,13 +148,11 @@ class _BudgetContent extends StatelessWidget {
         ],
       ),
       _ViewMode.chart => Column(
+        spacing: 12,
         children: [
           header,
           Expanded(
-            child: FractionallySizedBox(
-              heightFactor: 0.8,
-              child: SankeyDiagram(budget: budget),
-            ),
+            child: SankeyDiagram(budget: budget),
           ),
         ],
       ),
