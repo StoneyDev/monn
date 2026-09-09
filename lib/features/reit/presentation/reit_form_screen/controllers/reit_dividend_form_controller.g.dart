@@ -10,12 +10,12 @@ part of 'reit_dividend_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ReitDividendFormController)
-const reitDividendFormControllerProvider =
+final reitDividendFormControllerProvider =
     ReitDividendFormControllerProvider._();
 
 final class ReitDividendFormControllerProvider
     extends $NotifierProvider<ReitDividendFormController, ReitDividendForm> {
-  const ReitDividendFormControllerProvider._()
+  ReitDividendFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -50,8 +50,7 @@ abstract class _$ReitDividendFormController
   ReitDividendForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<ReitDividendForm, ReitDividendForm>;
     final element =
         ref.element
@@ -61,6 +60,6 @@ abstract class _$ReitDividendFormController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

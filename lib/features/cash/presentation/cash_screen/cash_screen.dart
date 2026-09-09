@@ -52,11 +52,11 @@ class CashScreen extends ConsumerWidget {
           switch (cashs) {
             AsyncData(:final value) => Expanded(
               child: ListView.separated(
+                scrollCacheExtent: const .pixels(250),
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                 itemBuilder: (_, index) => _CashCard(value[index]),
                 separatorBuilder: (_, _) => const SizedBox(height: 16),
                 itemCount: value.length,
-                cacheExtent: 250,
               ),
             ),
             AsyncError(:final error) => Text(

@@ -36,23 +36,19 @@ Future<void> _systemChrome() => SystemChrome.setPreferredOrientations([
 
 void _registerErrorHandlers() {
   // Show some error UI if any uncaught exception happens
-  FlutterError.onError = (FlutterErrorDetails details) {
+  FlutterError.onError = (details) {
     FlutterError.presentError(details);
     debugPrint(details.toString());
   };
   // Handle errors from the underlying platform/OS
-  PlatformDispatcher.instance.onError = (Object error, _) {
+  PlatformDispatcher.instance.onError = (error, _) {
     debugPrint(error.toString());
     return true;
   };
   // Show some error UI when any widget in the app fails to build
   ErrorWidget.builder = (error) {
     return Scaffold(
-      body: SafeArea(
-        child: MonnError(
-          message: error.exceptionAsString(),
-        ),
-      ),
+      body: SafeArea(child: MonnError(message: error.exceptionAsString())),
     );
   };
 }

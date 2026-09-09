@@ -218,9 +218,7 @@ class $AssetsImagesIconGen {
   ];
 }
 
-class MonnAssets {
-  const MonnAssets._();
-
+abstract final class MonnAssets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

@@ -10,12 +10,12 @@ part of 'pea_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(peaRepository)
-const peaRepositoryProvider = PeaRepositoryProvider._();
+final peaRepositoryProvider = PeaRepositoryProvider._();
 
 final class PeaRepositoryProvider
     extends $FunctionalProvider<PeaRepository, PeaRepository, PeaRepository>
     with $Provider<PeaRepository> {
-  const PeaRepositoryProvider._()
+  PeaRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,7 @@ final class PeaRepositoryProvider
 String _$peaRepositoryHash() => r'b6729e77b19b056b2fcae1676daeb4792b2072bf';
 
 @ProviderFor(getPea)
-const getPeaProvider = GetPeaProvider._();
+final getPeaProvider = GetPeaProvider._();
 
 final class GetPeaProvider
     extends
@@ -61,7 +61,7 @@ final class GetPeaProvider
           FutureOr<PeaEntry?>
         >
     with $FutureModifier<PeaEntry?>, $FutureProvider<PeaEntry?> {
-  const GetPeaProvider._()
+  GetPeaProvider._()
     : super(
         from: null,
         argument: null,
@@ -89,7 +89,7 @@ final class GetPeaProvider
 String _$getPeaHash() => r'527e7f3867342204757630dcf5f7f2e3962bcaa7';
 
 @ProviderFor(getPayoutReportPea)
-const getPayoutReportPeaProvider = GetPayoutReportPeaProvider._();
+final getPayoutReportPeaProvider = GetPayoutReportPeaProvider._();
 
 final class GetPayoutReportPeaProvider
     extends
@@ -99,7 +99,7 @@ final class GetPayoutReportPeaProvider
           FutureOr<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $FutureProvider<PayoutReportData> {
-  const GetPayoutReportPeaProvider._()
+  GetPayoutReportPeaProvider._()
     : super(
         from: null,
         argument: null,

@@ -10,11 +10,11 @@ part of 'freelance_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(FreelanceFormController)
-const freelanceFormControllerProvider = FreelanceFormControllerProvider._();
+final freelanceFormControllerProvider = FreelanceFormControllerProvider._();
 
 final class FreelanceFormControllerProvider
     extends $NotifierProvider<FreelanceFormController, FreelanceForm> {
-  const FreelanceFormControllerProvider._()
+  FreelanceFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,8 +48,7 @@ abstract class _$FreelanceFormController extends $Notifier<FreelanceForm> {
   FreelanceForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<FreelanceForm, FreelanceForm>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$FreelanceFormController extends $Notifier<FreelanceForm> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

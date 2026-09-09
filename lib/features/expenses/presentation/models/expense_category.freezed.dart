@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'expense_category.dart';
@@ -9,6 +9,7 @@ part of 'expense_category.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ExpenseCategoryCopyWith<ExpenseCategory> get copyWith => _$ExpenseCategoryCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpenseCategory&&(identical(other.name, name) || other.name == name)&&(identical(other.total, total) || other.total == total)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other.items, items));
+  final _this = this as ExpenseCategory;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpenseCategory&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.total, _this.total) || other.total == _this.total)&&(identical(other.color, _this.color) || other.color == _this.color)&&const DeepCollectionEquality().equals(other.items, _this.items));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,total,color,const DeepCollectionEquality().hash(items));
+int get hashCode {
+  final _this = this as ExpenseCategory;
+  return Object.hash(runtimeType,_this.name,_this.total,_this.color,const DeepCollectionEquality().hash(_this.items));
+}
 
 @override
 String toString() {
-  return 'ExpenseCategory(name: $name, total: $total, color: $color, items: $items)';
+  final _this = this as ExpenseCategory;
+  return 'ExpenseCategory(name: ${_this.name}, total: ${_this.total}, color: ${_this.color}, items: ${_this.items})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ExpenseCategoryCopyWithImpl<$Res>
 /// Create a copy of ExpenseCategory
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? total = null,Object? color = null,Object? items = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExpenseCategory(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as double,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
@@ -209,7 +215,7 @@ return $default(_that.name,_that.total,_that.color,_that.items);case _:
 
 
 class _ExpenseCategory extends ExpenseCategory {
-  const _ExpenseCategory({required this.name, required this.total, required this.color, required final  List<ExpenseCategoryItem> items}): _items = items,super._();
+  const _ExpenseCategory({required this.name, required this.total, required this.color, required  List<ExpenseCategoryItem> items}): _items = items,super._();
   
 
 @override final  String name;
@@ -233,16 +239,18 @@ _$ExpenseCategoryCopyWith<_ExpenseCategory> get copyWith => __$ExpenseCategoryCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpenseCategory&&(identical(other.name, name) || other.name == name)&&(identical(other.total, total) || other.total == total)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other._items, _items));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpenseCategory&&(identical(other.name, name) || other.name == name)&&(identical(other.total, total) || other.total == total)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other.items, _items));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,total,color,const DeepCollectionEquality().hash(_items));
+int get hashCode {
+    return Object.hash(runtimeType,name,total,color,const DeepCollectionEquality().hash(_items));
+}
 
 @override
 String toString() {
-  return 'ExpenseCategory(name: $name, total: $total, color: $color, items: $items)';
+    return 'ExpenseCategory(name: $name, total: $total, color: $color, items: $items)';
 }
 
 
@@ -297,16 +305,21 @@ $ExpenseCategoryItemCopyWith<ExpenseCategoryItem> get copyWith => _$ExpenseCateg
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpenseCategoryItem&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount));
+  final _this = this as ExpenseCategoryItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpenseCategoryItem&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.amount, _this.amount) || other.amount == _this.amount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,amount);
+int get hashCode {
+  final _this = this as ExpenseCategoryItem;
+  return Object.hash(runtimeType,_this.name,_this.amount);
+}
 
 @override
 String toString() {
-  return 'ExpenseCategoryItem(name: $name, amount: $amount)';
+  final _this = this as ExpenseCategoryItem;
+  return 'ExpenseCategoryItem(name: ${_this.name}, amount: ${_this.amount})';
 }
 
 
@@ -335,7 +348,7 @@ class _$ExpenseCategoryItemCopyWithImpl<$Res>
 /// Create a copy of ExpenseCategoryItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? amount = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExpenseCategoryItem(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,
@@ -495,16 +508,18 @@ _$ExpenseCategoryItemCopyWith<_ExpenseCategoryItem> get copyWith => __$ExpenseCa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpenseCategoryItem&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpenseCategoryItem&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,amount);
+int get hashCode {
+    return Object.hash(runtimeType,name,amount);
+}
 
 @override
 String toString() {
-  return 'ExpenseCategoryItem(name: $name, amount: $amount)';
+    return 'ExpenseCategoryItem(name: $name, amount: $amount)';
 }
 
 

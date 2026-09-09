@@ -10,11 +10,11 @@ part of 'backup_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(BackupController)
-const backupControllerProvider = BackupControllerProvider._();
+final backupControllerProvider = BackupControllerProvider._();
 
 final class BackupControllerProvider
     extends $AsyncNotifierProvider<BackupController, String?> {
-  const BackupControllerProvider._()
+  BackupControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -33,14 +33,13 @@ final class BackupControllerProvider
   BackupController create() => BackupController();
 }
 
-String _$backupControllerHash() => r'a417342d62b4b701ca0b5a0e328feb50c8ab0bd3';
+String _$backupControllerHash() => r'72404b478b6750498a4dd5b8ffe27e875210f258';
 
 abstract class _$BackupController extends $AsyncNotifier<String?> {
   FutureOr<String?> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<String?>, String?>;
     final element =
         ref.element
@@ -50,6 +49,6 @@ abstract class _$BackupController extends $AsyncNotifier<String?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

@@ -10,12 +10,12 @@ part of 'reit_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(reitRepository)
-const reitRepositoryProvider = ReitRepositoryProvider._();
+final reitRepositoryProvider = ReitRepositoryProvider._();
 
 final class ReitRepositoryProvider
     extends $FunctionalProvider<ReitRepository, ReitRepository, ReitRepository>
     with $Provider<ReitRepository> {
-  const ReitRepositoryProvider._()
+  ReitRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,7 @@ final class ReitRepositoryProvider
 String _$reitRepositoryHash() => r'a3e0fae30a474b3e4b6838ceb361c261f33c418a';
 
 @ProviderFor(watchReits)
-const watchReitsProvider = WatchReitsProvider._();
+final watchReitsProvider = WatchReitsProvider._();
 
 final class WatchReitsProvider
     extends
@@ -63,7 +63,7 @@ final class WatchReitsProvider
     with
         $FutureModifier<List<ReitWithDividends>>,
         $StreamProvider<List<ReitWithDividends>> {
-  const WatchReitsProvider._()
+  WatchReitsProvider._()
     : super(
         from: null,
         argument: null,
@@ -92,12 +92,12 @@ final class WatchReitsProvider
 String _$watchReitsHash() => r'6b2e7aaa35b42695cc58dff727ed05fbbd73de3c';
 
 @ProviderFor(deleteReit)
-const deleteReitProvider = DeleteReitFamily._();
+final deleteReitProvider = DeleteReitFamily._();
 
 final class DeleteReitProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
-  const DeleteReitProvider._({
+  DeleteReitProvider._({
     required DeleteReitFamily super.from,
     required int super.argument,
   }) : super(
@@ -144,7 +144,7 @@ String _$deleteReitHash() => r'27c6409aecfe9252b39bcc36f470bc7617ee30b1';
 
 final class DeleteReitFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<void>, int> {
-  const DeleteReitFamily._()
+  DeleteReitFamily._()
     : super(
         retry: null,
         name: r'deleteReitProvider',
@@ -161,7 +161,7 @@ final class DeleteReitFamily extends $Family
 }
 
 @ProviderFor(watchPayoutReportReit)
-const watchPayoutReportReitProvider = WatchPayoutReportReitProvider._();
+final watchPayoutReportReitProvider = WatchPayoutReportReitProvider._();
 
 final class WatchPayoutReportReitProvider
     extends
@@ -171,7 +171,7 @@ final class WatchPayoutReportReitProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportReitProvider._()
+  WatchPayoutReportReitProvider._()
     : super(
         from: null,
         argument: null,

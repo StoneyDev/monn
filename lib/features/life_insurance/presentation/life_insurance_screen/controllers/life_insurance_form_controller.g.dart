@@ -10,12 +10,12 @@ part of 'life_insurance_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(LifeInsuranceFormController)
-const lifeInsuranceFormControllerProvider =
+final lifeInsuranceFormControllerProvider =
     LifeInsuranceFormControllerProvider._();
 
 final class LifeInsuranceFormControllerProvider
     extends $NotifierProvider<LifeInsuranceFormController, LifeInsuranceForm> {
-  const LifeInsuranceFormControllerProvider._()
+  LifeInsuranceFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -50,8 +50,7 @@ abstract class _$LifeInsuranceFormController
   LifeInsuranceForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<LifeInsuranceForm, LifeInsuranceForm>;
     final element =
         ref.element
@@ -61,6 +60,6 @@ abstract class _$LifeInsuranceFormController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

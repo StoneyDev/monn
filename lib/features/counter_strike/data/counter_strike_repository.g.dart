@@ -10,7 +10,7 @@ part of 'counter_strike_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(counterStrikeRepository)
-const counterStrikeRepositoryProvider = CounterStrikeRepositoryProvider._();
+final counterStrikeRepositoryProvider = CounterStrikeRepositoryProvider._();
 
 final class CounterStrikeRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class CounterStrikeRepositoryProvider
           CounterStrikeRepository
         >
     with $Provider<CounterStrikeRepository> {
-  const CounterStrikeRepositoryProvider._()
+  CounterStrikeRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$counterStrikeRepositoryHash() =>
     r'8d9dda1c5ea5e06193424d02f32eeb08ae8fa764';
 
 @ProviderFor(watchCounterStrikes)
-const watchCounterStrikesProvider = WatchCounterStrikesProvider._();
+final watchCounterStrikesProvider = WatchCounterStrikesProvider._();
 
 final class WatchCounterStrikesProvider
     extends
@@ -70,7 +70,7 @@ final class WatchCounterStrikesProvider
     with
         $FutureModifier<List<CounterStrikeEntry>>,
         $StreamProvider<List<CounterStrikeEntry>> {
-  const WatchCounterStrikesProvider._()
+  WatchCounterStrikesProvider._()
     : super(
         from: null,
         argument: null,
@@ -100,7 +100,7 @@ String _$watchCounterStrikesHash() =>
     r'aefe4b1c55754c0af8bf3e5ba0af8015c3bb5888';
 
 @ProviderFor(watchPayoutReportCounterStrike)
-const watchPayoutReportCounterStrikeProvider =
+final watchPayoutReportCounterStrikeProvider =
     WatchPayoutReportCounterStrikeProvider._();
 
 final class WatchPayoutReportCounterStrikeProvider
@@ -111,7 +111,7 @@ final class WatchPayoutReportCounterStrikeProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportCounterStrikeProvider._()
+  WatchPayoutReportCounterStrikeProvider._()
     : super(
         from: null,
         argument: null,

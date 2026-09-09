@@ -10,7 +10,7 @@ part of 'crowdfunding_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(crowdfundingRepository)
-const crowdfundingRepositoryProvider = CrowdfundingRepositoryProvider._();
+final crowdfundingRepositoryProvider = CrowdfundingRepositoryProvider._();
 
 final class CrowdfundingRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class CrowdfundingRepositoryProvider
           CrowdfundingRepository
         >
     with $Provider<CrowdfundingRepository> {
-  const CrowdfundingRepositoryProvider._()
+  CrowdfundingRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$crowdfundingRepositoryHash() =>
     r'ee5166bcd8aad33bbee8a2274f28a1b1ec61efc4';
 
 @ProviderFor(watchCrowdfundings)
-const watchCrowdfundingsProvider = WatchCrowdfundingsProvider._();
+final watchCrowdfundingsProvider = WatchCrowdfundingsProvider._();
 
 final class WatchCrowdfundingsProvider
     extends
@@ -70,7 +70,7 @@ final class WatchCrowdfundingsProvider
     with
         $FutureModifier<List<CrowdfundingEntry>>,
         $StreamProvider<List<CrowdfundingEntry>> {
-  const WatchCrowdfundingsProvider._()
+  WatchCrowdfundingsProvider._()
     : super(
         from: null,
         argument: null,
@@ -100,7 +100,7 @@ String _$watchCrowdfundingsHash() =>
     r'1f1b9a11a2ca29eb50f97006a636a19b33a74b42';
 
 @ProviderFor(watchPayoutReportCrowdfunding)
-const watchPayoutReportCrowdfundingProvider =
+final watchPayoutReportCrowdfundingProvider =
     WatchPayoutReportCrowdfundingProvider._();
 
 final class WatchPayoutReportCrowdfundingProvider
@@ -111,7 +111,7 @@ final class WatchPayoutReportCrowdfundingProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportCrowdfundingProvider._()
+  WatchPayoutReportCrowdfundingProvider._()
     : super(
         from: null,
         argument: null,

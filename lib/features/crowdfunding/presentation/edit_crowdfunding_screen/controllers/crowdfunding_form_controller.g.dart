@@ -10,12 +10,12 @@ part of 'crowdfunding_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CrowdfundingFormController)
-const crowdfundingFormControllerProvider =
+final crowdfundingFormControllerProvider =
     CrowdfundingFormControllerProvider._();
 
 final class CrowdfundingFormControllerProvider
     extends $NotifierProvider<CrowdfundingFormController, CrowdfundingForm> {
-  const CrowdfundingFormControllerProvider._()
+  CrowdfundingFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -43,15 +43,14 @@ final class CrowdfundingFormControllerProvider
 }
 
 String _$crowdfundingFormControllerHash() =>
-    r'd009175eab1e74e4359a709cead0b6119a7fe465';
+    r'4934346e65039eab028af20b406cd9c1f81a4273';
 
 abstract class _$CrowdfundingFormController
     extends $Notifier<CrowdfundingForm> {
   CrowdfundingForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<CrowdfundingForm, CrowdfundingForm>;
     final element =
         ref.element
@@ -61,6 +60,6 @@ abstract class _$CrowdfundingFormController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

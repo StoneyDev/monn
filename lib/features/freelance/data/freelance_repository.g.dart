@@ -10,7 +10,7 @@ part of 'freelance_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(freelanceRepository)
-const freelanceRepositoryProvider = FreelanceRepositoryProvider._();
+final freelanceRepositoryProvider = FreelanceRepositoryProvider._();
 
 final class FreelanceRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class FreelanceRepositoryProvider
           FreelanceRepository
         >
     with $Provider<FreelanceRepository> {
-  const FreelanceRepositoryProvider._()
+  FreelanceRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$freelanceRepositoryHash() =>
     r'5b4a275f9851fc9fd12e08ade02f80548e7d97e6';
 
 @ProviderFor(watchFreelance)
-const watchFreelanceProvider = WatchFreelanceProvider._();
+final watchFreelanceProvider = WatchFreelanceProvider._();
 
 final class WatchFreelanceProvider
     extends
@@ -68,7 +68,7 @@ final class WatchFreelanceProvider
           Stream<FreelanceEntry?>
         >
     with $FutureModifier<FreelanceEntry?>, $StreamProvider<FreelanceEntry?> {
-  const WatchFreelanceProvider._()
+  WatchFreelanceProvider._()
     : super(
         from: null,
         argument: null,
@@ -97,13 +97,13 @@ final class WatchFreelanceProvider
 String _$watchFreelanceHash() => r'1c4fa26d11be91b0055a933e20cfa34333f13076';
 
 @ProviderFor(freelanceCalculation)
-const freelanceCalculationProvider = FreelanceCalculationProvider._();
+final freelanceCalculationProvider = FreelanceCalculationProvider._();
 
 final class FreelanceCalculationProvider
     extends
         $FunctionalProvider<FreelanceResult, FreelanceResult, FreelanceResult>
     with $Provider<FreelanceResult> {
-  const FreelanceCalculationProvider._()
+  FreelanceCalculationProvider._()
     : super(
         from: null,
         argument: null,

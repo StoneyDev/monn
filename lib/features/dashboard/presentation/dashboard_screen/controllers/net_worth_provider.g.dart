@@ -10,12 +10,12 @@ part of 'net_worth_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(getFinalAmount)
-const getFinalAmountProvider = GetFinalAmountFamily._();
+final getFinalAmountProvider = GetFinalAmountFamily._();
 
 final class GetFinalAmountProvider
     extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
     with $FutureModifier<double>, $FutureProvider<double> {
-  const GetFinalAmountProvider._({
+  GetFinalAmountProvider._({
     required GetFinalAmountFamily super.from,
     required SavingsType super.argument,
   }) : super(
@@ -62,7 +62,7 @@ String _$getFinalAmountHash() => r'ca0ca54b43bd41fe2e420498aa63c3a06b0c8534';
 
 final class GetFinalAmountFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<double>, SavingsType> {
-  const GetFinalAmountFamily._()
+  GetFinalAmountFamily._()
     : super(
         retry: null,
         name: r'getFinalAmountProvider',
@@ -79,12 +79,12 @@ final class GetFinalAmountFamily extends $Family
 }
 
 @ProviderFor(watchTotalNetWorth)
-const watchTotalNetWorthProvider = WatchTotalNetWorthProvider._();
+final watchTotalNetWorthProvider = WatchTotalNetWorthProvider._();
 
 final class WatchTotalNetWorthProvider
     extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
     with $FutureModifier<double>, $FutureProvider<double> {
-  const WatchTotalNetWorthProvider._()
+  WatchTotalNetWorthProvider._()
     : super(
         from: null,
         argument: null,
@@ -113,7 +113,7 @@ String _$watchTotalNetWorthHash() =>
     r'f3bbc6ee5c6e60de02e373c2f59143bef2783794';
 
 @ProviderFor(watchSortedSavings)
-const watchSortedSavingsProvider = WatchSortedSavingsFamily._();
+final watchSortedSavingsProvider = WatchSortedSavingsFamily._();
 
 final class WatchSortedSavingsProvider
     extends
@@ -125,7 +125,7 @@ final class WatchSortedSavingsProvider
     with
         $FutureModifier<List<SortedSaving>>,
         $FutureProvider<List<SortedSaving>> {
-  const WatchSortedSavingsProvider._({
+  WatchSortedSavingsProvider._({
     required WatchSortedSavingsFamily super.from,
     required SavingsFilter super.argument,
   }) : super(
@@ -175,7 +175,7 @@ String _$watchSortedSavingsHash() =>
 final class WatchSortedSavingsFamily extends $Family
     with
         $FunctionalFamilyOverride<FutureOr<List<SortedSaving>>, SavingsFilter> {
-  const WatchSortedSavingsFamily._()
+  WatchSortedSavingsFamily._()
     : super(
         retry: null,
         name: r'watchSortedSavingsProvider',
@@ -192,7 +192,7 @@ final class WatchSortedSavingsFamily extends $Family
 }
 
 @ProviderFor(watchFinalAmounts)
-const watchFinalAmountsProvider = WatchFinalAmountsProvider._();
+final watchFinalAmountsProvider = WatchFinalAmountsProvider._();
 
 final class WatchFinalAmountsProvider
     extends
@@ -204,7 +204,7 @@ final class WatchFinalAmountsProvider
     with
         $FutureModifier<Map<SavingsType, double>>,
         $FutureProvider<Map<SavingsType, double>> {
-  const WatchFinalAmountsProvider._()
+  WatchFinalAmountsProvider._()
     : super(
         from: null,
         argument: null,

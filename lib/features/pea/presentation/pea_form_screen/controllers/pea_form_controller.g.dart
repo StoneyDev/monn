@@ -10,11 +10,11 @@ part of 'pea_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(PeaFormController)
-const peaFormControllerProvider = PeaFormControllerProvider._();
+final peaFormControllerProvider = PeaFormControllerProvider._();
 
 final class PeaFormControllerProvider
     extends $NotifierProvider<PeaFormController, PeaForm> {
-  const PeaFormControllerProvider._()
+  PeaFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,8 +47,7 @@ abstract class _$PeaFormController extends $Notifier<PeaForm> {
   PeaForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<PeaForm, PeaForm>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$PeaFormController extends $Notifier<PeaForm> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

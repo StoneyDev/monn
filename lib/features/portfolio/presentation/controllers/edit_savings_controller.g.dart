@@ -10,11 +10,11 @@ part of 'edit_savings_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(EditSavingsController)
-const editSavingsControllerProvider = EditSavingsControllerProvider._();
+final editSavingsControllerProvider = EditSavingsControllerProvider._();
 
 final class EditSavingsControllerProvider
     extends $AsyncNotifierProvider<EditSavingsController, void> {
-  const EditSavingsControllerProvider._()
+  EditSavingsControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,8 +40,7 @@ abstract class _$EditSavingsController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<void>, void>;
     final element =
         ref.element
@@ -51,6 +50,6 @@ abstract class _$EditSavingsController extends $AsyncNotifier<void> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    return element.handleCreate(ref, build);
   }
 }

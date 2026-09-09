@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'reit_tax_calculator.dart';
@@ -9,6 +9,7 @@ part of 'reit_tax_calculator.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ReitTaxResultCopyWith<ReitTaxResult> get copyWith => _$ReitTaxResultCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReitTaxResult&&(identical(other.reitDividends, reitDividends) || other.reitDividends == reitDividends)&&(identical(other.reitIncomeTax, reitIncomeTax) || other.reitIncomeTax == reitIncomeTax)&&(identical(other.reitSocialCharges, reitSocialCharges) || other.reitSocialCharges == reitSocialCharges)&&(identical(other.reitTotalTax, reitTotalTax) || other.reitTotalTax == reitTotalTax)&&(identical(other.reitNetAfterTax, reitNetAfterTax) || other.reitNetAfterTax == reitNetAfterTax)&&(identical(other.effectiveTaxRate, effectiveTaxRate) || other.effectiveTaxRate == effectiveTaxRate)&&(identical(other.tmi, tmi) || other.tmi == tmi));
+  final _this = this as ReitTaxResult;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReitTaxResult&&(identical(other.reitDividends, _this.reitDividends) || other.reitDividends == _this.reitDividends)&&(identical(other.reitIncomeTax, _this.reitIncomeTax) || other.reitIncomeTax == _this.reitIncomeTax)&&(identical(other.reitSocialCharges, _this.reitSocialCharges) || other.reitSocialCharges == _this.reitSocialCharges)&&(identical(other.reitTotalTax, _this.reitTotalTax) || other.reitTotalTax == _this.reitTotalTax)&&(identical(other.reitNetAfterTax, _this.reitNetAfterTax) || other.reitNetAfterTax == _this.reitNetAfterTax)&&(identical(other.effectiveTaxRate, _this.effectiveTaxRate) || other.effectiveTaxRate == _this.effectiveTaxRate)&&(identical(other.tmi, _this.tmi) || other.tmi == _this.tmi));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,reitDividends,reitIncomeTax,reitSocialCharges,reitTotalTax,reitNetAfterTax,effectiveTaxRate,tmi);
+int get hashCode {
+  final _this = this as ReitTaxResult;
+  return Object.hash(runtimeType,_this.reitDividends,_this.reitIncomeTax,_this.reitSocialCharges,_this.reitTotalTax,_this.reitNetAfterTax,_this.effectiveTaxRate,_this.tmi);
+}
 
 @override
 String toString() {
-  return 'ReitTaxResult(reitDividends: $reitDividends, reitIncomeTax: $reitIncomeTax, reitSocialCharges: $reitSocialCharges, reitTotalTax: $reitTotalTax, reitNetAfterTax: $reitNetAfterTax, effectiveTaxRate: $effectiveTaxRate, tmi: $tmi)';
+  final _this = this as ReitTaxResult;
+  return 'ReitTaxResult(reitDividends: ${_this.reitDividends}, reitIncomeTax: ${_this.reitIncomeTax}, reitSocialCharges: ${_this.reitSocialCharges}, reitTotalTax: ${_this.reitTotalTax}, reitNetAfterTax: ${_this.reitNetAfterTax}, effectiveTaxRate: ${_this.effectiveTaxRate}, tmi: ${_this.tmi})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ReitTaxResultCopyWithImpl<$Res>
 /// Create a copy of ReitTaxResult
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? reitDividends = null,Object? reitIncomeTax = null,Object? reitSocialCharges = null,Object? reitTotalTax = null,Object? reitNetAfterTax = null,Object? effectiveTaxRate = null,Object? tmi = null,}) {
-  return _then(_self.copyWith(
+  return _then(ReitTaxResult(
 reitDividends: null == reitDividends ? _self.reitDividends : reitDividends // ignore: cast_nullable_to_non_nullable
 as double,reitIncomeTax: null == reitIncomeTax ? _self.reitIncomeTax : reitIncomeTax // ignore: cast_nullable_to_non_nullable
 as double,reitSocialCharges: null == reitSocialCharges ? _self.reitSocialCharges : reitSocialCharges // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ _$ReitTaxResultCopyWith<_ReitTaxResult> get copyWith => __$ReitTaxResultCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReitTaxResult&&(identical(other.reitDividends, reitDividends) || other.reitDividends == reitDividends)&&(identical(other.reitIncomeTax, reitIncomeTax) || other.reitIncomeTax == reitIncomeTax)&&(identical(other.reitSocialCharges, reitSocialCharges) || other.reitSocialCharges == reitSocialCharges)&&(identical(other.reitTotalTax, reitTotalTax) || other.reitTotalTax == reitTotalTax)&&(identical(other.reitNetAfterTax, reitNetAfterTax) || other.reitNetAfterTax == reitNetAfterTax)&&(identical(other.effectiveTaxRate, effectiveTaxRate) || other.effectiveTaxRate == effectiveTaxRate)&&(identical(other.tmi, tmi) || other.tmi == tmi));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReitTaxResult&&(identical(other.reitDividends, reitDividends) || other.reitDividends == reitDividends)&&(identical(other.reitIncomeTax, reitIncomeTax) || other.reitIncomeTax == reitIncomeTax)&&(identical(other.reitSocialCharges, reitSocialCharges) || other.reitSocialCharges == reitSocialCharges)&&(identical(other.reitTotalTax, reitTotalTax) || other.reitTotalTax == reitTotalTax)&&(identical(other.reitNetAfterTax, reitNetAfterTax) || other.reitNetAfterTax == reitNetAfterTax)&&(identical(other.effectiveTaxRate, effectiveTaxRate) || other.effectiveTaxRate == effectiveTaxRate)&&(identical(other.tmi, tmi) || other.tmi == tmi));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,reitDividends,reitIncomeTax,reitSocialCharges,reitTotalTax,reitNetAfterTax,effectiveTaxRate,tmi);
+int get hashCode {
+    return Object.hash(runtimeType,reitDividends,reitIncomeTax,reitSocialCharges,reitTotalTax,reitNetAfterTax,effectiveTaxRate,tmi);
+}
 
 @override
 String toString() {
-  return 'ReitTaxResult(reitDividends: $reitDividends, reitIncomeTax: $reitIncomeTax, reitSocialCharges: $reitSocialCharges, reitTotalTax: $reitTotalTax, reitNetAfterTax: $reitNetAfterTax, effectiveTaxRate: $effectiveTaxRate, tmi: $tmi)';
+    return 'ReitTaxResult(reitDividends: $reitDividends, reitIncomeTax: $reitIncomeTax, reitSocialCharges: $reitSocialCharges, reitTotalTax: $reitTotalTax, reitNetAfterTax: $reitNetAfterTax, effectiveTaxRate: $effectiveTaxRate, tmi: $tmi)';
 }
 
 

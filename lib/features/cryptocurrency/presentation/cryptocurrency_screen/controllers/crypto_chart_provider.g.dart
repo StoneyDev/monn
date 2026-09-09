@@ -10,12 +10,12 @@ part of 'crypto_chart_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(watchCryptoChart)
-const watchCryptoChartProvider = WatchCryptoChartProvider._();
+final watchCryptoChartProvider = WatchCryptoChartProvider._();
 
 final class WatchCryptoChartProvider
     extends $FunctionalProvider<AsyncValue<Chart>, Chart, Stream<Chart>>
     with $FutureModifier<Chart>, $StreamProvider<Chart> {
-  const WatchCryptoChartProvider._()
+  WatchCryptoChartProvider._()
     : super(
         from: null,
         argument: null,

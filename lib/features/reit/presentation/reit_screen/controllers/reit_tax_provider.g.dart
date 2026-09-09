@@ -10,12 +10,12 @@ part of 'reit_tax_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(reitTaxCalculation)
-const reitTaxCalculationProvider = ReitTaxCalculationProvider._();
+final reitTaxCalculationProvider = ReitTaxCalculationProvider._();
 
 final class ReitTaxCalculationProvider
     extends $FunctionalProvider<ReitTaxResult, ReitTaxResult, ReitTaxResult>
     with $Provider<ReitTaxResult> {
-  const ReitTaxCalculationProvider._()
+  ReitTaxCalculationProvider._()
     : super(
         from: null,
         argument: null,

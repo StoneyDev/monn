@@ -10,7 +10,7 @@ part of 'life_insurance_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(lifeInsuranceRepository)
-const lifeInsuranceRepositoryProvider = LifeInsuranceRepositoryProvider._();
+final lifeInsuranceRepositoryProvider = LifeInsuranceRepositoryProvider._();
 
 final class LifeInsuranceRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class LifeInsuranceRepositoryProvider
           LifeInsuranceRepository
         >
     with $Provider<LifeInsuranceRepository> {
-  const LifeInsuranceRepositoryProvider._()
+  LifeInsuranceRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$lifeInsuranceRepositoryHash() =>
     r'10ebd62b12a576d9ac615ab1df1f6d5f7e3b4476';
 
 @ProviderFor(watchLifeInsurance)
-const watchLifeInsuranceProvider = WatchLifeInsuranceProvider._();
+final watchLifeInsuranceProvider = WatchLifeInsuranceProvider._();
 
 final class WatchLifeInsuranceProvider
     extends
@@ -70,7 +70,7 @@ final class WatchLifeInsuranceProvider
     with
         $FutureModifier<LifeInsuranceEntry?>,
         $StreamProvider<LifeInsuranceEntry?> {
-  const WatchLifeInsuranceProvider._()
+  WatchLifeInsuranceProvider._()
     : super(
         from: null,
         argument: null,
@@ -100,7 +100,7 @@ String _$watchLifeInsuranceHash() =>
     r'06051b023bbaa8e9625eae9acd02e38fe5aea69c';
 
 @ProviderFor(watchPayoutReportLifeInsurance)
-const watchPayoutReportLifeInsuranceProvider =
+final watchPayoutReportLifeInsuranceProvider =
     WatchPayoutReportLifeInsuranceProvider._();
 
 final class WatchPayoutReportLifeInsuranceProvider
@@ -111,7 +111,7 @@ final class WatchPayoutReportLifeInsuranceProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportLifeInsuranceProvider._()
+  WatchPayoutReportLifeInsuranceProvider._()
     : super(
         from: null,
         argument: null,

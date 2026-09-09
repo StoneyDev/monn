@@ -55,6 +55,7 @@ class SavingsBookScreen extends ConsumerWidget {
           switch (savingsBooks) {
             AsyncData(:final value) => Expanded(
               child: ListView.separated(
+                scrollCacheExtent: const .pixels(250),
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
                 itemBuilder: (_, index) {
                   final item = value[index];
@@ -133,7 +134,6 @@ class SavingsBookScreen extends ConsumerWidget {
                 },
                 separatorBuilder: (_, _) => const SizedBox(height: 16),
                 itemCount: value.length,
-                cacheExtent: 250,
               ),
             ),
             AsyncError(:final error) => Text('Error: $error'),

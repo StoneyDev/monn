@@ -10,7 +10,7 @@ part of 'savings_book_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(savingsBookRepository)
-const savingsBookRepositoryProvider = SavingsBookRepositoryProvider._();
+final savingsBookRepositoryProvider = SavingsBookRepositoryProvider._();
 
 final class SavingsBookRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class SavingsBookRepositoryProvider
           SavingsBookRepository
         >
     with $Provider<SavingsBookRepository> {
-  const SavingsBookRepositoryProvider._()
+  SavingsBookRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$savingsBookRepositoryHash() =>
     r'04a97e740feedcb41ff39ce13f65524fb9c50d8b';
 
 @ProviderFor(watchSavingsBooks)
-const watchSavingsBooksProvider = WatchSavingsBooksProvider._();
+final watchSavingsBooksProvider = WatchSavingsBooksProvider._();
 
 final class WatchSavingsBooksProvider
     extends
@@ -70,7 +70,7 @@ final class WatchSavingsBooksProvider
     with
         $FutureModifier<List<SavingsBookEntry>>,
         $StreamProvider<List<SavingsBookEntry>> {
-  const WatchSavingsBooksProvider._()
+  WatchSavingsBooksProvider._()
     : super(
         from: null,
         argument: null,
@@ -99,7 +99,7 @@ final class WatchSavingsBooksProvider
 String _$watchSavingsBooksHash() => r'a02d1f4dca3c7b89760415b3d68f31f129b55985';
 
 @ProviderFor(watchPayoutReportSavingsBook)
-const watchPayoutReportSavingsBookProvider =
+final watchPayoutReportSavingsBookProvider =
     WatchPayoutReportSavingsBookProvider._();
 
 final class WatchPayoutReportSavingsBookProvider
@@ -110,7 +110,7 @@ final class WatchPayoutReportSavingsBookProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportSavingsBookProvider._()
+  WatchPayoutReportSavingsBookProvider._()
     : super(
         from: null,
         argument: null,

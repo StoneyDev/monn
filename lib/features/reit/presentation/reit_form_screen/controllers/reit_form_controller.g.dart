@@ -10,11 +10,11 @@ part of 'reit_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ReitFormController)
-const reitFormControllerProvider = ReitFormControllerProvider._();
+final reitFormControllerProvider = ReitFormControllerProvider._();
 
 final class ReitFormControllerProvider
     extends $NotifierProvider<ReitFormController, ReitForm> {
-  const ReitFormControllerProvider._()
+  ReitFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,8 +48,7 @@ abstract class _$ReitFormController extends $Notifier<ReitForm> {
   ReitForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<ReitForm, ReitForm>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$ReitFormController extends $Notifier<ReitForm> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

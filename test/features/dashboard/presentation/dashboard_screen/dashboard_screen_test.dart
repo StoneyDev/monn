@@ -44,9 +44,7 @@ void main() {
             filter: filter,
           ).overrideWithValue(const AsyncData([])),
           watchTotalNetWorthProvider.overrideWithValue(const AsyncData(0)),
-          getCryptoPriceMarketProvider.overrideWithValue(
-            const AsyncData([]),
-          ),
+          getCryptoPriceMarketProvider.overrideWithValue(const AsyncData([])),
           getEtfPriceMarketProvider.overrideWithValue(const AsyncData(0)),
         ],
         child: EasyLocalization(
@@ -71,25 +69,22 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(SettingsScreen), findsOneWidget);
-    expect(TickerMode.of(dashboardContext), isFalse);
+    expect(TickerMode.valuesOf(dashboardContext), isFalse);
 
-    Navigator.of(tester.element(find.byType(SettingsScreen))).pop(
-      (externalBackup: File('unused.db')),
-    );
+    Navigator.of(
+      tester.element(find.byType(SettingsScreen)),
+    ).pop((externalBackup: File('unused.db')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pump();
 
     expect(find.byType(SettingsScreen), findsNothing);
-    expect(TickerMode.of(dashboardContext), isTrue);
+    expect(TickerMode.valuesOf(dashboardContext), isTrue);
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(localDatabase.restoreCalls, 1);
 
     final surface = find
-        .descendant(
-          of: find.byType(Dialog),
-          matching: find.byType(Material),
-        )
+        .descendant(of: find.byType(Dialog), matching: find.byType(Material))
         .first;
     final dialogWidth = tester.getSize(surface).width;
     for (final step in DatabaseRestoreStep.values) {
@@ -117,10 +112,7 @@ class _PendingRestoreDatabase extends LocalDatabase {
   AppDatabase get database => _database;
 
   @override
-  Future<bool> restore(
-    File _, {
-    DatabaseRestoreProgress? onProgress,
-  }) {
+  Future<bool> restore(File _, {DatabaseRestoreProgress? onProgress}) {
     restoreCalls++;
     progress = onProgress;
     onProgress?.call(DatabaseRestoreStep.validating);

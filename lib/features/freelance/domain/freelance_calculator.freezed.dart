@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'freelance_calculator.dart';
@@ -9,6 +9,7 @@ part of 'freelance_calculator.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $FreelanceResultCopyWith<FreelanceResult> get copyWith => _$FreelanceResultCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FreelanceResult&&(identical(other.annualRevenue, annualRevenue) || other.annualRevenue == annualRevenue)&&(identical(other.abatement, abatement) || other.abatement == abatement)&&(identical(other.netImposable, netImposable) || other.netImposable == netImposable)&&(identical(other.urssaf, urssaf) || other.urssaf == urssaf)&&(identical(other.incomeTax, incomeTax) || other.incomeTax == incomeTax)&&(identical(other.totalCharges, totalCharges) || other.totalCharges == totalCharges)&&(identical(other.netAfterAll, netAfterAll) || other.netAfterAll == netAfterAll));
+  final _this = this as FreelanceResult;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FreelanceResult&&(identical(other.annualRevenue, _this.annualRevenue) || other.annualRevenue == _this.annualRevenue)&&(identical(other.abatement, _this.abatement) || other.abatement == _this.abatement)&&(identical(other.netImposable, _this.netImposable) || other.netImposable == _this.netImposable)&&(identical(other.urssaf, _this.urssaf) || other.urssaf == _this.urssaf)&&(identical(other.incomeTax, _this.incomeTax) || other.incomeTax == _this.incomeTax)&&(identical(other.totalCharges, _this.totalCharges) || other.totalCharges == _this.totalCharges)&&(identical(other.netAfterAll, _this.netAfterAll) || other.netAfterAll == _this.netAfterAll));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,annualRevenue,abatement,netImposable,urssaf,incomeTax,totalCharges,netAfterAll);
+int get hashCode {
+  final _this = this as FreelanceResult;
+  return Object.hash(runtimeType,_this.annualRevenue,_this.abatement,_this.netImposable,_this.urssaf,_this.incomeTax,_this.totalCharges,_this.netAfterAll);
+}
 
 @override
 String toString() {
-  return 'FreelanceResult(annualRevenue: $annualRevenue, abatement: $abatement, netImposable: $netImposable, urssaf: $urssaf, incomeTax: $incomeTax, totalCharges: $totalCharges, netAfterAll: $netAfterAll)';
+  final _this = this as FreelanceResult;
+  return 'FreelanceResult(annualRevenue: ${_this.annualRevenue}, abatement: ${_this.abatement}, netImposable: ${_this.netImposable}, urssaf: ${_this.urssaf}, incomeTax: ${_this.incomeTax}, totalCharges: ${_this.totalCharges}, netAfterAll: ${_this.netAfterAll})';
 }
 
 
@@ -63,7 +69,7 @@ class _$FreelanceResultCopyWithImpl<$Res>
 /// Create a copy of FreelanceResult
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? annualRevenue = null,Object? abatement = null,Object? netImposable = null,Object? urssaf = null,Object? incomeTax = null,Object? totalCharges = null,Object? netAfterAll = null,}) {
-  return _then(_self.copyWith(
+  return _then(FreelanceResult(
 annualRevenue: null == annualRevenue ? _self.annualRevenue : annualRevenue // ignore: cast_nullable_to_non_nullable
 as double,abatement: null == abatement ? _self.abatement : abatement // ignore: cast_nullable_to_non_nullable
 as double,netImposable: null == netImposable ? _self.netImposable : netImposable // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ _$FreelanceResultCopyWith<_FreelanceResult> get copyWith => __$FreelanceResultCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FreelanceResult&&(identical(other.annualRevenue, annualRevenue) || other.annualRevenue == annualRevenue)&&(identical(other.abatement, abatement) || other.abatement == abatement)&&(identical(other.netImposable, netImposable) || other.netImposable == netImposable)&&(identical(other.urssaf, urssaf) || other.urssaf == urssaf)&&(identical(other.incomeTax, incomeTax) || other.incomeTax == incomeTax)&&(identical(other.totalCharges, totalCharges) || other.totalCharges == totalCharges)&&(identical(other.netAfterAll, netAfterAll) || other.netAfterAll == netAfterAll));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FreelanceResult&&(identical(other.annualRevenue, annualRevenue) || other.annualRevenue == annualRevenue)&&(identical(other.abatement, abatement) || other.abatement == abatement)&&(identical(other.netImposable, netImposable) || other.netImposable == netImposable)&&(identical(other.urssaf, urssaf) || other.urssaf == urssaf)&&(identical(other.incomeTax, incomeTax) || other.incomeTax == incomeTax)&&(identical(other.totalCharges, totalCharges) || other.totalCharges == totalCharges)&&(identical(other.netAfterAll, netAfterAll) || other.netAfterAll == netAfterAll));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,annualRevenue,abatement,netImposable,urssaf,incomeTax,totalCharges,netAfterAll);
+int get hashCode {
+    return Object.hash(runtimeType,annualRevenue,abatement,netImposable,urssaf,incomeTax,totalCharges,netAfterAll);
+}
 
 @override
 String toString() {
-  return 'FreelanceResult(annualRevenue: $annualRevenue, abatement: $abatement, netImposable: $netImposable, urssaf: $urssaf, incomeTax: $incomeTax, totalCharges: $totalCharges, netAfterAll: $netAfterAll)';
+    return 'FreelanceResult(annualRevenue: $annualRevenue, abatement: $abatement, netImposable: $netImposable, urssaf: $urssaf, incomeTax: $incomeTax, totalCharges: $totalCharges, netAfterAll: $netAfterAll)';
 }
 
 

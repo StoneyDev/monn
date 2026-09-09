@@ -10,7 +10,7 @@ part of 'coin_market_cap_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(coinMarketCapRepository)
-const coinMarketCapRepositoryProvider = CoinMarketCapRepositoryProvider._();
+final coinMarketCapRepositoryProvider = CoinMarketCapRepositoryProvider._();
 
 final class CoinMarketCapRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class CoinMarketCapRepositoryProvider
           CoinMarketCapRepository
         >
     with $Provider<CoinMarketCapRepository> {
-  const CoinMarketCapRepositoryProvider._()
+  CoinMarketCapRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$coinMarketCapRepositoryHash() =>
     r'29fd3483b68c550210e7285f7ad54f6f1feaa73c';
 
 @ProviderFor(getCryptoPriceMarket)
-const getCryptoPriceMarketProvider = GetCryptoPriceMarketProvider._();
+final getCryptoPriceMarketProvider = GetCryptoPriceMarketProvider._();
 
 final class GetCryptoPriceMarketProvider
     extends
@@ -70,7 +70,7 @@ final class GetCryptoPriceMarketProvider
     with
         $FutureModifier<List<CryptocurrencyEntry>>,
         $FutureProvider<List<CryptocurrencyEntry>> {
-  const GetCryptoPriceMarketProvider._()
+  GetCryptoPriceMarketProvider._()
     : super(
         from: null,
         argument: null,

@@ -10,12 +10,12 @@ part of 'etf_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(etfRepository)
-const etfRepositoryProvider = EtfRepositoryProvider._();
+final etfRepositoryProvider = EtfRepositoryProvider._();
 
 final class EtfRepositoryProvider
     extends $FunctionalProvider<EtfRepository, EtfRepository, EtfRepository>
     with $Provider<EtfRepository> {
-  const EtfRepositoryProvider._()
+  EtfRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,12 +51,12 @@ final class EtfRepositoryProvider
 String _$etfRepositoryHash() => r'e62d4f0af112530f98d3d39e860c2afaec1b4e95';
 
 @ProviderFor(getEtfPriceMarket)
-const getEtfPriceMarketProvider = GetEtfPriceMarketProvider._();
+final getEtfPriceMarketProvider = GetEtfPriceMarketProvider._();
 
 final class GetEtfPriceMarketProvider
     extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
     with $FutureModifier<double>, $FutureProvider<double> {
-  const GetEtfPriceMarketProvider._()
+  GetEtfPriceMarketProvider._()
     : super(
         from: null,
         argument: null,
@@ -81,4 +81,4 @@ final class GetEtfPriceMarketProvider
   }
 }
 
-String _$getEtfPriceMarketHash() => r'44fe4cdad7e4a5fbc6c77d6280229e2b0150d065';
+String _$getEtfPriceMarketHash() => r'b3e137a3f4336808b8d0b2ea117e3927bb2e8227';

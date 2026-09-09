@@ -10,11 +10,11 @@ part of 'per_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(PerFormController)
-const perFormControllerProvider = PerFormControllerProvider._();
+final perFormControllerProvider = PerFormControllerProvider._();
 
 final class PerFormControllerProvider
     extends $NotifierProvider<PerFormController, PerForm> {
-  const PerFormControllerProvider._()
+  PerFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,8 +47,7 @@ abstract class _$PerFormController extends $Notifier<PerForm> {
   PerForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<PerForm, PerForm>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$PerFormController extends $Notifier<PerForm> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

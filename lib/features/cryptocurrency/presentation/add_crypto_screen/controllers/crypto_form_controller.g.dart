@@ -10,11 +10,11 @@ part of 'crypto_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CryptoFormController)
-const cryptoFormControllerProvider = CryptoFormControllerProvider._();
+final cryptoFormControllerProvider = CryptoFormControllerProvider._();
 
 final class CryptoFormControllerProvider
     extends $NotifierProvider<CryptoFormController, CryptoForm> {
-  const CryptoFormControllerProvider._()
+  CryptoFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,8 +48,7 @@ abstract class _$CryptoFormController extends $Notifier<CryptoForm> {
   CryptoForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<CryptoForm, CryptoForm>;
     final element =
         ref.element
@@ -59,6 +58,6 @@ abstract class _$CryptoFormController extends $Notifier<CryptoForm> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

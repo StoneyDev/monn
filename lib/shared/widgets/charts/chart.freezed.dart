@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chart.dart';
@@ -9,6 +9,7 @@ part of 'chart.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ChartCopyWith<Chart> get copyWith => _$ChartCopyWithImpl<Chart>(this as Chart, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chart&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&const DeepCollectionEquality().equals(other.data, data));
+  final _this = this as Chart;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chart&&(identical(other.totalAmount, _this.totalAmount) || other.totalAmount == _this.totalAmount)&&const DeepCollectionEquality().equals(other.data, _this.data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,totalAmount,const DeepCollectionEquality().hash(data));
+int get hashCode {
+  final _this = this as Chart;
+  return Object.hash(runtimeType,_this.totalAmount,const DeepCollectionEquality().hash(_this.data));
+}
 
 @override
 String toString() {
-  return 'Chart(totalAmount: $totalAmount, data: $data)';
+  final _this = this as Chart;
+  return 'Chart(totalAmount: ${_this.totalAmount}, data: ${_this.data})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ChartCopyWithImpl<$Res>
 /// Create a copy of Chart
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? totalAmount = null,Object? data = null,}) {
-  return _then(_self.copyWith(
+  return _then(Chart(
 totalAmount: null == totalAmount ? _self.totalAmount : totalAmount // ignore: cast_nullable_to_non_nullable
 as double,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as List<ChartData>,
@@ -207,7 +213,7 @@ return $default(_that.totalAmount,_that.data);case _:
 
 
 class _Chart implements Chart {
-  const _Chart({required this.totalAmount, required final  List<ChartData> data}): _data = data;
+  const _Chart({required this.totalAmount, required  List<ChartData> data}): _data = data;
   
 
 @override final  double totalAmount;
@@ -229,16 +235,18 @@ _$ChartCopyWith<_Chart> get copyWith => __$ChartCopyWithImpl<_Chart>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chart&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&const DeepCollectionEquality().equals(other._data, _data));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chart&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&const DeepCollectionEquality().equals(other.data, _data));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,totalAmount,const DeepCollectionEquality().hash(_data));
+int get hashCode {
+    return Object.hash(runtimeType,totalAmount,const DeepCollectionEquality().hash(_data));
+}
 
 @override
 String toString() {
-  return 'Chart(totalAmount: $totalAmount, data: $data)';
+    return 'Chart(totalAmount: $totalAmount, data: $data)';
 }
 
 
@@ -291,16 +299,21 @@ $ChartDataCopyWith<ChartData> get copyWith => _$ChartDataCopyWithImpl<ChartData>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChartData&&(identical(other.portion, portion) || other.portion == portion)&&(identical(other.color, color) || other.color == color));
+  final _this = this as ChartData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChartData&&(identical(other.portion, _this.portion) || other.portion == _this.portion)&&(identical(other.color, _this.color) || other.color == _this.color));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,portion,color);
+int get hashCode {
+  final _this = this as ChartData;
+  return Object.hash(runtimeType,_this.portion,_this.color);
+}
 
 @override
 String toString() {
-  return 'ChartData(portion: $portion, color: $color)';
+  final _this = this as ChartData;
+  return 'ChartData(portion: ${_this.portion}, color: ${_this.color})';
 }
 
 
@@ -329,7 +342,7 @@ class _$ChartDataCopyWithImpl<$Res>
 /// Create a copy of ChartData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? portion = null,Object? color = null,}) {
-  return _then(_self.copyWith(
+  return _then(ChartData(
 portion: null == portion ? _self.portion : portion // ignore: cast_nullable_to_non_nullable
 as double,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as Color,
@@ -489,16 +502,18 @@ _$ChartDataCopyWith<_ChartData> get copyWith => __$ChartDataCopyWithImpl<_ChartD
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChartData&&(identical(other.portion, portion) || other.portion == portion)&&(identical(other.color, color) || other.color == color));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChartData&&(identical(other.portion, portion) || other.portion == portion)&&(identical(other.color, color) || other.color == color));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,portion,color);
+int get hashCode {
+    return Object.hash(runtimeType,portion,color);
+}
 
 @override
 String toString() {
-  return 'ChartData(portion: $portion, color: $color)';
+    return 'ChartData(portion: $portion, color: $color)';
 }
 
 

@@ -10,12 +10,12 @@ part of 'counter_strike_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CounterStrikeFormController)
-const counterStrikeFormControllerProvider =
+final counterStrikeFormControllerProvider =
     CounterStrikeFormControllerProvider._();
 
 final class CounterStrikeFormControllerProvider
     extends $NotifierProvider<CounterStrikeFormController, CounterStrikeForm> {
-  const CounterStrikeFormControllerProvider._()
+  CounterStrikeFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -50,8 +50,7 @@ abstract class _$CounterStrikeFormController
   CounterStrikeForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<CounterStrikeForm, CounterStrikeForm>;
     final element =
         ref.element
@@ -61,6 +60,6 @@ abstract class _$CounterStrikeFormController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

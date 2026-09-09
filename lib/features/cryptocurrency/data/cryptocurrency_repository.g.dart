@@ -10,7 +10,7 @@ part of 'cryptocurrency_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(cryptocurrencyRepository)
-const cryptocurrencyRepositoryProvider = CryptocurrencyRepositoryProvider._();
+final cryptocurrencyRepositoryProvider = CryptocurrencyRepositoryProvider._();
 
 final class CryptocurrencyRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class CryptocurrencyRepositoryProvider
           CryptocurrencyRepository
         >
     with $Provider<CryptocurrencyRepository> {
-  const CryptocurrencyRepositoryProvider._()
+  CryptocurrencyRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$cryptocurrencyRepositoryHash() =>
     r'8ac20e264be6323622d84a1aec23adf53788f7c7';
 
 @ProviderFor(watchCryptocurrencies)
-const watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();
+final watchCryptocurrenciesProvider = WatchCryptocurrenciesProvider._();
 
 final class WatchCryptocurrenciesProvider
     extends
@@ -70,7 +70,7 @@ final class WatchCryptocurrenciesProvider
     with
         $FutureModifier<List<CryptocurrencyEntry>>,
         $StreamProvider<List<CryptocurrencyEntry>> {
-  const WatchCryptocurrenciesProvider._()
+  WatchCryptocurrenciesProvider._()
     : super(
         from: null,
         argument: null,
@@ -100,7 +100,7 @@ String _$watchCryptocurrenciesHash() =>
     r'a7a1bc32ec85e478ccb3e36ad89aca794a642256';
 
 @ProviderFor(getCryptocurrency)
-const getCryptocurrencyProvider = GetCryptocurrencyFamily._();
+final getCryptocurrencyProvider = GetCryptocurrencyFamily._();
 
 final class GetCryptocurrencyProvider
     extends
@@ -112,7 +112,7 @@ final class GetCryptocurrencyProvider
     with
         $FutureModifier<CryptocurrencyWithTransactions>,
         $FutureProvider<CryptocurrencyWithTransactions> {
-  const GetCryptocurrencyProvider._({
+  GetCryptocurrencyProvider._({
     required GetCryptocurrencyFamily super.from,
     required CryptoType super.argument,
   }) : super(
@@ -164,7 +164,7 @@ final class GetCryptocurrencyFamily extends $Family
           FutureOr<CryptocurrencyWithTransactions>,
           CryptoType
         > {
-  const GetCryptocurrencyFamily._()
+  GetCryptocurrencyFamily._()
     : super(
         retry: null,
         name: r'getCryptocurrencyProvider',
@@ -181,7 +181,7 @@ final class GetCryptocurrencyFamily extends $Family
 }
 
 @ProviderFor(watchPayoutReportCrypto)
-const watchPayoutReportCryptoProvider = WatchPayoutReportCryptoProvider._();
+final watchPayoutReportCryptoProvider = WatchPayoutReportCryptoProvider._();
 
 final class WatchPayoutReportCryptoProvider
     extends
@@ -191,7 +191,7 @@ final class WatchPayoutReportCryptoProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportCryptoProvider._()
+  WatchPayoutReportCryptoProvider._()
     : super(
         from: null,
         argument: null,

@@ -7,7 +7,6 @@ import 'package:retrofit/retrofit.dart';
 part 'coin_market_cap_api.g.dart';
 
 @RestApi(baseUrl: 'https://pro-api.coinmarketcap.com/')
-// ignore: one_member_abstracts (Remove when there are more api calls)
 abstract class CoinMarketCapApi {
   factory CoinMarketCapApi(Dio dio) = _CoinMarketCapApi;
 

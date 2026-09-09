@@ -32,9 +32,7 @@ class SettingsScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(
-        title: context.tr(LocaleKeys.common_settings),
-      ),
+      appBar: MonnAppBar(title: context.tr(LocaleKeys.common_settings)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -176,10 +174,9 @@ class SettingsScreen extends ConsumerWidget {
                         ),
                         Text(
                           backupDate != null
-                              ? DateTime.parse(backupDate).slashFormat(
-                                  locale,
-                                  withHour: true,
-                                )
+                              ? DateTime.parse(
+                                  backupDate,
+                                ).slashFormat(locale, withHour: true)
                               : context.tr(LocaleKeys.common_no_backup),
                         ),
                       ],
@@ -218,17 +215,14 @@ class _BackupAction extends ConsumerWidget {
         // Import button
         MenuItemButton(
           onPressed: () async {
-            final result = await FilePicker.platform.pickFiles();
+            final result = await FilePicker.pickFiles();
             if (!context.mounted) return;
 
-            final filePath = result?.files.single.path;
+            final filePath = result.single.path;
             final isAllowed = filePath?.contains(RegExp(r'\.db$')) ?? false;
 
             if (filePath != null && isAllowed) {
-              await _requestRestore(
-                context,
-                externalBackup: File(filePath),
-              );
+              await _requestRestore(context, externalBackup: File(filePath));
             } else {
               if (!context.mounted) return;
               MonnSnackBar.error(
@@ -251,9 +245,7 @@ class _BackupAction extends ConsumerWidget {
               final backupDir = await getApplicationSupportDirectory();
               await SharePlus.instance.share(
                 ShareParams(
-                  files: [
-                    XFile('${backupDir.path}/backup_$lastBackupDate.db'),
-                  ],
+                  files: [XFile('${backupDir.path}/backup_$lastBackupDate.db')],
                 ),
               );
             },
@@ -289,9 +281,7 @@ class _BackupAction extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(context.tr(LocaleKeys.restore_title)),
-        content: Text(
-          context.tr(LocaleKeys.restore_confirmation),
-        ),
+        content: Text(context.tr(LocaleKeys.restore_confirmation)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -307,8 +297,8 @@ class _BackupAction extends ConsumerWidget {
     );
     if (!context.mounted || confirmed != true) return;
 
-    Navigator.of(context).pop<DatabaseRestoreRequest>(
-      (externalBackup: externalBackup),
-    );
+    Navigator.of(
+      context,
+    ).pop<DatabaseRestoreRequest>((externalBackup: externalBackup));
   }
 }

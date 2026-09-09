@@ -5223,7 +5223,16 @@ class $$SavingsEntriesTableTableManager
                 startAmount: startAmount,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$SavingsEntriesTable, SavingsEntry>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $SavingsEntriesTable,
+                    SavingsEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -5375,7 +5384,16 @@ class $$CashEntriesTableTableManager
                 value: value,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$CashEntriesTable, CashEntry>(table),
+                  BaseReferences<_$AppDatabase, $CashEntriesTable, CashEntry>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -5624,7 +5642,18 @@ class $$CrowdfundingEntriesTableTableManager
                 receivedAt: receivedAt,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$CrowdfundingEntriesTable, CrowdfundingEntry>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $CrowdfundingEntriesTable,
+                    CrowdfundingEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -5835,7 +5864,18 @@ class $$SavingsBookEntriesTableTableManager
                 interests: interests,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$SavingsBookEntriesTable, SavingsBookEntry>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $SavingsBookEntriesTable,
+                    SavingsBookEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -6108,7 +6148,18 @@ class $$CounterStrikeEntriesTableTableManager
                 wear: wear,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$CounterStrikeEntriesTable, CounterStrikeEntry>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $CounterStrikeEntriesTable,
+                    CounterStrikeEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -6307,7 +6358,16 @@ class $$PeaEntriesTableTableManager
                 lastUpdate: lastUpdate,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$PeaEntriesTable, PeaEntry>(table),
+                  BaseReferences<_$AppDatabase, $PeaEntriesTable, PeaEntry>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -6457,7 +6517,16 @@ class $$PerEntriesTableTableManager
                 interests: interests,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$PerEntriesTable, PerEntry>(table),
+                  BaseReferences<_$AppDatabase, $PerEntriesTable, PerEntry>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -6622,7 +6691,18 @@ class $$LifeInsuranceEntriesTableTableManager
                 interests: interests,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$LifeInsuranceEntriesTable, LifeInsuranceEntry>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $LifeInsuranceEntriesTable,
+                    LifeInsuranceEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -6771,7 +6851,16 @@ class $$FreelanceEntriesTableTableManager
                 annualRevenue: annualRevenue,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$FreelanceEntriesTable, FreelanceEntry>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $FreelanceEntriesTable,
+                    FreelanceEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -7148,7 +7237,16 @@ class $$BudgetEntriesTableTableManager
                 ai: ai,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$BudgetEntriesTable, BudgetEntry>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $BudgetEntriesTable,
+                    BudgetEntry
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -7206,14 +7304,13 @@ final class $$CryptocurrencyEntriesTableReferences
     $CryptocurrencyTransactionEntriesTable,
     List<CryptocurrencyTransactionEntry>
   >
-  _cryptocurrencyTransactionEntriesRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.cryptocurrencyTransactionEntries,
-        aliasName: $_aliasNameGenerator(
-          db.cryptocurrencyEntries.id,
-          db.cryptocurrencyTransactionEntries.cryptocurrencyId,
-        ),
-      );
+  _cryptocurrencyTransactionEntriesRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.cryptocurrencyTransactionEntries,
+    aliasName:
+        'cryptocurrency_entries__id__cryptocurrency_transaction_entries__cryptocurrency_id',
+  );
 
   $$CryptocurrencyTransactionEntriesTableProcessedTableManager
   get cryptocurrencyTransactionEntriesRefs {
@@ -7458,7 +7555,9 @@ class $$CryptocurrencyEntriesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$CryptocurrencyEntriesTable, CryptocurrencyEntry>(
+                    table,
+                  ),
                   $$CryptocurrencyEntriesTableReferences(db, table, e),
                 ),
               )
@@ -7548,13 +7647,11 @@ final class $$CryptocurrencyTransactionEntriesTableReferences
     super.$_typedResult,
   );
 
-  static $CryptocurrencyEntriesTable _cryptocurrencyIdTable(_$AppDatabase db) =>
-      db.cryptocurrencyEntries.createAlias(
-        $_aliasNameGenerator(
-          db.cryptocurrencyTransactionEntries.cryptocurrencyId,
-          db.cryptocurrencyEntries.id,
-        ),
-      );
+  static $CryptocurrencyEntriesTable _cryptocurrencyIdTable(
+    _$AppDatabase db,
+  ) => db.cryptocurrencyEntries.createAlias(
+    'cryptocurrency_transaction_entries__cryptocurrency_id__cryptocurrency_entries__id',
+  );
 
   $$CryptocurrencyEntriesTableProcessedTableManager get cryptocurrencyId {
     final $_column = $_itemColumn<int>('cryptocurrency_id')!;
@@ -7779,7 +7876,10 @@ class $$CryptocurrencyTransactionEntriesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<
+                    $CryptocurrencyTransactionEntriesTable,
+                    CryptocurrencyTransactionEntry
+                  >(table),
                   $$CryptocurrencyTransactionEntriesTableReferences(
                     db,
                     table,
@@ -7877,10 +7977,7 @@ final class $$ReitEntriesTableReferences
   _reitDividendEntriesRefsTable(_$AppDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.reitDividendEntries,
-        aliasName: $_aliasNameGenerator(
-          db.reitEntries.id,
-          db.reitDividendEntries.reitId,
-        ),
+        aliasName: 'reit_entries__id__reit_dividend_entries__reit_id',
       );
 
   $$ReitDividendEntriesTableProcessedTableManager get reitDividendEntriesRefs {
@@ -8101,7 +8198,7 @@ class $$ReitEntriesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$ReitEntriesTable, ReitEntry>(table),
                   $$ReitEntriesTableReferences(db, table, e),
                 ),
               )
@@ -8184,10 +8281,8 @@ final class $$ReitDividendEntriesTableReferences
     super.$_typedResult,
   );
 
-  static $ReitEntriesTable _reitIdTable(_$AppDatabase db) =>
-      db.reitEntries.createAlias(
-        $_aliasNameGenerator(db.reitDividendEntries.reitId, db.reitEntries.id),
-      );
+  static $ReitEntriesTable _reitIdTable(_$AppDatabase db) => db.reitEntries
+      .createAlias('reit_dividend_entries__reit_id__reit_entries__id');
 
   $$ReitEntriesTableProcessedTableManager get reitId {
     final $_column = $_itemColumn<int>('reit_id')!;
@@ -8405,7 +8500,9 @@ class $$ReitDividendEntriesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$ReitDividendEntriesTable, ReitDividendEntry>(
+                    table,
+                  ),
                   $$ReitDividendEntriesTableReferences(db, table, e),
                 ),
               )

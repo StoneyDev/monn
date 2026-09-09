@@ -110,7 +110,7 @@ class CryptocurrencyRepository {
 
     if (crypto != null) return crypto;
 
-    return _upsertCryptocurrencyByType(
+    return await _upsertCryptocurrencyByType(
       CryptocurrencyEntriesCompanion.insert(type: type.name),
     );
   }
@@ -126,7 +126,7 @@ class CryptocurrencyRepository {
 
     if (updatedRows.isNotEmpty) return updatedRows.single;
 
-    return _db
+    return await _db
         .into(_db.cryptocurrencyEntries)
         .insertReturning(
           cryptoUpsert,

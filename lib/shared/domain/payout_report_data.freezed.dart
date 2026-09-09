@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'payout_report_data.dart';
@@ -9,6 +9,7 @@ part of 'payout_report_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PayoutReportDataCopyWith<PayoutReportData> get copyWith => _$PayoutReportDataCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PayoutReportData&&(identical(other.totalNetProfit, totalNetProfit) || other.totalNetProfit == totalNetProfit)&&(identical(other.totalTaxProfit, totalTaxProfit) || other.totalTaxProfit == totalTaxProfit)&&(identical(other.totalLoss, totalLoss) || other.totalLoss == totalLoss)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount));
+  final _this = this as PayoutReportData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PayoutReportData&&(identical(other.totalNetProfit, _this.totalNetProfit) || other.totalNetProfit == _this.totalNetProfit)&&(identical(other.totalTaxProfit, _this.totalTaxProfit) || other.totalTaxProfit == _this.totalTaxProfit)&&(identical(other.totalLoss, _this.totalLoss) || other.totalLoss == _this.totalLoss)&&(identical(other.finalAmount, _this.finalAmount) || other.finalAmount == _this.finalAmount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,totalNetProfit,totalTaxProfit,totalLoss,finalAmount);
+int get hashCode {
+  final _this = this as PayoutReportData;
+  return Object.hash(runtimeType,_this.totalNetProfit,_this.totalTaxProfit,_this.totalLoss,_this.finalAmount);
+}
 
 @override
 String toString() {
-  return 'PayoutReportData(totalNetProfit: $totalNetProfit, totalTaxProfit: $totalTaxProfit, totalLoss: $totalLoss, finalAmount: $finalAmount)';
+  final _this = this as PayoutReportData;
+  return 'PayoutReportData(totalNetProfit: ${_this.totalNetProfit}, totalTaxProfit: ${_this.totalTaxProfit}, totalLoss: ${_this.totalLoss}, finalAmount: ${_this.finalAmount})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PayoutReportDataCopyWithImpl<$Res>
 /// Create a copy of PayoutReportData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? totalNetProfit = null,Object? totalTaxProfit = null,Object? totalLoss = null,Object? finalAmount = null,}) {
-  return _then(_self.copyWith(
+  return _then(PayoutReportData(
 totalNetProfit: null == totalNetProfit ? _self.totalNetProfit : totalNetProfit // ignore: cast_nullable_to_non_nullable
 as double,totalTaxProfit: null == totalTaxProfit ? _self.totalTaxProfit : totalTaxProfit // ignore: cast_nullable_to_non_nullable
 as double,totalLoss: null == totalLoss ? _self.totalLoss : totalLoss // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$PayoutReportDataCopyWith<_PayoutReportData> get copyWith => __$PayoutReportDat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PayoutReportData&&(identical(other.totalNetProfit, totalNetProfit) || other.totalNetProfit == totalNetProfit)&&(identical(other.totalTaxProfit, totalTaxProfit) || other.totalTaxProfit == totalTaxProfit)&&(identical(other.totalLoss, totalLoss) || other.totalLoss == totalLoss)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PayoutReportData&&(identical(other.totalNetProfit, totalNetProfit) || other.totalNetProfit == totalNetProfit)&&(identical(other.totalTaxProfit, totalTaxProfit) || other.totalTaxProfit == totalTaxProfit)&&(identical(other.totalLoss, totalLoss) || other.totalLoss == totalLoss)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,totalNetProfit,totalTaxProfit,totalLoss,finalAmount);
+int get hashCode {
+    return Object.hash(runtimeType,totalNetProfit,totalTaxProfit,totalLoss,finalAmount);
+}
 
 @override
 String toString() {
-  return 'PayoutReportData(totalNetProfit: $totalNetProfit, totalTaxProfit: $totalTaxProfit, totalLoss: $totalLoss, finalAmount: $finalAmount)';
+    return 'PayoutReportData(totalNetProfit: $totalNetProfit, totalTaxProfit: $totalTaxProfit, totalLoss: $totalLoss, finalAmount: $finalAmount)';
 }
 
 

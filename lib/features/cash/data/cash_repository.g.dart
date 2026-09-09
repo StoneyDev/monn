@@ -10,12 +10,12 @@ part of 'cash_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(cashRepository)
-const cashRepositoryProvider = CashRepositoryProvider._();
+final cashRepositoryProvider = CashRepositoryProvider._();
 
 final class CashRepositoryProvider
     extends $FunctionalProvider<CashRepository, CashRepository, CashRepository>
     with $Provider<CashRepository> {
-  const CashRepositoryProvider._()
+  CashRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,12 +51,12 @@ final class CashRepositoryProvider
 String _$cashRepositoryHash() => r'77c38449e292682eab2827453465df37e7490325';
 
 @ProviderFor(deleteCash)
-const deleteCashProvider = DeleteCashFamily._();
+final deleteCashProvider = DeleteCashFamily._();
 
 final class DeleteCashProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
-  const DeleteCashProvider._({
+  DeleteCashProvider._({
     required DeleteCashFamily super.from,
     required int super.argument,
   }) : super(
@@ -103,7 +103,7 @@ String _$deleteCashHash() => r'b9f4136c64c6b6bc607c0664b4ea166fa1d35c26';
 
 final class DeleteCashFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<void>, int> {
-  const DeleteCashFamily._()
+  DeleteCashFamily._()
     : super(
         retry: null,
         name: r'deleteCashProvider',
@@ -120,7 +120,7 @@ final class DeleteCashFamily extends $Family
 }
 
 @ProviderFor(watchCashs)
-const watchCashsProvider = WatchCashsProvider._();
+final watchCashsProvider = WatchCashsProvider._();
 
 final class WatchCashsProvider
     extends
@@ -130,7 +130,7 @@ final class WatchCashsProvider
           Stream<List<CashEntry>>
         >
     with $FutureModifier<List<CashEntry>>, $StreamProvider<List<CashEntry>> {
-  const WatchCashsProvider._()
+  WatchCashsProvider._()
     : super(
         from: null,
         argument: null,
@@ -159,7 +159,7 @@ final class WatchCashsProvider
 String _$watchCashsHash() => r'1e6c82dbda350a0b7c40e034626ef97d380042ff';
 
 @ProviderFor(watchPayoutReportCash)
-const watchPayoutReportCashProvider = WatchPayoutReportCashProvider._();
+final watchPayoutReportCashProvider = WatchPayoutReportCashProvider._();
 
 final class WatchPayoutReportCashProvider
     extends
@@ -169,7 +169,7 @@ final class WatchPayoutReportCashProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportCashProvider._()
+  WatchPayoutReportCashProvider._()
     : super(
         from: null,
         argument: null,

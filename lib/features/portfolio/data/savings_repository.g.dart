@@ -10,7 +10,7 @@ part of 'savings_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(savingsRepository)
-const savingsRepositoryProvider = SavingsRepositoryProvider._();
+final savingsRepositoryProvider = SavingsRepositoryProvider._();
 
 final class SavingsRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class SavingsRepositoryProvider
           SavingsRepository
         >
     with $Provider<SavingsRepository> {
-  const SavingsRepositoryProvider._()
+  SavingsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -57,7 +57,7 @@ final class SavingsRepositoryProvider
 String _$savingsRepositoryHash() => r'a94e211295a2b5f5e1020429a0ff4f7905e249b5';
 
 @ProviderFor(watchSavings)
-const watchSavingsProvider = WatchSavingsProvider._();
+final watchSavingsProvider = WatchSavingsProvider._();
 
 final class WatchSavingsProvider
     extends
@@ -69,7 +69,7 @@ final class WatchSavingsProvider
     with
         $FutureModifier<List<SavingsEntry>>,
         $StreamProvider<List<SavingsEntry>> {
-  const WatchSavingsProvider._()
+  WatchSavingsProvider._()
     : super(
         from: null,
         argument: null,
@@ -98,7 +98,7 @@ final class WatchSavingsProvider
 String _$watchSavingsHash() => r'758ecfefbd2d1032fdda62caf5ea6f93a43802f9';
 
 @ProviderFor(getSavings)
-const getSavingsProvider = GetSavingsFamily._();
+final getSavingsProvider = GetSavingsFamily._();
 
 final class GetSavingsProvider
     extends
@@ -108,7 +108,7 @@ final class GetSavingsProvider
           FutureOr<SavingsEntry?>
         >
     with $FutureModifier<SavingsEntry?>, $FutureProvider<SavingsEntry?> {
-  const GetSavingsProvider._({
+  GetSavingsProvider._({
     required GetSavingsFamily super.from,
     required SavingsType super.argument,
   }) : super(
@@ -156,7 +156,7 @@ String _$getSavingsHash() => r'a632fdd1ff27ba185f3903ece5292ed04cc1f8c5';
 
 final class GetSavingsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SavingsEntry?>, SavingsType> {
-  const GetSavingsFamily._()
+  GetSavingsFamily._()
     : super(
         retry: null,
         name: r'getSavingsProvider',

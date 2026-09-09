@@ -10,11 +10,11 @@ part of 'theme_switch_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ThemeSwitchController)
-const themeSwitchControllerProvider = ThemeSwitchControllerProvider._();
+final themeSwitchControllerProvider = ThemeSwitchControllerProvider._();
 
 final class ThemeSwitchControllerProvider
     extends $AsyncNotifierProvider<ThemeSwitchController, ThemeMode> {
-  const ThemeSwitchControllerProvider._()
+  ThemeSwitchControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,8 +40,7 @@ abstract class _$ThemeSwitchController extends $AsyncNotifier<ThemeMode> {
   FutureOr<ThemeMode> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<ThemeMode>, ThemeMode>;
     final element =
         ref.element
@@ -51,6 +50,6 @@ abstract class _$ThemeSwitchController extends $AsyncNotifier<ThemeMode> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

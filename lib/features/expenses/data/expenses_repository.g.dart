@@ -10,7 +10,7 @@ part of 'expenses_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(expensesRepository)
-const expensesRepositoryProvider = ExpensesRepositoryProvider._();
+final expensesRepositoryProvider = ExpensesRepositoryProvider._();
 
 final class ExpensesRepositoryProvider
     extends
@@ -20,7 +20,7 @@ final class ExpensesRepositoryProvider
           ExpensesRepository
         >
     with $Provider<ExpensesRepository> {
-  const ExpensesRepositoryProvider._()
+  ExpensesRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -58,7 +58,7 @@ String _$expensesRepositoryHash() =>
     r'4ef20680e3bed71a34cc3e2988b818c6c7f5c9e7';
 
 @ProviderFor(watchBudget)
-const watchBudgetProvider = WatchBudgetProvider._();
+final watchBudgetProvider = WatchBudgetProvider._();
 
 final class WatchBudgetProvider
     extends
@@ -68,7 +68,7 @@ final class WatchBudgetProvider
           Stream<BudgetEntry?>
         >
     with $FutureModifier<BudgetEntry?>, $StreamProvider<BudgetEntry?> {
-  const WatchBudgetProvider._()
+  WatchBudgetProvider._()
     : super(
         from: null,
         argument: null,

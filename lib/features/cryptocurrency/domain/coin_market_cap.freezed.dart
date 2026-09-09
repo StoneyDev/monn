@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'coin_market_cap.dart';
@@ -9,6 +9,7 @@ part of 'coin_market_cap.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $CoinMarketCapResponseCopyWith<CoinMarketCapResponse> get copyWith => _$CoinMark
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMarketCapResponse&&const DeepCollectionEquality().equals(other.data, data));
+  final _this = this as CoinMarketCapResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMarketCapResponse&&const DeepCollectionEquality().equals(other.data, _this.data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
+int get hashCode {
+  final _this = this as CoinMarketCapResponse;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.data));
+}
 
 @override
 String toString() {
-  return 'CoinMarketCapResponse(data: $data)';
+  final _this = this as CoinMarketCapResponse;
+  return 'CoinMarketCapResponse(data: ${_this.data})';
 }
 
 
@@ -66,7 +72,7 @@ class _$CoinMarketCapResponseCopyWithImpl<$Res>
 /// Create a copy of CoinMarketCapResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? data = null,}) {
-  return _then(_self.copyWith(
+  return _then(CoinMarketCapResponse(
 data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as Map<String, CoinMarketCapCrypto>,
   ));
@@ -209,7 +215,7 @@ return $default(_that.data);case _:
 @JsonSerializable()
 
 class _CoinMarketCapResponse implements CoinMarketCapResponse {
-  const _CoinMarketCapResponse({required final  Map<String, CoinMarketCapCrypto> data}): _data = data;
+  const _CoinMarketCapResponse({required  Map<String, CoinMarketCapCrypto> data}): _data = data;
   factory _CoinMarketCapResponse.fromJson(Map<String, dynamic> json) => _$CoinMarketCapResponseFromJson(json);
 
  final  Map<String, CoinMarketCapCrypto> _data;
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinMarketCapResponse&&const DeepCollectionEquality().equals(other._data, _data));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinMarketCapResponse&&const DeepCollectionEquality().equals(other.data, _data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
+}
 
 @override
 String toString() {
-  return 'CoinMarketCapResponse(data: $data)';
+    return 'CoinMarketCapResponse(data: $data)';
 }
 
 
@@ -297,16 +305,21 @@ $CoinMarketCapCryptoCopyWith<CoinMarketCapCrypto> get copyWith => _$CoinMarketCa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMarketCapCrypto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.quote, quote) || other.quote == quote));
+  final _this = this as CoinMarketCapCrypto;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMarketCapCrypto&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.symbol, _this.symbol) || other.symbol == _this.symbol)&&(identical(other.slug, _this.slug) || other.slug == _this.slug)&&(identical(other.quote, _this.quote) || other.quote == _this.quote));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,symbol,slug,quote);
+int get hashCode {
+  final _this = this as CoinMarketCapCrypto;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.symbol,_this.slug,_this.quote);
+}
 
 @override
 String toString() {
-  return 'CoinMarketCapCrypto(id: $id, name: $name, symbol: $symbol, slug: $slug, quote: $quote)';
+  final _this = this as CoinMarketCapCrypto;
+  return 'CoinMarketCapCrypto(id: ${_this.id}, name: ${_this.name}, symbol: ${_this.symbol}, slug: ${_this.slug}, quote: ${_this.quote})';
 }
 
 
@@ -335,7 +348,7 @@ class _$CoinMarketCapCryptoCopyWithImpl<$Res>
 /// Create a copy of CoinMarketCapCrypto
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? symbol = null,Object? slug = null,Object? quote = null,}) {
-  return _then(_self.copyWith(
+  return _then(CoinMarketCapCrypto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
@@ -513,16 +526,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinMarketCapCrypto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.quote, quote) || other.quote == quote));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinMarketCapCrypto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.quote, quote) || other.quote == quote));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,symbol,slug,quote);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,symbol,slug,quote);
+}
 
 @override
 String toString() {
-  return 'CoinMarketCapCrypto(id: $id, name: $name, symbol: $symbol, slug: $slug, quote: $quote)';
+    return 'CoinMarketCapCrypto(id: $id, name: $name, symbol: $symbol, slug: $slug, quote: $quote)';
 }
 
 
@@ -590,16 +605,21 @@ $QuoteCopyWith<Quote> get copyWith => _$QuoteCopyWithImpl<Quote>(this as Quote, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Quote&&(identical(other.priceUsd, priceUsd) || other.priceUsd == priceUsd));
+  final _this = this as Quote;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Quote&&(identical(other.priceUsd, _this.priceUsd) || other.priceUsd == _this.priceUsd));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,priceUsd);
+int get hashCode {
+  final _this = this as Quote;
+  return Object.hash(runtimeType,_this.priceUsd);
+}
 
 @override
 String toString() {
-  return 'Quote(priceUsd: $priceUsd)';
+  final _this = this as Quote;
+  return 'Quote(priceUsd: ${_this.priceUsd})';
 }
 
 
@@ -628,7 +648,7 @@ class _$QuoteCopyWithImpl<$Res>
 /// Create a copy of Quote
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? priceUsd = null,}) {
-  return _then(_self.copyWith(
+  return _then(Quote(
 priceUsd: null == priceUsd ? _self.priceUsd : priceUsd // ignore: cast_nullable_to_non_nullable
 as PriceUsd,
   ));
@@ -798,16 +818,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Quote&&(identical(other.priceUsd, priceUsd) || other.priceUsd == priceUsd));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Quote&&(identical(other.priceUsd, priceUsd) || other.priceUsd == priceUsd));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,priceUsd);
+int get hashCode {
+    return Object.hash(runtimeType,priceUsd);
+}
 
 @override
 String toString() {
-  return 'Quote(priceUsd: $priceUsd)';
+    return 'Quote(priceUsd: $priceUsd)';
 }
 
 
@@ -871,16 +893,21 @@ $PriceUsdCopyWith<PriceUsd> get copyWith => _$PriceUsdCopyWithImpl<PriceUsd>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PriceUsd&&(identical(other.price, price) || other.price == price)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
+  final _this = this as PriceUsd;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PriceUsd&&(identical(other.price, _this.price) || other.price == _this.price)&&(identical(other.lastUpdated, _this.lastUpdated) || other.lastUpdated == _this.lastUpdated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,price,lastUpdated);
+int get hashCode {
+  final _this = this as PriceUsd;
+  return Object.hash(runtimeType,_this.price,_this.lastUpdated);
+}
 
 @override
 String toString() {
-  return 'PriceUsd(price: $price, lastUpdated: $lastUpdated)';
+  final _this = this as PriceUsd;
+  return 'PriceUsd(price: ${_this.price}, lastUpdated: ${_this.lastUpdated})';
 }
 
 
@@ -909,7 +936,7 @@ class _$PriceUsdCopyWithImpl<$Res>
 /// Create a copy of PriceUsd
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? price = null,Object? lastUpdated = null,}) {
-  return _then(_self.copyWith(
+  return _then(PriceUsd(
 price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,lastUpdated: null == lastUpdated ? _self.lastUpdated : lastUpdated // ignore: cast_nullable_to_non_nullable
 as String,
@@ -1072,16 +1099,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PriceUsd&&(identical(other.price, price) || other.price == price)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PriceUsd&&(identical(other.price, price) || other.price == price)&&(identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,price,lastUpdated);
+int get hashCode {
+    return Object.hash(runtimeType,price,lastUpdated);
+}
 
 @override
 String toString() {
-  return 'PriceUsd(price: $price, lastUpdated: $lastUpdated)';
+    return 'PriceUsd(price: $price, lastUpdated: $lastUpdated)';
 }
 
 

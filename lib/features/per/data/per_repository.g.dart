@@ -10,12 +10,12 @@ part of 'per_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(perRepository)
-const perRepositoryProvider = PerRepositoryProvider._();
+final perRepositoryProvider = PerRepositoryProvider._();
 
 final class PerRepositoryProvider
     extends $FunctionalProvider<PerRepository, PerRepository, PerRepository>
     with $Provider<PerRepository> {
-  const PerRepositoryProvider._()
+  PerRepositoryProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,13 +51,13 @@ final class PerRepositoryProvider
 String _$perRepositoryHash() => r'bf7852c2a984bbec5f96222e0a3f1b9ab57c2528';
 
 @ProviderFor(watchPer)
-const watchPerProvider = WatchPerProvider._();
+final watchPerProvider = WatchPerProvider._();
 
 final class WatchPerProvider
     extends
         $FunctionalProvider<AsyncValue<PerEntry?>, PerEntry?, Stream<PerEntry?>>
     with $FutureModifier<PerEntry?>, $StreamProvider<PerEntry?> {
-  const WatchPerProvider._()
+  WatchPerProvider._()
     : super(
         from: null,
         argument: null,
@@ -85,7 +85,7 @@ final class WatchPerProvider
 String _$watchPerHash() => r'f29aae1069ad1e23b65345b56ef107059a2f7f10';
 
 @ProviderFor(watchPayoutReportPer)
-const watchPayoutReportPerProvider = WatchPayoutReportPerProvider._();
+final watchPayoutReportPerProvider = WatchPayoutReportPerProvider._();
 
 final class WatchPayoutReportPerProvider
     extends
@@ -95,7 +95,7 @@ final class WatchPayoutReportPerProvider
           Stream<PayoutReportData>
         >
     with $FutureModifier<PayoutReportData>, $StreamProvider<PayoutReportData> {
-  const WatchPayoutReportPerProvider._()
+  WatchPayoutReportPerProvider._()
     : super(
         from: null,
         argument: null,

@@ -10,7 +10,7 @@ part of 'savings_book_interest_form_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(SavingsBookInterestFormController)
-const savingsBookInterestFormControllerProvider =
+final savingsBookInterestFormControllerProvider =
     SavingsBookInterestFormControllerProvider._();
 
 final class SavingsBookInterestFormControllerProvider
@@ -19,7 +19,7 @@ final class SavingsBookInterestFormControllerProvider
           SavingsBookInterestFormController,
           SavingsBookInterestForm
         > {
-  const SavingsBookInterestFormControllerProvider._()
+  SavingsBookInterestFormControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -56,8 +56,7 @@ abstract class _$SavingsBookInterestFormController
   SavingsBookInterestForm build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref =
         this.ref as $Ref<SavingsBookInterestForm, SavingsBookInterestForm>;
     final element =
@@ -68,6 +67,6 @@ abstract class _$SavingsBookInterestFormController
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

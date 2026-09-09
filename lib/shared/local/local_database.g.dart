@@ -10,7 +10,7 @@ part of 'local_database.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(localDatabase)
-const localDatabaseProvider = LocalDatabaseProvider._();
+final localDatabaseProvider = LocalDatabaseProvider._();
 
 final class LocalDatabaseProvider
     extends
@@ -20,7 +20,7 @@ final class LocalDatabaseProvider
           FutureOr<LocalDatabase>
         >
     with $FutureModifier<LocalDatabase>, $FutureProvider<LocalDatabase> {
-  const LocalDatabaseProvider._()
+  LocalDatabaseProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,12 +49,12 @@ final class LocalDatabaseProvider
 String _$localDatabaseHash() => r'f9df843ad9a165648eaaa82d247f6df6370a02b3';
 
 @ProviderFor(appDatabase)
-const appDatabaseProvider = AppDatabaseProvider._();
+final appDatabaseProvider = AppDatabaseProvider._();
 
 final class AppDatabaseProvider
     extends $FunctionalProvider<AppDatabase, AppDatabase, AppDatabase>
     with $Provider<AppDatabase> {
-  const AppDatabaseProvider._()
+  AppDatabaseProvider._()
     : super(
         from: null,
         argument: null,
