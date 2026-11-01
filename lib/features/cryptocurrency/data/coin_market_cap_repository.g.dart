@@ -97,4 +97,4 @@ final class GetCryptoPriceMarketProvider
 }
 
 String _$getCryptoPriceMarketHash() =>
-    r'49e959c73ce1b4929f4fd87612e20095fcd2be1e';
+    r'6f954bd204f18b88756da279f7eac00843ad9029';

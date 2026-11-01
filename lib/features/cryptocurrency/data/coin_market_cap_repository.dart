@@ -67,7 +67,6 @@ Future<List<CryptocurrencyEntry>> getCryptoPriceMarket(Ref ref) async {
       final market = cryptoMarketMap[cryptoType.name.toKebabCase()];
       final companion = CryptocurrencyEntriesCompanion(
         type: Value(crypto.type),
-        totalCrypto: Value(crypto.totalCrypto),
         priceMarket: Value(market!.quote.priceUsd.price),
         lastUpdate: Value(now),
       );

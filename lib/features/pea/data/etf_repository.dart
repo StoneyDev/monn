@@ -49,8 +49,6 @@ Future<double> getEtfPriceMarket(Ref ref) async {
       await peaRepository.editPea(
         PeaEntriesCompanion(
           id: Value(pea?.id ?? 1),
-          equity: Value(pea?.equity),
-          costAverage: Value(pea?.costAverage),
           lastPrice: Value(priceMarket),
           lastUpdate: Value(now),
         ),
