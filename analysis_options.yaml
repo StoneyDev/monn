@@ -12,6 +12,10 @@ analyzer:
     - build/**
     - android/**
     - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
   errors:
     invalid_annotation_target: ignore
     document_ignores: ignore
