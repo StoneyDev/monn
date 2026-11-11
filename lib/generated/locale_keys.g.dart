@@ -166,6 +166,10 @@ abstract class LocaleKeys {
   static const freelance_urssaf_rate = 'freelance.urssaf_rate';
   static const freelance_remaining = 'freelance.remaining';
   static const freelance_deducted = 'freelance.deducted';
+  static const freelance_urssaf_calculator = 'freelance.urssaf_calculator';
+  static const freelance_urssaf_due = 'freelance.urssaf_due';
+  static const freelance_monthly_remaining = 'freelance.monthly_remaining';
+  static const freelance_monthly_revenue = 'freelance.monthly_revenue';
   static const freelance = 'freelance';
   static const filters_month = 'filters.month';
   static const filters_all_months = 'filters.all_months';

@@ -185,6 +185,10 @@ class CodegenLoader extends AssetLoader {
       "urssaf_rate": "Contributions 25.6%",
       "remaining": "Remaining",
       "deducted": "Deducted",
+      "urssaf_calculator": "URSSAF calculator",
+      "urssaf_due": "Due to URSSAF",
+      "monthly_remaining": "remaining this month",
+      "monthly_revenue": "Monthly revenue",
     },
     "filters": {
       "month": "Month",
@@ -386,6 +390,10 @@ class CodegenLoader extends AssetLoader {
       "urssaf_rate": "Cotisations 25,6%",
       "remaining": "Restant",
       "deducted": "Prélevé",
+      "urssaf_calculator": "Calculateur URSSAF",
+      "urssaf_due": "À payer à l’URSSAF",
+      "monthly_remaining": "restant ce mois",
+      "monthly_revenue": "Chiffre d’affaires du mois",
     },
     "filters": {
       "month": "Mois",

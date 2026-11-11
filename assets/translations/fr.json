@@ -170,7 +170,11 @@
     "urssaf_label": "URSSAF",
     "urssaf_rate": "Cotisations 25,6%",
     "remaining": "Restant",
-    "deducted": "Prélevé"
+    "deducted": "Prélevé",
+    "urssaf_calculator": "Calculateur URSSAF",
+    "urssaf_due": "À payer à l’URSSAF",
+    "monthly_remaining": "restant ce mois",
+    "monthly_revenue": "Chiffre d’affaires du mois"
   },
   "filters": {
     "month": "Mois",
