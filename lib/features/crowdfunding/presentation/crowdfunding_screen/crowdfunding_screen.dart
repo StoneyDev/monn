@@ -58,9 +58,7 @@ class _CrowdfundingScreenState extends ConsumerState<CrowdfundingScreen> {
       getSavingsProvider(type: .crowdfunding),
     );
     final crowdfundingData = ref.watch(
-      getSavingsProvider(
-        type: .crowdfunding,
-      ).select((data) => data.value),
+      getSavingsProvider(type: .crowdfunding).select((data) => data.value),
     );
     final crowdfundings = ref.watch(watchCrowdfundingsProvider);
     final report = ref.watch(
@@ -184,7 +182,9 @@ class _CrowdfundingScreenState extends ConsumerState<CrowdfundingScreen> {
                   ),
                 ),
                 OutlinedButton.icon(
-                  icon: const iconoir.FilterList(),
+                  icon: iconoir.FilterList(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   label: Text(
                     [
                       context.tr(LocaleKeys.common_filter),
