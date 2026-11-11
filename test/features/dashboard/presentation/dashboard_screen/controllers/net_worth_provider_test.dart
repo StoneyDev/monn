@@ -18,15 +18,13 @@ void main() {
         overrides: [
           savingsRepositoryProvider.overrideWithValue(repository),
           for (final type in SavingsType.values)
-            getFinalAmountProvider(
-              type,
-            ).overrideWithValue(const AsyncData(0)),
+            getFinalAmountProvider(type).overrideWithValue(const AsyncData(0)),
         ],
       );
 
-      when(repository.watchSavings()).thenAnswer(
-        (_) => Stream.value(<SavingsEntry>[]),
-      );
+      when(
+        repository.watchSavings(),
+      ).thenAnswer((_) => Stream.value(<SavingsEntry>[]));
 
       // Act
       final provider = watchSortedSavingsProvider(

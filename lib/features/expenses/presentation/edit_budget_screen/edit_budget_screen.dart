@@ -83,9 +83,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.rent.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        rent: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(rent: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_electricity),
@@ -94,18 +93,16 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.electricity.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        electricity: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(electricity: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_gas),
                       initialValue: form.gas == 0 ? null : form.gas.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        gas: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(gas: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_water),
@@ -114,9 +111,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.water.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        water: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(water: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_internet),
@@ -125,9 +121,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.internet.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        internet: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(internet: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_home_insurance),
@@ -136,9 +131,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.homeInsurance.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        homeInsurance: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(homeInsurance: double.tryParse(v) ?? 0),
                     ),
 
                     // Transport
@@ -176,9 +170,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.groceries.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        groceries: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(groceries: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_restaurants),
@@ -187,9 +180,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.restaurants.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        restaurants: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(restaurants: double.tryParse(v) ?? 0),
                     ),
 
                     // Health
@@ -229,9 +221,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                           : form.phone.toString(),
                       suffix: '€',
                       required: true,
-                      onChanged: (v) => notifier.set(
-                        phone: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(phone: double.tryParse(v) ?? 0),
                     ),
                     MonnFieldNumber<double>(
                       label: context.tr(LocaleKeys.expenses_ai),
@@ -239,9 +230,8 @@ class _EditBudgetScreenState extends ConsumerState<EditBudgetScreen> {
                       suffix: '€',
                       required: true,
                       textInputAction: TextInputAction.done,
-                      onChanged: (v) => notifier.set(
-                        ai: double.tryParse(v) ?? 0,
-                      ),
+                      onChanged: (v) =>
+                          notifier.set(ai: double.tryParse(v) ?? 0),
                     ),
                   ],
                 );

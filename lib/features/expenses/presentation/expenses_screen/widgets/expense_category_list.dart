@@ -34,10 +34,7 @@ class ExpenseCategoryList extends StatelessWidget {
 }
 
 class _CategorySection extends StatelessWidget {
-  const _CategorySection({
-    required this.category,
-    required this.totalExpenses,
-  });
+  const _CategorySection({required this.category, required this.totalExpenses});
 
   final ExpenseCategory category;
   final double totalExpenses;
@@ -148,25 +145,22 @@ class _ExpenseLineItem extends StatelessWidget {
             child: const SizedBox(width: 4),
           ),
           Expanded(
-            child: Text(
-              name,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            child: Text(name, style: Theme.of(context).textTheme.bodyMedium),
           ),
           Text(
             amount.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
           ),
           SizedBox(
             width: 40,
             child: Text(
               '${percentage.toStringAsFixed(0)}%',
               textAlign: TextAlign.end,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.lightGray,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
             ),
           ),
         ],

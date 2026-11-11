@@ -19,9 +19,7 @@ void main() {
     final container = createContainer(
       overrides: [
         peaRepositoryProvider.overrideWithValue(peaRepository),
-        etfRepositoryProvider.overrideWithValue(
-          const _FakeEtfRepository(120),
-        ),
+        etfRepositoryProvider.overrideWithValue(const _FakeEtfRepository(120)),
       ],
     )..listen(getPeaProvider, (_, _) {});
 

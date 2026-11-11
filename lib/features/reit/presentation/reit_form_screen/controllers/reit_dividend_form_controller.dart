@@ -13,11 +13,8 @@ typedef ReitDividendForm = ({
 @Riverpod(keepAlive: true)
 class ReitDividendFormController extends _$ReitDividendFormController {
   @override
-  ReitDividendForm build() => (
-    amount: '',
-    receivedAt: DateTime.now(),
-    reit: null,
-  );
+  ReitDividendForm build() =>
+      (amount: '', receivedAt: DateTime.now(), reit: null);
 
   void set({String? amount, DateTime? receivedAt, ReitEntry? reit}) {
     state = (

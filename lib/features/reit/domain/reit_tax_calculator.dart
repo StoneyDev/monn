@@ -47,10 +47,7 @@ class ReitTaxCalculator {
 
   static double _applyDecote(double grossTax) {
     if (grossTax <= 0) return 0;
-    final decote = (_decoteCoefficient - grossTax * 0.4525).clamp(
-      0,
-      grossTax,
-    );
+    final decote = (_decoteCoefficient - grossTax * 0.4525).clamp(0, grossTax);
     return grossTax - decote;
   }
 

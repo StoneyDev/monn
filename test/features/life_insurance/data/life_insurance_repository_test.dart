@@ -38,9 +38,9 @@ void main() {
         ],
       );
 
-      when(repository.watchLifeInsurance()).thenAnswer(
-        (_) => Stream.value(null),
-      );
+      when(
+        repository.watchLifeInsurance(),
+      ).thenAnswer((_) => Stream.value(null));
 
       // Act
       final listener = MockListener<AsyncValue<LifeInsuranceEntry?>>();
@@ -79,9 +79,9 @@ void main() {
         ],
       );
 
-      when(repository.watchLifeInsurance()).thenAnswer(
-        (_) => Stream.value(lifeInsurance),
-      );
+      when(
+        repository.watchLifeInsurance(),
+      ).thenAnswer((_) => Stream.value(lifeInsurance));
 
       // Act
       final listener = MockListener<AsyncValue<LifeInsuranceEntry?>>();
@@ -120,9 +120,9 @@ void main() {
           ],
         );
 
-        when(repository.watchLifeInsurance()).thenAnswer(
-          (_) => Stream.value(null),
-        );
+        when(
+          repository.watchLifeInsurance(),
+        ).thenAnswer((_) => Stream.value(null));
 
         // Act
         final listener = MockListener<AsyncValue<PayoutReportData>>();
@@ -160,9 +160,7 @@ void main() {
           interests: 750.50,
         );
 
-        const expectedPayoutReport = PayoutReportData(
-          finalAmount: 10750.50,
-        );
+        const expectedPayoutReport = PayoutReportData(finalAmount: 10750.50);
 
         final repository = MockLifeInsuranceRepository();
         final container = createContainer(
@@ -171,9 +169,9 @@ void main() {
           ],
         );
 
-        when(repository.watchLifeInsurance()).thenAnswer(
-          (_) => Stream.value(lifeInsurance),
-        );
+        when(
+          repository.watchLifeInsurance(),
+        ).thenAnswer((_) => Stream.value(lifeInsurance));
 
         // Act
         final listener = MockListener<AsyncValue<PayoutReportData>>();
@@ -211,9 +209,7 @@ void main() {
           interests: 0,
         );
 
-        const expectedPayoutReport = PayoutReportData(
-          finalAmount: 5000,
-        );
+        const expectedPayoutReport = PayoutReportData(finalAmount: 5000);
 
         final repository = MockLifeInsuranceRepository();
         final container = createContainer(
@@ -222,9 +218,9 @@ void main() {
           ],
         );
 
-        when(repository.watchLifeInsurance()).thenAnswer(
-          (_) => Stream.value(lifeInsurance),
-        );
+        when(
+          repository.watchLifeInsurance(),
+        ).thenAnswer((_) => Stream.value(lifeInsurance));
 
         // Act
         final listener = MockListener<AsyncValue<PayoutReportData>>();

@@ -14,12 +14,8 @@ typedef ReitForm = ({
 @Riverpod(keepAlive: true)
 class ReitFormController extends _$ReitFormController {
   @override
-  ReitForm build() => (
-    reitName: '',
-    boughtOn: DateTime.now(),
-    price: '',
-    shares: '',
-  );
+  ReitForm build() =>
+      (reitName: '', boughtOn: DateTime.now(), price: '', shares: '');
 
   void set({
     String? reitName,

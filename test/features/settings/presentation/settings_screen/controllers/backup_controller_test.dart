@@ -45,18 +45,14 @@ void main() {
       final restoredSeed = AppDatabase(NativeDatabase(restoredFile));
       await restoredSeed
           .into(restoredSeed.savingsEntries)
-          .insert(
-            SavingsEntriesCompanion.insert(type: 'pea'),
-          );
+          .insert(SavingsEntriesCompanion.insert(type: 'pea'));
       await restoredSeed.close();
       final originalDatabase = AppDatabase(
         NativeDatabase(File('${directory.path}/original.db')),
       );
       await originalDatabase
           .into(originalDatabase.savingsEntries)
-          .insert(
-            SavingsEntriesCompanion.insert(type: 'cash'),
-          );
+          .insert(SavingsEntriesCompanion.insert(type: 'cash'));
       final localDatabase = _SuccessfulRestoreLocalDatabase(
         originalDatabase,
         restoredFile,
@@ -80,49 +76,43 @@ void main() {
     },
   );
 
-  test(
-    'refreshes the dashboard after a successful restore',
-    () async {
-      final directory = Directory.systemTemp.createTempSync(
-        'monn_dashboard_restore_',
-      );
-      addTearDown(() => directory.deleteSync(recursive: true));
-      final restoredFile = File('${directory.path}/restored.db');
-      final restoredSeed = AppDatabase(NativeDatabase(restoredFile));
-      await restoredSeed.close();
-      final originalDatabase = AppDatabase(
-        NativeDatabase(File('${directory.path}/original.db')),
-      );
-      final localDatabase = _SuccessfulRestoreLocalDatabase(
-        originalDatabase,
-        restoredFile,
-      );
-      addTearDown(localDatabase.close);
-      final container = createContainer(
-        overrides: [
-          localDatabaseProvider.overrideWithValue(AsyncData(localDatabase)),
-        ],
-      );
-      const filter = SavingsFilter.sortByFinalAmountDesc;
-      container.listen(
-        watchSortedSavingsProvider(filter: filter),
-        (_, _) {},
-      );
+  test('refreshes the dashboard after a successful restore', () async {
+    final directory = Directory.systemTemp.createTempSync(
+      'monn_dashboard_restore_',
+    );
+    addTearDown(() => directory.deleteSync(recursive: true));
+    final restoredFile = File('${directory.path}/restored.db');
+    final restoredSeed = AppDatabase(NativeDatabase(restoredFile));
+    await restoredSeed.close();
+    final originalDatabase = AppDatabase(
+      NativeDatabase(File('${directory.path}/original.db')),
+    );
+    final localDatabase = _SuccessfulRestoreLocalDatabase(
+      originalDatabase,
+      restoredFile,
+    );
+    addTearDown(localDatabase.close);
+    final container = createContainer(
+      overrides: [
+        localDatabaseProvider.overrideWithValue(AsyncData(localDatabase)),
+      ],
+    );
+    const filter = SavingsFilter.sortByFinalAmountDesc;
+    container.listen(watchSortedSavingsProvider(filter: filter), (_, _) {});
 
-      await container
-          .read(watchSortedSavingsProvider(filter: filter).future)
-          .timeout(const Duration(seconds: 2));
+    await container
+        .read(watchSortedSavingsProvider(filter: filter).future)
+        .timeout(const Duration(seconds: 2));
 
-      final restored = await container
-          .read(backupControllerProvider.notifier)
-          .restoreDB(externalBackup: File('unused.db'));
+    final restored = await container
+        .read(backupControllerProvider.notifier)
+        .restoreDB(externalBackup: File('unused.db'));
 
-      expect(restored, isTrue);
-      await container
-          .read(watchSortedSavingsProvider(filter: filter).future)
-          .timeout(const Duration(seconds: 2));
-    },
-  );
+    expect(restored, isTrue);
+    await container
+        .read(watchSortedSavingsProvider(filter: filter).future)
+        .timeout(const Duration(seconds: 2));
+  });
 
   test(
     'restores while the dashboard keeps the background database active',
@@ -152,10 +142,7 @@ void main() {
         ],
       );
       const filter = SavingsFilter.sortByFinalAmountDesc;
-      container.listen(
-        watchSortedSavingsProvider(filter: filter),
-        (_, _) {},
-      );
+      container.listen(watchSortedSavingsProvider(filter: filter), (_, _) {});
       await container
           .read(watchSortedSavingsProvider(filter: filter).future)
           .timeout(const Duration(seconds: 2));
@@ -186,10 +173,7 @@ class _RollbackLocalDatabase extends LocalDatabase {
   AppDatabase get database => _database;
 
   @override
-  Future<bool> restore(
-    File _, {
-    DatabaseRestoreProgress? onProgress,
-  }) async {
+  Future<bool> restore(File _, {DatabaseRestoreProgress? onProgress}) async {
     await _database.close();
     _database = AppDatabase(NativeDatabase.memory());
     return false;
@@ -209,10 +193,7 @@ class _SuccessfulRestoreLocalDatabase extends LocalDatabase {
   AppDatabase get database => _database;
 
   @override
-  Future<bool> restore(
-    File _, {
-    DatabaseRestoreProgress? onProgress,
-  }) async {
+  Future<bool> restore(File _, {DatabaseRestoreProgress? onProgress}) async {
     await _database.close();
     _database = AppDatabase(NativeDatabase(_restoredFile));
     return true;
@@ -239,10 +220,7 @@ class _ActualRestoreLocalDatabase extends LocalDatabase {
   AppDatabase get database => _database;
 
   @override
-  Future<bool> restore(
-    File _, {
-    DatabaseRestoreProgress? onProgress,
-  }) async {
+  Future<bool> restore(File _, {DatabaseRestoreProgress? onProgress}) async {
     final result = await restoreDatabaseBackup(
       currentDatabase: _database,
       source: _source,

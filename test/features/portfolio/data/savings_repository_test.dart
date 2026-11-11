@@ -15,9 +15,7 @@ void main() {
       // Arrange
       final repository = MockSavingsRepository();
       final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [savingsRepositoryProvider.overrideWithValue(repository)],
       );
 
       // Act
@@ -35,14 +33,10 @@ void main() {
       final repository = MockSavingsRepository();
 
       final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [savingsRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.watchSavings()).thenAnswer(
-        (_) => Stream.value(savings),
-      );
+      when(repository.watchSavings()).thenAnswer((_) => Stream.value(savings));
 
       // Act
       final listener = MockListener<AsyncValue<List<SavingsEntry>>>();
@@ -73,14 +67,12 @@ void main() {
 
         final repository = MockSavingsRepository();
         final container = createContainer(
-          overrides: [
-            savingsRepositoryProvider.overrideWithValue(repository),
-          ],
+          overrides: [savingsRepositoryProvider.overrideWithValue(repository)],
         );
 
-        when(repository.getSavings(any)).thenAnswer(
-          (_) => Future.value(saving),
-        );
+        when(
+          repository.getSavings(any),
+        ).thenAnswer((_) => Future.value(saving));
 
         // Act
         final listener = MockListener<AsyncValue<SavingsEntry?>>();

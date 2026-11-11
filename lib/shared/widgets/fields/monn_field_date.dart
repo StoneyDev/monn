@@ -92,9 +92,9 @@ class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
                   return null;
                 }
               : null,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w900,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
         ),
       ],
     );

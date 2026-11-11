@@ -137,10 +137,7 @@ void main() {
       // Act
       container
           .read(budgetFormControllerProvider.notifier)
-          .set(
-            freelanceIncome: 6000,
-            electricity: 150,
-          );
+          .set(freelanceIncome: 6000, electricity: 150);
 
       final result = container.read(budgetFormControllerProvider).value!;
 
@@ -188,10 +185,7 @@ void main() {
         // Update form
         container
             .read(budgetFormControllerProvider.notifier)
-            .set(
-              freelanceIncome: 6000,
-              rent: 1500,
-            );
+            .set(freelanceIncome: 6000, rent: 1500);
 
         // Act
         final success = await container
@@ -257,6 +251,5 @@ void main() {
       // Assert
       expect(success, false);
     });
-
   });
 }

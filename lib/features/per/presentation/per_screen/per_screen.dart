@@ -27,9 +27,7 @@ class PerScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: MonnAppBar(
-        title: context.tr(LocaleKeys.savings_per),
-      ),
+      appBar: MonnAppBar(title: context.tr(LocaleKeys.savings_per)),
       body: MonnScrollView(
         slivers: [
           SliverList(
@@ -99,9 +97,7 @@ class PerScreen extends ConsumerWidget {
                 _ => const Center(
                   child: Padding(
                     padding: EdgeInsets.all(32),
-                    child: RepaintBoundary(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: RepaintBoundary(child: CircularProgressIndicator()),
                   ),
                 ),
               },

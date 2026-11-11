@@ -46,9 +46,9 @@ Stream<List<CrowdfundingEntry>> watchCrowdfundings(Ref ref) async* {
 Stream<PayoutReportData> watchPayoutReportCrowdfunding(Ref ref) async* {
   final repository = ref.watch(crowdfundingRepositoryProvider);
   final startAmount = await ref.watch(
-    getSavingsProvider(type: SavingsType.crowdfunding).selectAsync(
-      (data) => data?.startAmount ?? 0,
-    ),
+    getSavingsProvider(
+      type: SavingsType.crowdfunding,
+    ).selectAsync((data) => data?.startAmount ?? 0),
   );
 
   await for (final results in repository.watchCrowdfundings()) {

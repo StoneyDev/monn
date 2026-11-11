@@ -12,14 +12,15 @@ class FreelanceRepository {
   final AppDatabase _db;
 
   Stream<FreelanceEntry?> watchFreelance() {
-    return (_db.select(_db.freelanceEntries)..where((t) => t.id.equals(1)))
-        .watchSingleOrNull();
+    return (_db.select(
+      _db.freelanceEntries,
+    )..where((t) => t.id.equals(1))).watchSingleOrNull();
   }
 
   Future<void> editFreelance(FreelanceEntriesCompanion freelance) {
-    return _db.into(_db.freelanceEntries).insertOnConflictUpdate(
-          freelance.copyWith(id: const Value(1)),
-        );
+    return _db
+        .into(_db.freelanceEntries)
+        .insertOnConflictUpdate(freelance.copyWith(id: const Value(1)));
   }
 }
 

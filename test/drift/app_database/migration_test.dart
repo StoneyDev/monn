@@ -30,10 +30,7 @@ void main() {
       final schema = await verifier.schemaAt(fromVersion);
       final db = AppDatabase(schema.newConnection());
 
-      await verifier.migrateAndValidate(
-        db,
-        GeneratedHelper.versions.last,
-      );
+      await verifier.migrateAndValidate(db, GeneratedHelper.versions.last);
       await db.close();
     }
   });

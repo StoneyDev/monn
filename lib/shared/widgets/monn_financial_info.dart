@@ -4,11 +4,7 @@ import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/utils/app_colors.dart';
 
 class MonnFinancialInfo extends StatelessWidget {
-  const MonnFinancialInfo({
-    required this.title,
-    required this.data,
-    super.key,
-  });
+  const MonnFinancialInfo({required this.title, required this.data, super.key});
 
   final String title;
   final Object data;
@@ -28,9 +24,7 @@ class MonnFinancialInfo extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: AppColors.lightGray,
-          ),
+          style: const TextStyle(color: AppColors.lightGray),
         ),
         Text(
           formattedData,

@@ -7,12 +7,7 @@ import 'package:path/path.dart' as p;
 
 const _validationSchema = 'monn_validation';
 
-enum DatabaseRestoreStep {
-  validating,
-  creatingRecovery,
-  replacing,
-  finalizing,
-}
+enum DatabaseRestoreStep { validating, creatingRecovery, replacing, finalizing }
 
 typedef DatabaseRestoreProgress = void Function(DatabaseRestoreStep step);
 
@@ -23,9 +18,8 @@ Future<void> createDatabaseBackup({
 
 Future<void> deleteOlderDatabaseBackups(File currentBackup) async {
   final pattern = RegExp(r'^backup_(.+)\.db$');
-  DateTime? backupDate(String path) => DateTime.tryParse(
-    pattern.firstMatch(p.basename(path))?.group(1) ?? '',
-  );
+  DateTime? backupDate(String path) =>
+      DateTime.tryParse(pattern.firstMatch(p.basename(path))?.group(1) ?? '');
   final currentDate = backupDate(currentBackup.path);
   if (currentDate == null) return;
 
@@ -50,15 +44,9 @@ Future<({AppDatabase database, bool restored})> restoreDatabaseBackup({
   required Directory temporaryDirectory,
   DatabaseRestoreProgress? onProgress,
 }) async {
-  final restoreDirectory = await temporaryDirectory.createTemp(
-    'monn_restore_',
-  );
-  final staging = File(
-    p.join(restoreDirectory.path, 'staging.db'),
-  );
-  final rollback = File(
-    p.join(restoreDirectory.path, 'rollback.db'),
-  );
+  final restoreDirectory = await temporaryDirectory.createTemp('monn_restore_');
+  final staging = File(p.join(restoreDirectory.path, 'staging.db'));
+  final rollback = File(p.join(restoreDirectory.path, 'rollback.db'));
 
   try {
     onProgress?.call(.validating);
@@ -75,18 +63,12 @@ Future<({AppDatabase database, bool restored})> restoreDatabaseBackup({
     try {
       if (!await _migrateAndValidate(staging)) {
         onProgress?.call(.finalizing);
-        return (
-          database: _openDatabase(destination),
-          restored: false,
-        );
+        return (database: _openDatabase(destination), restored: false);
       }
 
       await _replaceDatabaseFile(source: staging, destination: destination);
       onProgress?.call(.finalizing);
-      return (
-        database: _openDatabase(destination),
-        restored: true,
-      );
+      return (database: _openDatabase(destination), restored: true);
     } on Object {
       await _replaceDatabaseFile(source: rollback, destination: destination);
       onProgress?.call(.finalizing);
@@ -110,16 +92,12 @@ Future<bool> _migrateAndValidate(File file) async {
   }
 }
 
-Future<bool> _isRestorableDatabase(
-  AppDatabase database,
-  File file,
-) async {
+Future<bool> _isRestorableDatabase(AppDatabase database, File file) async {
   var attached = false;
   try {
-    await database.customStatement(
-      'ATTACH DATABASE ? AS $_validationSchema',
-      [file.path],
-    );
+    await database.customStatement('ATTACH DATABASE ? AS $_validationSchema', [
+      file.path,
+    ]);
     attached = true;
     final versionRow = await database
         .customSelect('PRAGMA $_validationSchema.user_version')
@@ -136,9 +114,7 @@ Future<bool> _isRestorableDatabase(
     return false;
   } finally {
     if (attached) {
-      await database.customStatement(
-        'DETACH DATABASE $_validationSchema',
-      );
+      await database.customStatement('DETACH DATABASE $_validationSchema');
     }
   }
 }
@@ -148,12 +124,8 @@ Future<bool> _hasRequiredSchema(AppDatabase database) async {
     final columns = await database
         .customSelect('PRAGMA table_info("${table.actualTableName}")')
         .get();
-    final actualColumns = {
-      for (final row in columns) row.read<String>('name'),
-    };
-    final expectedColumns = {
-      for (final column in table.$columns) column.$name,
-    };
+    final actualColumns = {for (final row in columns) row.read<String>('name')};
+    final expectedColumns = {for (final column in table.$columns) column.$name};
     if (!actualColumns.containsAll(expectedColumns)) return false;
   }
   return true;

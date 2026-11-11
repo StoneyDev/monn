@@ -26,9 +26,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
     final reits = ref.watch(watchReitsProvider);
 
     return Scaffold(
-      appBar: MonnAppBar(
-        title: context.tr(LocaleKeys.common_select_a_reit),
-      ),
+      appBar: MonnAppBar(title: context.tr(LocaleKeys.common_select_a_reit)),
       body: switch (reits) {
         AsyncData(:final value) => RadioGroup<int?>(
           groupValue: selectedReit?.id,
@@ -59,9 +57,7 @@ class ReitFormStepOneScreen extends ConsumerWidget {
           'Error: $error',
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
-        _ => const RepaintBoundary(
-          child: CircularProgressIndicator(),
-        ),
+        _ => const RepaintBoundary(child: CircularProgressIndicator()),
       },
       bottomNavigationBar: SafeArea(
         child: Padding(

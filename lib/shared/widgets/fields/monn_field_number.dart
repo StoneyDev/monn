@@ -82,9 +82,9 @@ class MonnFieldNumber<T> extends ConsumerWidget {
                 }
               : null,
           onChanged: onChanged,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w900,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
         ),
       ],
     );

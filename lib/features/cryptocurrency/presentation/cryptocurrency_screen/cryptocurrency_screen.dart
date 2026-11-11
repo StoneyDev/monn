@@ -40,9 +40,9 @@ class CryptocurrencyScreen extends ConsumerWidget {
     final locale = context.locale.toString();
     final chart = ref.watch(watchCryptoChartProvider);
     final cryptoData = ref.watch(
-      getSavingsProvider(type: SavingsType.cryptocurrency).select(
-        (value) => value.value,
-      ),
+      getSavingsProvider(
+        type: SavingsType.cryptocurrency,
+      ).select((value) => value.value),
     );
     final cryptocurrencies = ref.watch(getCryptoPriceMarketProvider);
 
@@ -129,10 +129,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                       MonnLine(
                         title: context.tr(LocaleKeys.common_rate_of_return),
                         value: Text(
-                          '${totalReturnRate(
-                            initialValue: cryptoData?.startAmount ?? 0,
-                            finalValue: chart.value?.totalAmount ?? 0,
-                          ).abs().toStringAsFixed(2)}%',
+                          '${totalReturnRate(initialValue: cryptoData?.startAmount ?? 0, finalValue: chart.value?.totalAmount ?? 0).abs().toStringAsFixed(2)}%',
                           textAlign: TextAlign.right,
                         ),
                       ),
@@ -142,11 +139,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
                           context.tr(
                             LocaleKeys.common_per_year,
                             args: [
-                              '${annualGrowthRate(
-                                initialValue: cryptoData?.startAmount ?? 0,
-                                duration: DateTime(2022, 04, 24).numberYears(),
-                                finalValue: chart.value?.totalAmount ?? 0,
-                              ).toStringAsFixed(2)}%',
+                              '${annualGrowthRate(initialValue: cryptoData?.startAmount ?? 0, duration: DateTime(2022, 04, 24).numberYears(), finalValue: chart.value?.totalAmount ?? 0).toStringAsFixed(2)}%',
                             ],
                           ),
                           textAlign: TextAlign.right,
@@ -180,16 +173,12 @@ class CryptocurrencyScreen extends ConsumerWidget {
                 child: Text(
                   '$error',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
               ),
               _ => const SliverToBoxAdapter(
                 child: Center(
-                  child: RepaintBoundary(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: RepaintBoundary(child: CircularProgressIndicator()),
                 ),
               ),
             },
@@ -201,10 +190,7 @@ class CryptocurrencyScreen extends ConsumerWidget {
 }
 
 class _CryptoCard extends ConsumerWidget {
-  const _CryptoCard({
-    required this.crypto,
-    this.onTap,
-  });
+  const _CryptoCard({required this.crypto, this.onTap});
 
   final CryptocurrencyEntry crypto;
   final void Function()? onTap;
@@ -218,11 +204,7 @@ class _CryptoCard extends ConsumerWidget {
       child: MonnCard(
         onTap: onTap,
         child: MonnTile(
-          icon: Image(
-            image: crypto.cryptoType.logo(),
-            height: 40,
-            width: 40,
-          ),
+          icon: Image(image: crypto.cryptoType.logo(), height: 40, width: 40),
           content: Text(
             crypto.cryptoType.label,
             style: TextStyle(

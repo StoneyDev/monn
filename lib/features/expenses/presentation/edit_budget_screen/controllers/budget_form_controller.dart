@@ -88,23 +88,21 @@ class BudgetFormController extends _$BudgetFormController {
     final current = state.value;
     if (current == null) return;
 
-    state = AsyncData(
-      (
-        freelanceIncome: freelanceIncome ?? current.freelanceIncome,
-        rent: rent ?? current.rent,
-        electricity: electricity ?? current.electricity,
-        gas: gas ?? current.gas,
-        water: water ?? current.water,
-        internet: internet ?? current.internet,
-        homeInsurance: homeInsurance ?? current.homeInsurance,
-        publicTransport: publicTransport ?? current.publicTransport,
-        groceries: groceries ?? current.groceries,
-        restaurants: restaurants ?? current.restaurants,
-        healthInsurance: healthInsurance ?? current.healthInsurance,
-        phone: phone ?? current.phone,
-        ai: ai ?? current.ai,
-      ),
-    );
+    state = AsyncData((
+      freelanceIncome: freelanceIncome ?? current.freelanceIncome,
+      rent: rent ?? current.rent,
+      electricity: electricity ?? current.electricity,
+      gas: gas ?? current.gas,
+      water: water ?? current.water,
+      internet: internet ?? current.internet,
+      homeInsurance: homeInsurance ?? current.homeInsurance,
+      publicTransport: publicTransport ?? current.publicTransport,
+      groceries: groceries ?? current.groceries,
+      restaurants: restaurants ?? current.restaurants,
+      healthInsurance: healthInsurance ?? current.healthInsurance,
+      phone: phone ?? current.phone,
+      ai: ai ?? current.ai,
+    ));
   }
 
   Future<bool> submit() async {

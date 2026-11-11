@@ -42,10 +42,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
                   initialValue: (value?.equity ?? '').toString(),
                   onChanged: (newEquity) => ref
                       .read(peaFormControllerProvider.notifier)
-                      .set(
-                        equity: newEquity,
-                        initialEquity: value?.equity,
-                      ),
+                      .set(equity: newEquity, initialEquity: value?.equity),
                 ),
                 MonnFieldNumber<double>(
                   label: context.tr(LocaleKeys.common_purchase_price),
@@ -69,9 +66,7 @@ class _PeaFormScreenState extends ConsumerState<PeaFormScreen> {
           ),
         ),
         _ => const Center(
-          child: RepaintBoundary(
-            child: CircularProgressIndicator(),
-          ),
+          child: RepaintBoundary(child: CircularProgressIndicator()),
         ),
       },
       bottomNavigationBar: SafeArea(
