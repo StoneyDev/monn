@@ -11,7 +11,7 @@ extension BudgetToCategories on BudgetEntry {
     ExpenseCategory(
       name: context.tr(LocaleKeys.expenses_housing),
       total: totalHousing,
-      color: AppColors.blue,
+      color: AppColors.housing,
       items: [
         ExpenseCategoryItem(
           name: context.tr(LocaleKeys.expenses_rent),
@@ -53,7 +53,7 @@ extension BudgetToCategories on BudgetEntry {
     ExpenseCategory(
       name: context.tr(LocaleKeys.expenses_food),
       total: totalFood,
-      color: AppColors.green,
+      color: AppColors.food,
       items: [
         ExpenseCategoryItem(
           name: context.tr(LocaleKeys.expenses_groceries),
@@ -68,7 +68,7 @@ extension BudgetToCategories on BudgetEntry {
     ExpenseCategory(
       name: context.tr(LocaleKeys.expenses_health),
       total: totalHealth,
-      color: AppColors.red,
+      color: AppColors.health,
       items: [
         ExpenseCategoryItem(
           name: context.tr(LocaleKeys.expenses_health_insurance),

@@ -11,10 +11,7 @@ class MonnSnackBar {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      content: Text(
-        message,
-        style: const TextStyle(color: AppColors.green),
-      ),
+      content: Text(message, style: const TextStyle(color: AppColors.green)),
     );
   }
 
@@ -25,24 +22,17 @@ class MonnSnackBar {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      content: Text(
-        message,
-        style: const TextStyle(color: AppColors.red),
-      ),
+      content: Text(message, style: const TextStyle(color: AppColors.red)),
     );
   }
 
   static SnackBar info({required String message}) {
     return SnackBar(
       behavior: SnackBarBehavior.floating,
-      backgroundColor: AppColors.blue50,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      content: Text(
-        message,
-        style: const TextStyle(color: AppColors.blue),
-      ),
+      content: Text(message),
     );
   }
 }

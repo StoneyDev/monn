@@ -106,10 +106,7 @@ class SankeyDiagram extends StatelessWidget {
             child: SizedBox(
               height: positions.height,
               child: CustomPaint(
-                painter: _SankeyPainter(
-                  layout: layout,
-                  positions: positions,
-                ),
+                painter: _SankeyPainter(layout: layout, positions: positions),
                 child: _SankeyLabels(
                   layout: layout,
                   positions: positions,
@@ -167,10 +164,7 @@ class _SubItemPosition extends _NodePosition {
 }
 
 class _SankeyPositions {
-  const _SankeyPositions({
-    required this.categories,
-    required this.subItems,
-  });
+  const _SankeyPositions({required this.categories, required this.subItems});
 
   final List<_CategoryPosition> categories;
   final List<_SubItemPosition> subItems;
@@ -274,9 +268,7 @@ class _SankeyLabels extends StatelessWidget {
     );
 
     final categoryLabelHeight = MediaQuery.textScalerOf(context).scale(20);
-    final categoryLabelStyle = labelStyle.copyWith(
-      fontWeight: FontWeight.w700,
-    );
+    final categoryLabelStyle = labelStyle.copyWith(fontWeight: FontWeight.w700);
 
     return Stack(
       clipBehavior: Clip.none,
@@ -311,9 +303,7 @@ class _SankeyLabels extends StatelessWidget {
                 pos.category.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: categoryLabelStyle.copyWith(
-                  color: pos.color,
-                ),
+                style: categoryLabelStyle.copyWith(color: pos.color),
               ),
             ),
           ),
@@ -330,9 +320,7 @@ class _SankeyLabels extends StatelessWidget {
                 child: Row(
                   spacing: 4,
                   children: [
-                    Expanded(
-                      child: Text(pos.item.name),
-                    ),
+                    Expanded(child: Text(pos.item.name)),
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxWidth: layout.amountMaxWidth,
@@ -355,10 +343,7 @@ class _SankeyLabels extends StatelessWidget {
 }
 
 class _SankeyPainter extends CustomPainter {
-  _SankeyPainter({
-    required this.layout,
-    required this.positions,
-  });
+  _SankeyPainter({required this.layout, required this.positions});
 
   final _SankeyLayout layout;
   final _SankeyPositions positions;
@@ -488,16 +473,12 @@ class _SankeyPainter extends CustomPainter {
       )
       ..close();
 
-    final gradient = ui.Gradient.linear(
-      Offset(startX, 0),
-      Offset(endX, 0),
-      [color.withValues(alpha: _kFlowOpacity), color.withValues(alpha: 0.25)],
-    );
+    final gradient = ui.Gradient.linear(Offset(startX, 0), Offset(endX, 0), [
+      color.withValues(alpha: _kFlowOpacity),
+      color.withValues(alpha: 0.25),
+    ]);
 
-    canvas.drawPath(
-      path,
-      Paint()..shader = gradient,
-    );
+    canvas.drawPath(path, Paint()..shader = gradient);
   }
 
   @override

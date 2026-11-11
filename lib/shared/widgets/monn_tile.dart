@@ -19,26 +19,22 @@ class MonnTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 16,
       children: [
         icon,
-        const SizedBox(width: 16),
         Expanded(
           child: Column(
+            spacing: 4,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              content,
-              subContent,
-            ],
+            children: [content, subContent],
           ),
         ),
         Expanded(
           child: Column(
+            spacing: 4,
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              trailing,
-              ?subTrailing,
-            ],
+            children: [trailing, ?subTrailing],
           ),
         ),
       ],

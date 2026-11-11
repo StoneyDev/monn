@@ -43,12 +43,8 @@ class _MonnCardState extends State<MonnCard> {
         child: Container(
           padding: widget.padding,
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-            border: Border.all(
-              color: Theme.of(context).colorScheme.outline,
-              width: 2,
-            ),
+            borderRadius: const BorderRadius.all(Radius.circular(24)),
+            color: Theme.of(context).colorScheme.surfaceContainer,
           ),
           child: widget.child,
         ),

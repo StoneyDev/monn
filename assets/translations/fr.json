@@ -1,5 +1,6 @@
 {
   "common": {
+    "delete_confirmation": "Voulez-vous supprimer cet élément ?",
     "dividends": "Dividendes",
     "dividend": "Dividende",
     "filter": "Filtre",
@@ -86,6 +87,7 @@
     "error": "Échec de la restauration de la base de données"
   },
   "button": {
+    "delete": "Supprimer",
     "cancel": "Annuler",
     "close": "Fermer",
     "retry": "Réessayer",
@@ -150,6 +152,9 @@
     "ai": "IA"
   },
   "freelance": {
+    "annual_net": "Revenu net annuel",
+    "monthly_equivalent": "équivalent mensuel",
+    "annual_revenue": "Chiffre d’affaires annuel",
     "net_imposable": "Net imposable",
     "total_charges": "Total prélèvements",
     "calculation": "Base fiscale",
@@ -185,5 +190,16 @@
     "dark": "Sombre",
     "light": "Clair",
     "system": "Système"
+  },
+  "history": {
+    "title": "Évolution du patrimoine",
+    "since": "depuis le {}",
+    "month": "1M",
+    "quarter": "3M",
+    "year": "1A",
+    "all": "Tout",
+    "empty": "Aucun relevé sur cette période.",
+    "first_point": "Premier relevé le {}. La courbe apparaîtra dès le prochain.",
+    "unavailable": "Historique momentanément indisponible"
   }
 }

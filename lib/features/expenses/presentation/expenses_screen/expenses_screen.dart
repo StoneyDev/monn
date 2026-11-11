@@ -88,16 +88,12 @@ class _EmptyBudget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 8,
       children: [
-        const iconoir.Wallet(
-          height: 64,
-          width: 64,
-          color: AppColors.lightGray,
-        ),
+        const iconoir.Wallet(height: 64, width: 64, color: AppColors.lightGray),
         Text(
           context.tr(LocaleKeys.expenses_no_data),
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: AppColors.lightGray,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(color: AppColors.lightGray),
         ),
       ],
     ),
@@ -123,9 +119,9 @@ class _BudgetContent extends StatelessWidget {
       children: [
         Text(
           budget.totalExpenses.simpleCurrency(locale),
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w900),
         ),
         Text(
           // ignore: lines_longer_than_80_chars
@@ -144,17 +140,22 @@ class _BudgetContent extends StatelessWidget {
           SliverToBoxAdapter(child: header),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
           SliverToBoxAdapter(child: ExpenseCategoryList(budget: budget)),
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
-        ],
-      ),
-      _ViewMode.chart => Column(
-        spacing: 12,
-        children: [
-          header,
-          Expanded(
-            child: SankeyDiagram(budget: budget),
+          SliverPadding(
+            padding: EdgeInsets.only(
+              bottom: 32 + MediaQuery.paddingOf(context).bottom,
+            ),
           ),
         ],
+      ),
+      _ViewMode.chart => SafeArea(
+        top: false,
+        child: Column(
+          spacing: 12,
+          children: [
+            header,
+            Expanded(child: SankeyDiagram(budget: budget)),
+          ],
+        ),
       ),
     };
   }

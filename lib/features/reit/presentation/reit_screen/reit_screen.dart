@@ -9,6 +9,7 @@ import 'package:monn/features/reit/presentation/reit_screen/controllers/reit_tax
 import 'package:monn/features/reit/presentation/reit_screen/reit_dividends_bottom_sheet.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/domain/savings.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/extensions/string_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
@@ -26,9 +27,7 @@ class ReitScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = context.locale.toString();
     final savingsReit = ref.watch(
-      getSavingsProvider(type: SavingsType.reit).select(
-        (value) => value.value,
-      ),
+      getSavingsProvider(type: SavingsType.reit).select((value) => value.value),
     );
     final reits = ref.watch(watchReitsProvider);
     final finalAmount = ref.watch(
@@ -40,9 +39,7 @@ class ReitScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr(
-          'savings.${SavingsType.reit.name.toSnakeCase()}',
-        ),
+        title: context.tr('savings.${SavingsType.reit.name.toSnakeCase()}'),
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
@@ -58,17 +55,17 @@ class ReitScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Text(
             finalAmount.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
           ),
           OutlinedButton(
             onPressed: null,
             child: Text(
               (savingsReit?.startAmount ?? 0).simpleCurrency(locale),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.lightGray,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: AppColors.lightGray),
             ),
           ),
           const SizedBox(height: 16),
@@ -95,10 +92,7 @@ class ReitScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Divider(
-            color: Theme.of(context).colorScheme.outline,
-            height: 0,
-          ),
+          Divider(color: Theme.of(context).colorScheme.outline, height: 0),
           switch (reits) {
             AsyncData(:final value) => Expanded(
               child: ListView.separated(
@@ -200,7 +194,7 @@ class ReitScreen extends ConsumerWidget {
                                   backgroundColor: AppColors.lightGray
                                       .withValues(alpha: 0.3),
                                   color: metrics.isProfitable
-                                      ? Colors.green
+                                      ? context.positiveColor
                                       : Theme.of(context).colorScheme.primary,
                                   minHeight: 8,
                                 ),
@@ -231,7 +225,7 @@ class ReitScreen extends ConsumerWidget {
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: metrics.isProfitable
-                                    ? Colors.green
+                                    ? context.positiveColor
                                     : AppColors.lightGray,
                               ),
                         ),
@@ -239,47 +233,23 @@ class ReitScreen extends ConsumerWidget {
                     ),
                     onLongPress: () => WoltModalSheet.show<void>(
                       context: context,
+                      barrierDismissible: false,
                       modalTypeBuilder: (_) => WoltModalType.alertDialog(),
-                      pageListBuilder: (context) => [
+                      pageListBuilder: (dialog) => [
                         MonnBottomSheet.warningDialog(
-                          context: context,
-                          title: item.reit.name.toUpperCase(),
-                          sliver: SliverToBoxAdapter(
-                            child: Column(
-                              spacing: 8,
-                              children: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Center(
-                                    child: Text(
-                                      context.tr(LocaleKeys.button_close),
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await ref.read(
-                                      deleteReitProvider(item.reit.id).future,
-                                    );
-                                    if (!context.mounted) return;
-                                    ref
-                                      ..invalidate(
-                                        getSavingsProvider(type: .reit),
-                                      )
-                                      ..invalidate(
-                                        watchPayoutReportReitProvider,
-                                      );
-                                    Navigator.pop(context);
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      context.tr(LocaleKeys.button_ok),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          context: dialog,
+                          title: item.reit.name,
+                          onConfirm: () async {
+                            await ref.read(
+                              deleteReitProvider(item.reit.id).future,
+                            );
+                            // The screen owns ref; the dialog may be closed.
+                            if (!context.mounted) return;
+                            ref
+                              ..invalidate(getSavingsProvider(type: .reit))
+                              ..invalidate(watchPayoutReportReitProvider);
+                            if (dialog.mounted) Navigator.pop(dialog);
+                          },
                         ),
                       ],
                     ),
@@ -299,9 +269,7 @@ class ReitScreen extends ConsumerWidget {
               ),
             ),
             AsyncError(:final error) => Text('error: $error'),
-            _ => const RepaintBoundary(
-              child: CircularProgressIndicator(),
-            ),
+            _ => const RepaintBoundary(child: CircularProgressIndicator()),
           },
         ],
       ),

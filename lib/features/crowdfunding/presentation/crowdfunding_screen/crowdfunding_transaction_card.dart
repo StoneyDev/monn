@@ -65,8 +65,8 @@ class CrowdfundingTransactionCard extends ConsumerWidget {
           if (crowdfunding.brutProfit.isNegative)
             Text(
               crowdfunding.brutProfit.simpleCurrency(locale),
-              style: const TextStyle(
-                color: AppColors.red,
+              style: TextStyle(
+                color: context.negativeColor,
                 fontWeight: FontWeight.bold,
               ),
             )
@@ -85,7 +85,9 @@ class CrowdfundingTransactionCard extends ConsumerWidget {
                       ? '(${crowdfunding.brutProfit})'
                       : context.tr(LocaleKeys.common_exempt),
                   style: TextStyle(
-                    color: isExempt ? AppColors.lightGray : AppColors.green,
+                    color: isExempt
+                        ? AppColors.lightGray
+                        : context.positiveColor,
                   ),
                 ),
               ],

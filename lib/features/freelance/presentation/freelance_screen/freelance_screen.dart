@@ -11,9 +11,7 @@ import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
-import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
-import 'package:monn/utils/app_colors.dart';
 
 class FreelanceScreen extends ConsumerWidget {
   const FreelanceScreen({super.key});
@@ -27,7 +25,9 @@ class FreelanceScreen extends ConsumerWidget {
       body: MonnScrollView(
         slivers: [
           SliverPadding(
-            padding: const EdgeInsets.only(bottom: 48),
+            padding: EdgeInsets.only(
+              bottom: 48 + MediaQuery.paddingOf(context).bottom,
+            ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 switch (freelance) {
@@ -35,7 +35,6 @@ class FreelanceScreen extends ConsumerWidget {
                     spacing: 24,
                     children: [
                       _FreelanceHeader(),
-                      _RevenueRecap(),
                       ChargesBreakdown(),
                       CalculationBreakdown(),
                     ],
@@ -77,29 +76,98 @@ class _FreelanceHeader extends ConsumerWidget {
     final annualRevenue = freelance?.annualRevenue ?? 0;
     final result = ref.watch(freelanceCalculationProvider);
 
+    final theme = Theme.of(context);
+    final monthlyNet = (result.netAfterAll / 12).simpleCurrency(locale);
+
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 14),
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 24,
         children: [
-          Text(
-            result.netAfterAll.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 8,
+            children: [
+              Text(
+                context.tr(LocaleKeys.freelance_annual_net),
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  result.netAfterAll.simpleCurrency(locale),
+                  style: theme.textTheme.headlineLarge,
+                ),
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '$monthlyNet · ',
+                      style: TextStyle(
+                        color: context.positiveColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    TextSpan(
+                      text: context.tr(LocaleKeys.freelance_monthly_equivalent),
+                    ),
+                  ],
+                ),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
           ),
-          OutlinedButton(
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: theme.colorScheme.surfaceContainer,
+              foregroundColor: theme.colorScheme.onSurface,
+              padding: const EdgeInsets.all(24),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+            ),
             onPressed: () => _openAmountScreen(
               context: context,
               ref: ref,
               annualRevenue: annualRevenue,
             ),
-            child: Text(
-              annualRevenue.simpleCurrency(locale),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.lightGray,
-              ),
+            child: Row(
+              spacing: 16,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 4,
+                    children: [
+                      Text(
+                        context.tr(LocaleKeys.freelance_annual_revenue),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      Text(
+                        annualRevenue.simpleCurrency(locale),
+                        style: theme.textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.edit_outlined,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+              ],
             ),
           ),
+          const _RevenueRecap(),
         ],
       ),
     );
@@ -137,7 +205,6 @@ class _RevenueRecap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
     final freelance = ref.watch(watchFreelanceProvider).value;
     final annualRevenue = freelance?.annualRevenue ?? 0;
     final result = ref.watch(freelanceCalculationProvider);
@@ -147,78 +214,62 @@ class _RevenueRecap extends ConsumerWidget {
     final remainingPercent = (result.netAfterAll / annualRevenue * 100).round();
     final deductedPercent = 100 - remainingPercent;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: MonnCard(
-        child: Column(
+    final theme = Theme.of(context);
+
+    return Column(
+      spacing: 12,
+      children: [
+        Row(
           spacing: 16,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: SizedBox(
-                height: 12,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: remainingPercent,
-                      child: const ColoredBox(
-                        color: AppColors.green,
-                        child: SizedBox.expand(),
-                      ),
-                    ),
-                    Expanded(
-                      flex: deductedPercent,
-                      child: const ColoredBox(
-                        color: AppColors.red,
-                        child: SizedBox.expand(),
-                      ),
-                    ),
-                  ],
+            Expanded(
+              child: Text(
+                '${context.tr(LocaleKeys.freelance_remaining)} '
+                '· $remainingPercent%',
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: context.positiveColor,
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${context.tr(LocaleKeys.freelance_remaining)} '
-                      '· $remainingPercent%',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      result.netAfterAll.simpleCurrency(locale),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.green,
-                      ),
-                    ),
-                  ],
+            Expanded(
+              child: Text(
+                '${context.tr(LocaleKeys.freelance_deducted)} '
+                '· $deductedPercent%',
+                textAlign: TextAlign.end,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: context.negativeColor,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '${context.tr(LocaleKeys.freelance_deducted)} '
-                      '· $deductedPercent%',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      result.totalCharges.simpleCurrency(locale),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ],
         ),
-      ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: SizedBox(
+            height: 8,
+            child: Row(
+              spacing: 3,
+              children: [
+                Expanded(
+                  flex: remainingPercent,
+                  child: ColoredBox(
+                    color: context.positiveColor,
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+                Expanded(
+                  flex: deductedPercent,
+                  child: ColoredBox(
+                    color: context.negativeColor,
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

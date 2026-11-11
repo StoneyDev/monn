@@ -142,19 +142,19 @@ class _CounterStrikeItem extends ConsumerWidget {
                         ),
                         const SizedBox(width: 4),
                         if (data.currentValue > data.purchaseValue)
-                          const iconoir.ArrowUpCircleSolid(
-                            color: AppColors.green,
+                          iconoir.ArrowUpCircleSolid(
+                            color: context.positiveColor,
                             height: 16,
                             width: 16,
                           )
                         else if (data.currentValue < data.purchaseValue)
-                          const iconoir.ArrowDownCircleSolid(
-                            color: AppColors.red,
+                          iconoir.ArrowDownCircleSolid(
+                            color: context.negativeColor,
                             height: 16,
                             width: 16,
                           ),
                         const SizedBox(width: 4),
-                        percentageValue(),
+                        percentageValue(context),
                       ],
                     ),
                     Text(
@@ -214,7 +214,7 @@ class _CounterStrikeItem extends ConsumerWidget {
     );
   }
 
-  Widget percentageValue() {
+  Widget percentageValue(BuildContext context) {
     final purchaseValue = data.purchaseValue;
     final currentValue = data.currentValue;
     final change = totalReturnRate(
@@ -225,7 +225,9 @@ class _CounterStrikeItem extends ConsumerWidget {
     return Text(
       '${change.abs().toStringAsFixed(2)}%',
       style: TextStyle(
-        color: change.isNegative ? AppColors.red : AppColors.green,
+        color: change.isNegative
+            ? context.negativeColor
+            : context.positiveColor,
         fontWeight: FontWeight.bold,
       ),
     );

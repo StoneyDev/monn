@@ -64,14 +64,14 @@ class LifeInsuranceScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: isFiscallyEligible
-                          ? AppColors.green
-                          : AppColors.red,
+                          ? context.positiveColor
+                          : context.negativeColor,
                     ),
                   ),
                   if (isFiscallyEligible)
-                    const iconoir.CheckCircleSolid(color: AppColors.green)
+                    iconoir.CheckCircleSolid(color: context.positiveColor)
                   else
-                    const iconoir.XmarkCircleSolid(color: AppColors.red),
+                    iconoir.XmarkCircleSolid(color: context.negativeColor),
                 ],
               ),
             ),
@@ -99,9 +99,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
                         child: Text(
                           (value?.invested ?? 0).simpleCurrency(locale),
                           style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                color: AppColors.lightGray,
-                              ),
+                              ?.copyWith(color: AppColors.lightGray),
                         ),
                         onPressed: () => _openInvestedAmountScreen(
                           context: context,
@@ -149,9 +147,7 @@ class LifeInsuranceScreen extends ConsumerWidget {
                 _ => const Center(
                   child: Padding(
                     padding: EdgeInsets.all(32),
-                    child: RepaintBoundary(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: RepaintBoundary(child: CircularProgressIndicator()),
                   ),
                 ),
               },
