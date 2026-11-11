@@ -29,10 +29,11 @@ class MonnSnackBar {
   static SnackBar info({required String message}) {
     return SnackBar(
       behavior: SnackBarBehavior.floating,
+      backgroundColor: AppColors.blue50,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      content: Text(message),
+      content: Text(message, style: const TextStyle(color: AppColors.blue)),
     );
   }
 }

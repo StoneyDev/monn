@@ -128,3 +128,11 @@ class ReitDividendEntries extends Table {
   DateTimeColumn get receivedAt => dateTime()();
   RealColumn get amount => real()();
 }
+
+class NetWorthSnapshots extends Table {
+  DateTimeColumn get day => dateTime()();
+  RealColumn get total => real()();
+
+  @override
+  Set<Column> get primaryKey => {day};
+}

@@ -9,6 +9,40 @@ part of 'net_worth_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(recordNetWorthSnapshot)
+final recordNetWorthSnapshotProvider = RecordNetWorthSnapshotProvider._();
+
+final class RecordNetWorthSnapshotProvider
+    extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
+    with $FutureModifier<void>, $FutureProvider<void> {
+  RecordNetWorthSnapshotProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'recordNetWorthSnapshotProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$recordNetWorthSnapshotHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<void> create(Ref ref) {
+    return recordNetWorthSnapshot(ref);
+  }
+}
+
+String _$recordNetWorthSnapshotHash() =>
+    r'c5ee0e856614e0e9cc96fbceb318316fd2371cef';
+
 @ProviderFor(getFinalAmount)
 final getFinalAmountProvider = GetFinalAmountFamily._();
 

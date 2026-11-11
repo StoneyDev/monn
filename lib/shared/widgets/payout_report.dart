@@ -48,7 +48,7 @@ class PayoutReport extends StatelessWidget {
               ),
             ),
             MonnLine(
-              icon: iconoir.Bank(color: Theme.of(context).colorScheme.primary),
+              icon: const iconoir.Bank(color: AppColors.blue),
               title: context.tr(LocaleKeys.common_tax, args: ['']),
               value: Text(
                 (-tax).simpleCurrency(locale),

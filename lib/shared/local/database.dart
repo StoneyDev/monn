@@ -7,6 +7,7 @@ part 'database.drift.dart';
 @DriftDatabase(
   tables: [
     SavingsEntries,
+    NetWorthSnapshots,
     CashEntries,
     CrowdfundingEntries,
     SavingsBookEntries,
@@ -26,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -57,6 +58,9 @@ class AppDatabase extends _$AppDatabase {
                 CASE tax_percentage WHEN 17.2 THEN 0.30 ELSE 0.314 END, 2), 2)
           WHERE tax_percentage IN (17.2, 18.6) AND brut_profit >= 0
         ''');
+      },
+      from3To4: (m, schema) async {
+        await m.createTable(schema.netWorthSnapshots);
       },
     ),
     beforeOpen: (_) async {

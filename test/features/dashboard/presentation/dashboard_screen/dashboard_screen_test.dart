@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
+import 'package:monn/features/dashboard/data/net_worth_history_repository.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/dashboard_screen.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
@@ -44,6 +45,10 @@ void main() {
             filter: filter,
           ).overrideWithValue(const AsyncData([])),
           watchTotalNetWorthProvider.overrideWithValue(const AsyncData(0)),
+          watchNetWorthHistoryProvider.overrideWithValue(const AsyncData([])),
+          recordNetWorthSnapshotProvider.overrideWithValue(
+            const AsyncData(null),
+          ),
           getCryptoPriceMarketProvider.overrideWithValue(const AsyncData([])),
           getEtfPriceMarketProvider.overrideWithValue(const AsyncData(0)),
         ],
@@ -69,7 +74,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(SettingsScreen), findsOneWidget);
-    expect(TickerMode.valuesOf(dashboardContext), isFalse);
+    expect(TickerMode.valuesOf(dashboardContext).enabled, isFalse);
 
     Navigator.of(
       tester.element(find.byType(SettingsScreen)),
@@ -79,7 +84,7 @@ void main() {
     await tester.pump();
 
     expect(find.byType(SettingsScreen), findsNothing);
-    expect(TickerMode.valuesOf(dashboardContext), isTrue);
+    expect(TickerMode.valuesOf(dashboardContext).enabled, isTrue);
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(localDatabase.restoreCalls, 1);
 
