@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
+import 'package:monn/utils/app_colors.dart';
 
 class RevenueSummary extends StatelessWidget {
   const RevenueSummary({
@@ -14,6 +15,8 @@ class RevenueSummary extends StatelessWidget {
     required this.revenue,
     required this.remaining,
     required this.onEdit,
+    this.training = 0,
+    this.incomeTax = 0,
     super.key,
   });
 
@@ -24,6 +27,8 @@ class RevenueSummary extends StatelessWidget {
   final String revenueLabel;
   final double revenue;
   final double remaining;
+  final double training;
+  final double incomeTax;
   final VoidCallback onEdit;
 
   @override
@@ -114,7 +119,12 @@ class RevenueSummary extends StatelessWidget {
             ),
           ),
           if (revenue != 0)
-            _RevenueRecap(revenue: revenue, remaining: remaining),
+            _RevenueRecap(
+              revenue: revenue,
+              remaining: remaining,
+              training: training,
+              incomeTax: incomeTax,
+            ),
         ],
       ),
     );
@@ -122,15 +132,39 @@ class RevenueSummary extends StatelessWidget {
 }
 
 class _RevenueRecap extends StatelessWidget {
-  const _RevenueRecap({required this.revenue, required this.remaining});
+  const _RevenueRecap({
+    required this.revenue,
+    required this.remaining,
+    required this.training,
+    required this.incomeTax,
+  });
 
   final double revenue;
   final double remaining;
+  final double training;
+  final double incomeTax;
 
   @override
   Widget build(BuildContext context) {
-    final remainingPercent = (remaining / revenue * 100).round().clamp(0, 100);
-    final deductedPercent = 100 - remainingPercent;
+    // Tenths of a percent, so the bar keeps integer flex values.
+    final remainingTenths = (remaining / revenue * 1000).round().clamp(0, 1000);
+    final deductedTenths = 1000 - remainingTenths;
+    final trainingTenths = (training / revenue * 1000).round().clamp(
+      0,
+      deductedTenths,
+    );
+    final taxTenths = (incomeTax / revenue * 1000).round().clamp(
+      0,
+      deductedTenths - trainingTenths,
+    );
+    final mainTenths = deductedTenths - trainingTenths - taxTenths;
+    final taxColor = context.isDarkTheme
+        ? AppColors.red700Dark
+        : AppColors.red700;
+    final trainingColor = context.isDarkTheme
+        ? AppColors.orangeDark
+        : AppColors.orange;
+    final locale = context.locale.toString();
 
     final theme = Theme.of(context);
 
@@ -141,19 +175,38 @@ class _RevenueRecap extends StatelessWidget {
           spacing: 16,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                '${context.tr(LocaleKeys.freelance_remaining)} '
-                '· $remainingPercent%',
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: context.positiveColor,
-                ),
+            Text(
+              '${context.tr(LocaleKeys.freelance_remaining)} '
+              '· ${(remainingTenths / 10).toDecimal(locale: locale)}%',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: context.positiveColor,
               ),
             ),
             Expanded(
-              child: Text(
-                '${context.tr(LocaleKeys.freelance_deducted)} '
-                '· $deductedPercent%',
+              child: Text.rich(
+                TextSpan(
+                  text:
+                      '${context.tr(LocaleKeys.freelance_deducted)} '
+                      '· ${(mainTenths / 10).toDecimal(locale: locale)}%',
+                  children: [
+                    if (trainingTenths > 0)
+                      TextSpan(
+                        text:
+                            ' + '
+                            '${(trainingTenths / 10).toDecimal(locale: locale)}'
+                            '%',
+                        style: TextStyle(color: trainingColor),
+                      ),
+                    if (taxTenths > 0)
+                      TextSpan(
+                        text:
+                            ' + '
+                            '${(taxTenths / 10).toDecimal(locale: locale)}'
+                            '%',
+                        style: TextStyle(color: taxColor),
+                      ),
+                  ],
+                ),
                 textAlign: TextAlign.end,
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: context.negativeColor,
@@ -169,19 +222,33 @@ class _RevenueRecap extends StatelessWidget {
             child: Row(
               spacing: 3,
               children: [
-                if (remainingPercent > 0)
+                if (remainingTenths > 0)
                   Expanded(
-                    flex: remainingPercent,
+                    flex: remainingTenths,
                     child: ColoredBox(
                       color: context.positiveColor,
                       child: const SizedBox.expand(),
                     ),
                   ),
-                if (deductedPercent > 0)
+                if (mainTenths > 0)
                   Expanded(
-                    flex: deductedPercent,
+                    flex: mainTenths,
                     child: ColoredBox(
                       color: context.negativeColor,
+                      child: const SizedBox.expand(),
+                    ),
+                  ),
+                // Fixed width: a to-scale segment would be under a pixel.
+                if (trainingTenths > 0)
+                  ColoredBox(
+                    color: trainingColor,
+                    child: const SizedBox(width: 6, height: double.infinity),
+                  ),
+                if (taxTenths > 0)
+                  Expanded(
+                    flex: taxTenths,
+                    child: ColoredBox(
+                      color: taxColor,
                       child: const SizedBox.expand(),
                     ),
                   ),

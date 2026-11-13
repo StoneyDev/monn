@@ -18,6 +18,10 @@ class AppColors {
   static const Color red50 = Color(0xfff7e6e8);
   static const Color red = Color(0xffDF293A);
   static const Color redDark = Color(0xffFF3547);
+  static const Color red700 = Color(0xff8E1420);
+  static const Color red700Dark = Color(0xffB8323F);
+  static const Color orange = Color(0xffC2570C);
+  static const Color orangeDark = Color(0xffFF9F1C);
 
   // Crypto color
   static const Color btc = Color(0xffef8e19);

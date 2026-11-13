@@ -52,7 +52,7 @@ void main() {
     });
 
     group('calculateUrssaf', () {
-      test('should return 25.6% of annual revenue', () {
+      test('should return 25.8% of annual revenue', () {
         // Arrange
         const annualRevenue = 10000.0;
 
@@ -60,18 +60,18 @@ void main() {
         final result = FreelanceCalculator.calculateUrssaf(annualRevenue);
 
         // Assert
-        expect(result, closeTo(2560, 0.01));
+        expect(result, closeTo(2580, 0.01));
       });
 
       test('should round to the nearest euro', () {
         // Arrange
-        const revenue = 1234.0;
+        const revenue = 7770.0;
 
         // Act
         final result = FreelanceCalculator.calculateUrssaf(revenue);
 
         // Assert
-        expect(result, 316);
+        expect(result, 2005);
       });
 
       test('should not round the annual estimate', () {
@@ -79,7 +79,7 @@ void main() {
         final result = FreelanceCalculator.calculate(50000.5);
 
         // Assert
-        expect(result.urssaf, closeTo(12800.128, 0.0001));
+        expect(result.urssaf, closeTo(12900.129, 0.0001));
       });
 
       test('should return 0 when revenue is 0', () {
@@ -163,9 +163,9 @@ void main() {
         expect(result.annualRevenue, 100000);
         expect(result.abatement, closeTo(34000, 0.01));
         expect(result.netImposable, closeTo(66000, 0.01));
-        expect(result.urssaf, closeTo(25600, 0.01));
+        expect(result.urssaf, closeTo(25800, 0.01));
         expect(result.incomeTax, closeTo(12903.99, 0.01));
-        expect(result.netAfterAll, closeTo(61496.01, 0.01));
+        expect(result.netAfterAll, closeTo(61296.01, 0.01));
       });
 
       test('should return zeros when revenue is 0', () {

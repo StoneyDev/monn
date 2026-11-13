@@ -58,6 +58,7 @@ class _UrssafCalculatorScreenState extends State<UrssafCalculatorScreen> {
               revenueLabel: context.tr(LocaleKeys.freelance_monthly_revenue),
               revenue: _monthlyRevenue,
               remaining: remaining,
+              training: FreelanceCalculator.calculateCfp(_monthlyRevenue),
               onEdit: _openAmountScreen,
             ),
           ),

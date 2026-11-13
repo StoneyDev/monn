@@ -6,8 +6,10 @@ class FreelanceCalculator {
   const FreelanceCalculator._();
 
   static const double abatementRate = 0.34;
-  // 2026 BNC social contributions, excluding Cipav and ACRE reductions.
-  static const double urssafRate = 0.256;
+  // 2026 BNC social contributions (25.6%) plus the professional training
+  // contribution (CFP, 0.2%), excluding Cipav and ACRE reductions.
+  static const double urssafRate = 0.258;
+  static const double cfpRate = 0.002;
 
   // 2026 income tax on 2025 income, for one tax share.
   // Used as an estimate for 2026 income until the 2027 scale is published.
@@ -29,6 +31,10 @@ class FreelanceCalculator {
 
   static double calculateUrssaf(double revenue) =>
       (revenue.roundToDouble() * urssafRate).roundToDouble();
+
+  // Share of [calculateUrssaf] that funds professional training.
+  static double calculateCfp(double revenue) =>
+      (revenue.roundToDouble() * cfpRate).roundToDouble();
 
   static double calculateIncomeTax(double netImposable) {
     if (netImposable <= 0) return 0;

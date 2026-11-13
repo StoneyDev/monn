@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
+import 'package:monn/features/freelance/domain/freelance_calculator.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/controllers/freelance_form_controller.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/widgets/breakdown_section.dart';
 import 'package:monn/features/freelance/presentation/urssaf_calculator_screen/urssaf_calculator_screen.dart';
@@ -96,6 +97,8 @@ class _FreelanceHeader extends ConsumerWidget {
       revenueLabel: context.tr(LocaleKeys.freelance_annual_revenue),
       revenue: annualRevenue,
       remaining: result.netAfterAll,
+      training: annualRevenue * FreelanceCalculator.cfpRate,
+      incomeTax: result.incomeTax,
       onEdit: () => _openAmountScreen(
         context: context,
         ref: ref,
