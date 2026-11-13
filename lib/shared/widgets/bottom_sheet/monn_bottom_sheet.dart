@@ -79,7 +79,10 @@ class MonnBottomSheet {
                   children: [
                     MonnButton(
                       text: context.tr(LocaleKeys.button_delete),
-                      onPressed: onConfirm,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onConfirm();
+                      },
                     ),
                     TextButton(
                       onPressed: Navigator.of(context).pop,

@@ -2,11 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/shared/local/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils.dart';
 
 void main() {
   test('refreshes cached PEA data after updating the ETF price', () async {
+    SharedPreferences.setMockInitialValues({});
     final peaRepository = _FakePeaRepository(
       PeaEntry(
         id: 1,

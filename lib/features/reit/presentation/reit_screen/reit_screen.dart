@@ -243,12 +243,10 @@ class ReitScreen extends ConsumerWidget {
                             await ref.read(
                               deleteReitProvider(item.reit.id).future,
                             );
-                            // The screen owns ref; the dialog may be closed.
                             if (!context.mounted) return;
                             ref
                               ..invalidate(getSavingsProvider(type: .reit))
                               ..invalidate(watchPayoutReportReitProvider);
-                            if (dialog.mounted) Navigator.pop(dialog);
                           },
                         ),
                       ],

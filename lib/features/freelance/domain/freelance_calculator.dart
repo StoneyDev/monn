@@ -60,7 +60,7 @@ class FreelanceCalculator {
   static FreelanceResult calculate(double annualRevenue) {
     final abatement = calculateAbatement(annualRevenue);
     final netImposable = calculateNetImposable(annualRevenue);
-    final urssaf = calculateUrssaf(annualRevenue);
+    final urssaf = annualRevenue * urssafRate;
     final incomeTax = calculateIncomeTax(netImposable);
     final totalCharges = urssaf + incomeTax;
     final netAfterAll = annualRevenue - totalCharges;

@@ -90,12 +90,7 @@ class _CashCard extends ConsumerWidget {
           MonnBottomSheet.warningDialog(
             context: context,
             title: cash.label,
-            onConfirm: () async {
-              await ref.read(deleteCashProvider(cash.id).future);
-
-              if (!context.mounted) return;
-              Navigator.pop(context);
-            },
+            onConfirm: () => ref.read(deleteCashProvider(cash.id).future),
           ),
         ],
       ),

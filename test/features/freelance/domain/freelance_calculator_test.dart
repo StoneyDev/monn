@@ -74,6 +74,14 @@ void main() {
         expect(result, 316);
       });
 
+      test('should not round the annual estimate', () {
+        // Act
+        final result = FreelanceCalculator.calculate(50000.5);
+
+        // Assert
+        expect(result.urssaf, closeTo(12800.128, 0.0001));
+      });
+
       test('should return 0 when revenue is 0', () {
         // Arrange
         const annualRevenue = 0.0;

@@ -23,11 +23,11 @@ Future<void> recordNetWorthSnapshot(Ref ref) async {
   final repository = ref.watch(netWorthHistoryRepositoryProvider);
   // Record the day with refreshed prices. Offline, the last known prices
   // remain the best estimate, so a failed refresh does not block the record.
-  await Future.wait([
-    ref.watch(getCryptoPriceMarketProvider.future),
-    ref.watch(getEtfPriceMarketProvider.future),
-  ]).then<void>((_) {}, onError: (Object _) {});
-  if (!ref.mounted) return;
+  final prices = [
+    ref.watch(getCryptoPriceMarketProvider),
+    ref.watch(getEtfPriceMarketProvider),
+  ];
+  if (prices.any((price) => price.isLoading && !price.hasError)) return;
   final total = await ref.watch(watchTotalNetWorthProvider.future);
   if (!ref.mounted) return;
   await repository.record(total, DateTime.now());

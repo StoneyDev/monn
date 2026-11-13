@@ -46,11 +46,15 @@ class _NetWorthHistoryChartState extends ConsumerState<NetWorthHistoryChart> {
     final firstInRange = _days == 0
         ? 0
         : snapshots.indexWhere((point) => !point.day.isBefore(cutoff));
+    final start = firstInRange < 0 ? snapshots.length : firstInRange;
     // Snapshots are only taken when the app is opened, so the last one before
-    // the range serves as its baseline.
-    final points = firstInRange < 0
-        ? const <NetWorthSnapshot>[]
-        : snapshots.sublist(math.max(firstInRange - 1, 0));
+    // the range is carried forward to its start as the baseline.
+    final points = [
+      if (start > 0 &&
+          (start == snapshots.length || snapshots[start].day.isAfter(cutoff)))
+        snapshots[start - 1].copyWith(day: cutoff),
+      ...snapshots.skip(start),
+    ];
     String formatDay(DateTime day) =>
         (day.year == now.year
                 ? DateFormat.MMMd(locale)

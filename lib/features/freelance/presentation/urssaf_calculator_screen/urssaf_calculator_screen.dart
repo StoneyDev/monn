@@ -27,6 +27,7 @@ class _UrssafCalculatorScreenState extends State<UrssafCalculatorScreen> {
       context.push<void>(
         fullscreenDialog: true,
         AmountScreen(
+          initialValue: _monthlyRevenue,
           onChanged: (value) => amount = double.tryParse(value) ?? 0,
           onSubmit: () {
             setState(() => _monthlyRevenue = amount);
