@@ -22,7 +22,7 @@ class MonnDoughnutChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final emptyColor = context.isDarkTheme
         ? AppColors.gray300
-        : AppColors.white600;
+        : const Color(0xffF2F0F1);
 
     final displayChart = chart.data.isEmpty
         ? Chart(
@@ -46,10 +46,7 @@ class MonnDoughnutChart extends StatelessWidget {
 }
 
 class _DonutPainter extends CustomPainter {
-  const _DonutPainter({
-    required this.textColor,
-    required this.chart,
-  });
+  const _DonutPainter({required this.textColor, required this.chart});
 
   final Color textColor;
   final Chart chart;

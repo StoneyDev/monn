@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/monn_card.dart';
-import 'package:monn/utils/app_colors.dart';
 
 class CalculationBreakdown extends ConsumerWidget {
   const CalculationBreakdown({super.key});
@@ -18,21 +18,22 @@ class CalculationBreakdown extends ConsumerWidget {
     final result = ref.watch(freelanceCalculationProvider);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 12,
+        spacing: 16,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
               context.tr(LocaleKeys.freelance_calculation),
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           MonnCard(
+            padding: const EdgeInsets.all(24),
             child: Column(
               spacing: 16,
               children: [
@@ -40,60 +41,24 @@ class CalculationBreakdown extends ConsumerWidget {
                   title: context.tr(LocaleKeys.freelance_gross_revenue),
                   subtitle: context.tr(LocaleKeys.freelance_before_abatement),
                   amount: annualRevenue.simpleCurrency(locale),
-                  barColor: AppColors.green,
+                  amountColor: Theme.of(context).colorScheme.onSurface,
                 ),
                 _ChargeLineItem(
                   title: context.tr(LocaleKeys.freelance_abatement_title),
                   subtitle: context.tr(LocaleKeys.freelance_abatement_rate),
                   amount: '-${result.abatement.simpleCurrency(locale)}',
-                  barColor: AppColors.lightGray,
+                  amountColor: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 Divider(
                   color: Theme.of(context).colorScheme.outlineVariant,
                   height: 0,
                 ),
-                Row(
-                  spacing: 12,
-                  children: [
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.surfaceContainerLow,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.receipt_long_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.tr(LocaleKeys.freelance_net_imposable),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            context.tr(LocaleKeys.freelance_after_abatement),
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      result.netImposable.simpleCurrency(locale),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                _ChargeLineItem(
+                  title: context.tr(LocaleKeys.freelance_net_imposable),
+                  subtitle: context.tr(LocaleKeys.freelance_after_abatement),
+                  amount: result.netImposable.simpleCurrency(locale),
+                  amountColor: Theme.of(context).colorScheme.onSurface,
+                  isTotal: true,
                 ),
               ],
             ),
@@ -113,21 +78,22 @@ class ChargesBreakdown extends ConsumerWidget {
     final result = ref.watch(freelanceCalculationProvider);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 12,
+        spacing: 16,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
               context.tr(LocaleKeys.freelance_charges),
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           MonnCard(
+            padding: const EdgeInsets.all(24),
             child: Column(
               spacing: 16,
               children: [
@@ -135,7 +101,7 @@ class ChargesBreakdown extends ConsumerWidget {
                   title: context.tr(LocaleKeys.freelance_urssaf_label),
                   subtitle: context.tr(LocaleKeys.freelance_urssaf_rate),
                   amount: '-${result.urssaf.simpleCurrency(locale)}',
-                  barColor: AppColors.red,
+                  amountColor: context.negativeColor,
                 ),
                 _ChargeLineItem(
                   title: context.tr(LocaleKeys.freelance_income_tax_title),
@@ -143,53 +109,18 @@ class ChargesBreakdown extends ConsumerWidget {
                     LocaleKeys.freelance_estimated_deduction,
                   ),
                   amount: '-${result.incomeTax.simpleCurrency(locale)}',
-                  barColor: AppColors.red,
+                  amountColor: context.negativeColor,
                 ),
                 Divider(
                   color: Theme.of(context).colorScheme.outlineVariant,
                   height: 0,
                 ),
-                Row(
-                  spacing: 12,
-                  children: [
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: AppColors.red50,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.trending_down_rounded,
-                          color: AppColors.red,
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.tr(LocaleKeys.freelance_total_charges),
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            context.tr(LocaleKeys.freelance_social_fiscal),
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      '-${result.totalCharges.simpleCurrency(locale)}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.red,
-                      ),
-                    ),
-                  ],
+                _ChargeLineItem(
+                  title: context.tr(LocaleKeys.freelance_total_charges),
+                  subtitle: context.tr(LocaleKeys.freelance_social_fiscal),
+                  amount: '-${result.totalCharges.simpleCurrency(locale)}',
+                  amountColor: context.negativeColor,
+                  isTotal: true,
                 ),
               ],
             ),
@@ -205,51 +136,58 @@ class _ChargeLineItem extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.amount,
-    required this.barColor,
+    required this.amountColor,
+    this.isTotal = false,
   });
 
   final String title;
   final String subtitle;
   final String amount;
-  final Color barColor;
+  final Color amountColor;
+  final bool isTotal;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
-      spacing: 12,
+      spacing: 16,
       children: [
-        SizedBox(
-          width: 4,
-          height: 40,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: barColor,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-        ),
         Expanded(
+          flex: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 4,
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
                 ),
               ),
               Text(
                 subtitle,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
         ),
-        Text(
-          amount,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: barColor,
+        Flexible(
+          flex: 2,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                amount,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: isTotal ? FontWeight.w700 : FontWeight.w600,
+                  color: amountColor,
+                ),
+              ),
+            ),
           ),
         ),
       ],

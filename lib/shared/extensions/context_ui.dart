@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:monn/utils/app_colors.dart';
 
 extension ContextUi on BuildContext {
   bool get isDarkTheme => Theme.brightnessOf(this) == Brightness.dark;
+
+  Color get positiveColor =>
+      isDarkTheme ? AppColors.greenDark : AppColors.green;
+
+  Color get negativeColor => isDarkTheme ? AppColors.redDark : AppColors.red;
 
   Future<T?> push<T>(Widget page, {bool fullscreenDialog = false}) async {
     final route = MaterialPageRoute<T>(

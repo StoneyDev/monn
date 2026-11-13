@@ -19,8 +19,7 @@ enum CounterStrikeItem {
   falchionCase('Falchion'),
   horizonCase('Horizon'),
   recoilCase('Recoil'),
-  skeletonFade('Skeleton Fade')
-  ;
+  skeletonFade('Skeleton Fade');
 
   const CounterStrikeItem(this.label);
 

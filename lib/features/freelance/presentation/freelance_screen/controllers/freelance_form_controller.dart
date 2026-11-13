@@ -13,9 +13,7 @@ class FreelanceFormController extends _$FreelanceFormController {
   FreelanceForm build() => (annualRevenue: '');
 
   void set({String? annualRevenue}) {
-    state = (
-      annualRevenue: annualRevenue ?? state.annualRevenue,
-    );
+    state = (annualRevenue: annualRevenue ?? state.annualRevenue);
   }
 
   Future<bool> submit() async {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/shared/extensions/context_ui.dart';
-import 'package:monn/utils/app_colors.dart';
 import 'package:monn/utils/global_theme_data.dart';
 
 class MonnAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -26,9 +25,13 @@ class MonnAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: IconButton.filled(
                 onPressed: () => Navigator.maybePop(context),
                 style: IconButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.outline,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainer,
                 ),
-                icon: const iconoir.ArrowLeft(color: AppColors.lightGray),
+                icon: iconoir.ArrowLeft(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
             )
           : null,
@@ -36,7 +39,7 @@ class MonnAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Text(
               title!,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.lightGray,
+                color: Theme.of(context).colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             )

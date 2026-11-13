@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
 import 'package:monn/shared/widgets/monn_button.dart';
-import 'package:monn/utils/app_colors.dart';
 
 class AmountScreen extends StatefulWidget {
   const AmountScreen({
@@ -147,12 +147,12 @@ class _CalculationPreview extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Icon(Icons.add_circle, color: AppColors.green),
+                        Icon(Icons.add_circle, color: context.positiveColor),
                         Text(
                           addedValue.simpleCurrency(locale),
                           style: textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.green,
+                            color: context.positiveColor,
                           ),
                         ),
                       ],

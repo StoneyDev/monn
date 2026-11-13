@@ -101,23 +101,20 @@ Future<void> deleteReit(Ref ref, int id) {
 Stream<PayoutReportData> watchPayoutReportReit(Ref ref) async* {
   final repository = ref.watch(reitRepositoryProvider);
   final startAmount = await ref.watch(
-    getSavingsProvider(type: SavingsType.reit).selectAsync(
-      (savings) => savings?.startAmount ?? 0,
-    ),
+    getSavingsProvider(
+      type: SavingsType.reit,
+    ).selectAsync((savings) => savings?.startAmount ?? 0),
   );
 
   await for (final results in repository.watchReits()) {
-    final totalDividends = results.fold<double>(
-      0,
-      (total, e) {
-        final dividends = e.dividends.fold<double>(
-          0,
-          (total, dividend) => total + dividend.amount,
-        );
+    final totalDividends = results.fold<double>(0, (total, e) {
+      final dividends = e.dividends.fold<double>(
+        0,
+        (total, dividend) => total + dividend.amount,
+      );
 
-        return total + dividends;
-      },
-    );
+      return total + dividends;
+    });
 
     final finalAmount = totalDividends + startAmount;
 

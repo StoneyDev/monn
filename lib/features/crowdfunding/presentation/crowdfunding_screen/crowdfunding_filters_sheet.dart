@@ -46,7 +46,6 @@ class CrowdfundingFiltersSheet extends StatelessWidget {
                       ),
                 ),
               ),
-            ).copyWith(
               leadingNavBarWidget: showMonths
                   ? BackButton(
                       onPressed: () =>
@@ -89,15 +88,10 @@ class CrowdfundingFiltersSheet extends StatelessWidget {
                 children: [
                   RadioListTile<int?>(
                     value: null,
-                    title: Text(
-                      context.tr(LocaleKeys.filters_all_years),
-                    ),
+                    title: Text(context.tr(LocaleKeys.filters_all_years)),
                   ),
                   for (final value in years)
-                    RadioListTile<int?>(
-                      value: value,
-                      title: Text('$value'),
-                    ),
+                    RadioListTile<int?>(value: value, title: Text('$value')),
                 ],
               ),
             ),
@@ -143,9 +137,7 @@ class CrowdfundingFiltersSheet extends StatelessWidget {
                 runSpacing: 8,
                 children: [
                   FilterChip(
-                    label: Text(
-                      context.tr(LocaleKeys.filters_all_months),
-                    ),
+                    label: Text(context.tr(LocaleKeys.filters_all_months)),
                     selected: months.isEmpty,
                     onSelected: (_) =>
                         selection.value = (year: year, months: <int>{}),

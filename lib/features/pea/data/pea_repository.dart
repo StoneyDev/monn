@@ -38,9 +38,9 @@ Future<PeaEntry?> getPea(Ref ref) {
 Future<PayoutReportData> getPayoutReportPea(Ref ref) async {
   final data = await Future.wait([
     ref.watch(
-      getSavingsProvider(type: SavingsType.pea).selectAsync(
-        (data) => data?.startAmount ?? 0.0,
-      ),
+      getSavingsProvider(
+        type: SavingsType.pea,
+      ).selectAsync((data) => data?.startAmount ?? 0.0),
     ),
     ref.watch(getPeaProvider.future),
   ]);

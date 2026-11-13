@@ -71,10 +71,7 @@ END;
         ),
       );
 
-      expect(
-        (await db.select(db.savingsEntries).getSingle()).startAmount,
-        15,
-      );
+      expect((await db.select(db.savingsEntries).getSingle()).startAmount, 15);
     });
   });
 }

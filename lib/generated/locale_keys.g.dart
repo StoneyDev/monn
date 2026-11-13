@@ -2,7 +2,8 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
+  static const common_delete_confirmation = 'common.delete_confirmation';
   static const common_dividends = 'common.dividends';
   static const common_dividend = 'common.dividend';
   static const common_filter = 'common.filter';
@@ -55,7 +56,8 @@ abstract class  LocaleKeys {
   static const common_bought_on = 'common.bought_on';
   static const common_without_income_tax = 'common.without_income_tax';
   static const common_purchasing_tracking = 'common.purchasing_tracking';
-  static const common_price_and_purchase_date = 'common.price_and_purchase_date';
+  static const common_price_and_purchase_date =
+      'common.price_and_purchase_date';
   static const common_opening_account = 'common.opening_account';
   static const common_deletion_warning = 'common.deletion_warning';
   static const common_backup = 'common.backup';
@@ -87,6 +89,7 @@ abstract class  LocaleKeys {
   static const restore_success = 'restore.success';
   static const restore_error = 'restore.error';
   static const restore = 'restore';
+  static const button_delete = 'button.delete';
   static const button_cancel = 'button.cancel';
   static const button_close = 'button.close';
   static const button_retry = 'button.retry';
@@ -144,6 +147,9 @@ abstract class  LocaleKeys {
   static const expenses_phone = 'expenses.phone';
   static const expenses_ai = 'expenses.ai';
   static const expenses = 'expenses';
+  static const freelance_annual_net = 'freelance.annual_net';
+  static const freelance_monthly_equivalent = 'freelance.monthly_equivalent';
+  static const freelance_annual_revenue = 'freelance.annual_revenue';
   static const freelance_net_imposable = 'freelance.net_imposable';
   static const freelance_total_charges = 'freelance.total_charges';
   static const freelance_calculation = 'freelance.calculation';
@@ -160,6 +166,10 @@ abstract class  LocaleKeys {
   static const freelance_urssaf_rate = 'freelance.urssaf_rate';
   static const freelance_remaining = 'freelance.remaining';
   static const freelance_deducted = 'freelance.deducted';
+  static const freelance_urssaf_calculator = 'freelance.urssaf_calculator';
+  static const freelance_urssaf_due = 'freelance.urssaf_due';
+  static const freelance_monthly_remaining = 'freelance.monthly_remaining';
+  static const freelance_monthly_revenue = 'freelance.monthly_revenue';
   static const freelance = 'freelance';
   static const filters_month = 'filters.month';
   static const filters_all_months = 'filters.all_months';
@@ -169,14 +179,27 @@ abstract class  LocaleKeys {
   static const filters_reset = 'filters.reset';
   static const filters_all_years = 'filters.all_years';
   static const filters_no_results = 'filters.no_results';
-  static const filters_sort_by_start_amount_desc = 'filters.sort_by_start_amount_desc';
-  static const filters_sort_by_start_amount_asc = 'filters.sort_by_start_amount_asc';
-  static const filters_sort_by_final_amount_desc = 'filters.sort_by_final_amount_desc';
-  static const filters_sort_by_final_amount_asc = 'filters.sort_by_final_amount_asc';
+  static const filters_sort_by_start_amount_desc =
+      'filters.sort_by_start_amount_desc';
+  static const filters_sort_by_start_amount_asc =
+      'filters.sort_by_start_amount_asc';
+  static const filters_sort_by_final_amount_desc =
+      'filters.sort_by_final_amount_desc';
+  static const filters_sort_by_final_amount_asc =
+      'filters.sort_by_final_amount_asc';
   static const filters = 'filters';
   static const theme_mode_dark = 'theme_mode.dark';
   static const theme_mode_light = 'theme_mode.light';
   static const theme_mode_system = 'theme_mode.system';
   static const theme_mode = 'theme_mode';
-
+  static const history_title = 'history.title';
+  static const history_since = 'history.since';
+  static const history_month = 'history.month';
+  static const history_quarter = 'history.quarter';
+  static const history_year = 'history.year';
+  static const history_all = 'history.all';
+  static const history_empty = 'history.empty';
+  static const history_first_point = 'history.first_point';
+  static const history_unavailable = 'history.unavailable';
+  static const history = 'history';
 }

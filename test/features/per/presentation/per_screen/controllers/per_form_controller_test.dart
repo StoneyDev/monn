@@ -14,9 +14,7 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      );
+      final controller = container.read(perFormControllerProvider.notifier);
 
       // Assert
       expect(controller.state, isA<PerForm>());
@@ -30,9 +28,8 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(invested: invested);
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: invested);
 
       // Assert
       expect(controller.state.invested, invested);
@@ -44,9 +41,8 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(interests: interests);
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(interests: interests);
 
       // Assert
       expect(controller.state.interests, interests);
@@ -59,9 +55,8 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(invested: invested, interests: interests);
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: invested, interests: interests);
 
       // Assert
       expect(controller.state.invested, invested);
@@ -73,12 +68,9 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller =
-          container.read(
-              perFormControllerProvider.notifier,
-            )
-            ..set(invested: '5000')
-            ..set(invested: '10000');
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: '5000')
+        ..set(invested: '10000');
 
       // Assert
       expect(controller.state.invested, '10000');
@@ -89,12 +81,9 @@ void main() {
       final container = createContainer();
 
       // Act
-      final controller =
-          container.read(
-              perFormControllerProvider.notifier,
-            )
-            ..set(invested: '10000', interests: '500')
-            ..set(invested: '20000');
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: '10000', interests: '500')
+        ..set(invested: '20000');
 
       // Assert
       expect(controller.state.invested, '20000');
@@ -109,14 +98,11 @@ void main() {
       when(mockRepository.editPer(any)).thenAnswer((_) async {});
 
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(mockRepository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(invested: '10000', interests: '500');
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: '10000', interests: '500');
 
       // Act
       final result = await controller.submit();
@@ -132,14 +118,11 @@ void main() {
       when(mockRepository.editPer(any)).thenThrow(Exception('Error'));
 
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(mockRepository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(invested: '10000', interests: '500');
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: '10000', interests: '500');
 
       // Act
       final result = await controller.submit();
@@ -154,14 +137,11 @@ void main() {
       when(mockRepository.editPer(any)).thenAnswer((_) async {});
 
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(mockRepository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(mockRepository)],
       );
 
-      final controller = container.read(
-        perFormControllerProvider.notifier,
-      )..set(invested: '15000', interests: '750.50');
+      final controller = container.read(perFormControllerProvider.notifier)
+        ..set(invested: '15000', interests: '750.50');
 
       // Act
       await controller.submit();

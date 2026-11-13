@@ -161,10 +161,7 @@ void main() {
     final subscription = current
         .select(current.cashEntries)
         .watch()
-        .listen(
-          (_) {},
-          onError: (_, _) {},
-        );
+        .listen((_) {}, onError: (_, _) {});
     addTearDown(subscription.cancel);
 
     final result = await restoreDatabaseBackup(
@@ -215,9 +212,7 @@ void main() {
 }
 
 AppDatabase _open(File file, {bool enableMigrations = true}) {
-  return AppDatabase(
-    NativeDatabase(file, enableMigrations: enableMigrations),
-  );
+  return AppDatabase(NativeDatabase(file, enableMigrations: enableMigrations));
 }
 
 AppDatabase _openInBackground(File file) {

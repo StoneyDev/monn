@@ -64,9 +64,7 @@ class PeaFormController extends _$PeaFormController {
       costAverage: Value(newCostAverage),
     );
 
-    final result = await AsyncValue.guard(
-      () => repository.editPea(companion),
-    );
+    final result = await AsyncValue.guard(() => repository.editPea(companion));
 
     if (!ref.mounted) return false;
 

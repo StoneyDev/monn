@@ -40,10 +40,7 @@ class CashRepository {
     final total = (await query.getSingle()).read(totalExpression) ?? 0;
     final roundedTotal = double.parse(total.toStringAsFixed(2));
 
-    await _savingsRepository.setSavingsStartAmount(
-      .cash,
-      roundedTotal,
-    );
+    await _savingsRepository.setSavingsStartAmount(.cash, roundedTotal);
   }
 }
 
@@ -72,8 +69,6 @@ Stream<PayoutReportData> watchPayoutReportCash(Ref ref) async* {
   await for (final results in repository.watchCashs()) {
     final total = results.fold<double>(0, (total, e) => total + e.value);
 
-    yield PayoutReportData(
-      finalAmount: double.parse(total.toStringAsFixed(2)),
-    );
+    yield PayoutReportData(finalAmount: double.parse(total.toStringAsFixed(2)));
   }
 }

@@ -137,9 +137,9 @@ END;
         ],
       );
 
-      when(repository.watchCryptocurrencies()).thenAnswer(
-        (_) => Stream.value(cryptocurrencies),
-      );
+      when(
+        repository.watchCryptocurrencies(),
+      ).thenAnswer((_) => Stream.value(cryptocurrencies));
 
       // Act
       final listener = MockListener<AsyncValue<List<CryptocurrencyEntry>>>();
@@ -178,9 +178,9 @@ END;
           ],
         );
 
-        when(repository.watchCryptocurrencies()).thenAnswer(
-          (_) => Stream.value(cryptocurrencies),
-        );
+        when(
+          repository.watchCryptocurrencies(),
+        ).thenAnswer((_) => Stream.value(cryptocurrencies));
 
         // Act
         final listener = MockListener<AsyncValue<Chart>>();
@@ -234,9 +234,9 @@ END;
         ],
       );
 
-      when(repository.watchCryptocurrencies()).thenAnswer(
-        (_) => Stream.value(cryptocurrencies),
-      );
+      when(
+        repository.watchCryptocurrencies(),
+      ).thenAnswer((_) => Stream.value(cryptocurrencies));
 
       // Act
       final listener = MockListener<AsyncValue<Chart>>();
@@ -284,9 +284,9 @@ END;
         ],
       );
 
-      when(repository.watchCryptocurrencies()).thenAnswer(
-        (_) => Stream.value(cryptocurrencies),
-      );
+      when(
+        repository.watchCryptocurrencies(),
+      ).thenAnswer((_) => Stream.value(cryptocurrencies));
 
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();

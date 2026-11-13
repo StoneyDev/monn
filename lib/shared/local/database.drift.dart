@@ -256,6 +256,215 @@ class SavingsEntriesCompanion extends UpdateCompanion<SavingsEntry> {
   }
 }
 
+class $NetWorthSnapshotsTable extends NetWorthSnapshots
+    with TableInfo<$NetWorthSnapshotsTable, NetWorthSnapshot> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NetWorthSnapshotsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayMeta = const VerificationMeta('day');
+  @override
+  late final GeneratedColumn<DateTime> day = GeneratedColumn<DateTime>(
+    'day',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalMeta = const VerificationMeta('total');
+  @override
+  late final GeneratedColumn<double> total = GeneratedColumn<double>(
+    'total',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [day, total];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'net_worth_snapshots';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NetWorthSnapshot> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day')) {
+      context.handle(
+        _dayMeta,
+        day.isAcceptableOrUnknown(data['day']!, _dayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayMeta);
+    }
+    if (data.containsKey('total')) {
+      context.handle(
+        _totalMeta,
+        total.isAcceptableOrUnknown(data['total']!, _totalMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_totalMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {day};
+  @override
+  NetWorthSnapshot map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NetWorthSnapshot(
+      day: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}day'],
+      )!,
+      total: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}total'],
+      )!,
+    );
+  }
+
+  @override
+  $NetWorthSnapshotsTable createAlias(String alias) {
+    return $NetWorthSnapshotsTable(attachedDatabase, alias);
+  }
+}
+
+class NetWorthSnapshot extends DataClass
+    implements Insertable<NetWorthSnapshot> {
+  final DateTime day;
+  final double total;
+  const NetWorthSnapshot({required this.day, required this.total});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day'] = Variable<DateTime>(day);
+    map['total'] = Variable<double>(total);
+    return map;
+  }
+
+  NetWorthSnapshotsCompanion toCompanion(bool nullToAbsent) {
+    return NetWorthSnapshotsCompanion(day: Value(day), total: Value(total));
+  }
+
+  factory NetWorthSnapshot.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NetWorthSnapshot(
+      day: serializer.fromJson<DateTime>(json['day']),
+      total: serializer.fromJson<double>(json['total']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'day': serializer.toJson<DateTime>(day),
+      'total': serializer.toJson<double>(total),
+    };
+  }
+
+  NetWorthSnapshot copyWith({DateTime? day, double? total}) =>
+      NetWorthSnapshot(day: day ?? this.day, total: total ?? this.total);
+  NetWorthSnapshot copyWithCompanion(NetWorthSnapshotsCompanion data) {
+    return NetWorthSnapshot(
+      day: data.day.present ? data.day.value : this.day,
+      total: data.total.present ? data.total.value : this.total,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NetWorthSnapshot(')
+          ..write('day: $day, ')
+          ..write('total: $total')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(day, total);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NetWorthSnapshot &&
+          other.day == this.day &&
+          other.total == this.total);
+}
+
+class NetWorthSnapshotsCompanion extends UpdateCompanion<NetWorthSnapshot> {
+  final Value<DateTime> day;
+  final Value<double> total;
+  final Value<int> rowid;
+  const NetWorthSnapshotsCompanion({
+    this.day = const Value.absent(),
+    this.total = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NetWorthSnapshotsCompanion.insert({
+    required DateTime day,
+    required double total,
+    this.rowid = const Value.absent(),
+  }) : day = Value(day),
+       total = Value(total);
+  static Insertable<NetWorthSnapshot> custom({
+    Expression<DateTime>? day,
+    Expression<double>? total,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (day != null) 'day': day,
+      if (total != null) 'total': total,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NetWorthSnapshotsCompanion copyWith({
+    Value<DateTime>? day,
+    Value<double>? total,
+    Value<int>? rowid,
+  }) {
+    return NetWorthSnapshotsCompanion(
+      day: day ?? this.day,
+      total: total ?? this.total,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (day.present) {
+      map['day'] = Variable<DateTime>(day.value);
+    }
+    if (total.present) {
+      map['total'] = Variable<double>(total.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NetWorthSnapshotsCompanion(')
+          ..write('day: $day, ')
+          ..write('total: $total, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $CashEntriesTable extends CashEntries
     with TableInfo<$CashEntriesTable, CashEntry> {
   @override
@@ -5009,6 +5218,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $SavingsEntriesTable savingsEntries = $SavingsEntriesTable(this);
+  late final $NetWorthSnapshotsTable netWorthSnapshots =
+      $NetWorthSnapshotsTable(this);
   late final $CashEntriesTable cashEntries = $CashEntriesTable(this);
   late final $CrowdfundingEntriesTable crowdfundingEntries =
       $CrowdfundingEntriesTable(this);
@@ -5047,6 +5258,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     savingsEntries,
+    netWorthSnapshots,
     cashEntries,
     crowdfundingEntries,
     savingsBookEntries,
@@ -5254,6 +5466,171 @@ typedef $$SavingsEntriesTableProcessedTableManager =
         BaseReferences<_$AppDatabase, $SavingsEntriesTable, SavingsEntry>,
       ),
       SavingsEntry,
+      PrefetchHooks Function()
+    >;
+typedef $$NetWorthSnapshotsTableCreateCompanionBuilder =
+    NetWorthSnapshotsCompanion Function({
+      required DateTime day,
+      required double total,
+      Value<int> rowid,
+    });
+typedef $$NetWorthSnapshotsTableUpdateCompanionBuilder =
+    NetWorthSnapshotsCompanion Function({
+      Value<DateTime> day,
+      Value<double> total,
+      Value<int> rowid,
+    });
+
+class $$NetWorthSnapshotsTableFilterComposer
+    extends Composer<_$AppDatabase, $NetWorthSnapshotsTable> {
+  $$NetWorthSnapshotsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<DateTime> get day => $composableBuilder(
+    column: $table.day,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get total => $composableBuilder(
+    column: $table.total,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NetWorthSnapshotsTableOrderingComposer
+    extends Composer<_$AppDatabase, $NetWorthSnapshotsTable> {
+  $$NetWorthSnapshotsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<DateTime> get day => $composableBuilder(
+    column: $table.day,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get total => $composableBuilder(
+    column: $table.total,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NetWorthSnapshotsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NetWorthSnapshotsTable> {
+  $$NetWorthSnapshotsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<DateTime> get day =>
+      $composableBuilder(column: $table.day, builder: (column) => column);
+
+  GeneratedColumn<double> get total =>
+      $composableBuilder(column: $table.total, builder: (column) => column);
+}
+
+class $$NetWorthSnapshotsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $NetWorthSnapshotsTable,
+          NetWorthSnapshot,
+          $$NetWorthSnapshotsTableFilterComposer,
+          $$NetWorthSnapshotsTableOrderingComposer,
+          $$NetWorthSnapshotsTableAnnotationComposer,
+          $$NetWorthSnapshotsTableCreateCompanionBuilder,
+          $$NetWorthSnapshotsTableUpdateCompanionBuilder,
+          (
+            NetWorthSnapshot,
+            BaseReferences<
+              _$AppDatabase,
+              $NetWorthSnapshotsTable,
+              NetWorthSnapshot
+            >,
+          ),
+          NetWorthSnapshot,
+          PrefetchHooks Function()
+        > {
+  $$NetWorthSnapshotsTableTableManager(
+    _$AppDatabase db,
+    $NetWorthSnapshotsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NetWorthSnapshotsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NetWorthSnapshotsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NetWorthSnapshotsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<DateTime> day = const Value.absent(),
+                Value<double> total = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NetWorthSnapshotsCompanion(
+                day: day,
+                total: total,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required DateTime day,
+                required double total,
+                Value<int> rowid = const Value.absent(),
+              }) => NetWorthSnapshotsCompanion.insert(
+                day: day,
+                total: total,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$NetWorthSnapshotsTable, NetWorthSnapshot>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $NetWorthSnapshotsTable,
+                    NetWorthSnapshot
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NetWorthSnapshotsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $NetWorthSnapshotsTable,
+      NetWorthSnapshot,
+      $$NetWorthSnapshotsTableFilterComposer,
+      $$NetWorthSnapshotsTableOrderingComposer,
+      $$NetWorthSnapshotsTableAnnotationComposer,
+      $$NetWorthSnapshotsTableCreateCompanionBuilder,
+      $$NetWorthSnapshotsTableUpdateCompanionBuilder,
+      (
+        NetWorthSnapshot,
+        BaseReferences<
+          _$AppDatabase,
+          $NetWorthSnapshotsTable,
+          NetWorthSnapshot
+        >,
+      ),
+      NetWorthSnapshot,
       PrefetchHooks Function()
     >;
 typedef $$CashEntriesTableCreateCompanionBuilder =
@@ -8574,6 +8951,8 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$SavingsEntriesTableTableManager get savingsEntries =>
       $$SavingsEntriesTableTableManager(_db, _db.savingsEntries);
+  $$NetWorthSnapshotsTableTableManager get netWorthSnapshots =>
+      $$NetWorthSnapshotsTableTableManager(_db, _db.netWorthSnapshots);
   $$CashEntriesTableTableManager get cashEntries =>
       $$CashEntriesTableTableManager(_db, _db.cashEntries);
   $$CrowdfundingEntriesTableTableManager get crowdfundingEntries =>

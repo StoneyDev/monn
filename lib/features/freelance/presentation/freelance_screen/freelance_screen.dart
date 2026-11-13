@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/freelance/data/freelance_repository.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/controllers/freelance_form_controller.dart';
 import 'package:monn/features/freelance/presentation/freelance_screen/widgets/breakdown_section.dart';
+import 'package:monn/features/freelance/presentation/urssaf_calculator_screen/urssaf_calculator_screen.dart';
+import 'package:monn/features/freelance/presentation/widgets/revenue_summary.dart';
 import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
-import 'package:monn/shared/extensions/double_ui.dart';
 import 'package:monn/shared/widgets/monn_app_bar.dart';
-import 'package:monn/shared/widgets/monn_card.dart';
 import 'package:monn/shared/widgets/monn_scroll_view.dart';
-import 'package:monn/utils/app_colors.dart';
 
 class FreelanceScreen extends ConsumerWidget {
   const FreelanceScreen({super.key});
@@ -23,11 +23,24 @@ class FreelanceScreen extends ConsumerWidget {
     final freelance = ref.watch(watchFreelanceProvider);
 
     return Scaffold(
-      appBar: MonnAppBar(title: context.tr(LocaleKeys.home_freelance)),
+      appBar: MonnAppBar(
+        title: context.tr(LocaleKeys.home_freelance),
+        actions: [
+          IconButton(
+            tooltip: context.tr(LocaleKeys.freelance_urssaf_calculator),
+            icon: iconoir.Calculator(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () => context.push<void>(const UrssafCalculatorScreen()),
+          ),
+        ],
+      ),
       body: MonnScrollView(
         slivers: [
           SliverPadding(
-            padding: const EdgeInsets.only(bottom: 48),
+            padding: EdgeInsets.only(
+              bottom: 48 + MediaQuery.paddingOf(context).bottom,
+            ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 switch (freelance) {
@@ -35,7 +48,6 @@ class FreelanceScreen extends ConsumerWidget {
                     spacing: 24,
                     children: [
                       _FreelanceHeader(),
-                      _RevenueRecap(),
                       ChargesBreakdown(),
                       CalculationBreakdown(),
                     ],
@@ -72,35 +84,22 @@ class _FreelanceHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
     final freelance = ref.watch(watchFreelanceProvider).value;
     final annualRevenue = freelance?.annualRevenue ?? 0;
     final result = ref.watch(freelanceCalculationProvider);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 14),
-      child: Column(
-        children: [
-          Text(
-            result.netAfterAll.simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () => _openAmountScreen(
-              context: context,
-              ref: ref,
-              annualRevenue: annualRevenue,
-            ),
-            child: Text(
-              annualRevenue.simpleCurrency(locale),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.lightGray,
-              ),
-            ),
-          ),
-        ],
+    return RevenueSummary(
+      label: context.tr(LocaleKeys.freelance_annual_net),
+      amount: result.netAfterAll,
+      highlight: result.netAfterAll / 12,
+      caption: context.tr(LocaleKeys.freelance_monthly_equivalent),
+      revenueLabel: context.tr(LocaleKeys.freelance_annual_revenue),
+      revenue: annualRevenue,
+      remaining: result.netAfterAll,
+      onEdit: () => _openAmountScreen(
+        context: context,
+        ref: ref,
+        annualRevenue: annualRevenue,
       ),
     );
   }
@@ -126,97 +125,6 @@ class _FreelanceHeader extends ConsumerWidget {
             Navigator.pop(context);
           },
           onChanged: (newAmount) => formNotifier.set(annualRevenue: newAmount),
-        ),
-      ),
-    );
-  }
-}
-
-class _RevenueRecap extends ConsumerWidget {
-  const _RevenueRecap();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final locale = context.locale.toString();
-    final freelance = ref.watch(watchFreelanceProvider).value;
-    final annualRevenue = freelance?.annualRevenue ?? 0;
-    final result = ref.watch(freelanceCalculationProvider);
-
-    if (annualRevenue == 0) return const SizedBox.shrink();
-
-    final remainingPercent = (result.netAfterAll / annualRevenue * 100).round();
-    final deductedPercent = 100 - remainingPercent;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: MonnCard(
-        child: Column(
-          spacing: 16,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: SizedBox(
-                height: 12,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: remainingPercent,
-                      child: const ColoredBox(
-                        color: AppColors.green,
-                        child: SizedBox.expand(),
-                      ),
-                    ),
-                    Expanded(
-                      flex: deductedPercent,
-                      child: const ColoredBox(
-                        color: AppColors.red,
-                        child: SizedBox.expand(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${context.tr(LocaleKeys.freelance_remaining)} '
-                      '· $remainingPercent%',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      result.netAfterAll.simpleCurrency(locale),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.green,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '${context.tr(LocaleKeys.freelance_deducted)} '
-                      '· $deductedPercent%',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      result.totalCharges.simpleCurrency(locale),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

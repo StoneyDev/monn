@@ -40,7 +40,9 @@ void main() {
 
     test('getOrCreateBudget returns existing budget', () async {
       // Arrange
-      await db.into(db.budgetEntries).insertOnConflictUpdate(
+      await db
+          .into(db.budgetEntries)
+          .insertOnConflictUpdate(
             const BudgetEntriesCompanion(
               id: Value(1),
               freelanceIncome: Value(5000),
@@ -67,9 +69,9 @@ void main() {
 
       // Act
       await repository.saveBudget(budget);
-      final savedBudget = await (db.select(db.budgetEntries)
-            ..where((t) => t.id.equals(1)))
-          .getSingleOrNull();
+      final savedBudget = await (db.select(
+        db.budgetEntries,
+      )..where((t) => t.id.equals(1))).getSingleOrNull();
 
       // Assert
       expect(savedBudget, isNotNull);
@@ -80,7 +82,9 @@ void main() {
 
     test('watchBudget emits budget changes', () async {
       // Arrange
-      await db.into(db.budgetEntries).insertOnConflictUpdate(
+      await db
+          .into(db.budgetEntries)
+          .insertOnConflictUpdate(
             const BudgetEntriesCompanion(
               id: Value(1),
               freelanceIncome: Value(4000),
@@ -129,9 +133,7 @@ void main() {
         ],
       );
 
-      when(mockRepository.watchBudget()).thenAnswer(
-        (_) => Stream.value(null),
-      );
+      when(mockRepository.watchBudget()).thenAnswer((_) => Stream.value(null));
 
       // Act
       final listener = MockListener<AsyncValue<BudgetEntry?>>();
@@ -172,9 +174,9 @@ void main() {
         ],
       );
 
-      when(mockRepository.watchBudget()).thenAnswer(
-        (_) => Stream.value(budget),
-      );
+      when(
+        mockRepository.watchBudget(),
+      ).thenAnswer((_) => Stream.value(budget));
 
       // Act
       final listener = MockListener<AsyncValue<BudgetEntry?>>();

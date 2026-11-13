@@ -30,9 +30,7 @@ class CryptoPageScreen extends ConsumerWidget {
     final cryptocurrency = ref.watch(getCryptocurrencyProvider(type));
 
     return Scaffold(
-      appBar: MonnAppBar(
-        title: '${type.label} (${type.symbol})',
-      ),
+      appBar: MonnAppBar(title: '${type.label} (${type.symbol})'),
       body: cryptocurrency.when(
         data: (cryptoWithTx) {
           final crypto = cryptoWithTx.crypto;
@@ -179,7 +177,7 @@ class CryptoPageScreen extends ConsumerWidget {
                       trailing: Text(
                         '${transaction.amount}',
                         style: TextStyle(
-                          color: isWithdrawal ? AppColors.red : null,
+                          color: isWithdrawal ? context.negativeColor : null,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -193,9 +191,7 @@ class CryptoPageScreen extends ConsumerWidget {
         },
         error: (error, _) => Text(error.toString()),
         loading: () => const Center(
-          child: RepaintBoundary(
-            child: CircularProgressIndicator(),
-          ),
+          child: RepaintBoundary(child: CircularProgressIndicator()),
         ),
       ),
     );

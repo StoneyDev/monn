@@ -6,7 +6,6 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/add_cash_screen.dart';
 import 'package:monn/features/cash/presentation/add_cash_screen/controllers/cash_form_controller.dart';
-import 'package:monn/generated/locale_keys.g.dart';
 import 'package:monn/shared/domain/savings.dart';
 import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/extensions/double_ui.dart';
@@ -85,35 +84,13 @@ class _CashCard extends ConsumerWidget {
     return MonnCard(
       onLongPress: () => WoltModalSheet.show<void>(
         context: context,
+        barrierDismissible: true,
         modalTypeBuilder: (_) => WoltModalType.alertDialog(),
         pageListBuilder: (context) => [
           MonnBottomSheet.warningDialog(
             context: context,
-            title: cash.label.toUpperCase(),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                spacing: 8,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Center(
-                      child: Text(context.tr(LocaleKeys.button_close)),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      await ref.read(deleteCashProvider(cash.id).future);
-
-                      if (!context.mounted) return;
-                      Navigator.pop(context);
-                    },
-                    child: Center(
-                      child: Text(context.tr(LocaleKeys.button_ok)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            title: cash.label,
+            onConfirm: () => ref.read(deleteCashProvider(cash.id).future),
           ),
         ],
       ),
@@ -131,15 +108,9 @@ class _CashCard extends ConsumerWidget {
             ref.invalidate(cashFormControllerProvider);
             Navigator.pop(context);
           },
-          onChanged: (newAmount) {
-            ref
-                .read(cashFormControllerProvider.notifier)
-                .set(
-                  id: cash.id,
-                  label: cash.label,
-                  value: newAmount,
-                );
-          },
+          onChanged: (newAmount) => ref
+              .read(cashFormControllerProvider.notifier)
+              .set(id: cash.id, label: cash.label, value: newAmount),
         ),
       ),
       child: Row(

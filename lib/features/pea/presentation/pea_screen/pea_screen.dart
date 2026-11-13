@@ -41,9 +41,7 @@ class PeaScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: MonnAppBar(
-        title: context.tr(
-          'savings.${SavingsType.pea.name.toSnakeCase()}',
-        ),
+        title: context.tr('savings.${SavingsType.pea.name.toSnakeCase()}'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -69,13 +67,15 @@ class PeaScreen extends ConsumerWidget {
                     context.tr(LocaleKeys.common_taxation),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: eligibility ? AppColors.green : AppColors.red,
+                      color: eligibility
+                          ? context.positiveColor
+                          : context.negativeColor,
                     ),
                   ),
                   if (eligibility)
-                    const iconoir.CheckCircleSolid(color: AppColors.green)
+                    iconoir.CheckCircleSolid(color: context.positiveColor)
                   else
-                    const iconoir.XmarkCircleSolid(color: AppColors.red),
+                    iconoir.XmarkCircleSolid(color: context.negativeColor),
                 ],
               ),
             ),
@@ -85,168 +85,159 @@ class PeaScreen extends ConsumerWidget {
       body: MonnScrollView(
         slivers: [
           SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                const SizedBox(height: 20),
-                Text(
-                  (report?.finalAmount ?? 0).simpleCurrency(locale),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
+            delegate: SliverChildListDelegate([
+              const SizedBox(height: 20),
+              Text(
+                (report?.finalAmount ?? 0).simpleCurrency(locale),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
                 ),
-                switch (savingsPea) {
-                  AsyncData(:final value) => Center(
-                    child: OutlinedButton(
-                      child: Text(
-                        (value?.startAmount ?? 0).simpleCurrency(locale),
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: AppColors.lightGray,
-                            ),
+              ),
+              switch (savingsPea) {
+                AsyncData(:final value) => Center(
+                  child: OutlinedButton(
+                    child: Text(
+                      (value?.startAmount ?? 0).simpleCurrency(locale),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppColors.lightGray,
                       ),
-                      onPressed: () => context.push<void>(
-                        fullscreenDialog: true,
-                        AmountScreen(
-                          initialValue: value?.startAmount ?? 0,
-                          onChanged: (value) =>
-                              ref.read(_startAmountProvider.notifier).state =
-                                  value,
-                          onSubmit: () async {
-                            final newValue = ref.read(_startAmountProvider);
-                            final newSaving = SavingsEntriesCompanion(
-                              id: value != null
-                                  ? Value(value.id)
-                                  : const Value.absent(),
-                              type: Value(SavingsType.pea.name),
-                              startAmount: Value(double.parse(newValue)),
+                    ),
+                    onPressed: () => context.push<void>(
+                      fullscreenDialog: true,
+                      AmountScreen(
+                        initialValue: value?.startAmount ?? 0,
+                        onChanged: (value) =>
+                            ref.read(_startAmountProvider.notifier).state =
+                                value,
+                        onSubmit: () async {
+                          final newValue = ref.read(_startAmountProvider);
+                          final newSaving = SavingsEntriesCompanion(
+                            id: value != null
+                                ? Value(value.id)
+                                : const Value.absent(),
+                            type: Value(SavingsType.pea.name),
+                            startAmount: Value(double.parse(newValue)),
+                          );
+
+                          final success = await ref
+                              .read(editSavingsControllerProvider.notifier)
+                              .submit(newSaving);
+                          if (!context.mounted || !success) return;
+
+                          ref
+                            ..invalidate(_startAmountProvider)
+                            ..invalidate(
+                              getSavingsProvider(type: SavingsType.pea),
                             );
-
-                            final success = await ref
-                                .read(
-                                  editSavingsControllerProvider.notifier,
-                                )
-                                .submit(newSaving);
-                            if (!context.mounted || !success) return;
-
-                            ref
-                              ..invalidate(_startAmountProvider)
-                              ..invalidate(
-                                getSavingsProvider(type: SavingsType.pea),
-                              );
-                            Navigator.pop(context);
-                          },
-                        ),
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ),
-                  _ => const SizedBox.shrink(),
+                ),
+                _ => const SizedBox.shrink(),
+              },
+              const SizedBox(height: 32),
+              PayoutReport(netProfit: report?.totalNetProfit ?? 0),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
+                child: switch (peaData) {
+                  AsyncData(:final value) => Column(
+                    spacing: 16,
+                    children: [
+                      MonnLine(
+                        title: 'ETF',
+                        value: Text(
+                          'BNP Paribas Easy S&P 500',
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
+                        ),
+                      ),
+                      MonnLine(
+                        title: 'ISIN',
+                        value: Text(
+                          'FR0011550185',
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
+                        ),
+                      ),
+                      MonnLine(
+                        title: context.tr(LocaleKeys.common_number_equities),
+                        value: Text(
+                          '${value?.equity ?? 0}',
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
+                        ),
+                      ),
+                      MonnLine(
+                        title: context.tr(
+                          LocaleKeys.common_average_purchase_price,
+                        ),
+                        value: Text(
+                          (value?.costAverage ?? 0).simpleCurrency(locale),
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
+                        ),
+                      ),
+                      MonnLine(
+                        title: context.tr(LocaleKeys.common_current_price),
+                        value: switch (etfPrice) {
+                          AsyncData(:final value) => Text(
+                            value.simpleCurrency(locale),
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                          AsyncError() => Text(
+                            context.tr(LocaleKeys.common_api_error),
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                          _ => Text(
+                            context.tr(LocaleKeys.common_loading),
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: AppColors.lightGray),
+                          ),
+                        },
+                      ),
+                      MonnLine(
+                        title: context.tr(LocaleKeys.common_last_update),
+                        value: Text(
+                          value?.lastUpdate == null
+                              ? etfPrice.isLoading
+                                    ? context.tr(LocaleKeys.common_loading)
+                                    : DateTime.now().slashFormat(
+                                        locale,
+                                        withHour: true,
+                                      )
+                              : value!.lastUpdate!.slashFormat(
+                                  locale,
+                                  withHour: true,
+                                ),
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: AppColors.lightGray),
+                        ),
+                      ),
+                    ],
+                  ),
+                  _ => const Center(
+                    child: RepaintBoundary(child: CircularProgressIndicator()),
+                  ),
                 },
-                const SizedBox(height: 32),
-                PayoutReport(
-                  netProfit: report?.totalNetProfit ?? 0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 24,
-                  ),
-                  child: switch (peaData) {
-                    AsyncData(:final value) => Column(
-                      spacing: 16,
-                      children: [
-                        MonnLine(
-                          title: 'ETF',
-                          value: Text(
-                            'BNP Paribas Easy S&P 500',
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: AppColors.lightGray),
-                          ),
-                        ),
-                        MonnLine(
-                          title: 'ISIN',
-                          value: Text(
-                            'FR0011550185',
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: AppColors.lightGray),
-                          ),
-                        ),
-                        MonnLine(
-                          title: context.tr(LocaleKeys.common_number_equities),
-                          value: Text(
-                            '${value?.equity ?? 0}',
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: AppColors.lightGray),
-                          ),
-                        ),
-                        MonnLine(
-                          title: context.tr(
-                            LocaleKeys.common_average_purchase_price,
-                          ),
-                          value: Text(
-                            (value?.costAverage ?? 0).simpleCurrency(locale),
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: AppColors.lightGray),
-                          ),
-                        ),
-                        MonnLine(
-                          title: context.tr(LocaleKeys.common_current_price),
-                          value: switch (etfPrice) {
-                            AsyncData(:final value) => Text(
-                              value.simpleCurrency(locale),
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(color: AppColors.lightGray),
-                            ),
-                            AsyncError() => Text(
-                              context.tr(LocaleKeys.common_api_error),
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                              ),
-                            ),
-                            _ => Text(
-                              context.tr(LocaleKeys.common_loading),
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(color: AppColors.lightGray),
-                            ),
-                          },
-                        ),
-                        MonnLine(
-                          title: context.tr(LocaleKeys.common_last_update),
-                          value: Text(
-                            value?.lastUpdate == null
-                                ? etfPrice.isLoading
-                                      ? context.tr(LocaleKeys.common_loading)
-                                      : DateTime.now().slashFormat(
-                                          locale,
-                                          withHour: true,
-                                        )
-                                : value!.lastUpdate!.slashFormat(
-                                    locale,
-                                    withHour: true,
-                                  ),
-                            textAlign: TextAlign.right,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: AppColors.lightGray),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _ => const Center(
-                      child: RepaintBoundary(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  },
-                ),
-              ],
-            ),
+              ),
+            ]),
           ),
         ],
       ),

@@ -116,9 +116,9 @@ END;
         ],
       );
 
-      when(repository.watchSavingsBooks()).thenAnswer(
-        (_) => Stream.value(savingsBooks),
-      );
+      when(
+        repository.watchSavingsBooks(),
+      ).thenAnswer((_) => Stream.value(savingsBooks));
 
       // Act
       final listener = MockListener<AsyncValue<List<SavingsBookEntry>>>();
@@ -165,9 +165,9 @@ END;
         ],
       );
 
-      when(repository.watchSavingsBooks()).thenAnswer(
-        (_) => Stream.value(savingsBooks),
-      );
+      when(
+        repository.watchSavingsBooks(),
+      ).thenAnswer((_) => Stream.value(savingsBooks));
 
       // Act
       final listener = MockListener<AsyncValue<List<SavingsBookEntry>>>();
@@ -225,13 +225,13 @@ END;
         ],
       );
 
-      when(repository.watchSavingsBooks()).thenAnswer(
-        (_) => Stream.value(savingsBooks),
-      );
+      when(
+        repository.watchSavingsBooks(),
+      ).thenAnswer((_) => Stream.value(savingsBooks));
 
-      when(savingRepository.getSavings(any)).thenAnswer(
-        (_) => Future.value(savings),
-      );
+      when(
+        savingRepository.getSavings(any),
+      ).thenAnswer((_) => Future.value(savings));
 
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();

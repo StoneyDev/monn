@@ -12,20 +12,14 @@ void main() {
   group('editSavingController', () {
     test('should return true when the update is successful', () async {
       // Arrange
-      const saving = SavingsEntriesCompanion(
-        type: Value('savingsBook'),
-      );
+      const saving = SavingsEntriesCompanion(type: Value('savingsBook'));
 
       final repository = MockSavingsRepository();
       final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [savingsRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.editSaving(any)).thenAnswer(
-        (_) => Future<void>.value(),
-      );
+      when(repository.editSaving(any)).thenAnswer((_) => Future<void>.value());
 
       // Act
       final controller = container.read(editSavingsControllerProvider.notifier);
@@ -37,16 +31,12 @@ void main() {
 
     test('should return false when the update is unsuccessful', () async {
       // Arrange
-      const saving = SavingsEntriesCompanion(
-        type: Value('savingsBook'),
-      );
+      const saving = SavingsEntriesCompanion(type: Value('savingsBook'));
       final error = Exception();
 
       final repository = MockSavingsRepository();
       final container = createContainer(
-        overrides: [
-          savingsRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [savingsRepositoryProvider.overrideWithValue(repository)],
       );
 
       when(repository.editSaving(any)).thenThrow(error);

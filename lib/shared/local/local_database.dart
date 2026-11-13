@@ -18,10 +18,7 @@ class LocalDatabase {
   }
 
   Future<void> createBackup(File destination) {
-    return createDatabaseBackup(
-      database: _database,
-      destination: destination,
-    );
+    return createDatabaseBackup(database: _database, destination: destination);
   }
 
   Future<bool> restore(

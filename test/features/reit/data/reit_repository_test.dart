@@ -18,9 +18,7 @@ void main() {
       // Arrange
       final repository = MockReitRepository();
       final container = createContainer(
-        overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [reitRepositoryProvider.overrideWithValue(repository)],
       );
 
       // Act
@@ -93,10 +91,7 @@ END;
       );
 
       expect(await db.select(db.reitEntries).get(), hasLength(1));
-      expect(
-        (await db.select(db.savingsEntries).getSingle()).startAmount,
-        200,
-      );
+      expect((await db.select(db.savingsEntries).getSingle()).startAmount, 200);
     });
   });
 
@@ -107,14 +102,10 @@ END;
 
       final repository = MockReitRepository();
       final container = createContainer(
-        overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [reitRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
-      );
+      when(repository.watchReits()).thenAnswer((_) => Stream.value(reits));
 
       // Act
       final listener = MockListener<AsyncValue<List<ReitWithDividends>>>();
@@ -165,14 +156,10 @@ END;
 
       final repository = MockReitRepository();
       final container = createContainer(
-        overrides: [
-          reitRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [reitRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
-      );
+      when(repository.watchReits()).thenAnswer((_) => Stream.value(reits));
 
       // Act
       final listener = MockListener<AsyncValue<List<ReitWithDividends>>>();
@@ -224,11 +211,7 @@ END;
         ),
       ];
 
-      const savings = SavingsEntry(
-        id: 1,
-        type: 'reit',
-        startAmount: 2000,
-      );
+      const savings = SavingsEntry(id: 1, type: 'reit', startAmount: 2000);
 
       final repository = MockReitRepository();
       final savingRepository = MockSavingsRepository();
@@ -239,13 +222,11 @@ END;
         ],
       );
 
-      when(repository.watchReits()).thenAnswer(
-        (_) => Stream.value(reits),
-      );
+      when(repository.watchReits()).thenAnswer((_) => Stream.value(reits));
 
-      when(savingRepository.getSavings(any)).thenAnswer(
-        (_) => Future.value(savings),
-      );
+      when(
+        savingRepository.getSavings(any),
+      ).thenAnswer((_) => Future.value(savings));
 
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();

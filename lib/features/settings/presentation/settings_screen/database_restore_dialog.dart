@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/local/database_backup.dart';
-import 'package:monn/utils/app_colors.dart';
+import 'package:monn/shared/widgets/monn_button.dart';
 
 typedef DatabaseRestoreRequest = ({File? externalBackup});
 typedef RestoreDatabase =
@@ -54,18 +55,16 @@ class _DatabaseRestoreDialogState extends State<DatabaseRestoreDialog> {
               ),
               Expanded(
                 child: Text(
-                  context.tr(
-                    switch (_step) {
-                      DatabaseRestoreStep.validating =>
-                        LocaleKeys.restore_validating,
-                      DatabaseRestoreStep.creatingRecovery =>
-                        LocaleKeys.restore_creating_recovery,
-                      DatabaseRestoreStep.replacing =>
-                        LocaleKeys.restore_replacing,
-                      DatabaseRestoreStep.finalizing =>
-                        LocaleKeys.restore_finalizing,
-                    },
-                  ),
+                  context.tr(switch (_step) {
+                    DatabaseRestoreStep.validating =>
+                      LocaleKeys.restore_validating,
+                    DatabaseRestoreStep.creatingRecovery =>
+                      LocaleKeys.restore_creating_recovery,
+                    DatabaseRestoreStep.replacing =>
+                      LocaleKeys.restore_replacing,
+                    DatabaseRestoreStep.finalizing =>
+                      LocaleKeys.restore_finalizing,
+                  }),
                 ),
               ),
             ],
@@ -73,21 +72,15 @@ class _DatabaseRestoreDialogState extends State<DatabaseRestoreDialog> {
           true => Row(
             spacing: 16,
             children: [
-              const Icon(Icons.check_circle, color: AppColors.green),
-              Expanded(
-                child: Text(
-                  context.tr(LocaleKeys.restore_success),
-                ),
-              ),
+              Icon(Icons.check_circle, color: context.positiveColor),
+              Expanded(child: Text(context.tr(LocaleKeys.restore_success))),
             ],
           ),
           false => Row(
             spacing: 16,
             children: [
-              const Icon(Icons.error, color: AppColors.red),
-              Expanded(
-                child: Text(context.tr(LocaleKeys.restore_error)),
-              ),
+              Icon(Icons.error, color: context.negativeColor),
+              Expanded(child: Text(context.tr(LocaleKeys.restore_error))),
             ],
           ),
         },
@@ -99,9 +92,9 @@ class _DatabaseRestoreDialogState extends State<DatabaseRestoreDialog> {
             child: Text(context.tr(LocaleKeys.button_retry)),
           ),
         if (_restored != null)
-          TextButton(
+          MonnButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.tr(LocaleKeys.button_close)),
+            text: context.tr(LocaleKeys.button_close),
           ),
       ],
     ),

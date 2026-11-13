@@ -1,8 +1,11 @@
 import 'package:monn/features/cash/data/cash_repository.dart';
 import 'package:monn/features/counter_strike/data/counter_strike_repository.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
+import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
+import 'package:monn/features/dashboard/data/net_worth_history_repository.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
+import 'package:monn/features/pea/data/etf_repository.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/features/per/data/per_repository.dart';
 import 'package:monn/features/portfolio/data/savings_repository.dart';
@@ -14,6 +17,21 @@ import 'package:monn/shared/local/savings_entry_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'net_worth_provider.g.dart';
+
+@riverpod
+Future<void> recordNetWorthSnapshot(Ref ref) async {
+  final repository = ref.watch(netWorthHistoryRepositoryProvider);
+  // Record the day with refreshed prices. Offline, the last known prices
+  // remain the best estimate, so a failed refresh does not block the record.
+  final prices = [
+    ref.watch(getCryptoPriceMarketProvider),
+    ref.watch(getEtfPriceMarketProvider),
+  ];
+  if (prices.any((price) => price.isLoading && !price.hasError)) return;
+  final total = await ref.watch(watchTotalNetWorthProvider.future);
+  if (!ref.mounted) return;
+  await repository.record(total, DateTime.now());
+}
 
 enum SavingsFilter {
   sortByStartAmountDesc,
@@ -59,10 +77,7 @@ Future<double> getFinalAmount(Ref ref, SavingsType type) async {
 Future<double> watchTotalNetWorth(Ref ref) async {
   final amounts = await ref.watch(watchFinalAmountsProvider.future);
 
-  return amounts.values.fold<double>(
-    0,
-    (total, amount) => total + amount,
-  );
+  return amounts.values.fold<double>(0, (total, amount) => total + amount);
 }
 
 @riverpod
@@ -118,13 +133,9 @@ List<SortedSaving> _sortSavings(
         (a, b) => (a.startAmount ?? 0).compareTo(b.startAmount ?? 0),
       );
     case SavingsFilter.sortByFinalAmountDesc:
-      allSavings.sort(
-        (a, b) => b.finalAmount.compareTo(a.finalAmount),
-      );
+      allSavings.sort((a, b) => b.finalAmount.compareTo(a.finalAmount));
     case SavingsFilter.sortByFinalAmountAsc:
-      allSavings.sort(
-        (a, b) => a.finalAmount.compareTo(b.finalAmount),
-      );
+      allSavings.sort((a, b) => a.finalAmount.compareTo(b.finalAmount));
   }
 
   return allSavings;

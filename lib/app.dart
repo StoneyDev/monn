@@ -37,9 +37,7 @@ class App extends ConsumerWidget {
               ),
             ),
           ),
-          _ => const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          ),
+          _ => const Scaffold(body: Center(child: CircularProgressIndicator())),
         },
       ),
     );

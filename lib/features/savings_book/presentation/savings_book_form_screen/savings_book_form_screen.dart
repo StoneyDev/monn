@@ -22,9 +22,7 @@ class _SavingsBookFormScreenState extends ConsumerState<SavingsBookFormScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: MonnAppBar(
-      title: context.tr(LocaleKeys.common_add_savings_book),
-    ),
+    appBar: MonnAppBar(title: context.tr(LocaleKeys.common_add_savings_book)),
     body: SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Form(

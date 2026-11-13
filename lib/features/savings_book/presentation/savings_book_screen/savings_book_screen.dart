@@ -47,9 +47,9 @@ class SavingsBookScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Text(
             (report?.finalAmount ?? 0).simpleCurrency(locale),
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 16),
           switch (savingsBooks) {
@@ -138,9 +138,7 @@ class SavingsBookScreen extends ConsumerWidget {
             ),
             AsyncError(:final error) => Text('Error: $error'),
             _ => const Center(
-              child: RepaintBoundary(
-                child: CircularProgressIndicator(),
-              ),
+              child: RepaintBoundary(child: CircularProgressIndicator()),
             ),
           },
         ],

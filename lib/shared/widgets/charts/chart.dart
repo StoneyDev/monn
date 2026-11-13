@@ -13,8 +13,6 @@ abstract class Chart with _$Chart {
 
 @freezed
 abstract class ChartData with _$ChartData {
-  const factory ChartData({
-    required double portion,
-    required Color color,
-  }) = _ChartData;
+  const factory ChartData({required double portion, required Color color}) =
+      _ChartData;
 }

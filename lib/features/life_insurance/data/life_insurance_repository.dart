@@ -20,9 +20,7 @@ class LifeInsuranceRepository {
   Future<void> editLifeInsurance(LifeInsuranceEntriesCompanion lifeInsurance) {
     return _db
         .into(_db.lifeInsuranceEntries)
-        .insertOnConflictUpdate(
-          lifeInsurance.copyWith(id: const Value(1)),
-        );
+        .insertOnConflictUpdate(lifeInsurance.copyWith(id: const Value(1)));
   }
 }
 

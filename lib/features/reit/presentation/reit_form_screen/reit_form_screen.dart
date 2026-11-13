@@ -28,9 +28,7 @@ class _ReitFormScreenState extends ConsumerState<ReitFormScreen> {
     final formNotifier = ref.read(reitFormControllerProvider.notifier);
 
     return Scaffold(
-      appBar: MonnAppBar(
-        title: context.tr(LocaleKeys.common_add_reit),
-      ),
+      appBar: MonnAppBar(title: context.tr(LocaleKeys.common_add_reit)),
       body: MonnScrollView(
         slivers: [
           SliverPadding(

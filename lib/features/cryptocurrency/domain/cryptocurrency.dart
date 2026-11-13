@@ -5,8 +5,7 @@ enum CryptoType {
   ethereum('Ethereum', 'ETH'),
   chainlink('Chainlink', 'LINK'),
   tether('Tether', 'USDT'),
-  usdCoin('USD Coin', 'USDC')
-  ;
+  usdCoin('USD Coin', 'USDC');
 
   const CryptoType(this.label, this.symbol);
 

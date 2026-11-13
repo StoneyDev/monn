@@ -15,9 +15,7 @@ class EditSavingsController extends _$EditSavingsController {
     state = const AsyncLoading();
 
     final repository = ref.read(savingsRepositoryProvider);
-    final result = await AsyncValue.guard(
-      () => repository.editSaving(saving),
-    );
+    final result = await AsyncValue.guard(() => repository.editSaving(saving));
 
     if (!ref.mounted) return false;
 

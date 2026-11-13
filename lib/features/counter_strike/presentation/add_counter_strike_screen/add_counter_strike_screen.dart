@@ -6,6 +6,7 @@ import 'package:monn/features/counter_strike/domain/counter_strike.dart';
 import 'package:monn/features/counter_strike/presentation/add_counter_strike_screen/controllers/counter_strike_form_controller.dart';
 import 'package:monn/features/counter_strike/presentation/counter_strike_ui.dart';
 import 'package:monn/generated/locale_keys.g.dart';
+import 'package:monn/shared/extensions/context_ui.dart';
 import 'package:monn/shared/widgets/bottom_sheet/monn_bottom_sheet.dart';
 import 'package:monn/shared/widgets/fields/monn_field_date.dart';
 import 'package:monn/shared/widgets/fields/monn_field_number.dart';
@@ -88,7 +89,7 @@ class _AddCounterStrikeScreenState
                                       border: Border.all(
                                         width: 2,
                                         color: imageId == item
-                                            ? AppColors.green
+                                            ? context.positiveColor
                                             : Theme.of(
                                                 context,
                                               ).colorScheme.outline,
@@ -133,7 +134,7 @@ class _AddCounterStrikeScreenState
                     : iconoir.MediaImage(
                         height: 140,
                         color: hasImage
-                            ? AppColors.red
+                            ? context.negativeColor
                             : Theme.of(context).colorScheme.primary,
                       ),
               ),

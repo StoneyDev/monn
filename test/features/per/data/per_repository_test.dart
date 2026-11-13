@@ -15,9 +15,7 @@ void main() {
       // Arrange
       final repository = MockPerRepository();
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(repository)],
       );
 
       // Act
@@ -33,22 +31,14 @@ void main() {
       // Arrange
       final repository = MockPerRepository();
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.watchPer()).thenAnswer(
-        (_) => Stream.value(null),
-      );
+      when(repository.watchPer()).thenAnswer((_) => Stream.value(null));
 
       // Act
       final listener = MockListener<AsyncValue<PerEntry?>>();
-      container.listen(
-        watchPerProvider,
-        listener.call,
-        fireImmediately: true,
-      );
+      container.listen(watchPerProvider, listener.call, fireImmediately: true);
 
       final result = await container.read(watchPerProvider.future);
 
@@ -67,22 +57,14 @@ void main() {
 
       final repository = MockPerRepository();
       final container = createContainer(
-        overrides: [
-          perRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [perRepositoryProvider.overrideWithValue(repository)],
       );
 
-      when(repository.watchPer()).thenAnswer(
-        (_) => Stream.value(per),
-      );
+      when(repository.watchPer()).thenAnswer((_) => Stream.value(per));
 
       // Act
       final listener = MockListener<AsyncValue<PerEntry?>>();
-      container.listen(
-        watchPerProvider,
-        listener.call,
-        fireImmediately: true,
-      );
+      container.listen(watchPerProvider, listener.call, fireImmediately: true);
 
       final result = await container.read(watchPerProvider.future);
 
@@ -102,46 +84,37 @@ void main() {
   });
 
   group('watchPayoutReportPer', () {
-    test(
-      'should return empty PayoutReportData when no PER exists',
-      () async {
-        // Arrange
-        final repository = MockPerRepository();
-        final container = createContainer(
-          overrides: [
-            perRepositoryProvider.overrideWithValue(repository),
-          ],
-        );
+    test('should return empty PayoutReportData when no PER exists', () async {
+      // Arrange
+      final repository = MockPerRepository();
+      final container = createContainer(
+        overrides: [perRepositoryProvider.overrideWithValue(repository)],
+      );
 
-        when(repository.watchPer()).thenAnswer(
-          (_) => Stream.value(null),
-        );
+      when(repository.watchPer()).thenAnswer((_) => Stream.value(null));
 
-        // Act
-        final listener = MockListener<AsyncValue<PayoutReportData>>();
-        container.listen(
-          watchPayoutReportPerProvider,
-          listener.call,
-          fireImmediately: true,
-        );
+      // Act
+      final listener = MockListener<AsyncValue<PayoutReportData>>();
+      container.listen(
+        watchPayoutReportPerProvider,
+        listener.call,
+        fireImmediately: true,
+      );
 
-        final result = await container.read(
-          watchPayoutReportPerProvider.future,
-        );
+      final result = await container.read(watchPayoutReportPerProvider.future);
 
-        // Assert
-        verifyInOrder([
-          listener(null, const AsyncLoading<PayoutReportData>()),
-          listener(
-            const AsyncLoading<PayoutReportData>(),
-            const AsyncData(PayoutReportData()),
-          ),
-        ]);
-        verifyNoMoreInteractions(listener);
-        expect(result, const PayoutReportData());
-        expect(result.finalAmount, 0);
-      },
-    );
+      // Assert
+      verifyInOrder([
+        listener(null, const AsyncLoading<PayoutReportData>()),
+        listener(
+          const AsyncLoading<PayoutReportData>(),
+          const AsyncData(PayoutReportData()),
+        ),
+      ]);
+      verifyNoMoreInteractions(listener);
+      expect(result, const PayoutReportData());
+      expect(result.finalAmount, 0);
+    });
 
     test(
       'should return PayoutReportData with finalAmount = invested + interests',
@@ -149,20 +122,14 @@ void main() {
         // Arrange
         const per = PerEntry(id: 1, invested: 10000, interests: 750.50);
 
-        const expectedPayoutReport = PayoutReportData(
-          finalAmount: 10750.50,
-        );
+        const expectedPayoutReport = PayoutReportData(finalAmount: 10750.50);
 
         final repository = MockPerRepository();
         final container = createContainer(
-          overrides: [
-            perRepositoryProvider.overrideWithValue(repository),
-          ],
+          overrides: [perRepositoryProvider.overrideWithValue(repository)],
         );
 
-        when(repository.watchPer()).thenAnswer(
-          (_) => Stream.value(per),
-        );
+        when(repository.watchPer()).thenAnswer((_) => Stream.value(per));
 
         // Act
         final listener = MockListener<AsyncValue<PayoutReportData>>();
@@ -196,20 +163,14 @@ void main() {
         // Arrange
         const per = PerEntry(id: 1, invested: 5000, interests: 0);
 
-        const expectedPayoutReport = PayoutReportData(
-          finalAmount: 5000,
-        );
+        const expectedPayoutReport = PayoutReportData(finalAmount: 5000);
 
         final repository = MockPerRepository();
         final container = createContainer(
-          overrides: [
-            perRepositoryProvider.overrideWithValue(repository),
-          ],
+          overrides: [perRepositoryProvider.overrideWithValue(repository)],
         );
 
-        when(repository.watchPer()).thenAnswer(
-          (_) => Stream.value(per),
-        );
+        when(repository.watchPer()).thenAnswer((_) => Stream.value(per));
 
         // Act
         final listener = MockListener<AsyncValue<PayoutReportData>>();

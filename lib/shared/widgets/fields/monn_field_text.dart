@@ -54,9 +54,9 @@ class MonnFieldText extends StatelessWidget {
                   return null;
                 }
               : null,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w900,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
         ),
       ],
     );

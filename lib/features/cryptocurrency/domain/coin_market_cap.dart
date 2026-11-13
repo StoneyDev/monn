@@ -29,19 +29,16 @@ abstract class CoinMarketCapCrypto with _$CoinMarketCapCrypto {
 
 @freezed
 abstract class Quote with _$Quote {
-  const factory Quote({
-    @JsonKey(name: 'USD') required PriceUsd priceUsd,
-  }) = _Quote;
+  const factory Quote({@JsonKey(name: 'USD') required PriceUsd priceUsd}) =
+      _Quote;
 
   factory Quote.fromJson(Map<String, Object?> json) => _$QuoteFromJson(json);
 }
 
 @freezed
 abstract class PriceUsd with _$PriceUsd {
-  const factory PriceUsd({
-    required double price,
-    required String lastUpdated,
-  }) = _PriceUsd;
+  const factory PriceUsd({required double price, required String lastUpdated}) =
+      _PriceUsd;
 
   factory PriceUsd.fromJson(Map<String, Object?> json) =>
       _$PriceUsdFromJson(json);

@@ -27,8 +27,8 @@ class FreelanceCalculator {
   static double calculateNetImposable(double annualRevenue) =>
       annualRevenue * (1 - abatementRate);
 
-  static double calculateUrssaf(double annualRevenue) =>
-      annualRevenue * urssafRate;
+  static double calculateUrssaf(double revenue) =>
+      (revenue.roundToDouble() * urssafRate).roundToDouble();
 
   static double calculateIncomeTax(double netImposable) {
     if (netImposable <= 0) return 0;
@@ -53,22 +53,14 @@ class FreelanceCalculator {
 
   static double _applyDecote(double grossTax) {
     if (grossTax <= 0) return 0;
-    final decote = (_decoteCoefficient - grossTax * 0.4525).clamp(
-      0,
-      grossTax,
-    );
+    final decote = (_decoteCoefficient - grossTax * 0.4525).clamp(0, grossTax);
     return grossTax - decote;
   }
-
-  static double calculateNetAfterAll(double annualRevenue) =>
-      annualRevenue -
-      calculateUrssaf(annualRevenue) -
-      calculateIncomeTax(calculateNetImposable(annualRevenue));
 
   static FreelanceResult calculate(double annualRevenue) {
     final abatement = calculateAbatement(annualRevenue);
     final netImposable = calculateNetImposable(annualRevenue);
-    final urssaf = calculateUrssaf(annualRevenue);
+    final urssaf = annualRevenue * urssafRate;
     final incomeTax = calculateIncomeTax(netImposable);
     final totalCharges = urssaf + incomeTax;
     final netAfterAll = annualRevenue - totalCharges;

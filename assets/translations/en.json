@@ -1,5 +1,6 @@
 {
   "common": {
+    "delete_confirmation": "Do you want to delete this item?",
     "dividends": "Dividends",
     "dividend": "Dividend",
     "filter": "Filter",
@@ -86,6 +87,7 @@
     "error": "Database restore failed"
   },
   "button": {
+    "delete": "Delete",
     "cancel": "Cancel",
     "close": "Close",
     "retry": "Retry",
@@ -150,6 +152,9 @@
     "ai": "AI"
   },
   "freelance": {
+    "annual_net": "Annual net income",
+    "monthly_equivalent": "monthly equivalent",
+    "annual_revenue": "Annual revenue",
     "net_imposable": "Taxable Income",
     "total_charges": "Total deductions",
     "calculation": "Tax base",
@@ -165,7 +170,11 @@
     "urssaf_label": "URSSAF",
     "urssaf_rate": "Contributions 25.6%",
     "remaining": "Remaining",
-    "deducted": "Deducted"
+    "deducted": "Deducted",
+    "urssaf_calculator": "URSSAF calculator",
+    "urssaf_due": "Due to URSSAF",
+    "monthly_remaining": "remaining this month",
+    "monthly_revenue": "Monthly revenue"
   },
   "filters": {
     "month": "Month",
@@ -185,5 +194,16 @@
     "dark": "Dark",
     "light": "Light",
     "system": "System"
+  },
+  "history": {
+    "title": "Net worth history",
+    "since": "since {}",
+    "month": "1M",
+    "quarter": "3M",
+    "year": "1Y",
+    "all": "All",
+    "empty": "No snapshots for this period.",
+    "first_point": "First snapshot on {}. The chart appears after the next one.",
+    "unavailable": "History temporarily unavailable"
   }
 }

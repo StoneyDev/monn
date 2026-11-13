@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 
-class MonnButton extends StatelessWidget {
-  const MonnButton({
-    required this.text,
-    this.onPressed,
-    super.key,
-  });
+class MonnButton extends StatefulWidget {
+  const MonnButton({required this.text, this.onPressed, super.key});
 
   final String text;
   final void Function()? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+  State<MonnButton> createState() => _MonnButtonState();
+}
+
+class _MonnButtonState extends State<MonnButton> {
+  var _pressed = false;
+
+  void _setPressed(bool pressed) => setState(() => _pressed = pressed);
+
+  @override
+  Widget build(BuildContext context) => Listener(
+    onPointerDown: (_) => _setPressed(true),
+    onPointerUp: (_) => _setPressed(false),
+    onPointerCancel: (_) => _setPressed(false),
+    child: AnimatedScale(
+      duration: Durations.short2,
+      scale: _pressed && widget.onPressed != null ? 0.975 : 1,
+      child: ElevatedButton(
+        onPressed: widget.onPressed,
+        child: Text(widget.text),
       ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onPrimary,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }

@@ -40,9 +40,9 @@ void main() {
         ],
       );
 
-      when(repository.watchCrowdfundings()).thenAnswer(
-        (_) => Stream.value(crowdfundings),
-      );
+      when(
+        repository.watchCrowdfundings(),
+      ).thenAnswer((_) => Stream.value(crowdfundings));
 
       // Act
       final listener = MockListener<AsyncValue<List<CrowdfundingEntry>>>();
@@ -108,9 +108,9 @@ void main() {
           ],
         );
 
-        when(repository.watchCrowdfundings()).thenAnswer(
-          (_) => Stream.value(crowdfundings),
-        );
+        when(
+          repository.watchCrowdfundings(),
+        ).thenAnswer((_) => Stream.value(crowdfundings));
 
         // Act
         final listener = MockListener<AsyncValue<List<CrowdfundingEntry>>>();
@@ -192,13 +192,13 @@ void main() {
         ],
       );
 
-      when(crowdfundingRepository.watchCrowdfundings()).thenAnswer(
-        (_) => Stream.value(crowdfundings),
-      );
+      when(
+        crowdfundingRepository.watchCrowdfundings(),
+      ).thenAnswer((_) => Stream.value(crowdfundings));
 
-      when(savingRepository.getSavings(any)).thenAnswer(
-        (_) => Future.value(savings),
-      );
+      when(
+        savingRepository.getSavings(any),
+      ).thenAnswer((_) => Future.value(savings));
 
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();
@@ -278,13 +278,13 @@ void main() {
         ],
       );
 
-      when(crowdfundingRepository.watchCrowdfundings()).thenAnswer(
-        (_) => Stream.value(crowdfundings),
-      );
+      when(
+        crowdfundingRepository.watchCrowdfundings(),
+      ).thenAnswer((_) => Stream.value(crowdfundings));
 
-      when(savingRepository.getSavings(any)).thenAnswer(
-        (_) => Future.value(savings),
-      );
+      when(
+        savingRepository.getSavings(any),
+      ).thenAnswer((_) => Future.value(savings));
 
       // Act
       final listener = MockListener<AsyncValue<PayoutReportData>>();

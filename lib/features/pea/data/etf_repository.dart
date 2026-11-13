@@ -4,6 +4,7 @@ import 'package:monn/features/pea/data/etf_api.dart';
 import 'package:monn/features/pea/data/pea_repository.dart';
 import 'package:monn/shared/local/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'etf_repository.g.dart';
 
@@ -42,15 +43,25 @@ Future<double> getEtfPriceMarket(Ref ref) async {
     const Duration(hours: 1),
   );
 
-  if (now.isAfter(lastUpdate)) {
+  final prefs = await SharedPreferencesWithCache.create(
+    cacheOptions: const SharedPreferencesWithCacheOptions(
+      allowList: <String>{'lastEtfEmptyQuote'},
+    ),
+  );
+  // Alpha Vantage answers without a price once its daily quota is spent;
+  // asking again on every resume would keep it spent.
+  final lastEmptyQuote = prefs.getString('lastEtfEmptyQuote');
+  final retryAt = lastEmptyQuote != null
+      ? DateTime.parse(lastEmptyQuote).add(const Duration(hours: 1))
+      : lastUpdate;
+
+  if (now.isAfter(lastUpdate) && now.isAfter(retryAt)) {
     final priceMarket = await etfRepository.getEtfPriceMarket();
 
     if (priceMarket != null) {
       await peaRepository.editPea(
         PeaEntriesCompanion(
           id: Value(pea?.id ?? 1),
-          equity: Value(pea?.equity),
-          costAverage: Value(pea?.costAverage),
           lastPrice: Value(priceMarket),
           lastUpdate: Value(now),
         ),
@@ -62,6 +73,8 @@ Future<double> getEtfPriceMarket(Ref ref) async {
 
       return priceMarket;
     }
+
+    await prefs.setString('lastEtfEmptyQuote', now.toIso8601String());
   }
 
   return pea?.lastPrice ?? 0;

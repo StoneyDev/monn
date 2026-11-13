@@ -74,9 +74,7 @@ void main() {
 
       // Act
       final controller =
-          container.read(
-              lifeInsuranceFormControllerProvider.notifier,
-            )
+          container.read(lifeInsuranceFormControllerProvider.notifier)
             ..set(invested: '5000')
             ..set(invested: '10000');
 
@@ -90,9 +88,7 @@ void main() {
 
       // Act
       final controller =
-          container.read(
-              lifeInsuranceFormControllerProvider.notifier,
-            )
+          container.read(lifeInsuranceFormControllerProvider.notifier)
             ..set(invested: '10000', interests: '500')
             ..set(invested: '20000');
 

@@ -13,13 +13,52 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 7. **Drift backups** → never overlap production `AppDatabase` instances, introduce an `_StagingDatabase` subtype, use Drift's internal `QueryExecutor`, or disable `dontWarnAboutMultipleDatabases` in the app; validate attached files through the active connection and close it before opening a staging database
 8. **Inline simple mappings** → keep simple `switch` mappings used in only one place directly at the call site (for example, enum-to-`LocaleKeys` mappings inside `context.tr(...)`); do not extract them into an extension or helper solely to wrap the switch
 
+## Product Context
+
+- Monn is for Yann's personal use; he is its only user.
+- Prioritize useful financial information and direct actions. Do not add the
+  app name to screen headers, branding, marketing copy, greetings, or decorative
+  text unless explicitly requested.
+- Visual references guide colors, typography, spacing, and component shapes.
+  Do not copy their promotional content or device-specific controls. For the
+  supplied iPhone Duo references, ignore the right-hand icon column.
+- Keep interface accents monochrome: black in light mode, white in dark mode.
+  Do not introduce electric blue as an interface accent.
+  Preserve chart category palettes, including the Sankey; the monochrome rule
+  applies to interface controls, not data visualization colors.
+- Preserve this context across tasks; do not ask Yann to repeat it.
+
 ## Working Agreement
 
 ### Goal
 
-Finish the current task with the minimum sufficient change. Plan thoroughly,
-execute light. Ship no design, abstraction, or test that cannot be justified by
-the requirement.
+Finish the current task with the minimum sufficient change. Scale planning and
+verification to the task. Ship no design, abstraction, or test that cannot be
+justified by the requirement.
+
+### Token and Time Discipline
+
+- Default to economical execution, even when a speed mode is enabled. Do not
+  assume the active mode, its price, or exact consumption without evidence;
+  never change account or model settings without the user's request.
+- Read only relevant files and sections. Reuse context already read; reread
+  only when it changed or a specific uncertainty requires it. Keep tool output
+  bounded; inspect error excerpts instead of dumping full logs or generated files.
+- Choose the simplest viable approach once requirements are clear. Explore
+  alternatives only when a concrete constraint invalidates that approach.
+- Batch related edits before generation and validation. Rerun successful checks
+  only after relevant changes, failures, or a newly identified risk.
+- For visual changes, inspect a representative rendering and any directly
+  affected critical state. Do not create an exhaustive gallery or temporary
+  test harness solely for cosmetic polish.
+- Run native builds only when native code, plugins, build configuration, or a
+  specific integration risk warrants them. Documentation-only edits need a
+  diff review, not Flutter tests or builds. Preserve required safety checks.
+- If exploration or verification starts expanding, state the concrete blocker
+  briefly and narrow the approach before doing more work. Ask only if resolving
+  it requires a material scope decision from the user.
+- Stop when acceptance criteria and required checks pass. Report the result
+  concisely; do not add another audit or polish cycle without a concrete reason.
 
 ### Before Coding
 
