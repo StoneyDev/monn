@@ -1808,10 +1808,303 @@ i1.GeneratedColumn<int> _column_101(String aliasedName) =>
       $customConstraints:
           'NOT NULL REFERENCES reit_entries(id)ON DELETE CASCADE',
     );
+
+final class Schema5 extends i0.VersionedSchema {
+  Schema5({required super.database}) : super(version: 5);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    savingsEntries,
+    netWorthSnapshots,
+    cashEntries,
+    crowdfundingEntries,
+    savingsBookEntries,
+    counterStrikeEntries,
+    peaEntries,
+    ctoEntries,
+    perEntries,
+    lifeInsuranceEntries,
+    freelanceEntries,
+    budgetEntries,
+    cryptocurrencyEntries,
+    cryptocurrencyTransactionEntries,
+    reitEntries,
+    reitDividendEntries,
+    cryptocurrencyTransactionCryptoDate,
+    reitDividendReit,
+  ];
+  late final Shape0 savingsEntries = Shape0(
+    source: i0.VersionedTable(
+      entityName: 'savings_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['UNIQUE(type)'],
+      columns: [_column_50, _column_51, _column_52],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape13 netWorthSnapshots = Shape13(
+    source: i0.VersionedTable(
+      entityName: 'net_worth_snapshots',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(day)'],
+      columns: [_column_53, _column_54],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape1 cashEntries = Shape1(
+    source: i0.VersionedTable(
+      entityName: 'cash_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_55, _column_56],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape14 crowdfundingEntries = Shape14(
+    source: i0.VersionedTable(
+      entityName: 'crowdfunding_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [
+        _column_50,
+        _column_57,
+        _column_58,
+        _column_59,
+        _column_60,
+        _column_61,
+        _column_62,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape3 savingsBookEntries = Shape3(
+    source: i0.VersionedTable(
+      entityName: 'savings_book_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_63, _column_64, _column_65, _column_66],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape15 counterStrikeEntries = Shape15(
+    source: i0.VersionedTable(
+      entityName: 'counter_strike_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [
+        _column_50,
+        _column_67,
+        _column_68,
+        _column_69,
+        _column_70,
+        _column_71,
+        _column_72,
+        _column_73,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape16 peaEntries = Shape16(
+    source: i0.VersionedTable(
+      entityName: 'pea_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_74, _column_75, _column_76, _column_77],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape21 ctoEntries = Shape21(
+    source: i0.VersionedTable(
+      entityName: 'cto_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [
+        _column_50,
+        _column_63,
+        _column_102,
+        _column_103,
+        _column_104,
+        _column_76,
+        _column_77,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape6 perEntries = Shape6(
+    source: i0.VersionedTable(
+      entityName: 'per_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_78, _column_66],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape6 lifeInsuranceEntries = Shape6(
+    source: i0.VersionedTable(
+      entityName: 'life_insurance_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_78, _column_66],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape7 freelanceEntries = Shape7(
+    source: i0.VersionedTable(
+      entityName: 'freelance_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_79],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape8 budgetEntries = Shape8(
+    source: i0.VersionedTable(
+      entityName: 'budget_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [
+        _column_50,
+        _column_80,
+        _column_81,
+        _column_82,
+        _column_83,
+        _column_84,
+        _column_85,
+        _column_86,
+        _column_87,
+        _column_88,
+        _column_89,
+        _column_90,
+        _column_91,
+        _column_92,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape17 cryptocurrencyEntries = Shape17(
+    source: i0.VersionedTable(
+      entityName: 'cryptocurrency_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['UNIQUE(type)'],
+      columns: [_column_50, _column_51, _column_93, _column_94, _column_77],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape18 cryptocurrencyTransactionEntries = Shape18(
+    source: i0.VersionedTable(
+      entityName: 'cryptocurrency_transaction_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_95, _column_96, _column_97],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape19 reitEntries = Shape19(
+    source: i0.VersionedTable(
+      entityName: 'reit_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_63, _column_98, _column_99, _column_100],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape20 reitDividendEntries = Shape20(
+    source: i0.VersionedTable(
+      entityName: 'reit_dividend_entries',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_50, _column_101, _column_62, _column_97],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index cryptocurrencyTransactionCryptoDate = i1.Index(
+    'cryptocurrency_transaction_crypto_date',
+    'CREATE INDEX cryptocurrency_transaction_crypto_date ON cryptocurrency_transaction_entries (cryptocurrency_id, date)',
+  );
+  final i1.Index reitDividendReit = i1.Index(
+    'reit_dividend_reit',
+    'CREATE INDEX reit_dividend_reit ON reit_dividend_entries (reit_id)',
+  );
+}
+
+class Shape21 extends i0.VersionedTable {
+  Shape21({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get name =>
+      columnsByName['name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get symbol =>
+      columnsByName['symbol']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get quantity =>
+      columnsByName['quantity']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get costAverage =>
+      columnsByName['cost_average']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get lastPrice =>
+      columnsByName['last_price']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<int> get lastUpdate =>
+      columnsByName['last_update']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_102(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'symbol',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<double> _column_103(String aliasedName) =>
+    i1.GeneratedColumn<double>(
+      'quantity',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.double,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<double> _column_104(String aliasedName) =>
+    i1.GeneratedColumn<double>(
+      'cost_average',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.double,
+      $customConstraints: 'NOT NULL',
+    );
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -1830,6 +2123,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from3To4(migrator, schema);
         return 4;
+      case 4:
+        final schema = Schema5(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from4To5(migrator, schema);
+        return 5;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -1840,10 +2138,12 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) => i0.VersionedSchema.stepByStepHelper(
   step: migrationSteps(
     from1To2: from1To2,
     from2To3: from2To3,
     from3To4: from3To4,
+    from4To5: from4To5,
   ),
 );

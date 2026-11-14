@@ -41,7 +41,7 @@ final class RecordNetWorthSnapshotProvider
 }
 
 String _$recordNetWorthSnapshotHash() =>
-    r'c5ee0e856614e0e9cc96fbceb318316fd2371cef';
+    r'a9507699b66c1c35565b6d21cdd7ceb86060ab6c';
 
 @ProviderFor(getFinalAmount)
 final getFinalAmountProvider = GetFinalAmountFamily._();
@@ -92,7 +92,7 @@ final class GetFinalAmountProvider
   }
 }
 
-String _$getFinalAmountHash() => r'ca0ca54b43bd41fe2e420498aa63c3a06b0c8534';
+String _$getFinalAmountHash() => r'7267bf9f5020bf6739d4f73560e2c3d26c76a621';
 
 final class GetFinalAmountFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<double>, SavingsType> {

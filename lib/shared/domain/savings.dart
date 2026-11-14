@@ -4,7 +4,7 @@ enum SavingsType {
   cryptocurrency,
   csKnives,
   cash,
-  // cto,
+  cto,
   lifeInsurance,
   pea,
   per,

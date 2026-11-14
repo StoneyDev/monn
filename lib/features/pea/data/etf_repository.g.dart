@@ -48,7 +48,7 @@ final class EtfRepositoryProvider
   }
 }
 
-String _$etfRepositoryHash() => r'e62d4f0af112530f98d3d39e860c2afaec1b4e95';
+String _$etfRepositoryHash() => r'e8ff6f83ecb039bb31d5fbe948614948ede59801';
 
 @ProviderFor(getEtfPriceMarket)
 final getEtfPriceMarketProvider = GetEtfPriceMarketProvider._();
@@ -81,4 +81,4 @@ final class GetEtfPriceMarketProvider
   }
 }
 
-String _$getEtfPriceMarketHash() => r'e47c9233bf37d5b8f3c5ec52a733c6a994aec1e7';
+String _$getEtfPriceMarketHash() => r'0e189f1e324cfeaaa6f04e93d29e20ada1b804b7';

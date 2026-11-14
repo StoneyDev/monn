@@ -3,6 +3,7 @@ import 'package:monn/features/counter_strike/data/counter_strike_repository.dart
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
 import 'package:monn/features/cryptocurrency/data/cryptocurrency_repository.dart';
+import 'package:monn/features/cto/data/cto_repository.dart';
 import 'package:monn/features/dashboard/data/net_worth_history_repository.dart';
 import 'package:monn/features/life_insurance/data/life_insurance_repository.dart';
 import 'package:monn/features/pea/data/etf_repository.dart';
@@ -26,6 +27,7 @@ Future<void> recordNetWorthSnapshot(Ref ref) async {
   final prices = [
     ref.watch(getCryptoPriceMarketProvider),
     ref.watch(getEtfPriceMarketProvider),
+    ref.watch(refreshCtoPricesProvider),
   ];
   if (prices.any((price) => price.isLoading && !price.hasError)) return;
   final total = await ref.watch(watchTotalNetWorthProvider.future);
@@ -62,6 +64,7 @@ Future<double> getFinalAmount(Ref ref, SavingsType type) async {
       watchPayoutReportCounterStrikeProvider.future,
     ),
     SavingsType.cash => ref.watch(watchPayoutReportCashProvider.future),
+    SavingsType.cto => ref.watch(watchPayoutReportCtoProvider.future),
     SavingsType.lifeInsurance => ref.watch(
       watchPayoutReportLifeInsuranceProvider.future,
     ),

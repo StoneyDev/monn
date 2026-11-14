@@ -11,15 +11,31 @@ part 'etf_repository.g.dart';
 const _apiKey = String.fromEnvironment('ALPHA_VANTAGE_KEY');
 
 class EtfRepository {
-  const EtfRepository(this._api);
+  EtfRepository(this._api);
 
   final EtfApi _api;
 
-  Future<double?> getEtfPriceMarket() async {
-    final response = await _api.getQuote('GLOBAL_QUOTE', 'ESE.PAR', _apiKey);
-    final priceStr = response.globalQuote?.price;
+  Future<void> _queue = .value();
 
-    if (priceStr == null) return null;
+  Future<double?> getEtfPriceMarket(String symbol) {
+    final price = _queue.then((_) => _fetchPrice(symbol));
+    _queue = price
+        .then<void>((_) {}, onError: (_) {})
+        .then((_) => Future<void>.delayed(const Duration(seconds: 1)));
+
+    return price;
+  }
+
+  Future<double?> _fetchPrice(String symbol) async {
+    final response = await _api.getQuote('GLOBAL_QUOTE', symbol, _apiKey);
+    final quote = response.globalQuote;
+
+    // No quote at all: Alpha Vantage refused the request (spent quota).
+    if (quote == null) return null;
+
+    final priceStr = quote.price;
+    // An empty quote: Alpha Vantage does not know this ticker.
+    if (priceStr == null) throw FormatException('Unknown ticker', symbol);
 
     return double.tryParse(priceStr);
   }
@@ -27,7 +43,10 @@ class EtfRepository {
 
 @Riverpod(keepAlive: true)
 EtfRepository etfRepository(Ref ref) {
-  return EtfRepository(EtfApi(Dio()));
+  const timeout = Duration(seconds: 15);
+  return EtfRepository(
+    EtfApi(Dio(BaseOptions(connectTimeout: timeout, receiveTimeout: timeout))),
+  );
 }
 
 @riverpod
@@ -56,7 +75,12 @@ Future<double> getEtfPriceMarket(Ref ref) async {
       : lastUpdate;
 
   if (now.isAfter(lastUpdate) && now.isAfter(retryAt)) {
-    final priceMarket = await etfRepository.getEtfPriceMarket();
+    double? priceMarket;
+    try {
+      priceMarket = await etfRepository.getEtfPriceMarket('ESE.PAR');
+    } on FormatException {
+      // An empty quote for the PEA's ETF waits like a spent quota.
+    }
 
     if (priceMarket != null) {
       await peaRepository.editPea(

@@ -2409,6 +2409,465 @@ class PeaEntriesCompanion extends UpdateCompanion<PeaEntry> {
   }
 }
 
+class $CtoEntriesTable extends CtoEntries
+    with TableInfo<$CtoEntriesTable, CtoEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CtoEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _symbolMeta = const VerificationMeta('symbol');
+  @override
+  late final GeneratedColumn<String> symbol = GeneratedColumn<String>(
+    'symbol',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+    'quantity',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _costAverageMeta = const VerificationMeta(
+    'costAverage',
+  );
+  @override
+  late final GeneratedColumn<double> costAverage = GeneratedColumn<double>(
+    'cost_average',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastPriceMeta = const VerificationMeta(
+    'lastPrice',
+  );
+  @override
+  late final GeneratedColumn<double> lastPrice = GeneratedColumn<double>(
+    'last_price',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastUpdateMeta = const VerificationMeta(
+    'lastUpdate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastUpdate = GeneratedColumn<DateTime>(
+    'last_update',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    symbol,
+    quantity,
+    costAverage,
+    lastPrice,
+    lastUpdate,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cto_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CtoEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('symbol')) {
+      context.handle(
+        _symbolMeta,
+        symbol.isAcceptableOrUnknown(data['symbol']!, _symbolMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_symbolMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('cost_average')) {
+      context.handle(
+        _costAverageMeta,
+        costAverage.isAcceptableOrUnknown(
+          data['cost_average']!,
+          _costAverageMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_costAverageMeta);
+    }
+    if (data.containsKey('last_price')) {
+      context.handle(
+        _lastPriceMeta,
+        lastPrice.isAcceptableOrUnknown(data['last_price']!, _lastPriceMeta),
+      );
+    }
+    if (data.containsKey('last_update')) {
+      context.handle(
+        _lastUpdateMeta,
+        lastUpdate.isAcceptableOrUnknown(data['last_update']!, _lastUpdateMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CtoEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CtoEntry(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      symbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}symbol'],
+      )!,
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}quantity'],
+      )!,
+      costAverage: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cost_average'],
+      )!,
+      lastPrice: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}last_price'],
+      ),
+      lastUpdate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_update'],
+      ),
+    );
+  }
+
+  @override
+  $CtoEntriesTable createAlias(String alias) {
+    return $CtoEntriesTable(attachedDatabase, alias);
+  }
+}
+
+class CtoEntry extends DataClass implements Insertable<CtoEntry> {
+  final int id;
+  final String name;
+  final String symbol;
+  final double quantity;
+  final double costAverage;
+  final double? lastPrice;
+  final DateTime? lastUpdate;
+  const CtoEntry({
+    required this.id,
+    required this.name,
+    required this.symbol,
+    required this.quantity,
+    required this.costAverage,
+    this.lastPrice,
+    this.lastUpdate,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['symbol'] = Variable<String>(symbol);
+    map['quantity'] = Variable<double>(quantity);
+    map['cost_average'] = Variable<double>(costAverage);
+    if (!nullToAbsent || lastPrice != null) {
+      map['last_price'] = Variable<double>(lastPrice);
+    }
+    if (!nullToAbsent || lastUpdate != null) {
+      map['last_update'] = Variable<DateTime>(lastUpdate);
+    }
+    return map;
+  }
+
+  CtoEntriesCompanion toCompanion(bool nullToAbsent) {
+    return CtoEntriesCompanion(
+      id: Value(id),
+      name: Value(name),
+      symbol: Value(symbol),
+      quantity: Value(quantity),
+      costAverage: Value(costAverage),
+      lastPrice: lastPrice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastPrice),
+      lastUpdate: lastUpdate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastUpdate),
+    );
+  }
+
+  factory CtoEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CtoEntry(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      symbol: serializer.fromJson<String>(json['symbol']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      costAverage: serializer.fromJson<double>(json['costAverage']),
+      lastPrice: serializer.fromJson<double?>(json['lastPrice']),
+      lastUpdate: serializer.fromJson<DateTime?>(json['lastUpdate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'symbol': serializer.toJson<String>(symbol),
+      'quantity': serializer.toJson<double>(quantity),
+      'costAverage': serializer.toJson<double>(costAverage),
+      'lastPrice': serializer.toJson<double?>(lastPrice),
+      'lastUpdate': serializer.toJson<DateTime?>(lastUpdate),
+    };
+  }
+
+  CtoEntry copyWith({
+    int? id,
+    String? name,
+    String? symbol,
+    double? quantity,
+    double? costAverage,
+    Value<double?> lastPrice = const Value.absent(),
+    Value<DateTime?> lastUpdate = const Value.absent(),
+  }) => CtoEntry(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    symbol: symbol ?? this.symbol,
+    quantity: quantity ?? this.quantity,
+    costAverage: costAverage ?? this.costAverage,
+    lastPrice: lastPrice.present ? lastPrice.value : this.lastPrice,
+    lastUpdate: lastUpdate.present ? lastUpdate.value : this.lastUpdate,
+  );
+  CtoEntry copyWithCompanion(CtoEntriesCompanion data) {
+    return CtoEntry(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      symbol: data.symbol.present ? data.symbol.value : this.symbol,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      costAverage: data.costAverage.present
+          ? data.costAverage.value
+          : this.costAverage,
+      lastPrice: data.lastPrice.present ? data.lastPrice.value : this.lastPrice,
+      lastUpdate: data.lastUpdate.present
+          ? data.lastUpdate.value
+          : this.lastUpdate,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CtoEntry(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('symbol: $symbol, ')
+          ..write('quantity: $quantity, ')
+          ..write('costAverage: $costAverage, ')
+          ..write('lastPrice: $lastPrice, ')
+          ..write('lastUpdate: $lastUpdate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    symbol,
+    quantity,
+    costAverage,
+    lastPrice,
+    lastUpdate,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CtoEntry &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.symbol == this.symbol &&
+          other.quantity == this.quantity &&
+          other.costAverage == this.costAverage &&
+          other.lastPrice == this.lastPrice &&
+          other.lastUpdate == this.lastUpdate);
+}
+
+class CtoEntriesCompanion extends UpdateCompanion<CtoEntry> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> symbol;
+  final Value<double> quantity;
+  final Value<double> costAverage;
+  final Value<double?> lastPrice;
+  final Value<DateTime?> lastUpdate;
+  const CtoEntriesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.symbol = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.costAverage = const Value.absent(),
+    this.lastPrice = const Value.absent(),
+    this.lastUpdate = const Value.absent(),
+  });
+  CtoEntriesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String symbol,
+    required double quantity,
+    required double costAverage,
+    this.lastPrice = const Value.absent(),
+    this.lastUpdate = const Value.absent(),
+  }) : name = Value(name),
+       symbol = Value(symbol),
+       quantity = Value(quantity),
+       costAverage = Value(costAverage);
+  static Insertable<CtoEntry> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? symbol,
+    Expression<double>? quantity,
+    Expression<double>? costAverage,
+    Expression<double>? lastPrice,
+    Expression<DateTime>? lastUpdate,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (symbol != null) 'symbol': symbol,
+      if (quantity != null) 'quantity': quantity,
+      if (costAverage != null) 'cost_average': costAverage,
+      if (lastPrice != null) 'last_price': lastPrice,
+      if (lastUpdate != null) 'last_update': lastUpdate,
+    });
+  }
+
+  CtoEntriesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String>? symbol,
+    Value<double>? quantity,
+    Value<double>? costAverage,
+    Value<double?>? lastPrice,
+    Value<DateTime?>? lastUpdate,
+  }) {
+    return CtoEntriesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      quantity: quantity ?? this.quantity,
+      costAverage: costAverage ?? this.costAverage,
+      lastPrice: lastPrice ?? this.lastPrice,
+      lastUpdate: lastUpdate ?? this.lastUpdate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (symbol.present) {
+      map['symbol'] = Variable<String>(symbol.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (costAverage.present) {
+      map['cost_average'] = Variable<double>(costAverage.value);
+    }
+    if (lastPrice.present) {
+      map['last_price'] = Variable<double>(lastPrice.value);
+    }
+    if (lastUpdate.present) {
+      map['last_update'] = Variable<DateTime>(lastUpdate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CtoEntriesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('symbol: $symbol, ')
+          ..write('quantity: $quantity, ')
+          ..write('costAverage: $costAverage, ')
+          ..write('lastPrice: $lastPrice, ')
+          ..write('lastUpdate: $lastUpdate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $PerEntriesTable extends PerEntries
     with TableInfo<$PerEntriesTable, PerEntry> {
   @override
@@ -5228,6 +5687,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CounterStrikeEntriesTable counterStrikeEntries =
       $CounterStrikeEntriesTable(this);
   late final $PeaEntriesTable peaEntries = $PeaEntriesTable(this);
+  late final $CtoEntriesTable ctoEntries = $CtoEntriesTable(this);
   late final $PerEntriesTable perEntries = $PerEntriesTable(this);
   late final $LifeInsuranceEntriesTable lifeInsuranceEntries =
       $LifeInsuranceEntriesTable(this);
@@ -5264,6 +5724,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     savingsBookEntries,
     counterStrikeEntries,
     peaEntries,
+    ctoEntries,
     perEntries,
     lifeInsuranceEntries,
     freelanceEntries,
@@ -6763,6 +7224,245 @@ typedef $$PeaEntriesTableProcessedTableManager =
       $$PeaEntriesTableUpdateCompanionBuilder,
       (PeaEntry, BaseReferences<_$AppDatabase, $PeaEntriesTable, PeaEntry>),
       PeaEntry,
+      PrefetchHooks Function()
+    >;
+typedef $$CtoEntriesTableCreateCompanionBuilder =
+    CtoEntriesCompanion Function({
+      Value<int> id,
+      required String name,
+      required String symbol,
+      required double quantity,
+      required double costAverage,
+      Value<double?> lastPrice,
+      Value<DateTime?> lastUpdate,
+    });
+typedef $$CtoEntriesTableUpdateCompanionBuilder =
+    CtoEntriesCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String> symbol,
+      Value<double> quantity,
+      Value<double> costAverage,
+      Value<double?> lastPrice,
+      Value<DateTime?> lastUpdate,
+    });
+
+class $$CtoEntriesTableFilterComposer
+    extends Composer<_$AppDatabase, $CtoEntriesTable> {
+  $$CtoEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get symbol => $composableBuilder(
+    column: $table.symbol,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get costAverage => $composableBuilder(
+    column: $table.costAverage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lastPrice => $composableBuilder(
+    column: $table.lastPrice,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastUpdate => $composableBuilder(
+    column: $table.lastUpdate,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CtoEntriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CtoEntriesTable> {
+  $$CtoEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get symbol => $composableBuilder(
+    column: $table.symbol,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get costAverage => $composableBuilder(
+    column: $table.costAverage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lastPrice => $composableBuilder(
+    column: $table.lastPrice,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastUpdate => $composableBuilder(
+    column: $table.lastUpdate,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CtoEntriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CtoEntriesTable> {
+  $$CtoEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get symbol =>
+      $composableBuilder(column: $table.symbol, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<double> get costAverage => $composableBuilder(
+    column: $table.costAverage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get lastPrice =>
+      $composableBuilder(column: $table.lastPrice, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastUpdate => $composableBuilder(
+    column: $table.lastUpdate,
+    builder: (column) => column,
+  );
+}
+
+class $$CtoEntriesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CtoEntriesTable,
+          CtoEntry,
+          $$CtoEntriesTableFilterComposer,
+          $$CtoEntriesTableOrderingComposer,
+          $$CtoEntriesTableAnnotationComposer,
+          $$CtoEntriesTableCreateCompanionBuilder,
+          $$CtoEntriesTableUpdateCompanionBuilder,
+          (CtoEntry, BaseReferences<_$AppDatabase, $CtoEntriesTable, CtoEntry>),
+          CtoEntry,
+          PrefetchHooks Function()
+        > {
+  $$CtoEntriesTableTableManager(_$AppDatabase db, $CtoEntriesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CtoEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CtoEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CtoEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> symbol = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
+                Value<double> costAverage = const Value.absent(),
+                Value<double?> lastPrice = const Value.absent(),
+                Value<DateTime?> lastUpdate = const Value.absent(),
+              }) => CtoEntriesCompanion(
+                id: id,
+                name: name,
+                symbol: symbol,
+                quantity: quantity,
+                costAverage: costAverage,
+                lastPrice: lastPrice,
+                lastUpdate: lastUpdate,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                required String symbol,
+                required double quantity,
+                required double costAverage,
+                Value<double?> lastPrice = const Value.absent(),
+                Value<DateTime?> lastUpdate = const Value.absent(),
+              }) => CtoEntriesCompanion.insert(
+                id: id,
+                name: name,
+                symbol: symbol,
+                quantity: quantity,
+                costAverage: costAverage,
+                lastPrice: lastPrice,
+                lastUpdate: lastUpdate,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CtoEntriesTable, CtoEntry>(table),
+                  BaseReferences<_$AppDatabase, $CtoEntriesTable, CtoEntry>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CtoEntriesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CtoEntriesTable,
+      CtoEntry,
+      $$CtoEntriesTableFilterComposer,
+      $$CtoEntriesTableOrderingComposer,
+      $$CtoEntriesTableAnnotationComposer,
+      $$CtoEntriesTableCreateCompanionBuilder,
+      $$CtoEntriesTableUpdateCompanionBuilder,
+      (CtoEntry, BaseReferences<_$AppDatabase, $CtoEntriesTable, CtoEntry>),
+      CtoEntry,
       PrefetchHooks Function()
     >;
 typedef $$PerEntriesTableCreateCompanionBuilder =
@@ -8963,6 +9663,8 @@ class $AppDatabaseManager {
       $$CounterStrikeEntriesTableTableManager(_db, _db.counterStrikeEntries);
   $$PeaEntriesTableTableManager get peaEntries =>
       $$PeaEntriesTableTableManager(_db, _db.peaEntries);
+  $$CtoEntriesTableTableManager get ctoEntries =>
+      $$CtoEntriesTableTableManager(_db, _db.ctoEntries);
   $$PerEntriesTableTableManager get perEntries =>
       $$PerEntriesTableTableManager(_db, _db.perEntries);
   $$LifeInsuranceEntriesTableTableManager get lifeInsuranceEntries =>

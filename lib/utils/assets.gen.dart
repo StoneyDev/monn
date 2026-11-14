@@ -200,6 +200,10 @@ class $AssetsImagesIconGen {
   AssetGenImage get moneyBag =>
       const AssetGenImage('assets/images/icon/money_bag.png');
 
+  /// File path: assets/images/icon/rocket.png
+  AssetGenImage get rocket =>
+      const AssetGenImage('assets/images/icon/rocket.png');
+
   /// File path: assets/images/icon/umbrella.png
   AssetGenImage get umbrella =>
       const AssetGenImage('assets/images/icon/umbrella.png');
@@ -214,6 +218,7 @@ class $AssetsImagesIconGen {
     locker,
     money,
     moneyBag,
+    rocket,
     umbrella,
   ];
 }

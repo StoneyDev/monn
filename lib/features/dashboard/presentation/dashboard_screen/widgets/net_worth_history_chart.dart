@@ -93,7 +93,7 @@ class _NetWorthHistoryChartState extends ConsumerState<NetWorthHistoryChart> {
             spacing: 12,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 8,
@@ -182,7 +182,7 @@ class _NetWorthHistoryChartState extends ConsumerState<NetWorthHistoryChart> {
                   spacing: 8,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           void select(double x) {
@@ -266,7 +266,7 @@ class _NetWorthHistoryChartState extends ConsumerState<NetWorthHistoryChart> {
                     ),
                     if (points.length > 1)
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -285,7 +285,7 @@ class _NetWorthHistoryChartState extends ConsumerState<NetWorthHistoryChart> {
                   ],
                 ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 2,

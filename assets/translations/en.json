@@ -43,6 +43,9 @@
     "select_a_reit": "Select a reit",
     "add_reit": "Add reit",
     "savings_book_name": "Savings book name",
+    "add_etf": "Add ETF",
+    "etf_name": "ETF name",
+    "ticker": "Ticker (e.g. XMLC.DEX)",
     "reit_name": "Reit name",
     "crypto_amount": "Crypto amount",
     "old_value": "Old value",
@@ -115,6 +118,7 @@
     "cs_knives": "CS knives",
     "life_insurance": "Life insurance",
     "pea": "PEA",
+    "cto": "CTO",
     "per": "PER",
     "cash": "Cash",
     "reit": "Reit"

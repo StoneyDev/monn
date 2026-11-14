@@ -43,6 +43,9 @@
     "select_a_reit": "Sélectionnez une SCPI",
     "add_reit": "Ajouter une SCPI",
     "savings_book_name": "Nom du livret",
+    "add_etf": "Ajouter un ETF",
+    "etf_name": "Nom de l'ETF",
+    "ticker": "Ticker (ex. XMLC.DEX)",
     "reit_name": "Nom de la SCPI",
     "crypto_amount": "Montant en crypto",
     "old_value": "Ancienne valeur",
@@ -115,6 +118,7 @@
     "cs_knives": "Couteaux CS",
     "life_insurance": "Assurance vie",
     "pea": "PEA",
+    "cto": "CTO",
     "per": "PER",
     "cash": "Liquide",
     "reit": "SCPI"

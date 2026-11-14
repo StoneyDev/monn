@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' as iconoir;
 import 'package:monn/features/cryptocurrency/data/coin_market_cap_repository.dart';
+import 'package:monn/features/cto/data/cto_repository.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/controllers/net_worth_provider.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/savings_type_ui.dart';
 import 'package:monn/features/dashboard/presentation/dashboard_screen/widgets/net_worth_history_chart.dart';
@@ -46,7 +47,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     _lifecycleListener = AppLifecycleListener(
       onResume: () => ref
         ..invalidate(getCryptoPriceMarketProvider)
-        ..invalidate(getEtfPriceMarketProvider),
+        ..invalidate(getEtfPriceMarketProvider)
+        ..invalidate(refreshCtoPricesProvider),
     );
   }
 
@@ -86,7 +88,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               centerTitle: false,
               expandedTitleScale: 2,
               titlePadding: const EdgeInsets.only(
-                left: 24,
+                left: 16,
                 right: 120,
                 bottom: 12,
               ),
@@ -111,8 +113,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 bottom: false,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
+                    left: 16,
+                    right: 16,
                     top: kToolbarHeight + 20,
                   ),
                   child: Align(
@@ -210,7 +212,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
               child: Text(
                 context.tr(LocaleKeys.home_savings),
                 style: theme.textTheme.titleLarge,
@@ -234,7 +236,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       splashFactory: NoSplash.splashFactory,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
+                          horizontal: 16,
                           vertical: 20,
                         ),
                         child: Row(
@@ -267,12 +269,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   );
                 },
                 separatorBuilder: (_, _) =>
-                    const Divider(indent: 24, endIndent: 24),
+                    const Divider(indent: 16, endIndent: 16),
                 itemCount: value.length,
               ),
               AsyncError(:final error) => SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: MonnError(message: error.toString()),
                 ),
               ),

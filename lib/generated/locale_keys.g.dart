@@ -46,6 +46,9 @@ abstract class LocaleKeys {
   static const common_select_a_reit = 'common.select_a_reit';
   static const common_add_reit = 'common.add_reit';
   static const common_savings_book_name = 'common.savings_book_name';
+  static const common_add_etf = 'common.add_etf';
+  static const common_etf_name = 'common.etf_name';
+  static const common_ticker = 'common.ticker';
   static const common_reit_name = 'common.reit_name';
   static const common_crypto_amount = 'common.crypto_amount';
   static const common_old_value = 'common.old_value';
@@ -113,6 +116,7 @@ abstract class LocaleKeys {
   static const savings_cs_knives = 'savings.cs_knives';
   static const savings_life_insurance = 'savings.life_insurance';
   static const savings_pea = 'savings.pea';
+  static const savings_cto = 'savings.cto';
   static const savings_per = 'savings.per';
   static const savings_cash = 'savings.cash';
   static const savings_reit = 'savings.reit';

@@ -13,6 +13,7 @@ part 'database.drift.dart';
     SavingsBookEntries,
     CounterStrikeEntries,
     PeaEntries,
+    CtoEntries,
     PerEntries,
     LifeInsuranceEntries,
     FreelanceEntries,
@@ -27,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -61,6 +62,9 @@ class AppDatabase extends _$AppDatabase {
       },
       from3To4: (m, schema) async {
         await m.createTable(schema.netWorthSnapshots);
+      },
+      from4To5: (m, schema) async {
+        await m.createTable(schema.ctoEntries);
       },
     ),
     beforeOpen: (_) async {

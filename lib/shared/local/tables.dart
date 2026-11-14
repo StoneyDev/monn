@@ -52,6 +52,16 @@ class PeaEntries extends Table {
   DateTimeColumn get lastUpdate => dateTime().nullable()();
 }
 
+class CtoEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  TextColumn get symbol => text()();
+  RealColumn get quantity => real()();
+  RealColumn get costAverage => real()();
+  RealColumn get lastPrice => real().nullable()();
+  DateTimeColumn get lastUpdate => dateTime().nullable()();
+}
+
 class PerEntries extends Table {
   IntColumn get id => integer().autoIncrement()();
   RealColumn get invested => real().withDefault(const Constant(0))();
