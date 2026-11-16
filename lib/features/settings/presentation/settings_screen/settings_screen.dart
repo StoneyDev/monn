@@ -215,18 +215,20 @@ class _BackupAction extends ConsumerWidget {
         // Import button
         MenuItemButton(
           onPressed: () async {
-            final result = await FilePicker.pickFiles();
-            if (!context.mounted) return;
+            final file = await FilePicker.pickFile();
+            if (!context.mounted || file == null) return;
 
-            final filePath = result.single.path;
+            final filePath = file.path;
             final isAllowed = filePath?.contains(RegExp(r'\.db$')) ?? false;
 
             if (filePath != null && isAllowed) {
               await _requestRestore(context, externalBackup: File(filePath));
             } else {
               if (!context.mounted) return;
-              MonnSnackBar.error(
-                message: context.tr(LocaleKeys.common_import_failed),
+              ScaffoldMessenger.of(context).showSnackBar(
+                MonnSnackBar.error(
+                  message: context.tr(LocaleKeys.common_import_failed),
+                ),
               );
             }
           },

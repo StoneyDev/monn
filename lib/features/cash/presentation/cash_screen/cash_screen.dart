@@ -33,10 +33,10 @@ class CashScreen extends ConsumerWidget {
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(builder: (_) => const AddCashScreen()),
-        ),
+        onPressed: () async {
+          ref.invalidate(cashFormControllerProvider);
+          await context.push<void>(const AddCashScreen());
+        },
       ),
       body: Column(
         children: [

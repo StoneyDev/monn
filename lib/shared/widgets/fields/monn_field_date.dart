@@ -25,15 +25,9 @@ class MonnFieldDate extends ConsumerStatefulWidget {
 }
 
 class _MoonFieldDateState extends ConsumerState<MonnFieldDate> {
-  late final TextEditingController _controller;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _controller = TextEditingController(
-      text: widget.initialValue?.slashFormat(context.locale.toString()),
-    );
-  }
+  late final _controller = TextEditingController(
+    text: widget.initialValue?.slashFormat(context.locale.toString()),
+  );
 
   @override
   void dispose() {

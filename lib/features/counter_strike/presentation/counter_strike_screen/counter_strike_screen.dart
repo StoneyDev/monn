@@ -39,12 +39,10 @@ class CounterStrikeScreen extends ConsumerWidget {
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (_) => const AddCounterStrikeScreen(),
-          ),
-        ),
+        onPressed: () async {
+          ref.invalidate(counterStrikeFormControllerProvider);
+          await context.push<void>(const AddCounterStrikeScreen());
+        },
       ),
       body: Column(
         children: [
@@ -185,32 +183,35 @@ class _CounterStrikeItem extends ConsumerWidget {
           ),
         ],
       ),
-      onTap: () => context.push<void>(
-        AmountScreen(
-          initialValue: data.currentValue,
-          onSubmit: () async {
-            final success = await ref
+      onTap: () async {
+        ref.invalidate(counterStrikeFormControllerProvider);
+        await context.push<void>(
+          AmountScreen(
+            initialValue: data.currentValue,
+            onSubmit: () async {
+              final success = await ref
+                  .read(counterStrikeFormControllerProvider.notifier)
+                  .submit();
+
+              if (!context.mounted || !success) return;
+
+              ref.invalidate(counterStrikeFormControllerProvider);
+              Navigator.pop(context);
+            },
+            onChanged: (newCurrentValue) => ref
                 .read(counterStrikeFormControllerProvider.notifier)
-                .submit();
-
-            if (!context.mounted || !success) return;
-
-            ref.invalidate(counterStrikeFormControllerProvider);
-            Navigator.pop(context);
-          },
-          onChanged: (newCurrentValue) => ref
-              .read(counterStrikeFormControllerProvider.notifier)
-              .set(
-                id: data.id,
-                wear: data.wear?.toString(),
-                purchaseValue: data.purchaseValue.toString(),
-                currentValue: newCurrentValue,
-                boughtAt: data.boughtAt,
-                quantity: data.quantity.toString(),
-                imageId: data.imageItem,
-              ),
-        ),
-      ),
+                .set(
+                  id: data.id,
+                  wear: data.wear?.toString(),
+                  purchaseValue: data.purchaseValue.toString(),
+                  currentValue: newCurrentValue,
+                  boughtAt: data.boughtAt,
+                  quantity: data.quantity.toString(),
+                  imageId: data.imageItem,
+                ),
+          ),
+        );
+      },
     );
   }
 

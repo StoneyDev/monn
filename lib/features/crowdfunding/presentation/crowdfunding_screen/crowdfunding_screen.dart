@@ -8,6 +8,7 @@ import 'package:monn/features/amount/presentation/amount_screen.dart';
 import 'package:monn/features/crowdfunding/data/crowdfunding_repository.dart';
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_filters_sheet.dart';
 import 'package:monn/features/crowdfunding/presentation/crowdfunding_screen/crowdfunding_transaction_card.dart';
+import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/controllers/crowdfunding_form_controller.dart';
 import 'package:monn/features/crowdfunding/presentation/edit_crowdfunding_screen/edit_crowdfunding_screen.dart';
 import 'package:monn/features/portfolio/data/savings_repository.dart';
 import 'package:monn/features/portfolio/presentation/controllers/edit_savings_controller.dart';
@@ -84,12 +85,10 @@ class _CrowdfundingScreenState extends ConsumerState<CrowdfundingScreen> {
       ),
       floatingActionButton: IconButton.filled(
         icon: iconoir.Plus(color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (_) => const EditCrowdfundingScreen(),
-          ),
-        ),
+        onPressed: () async {
+          ref.invalidate(crowdfundingFormControllerProvider);
+          await context.push<void>(const EditCrowdfundingScreen());
+        },
       ),
       body: Column(
         children: [
@@ -118,8 +117,8 @@ class _CrowdfundingScreenState extends ConsumerState<CrowdfundingScreen> {
                     onSubmit: () async {
                       final newValue = ref.read(_startAmountProvider);
                       final newSaving = SavingsEntriesCompanion(
-                        id: Value(value!.id),
-                        type: Value(value.type),
+                        id: .absentIfNull(value?.id),
+                        type: Value(SavingsType.crowdfunding.name),
                         startAmount: Value(double.parse(newValue!)),
                       );
 

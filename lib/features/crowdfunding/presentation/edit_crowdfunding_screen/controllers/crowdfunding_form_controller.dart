@@ -56,6 +56,9 @@ class CrowdfundingFormController extends _$CrowdfundingFormController {
         platformName: Value(platformName),
         receivedAt: Value(receivedAt),
         brutProfit: Value(brutProfit),
+        netProfit: const Value(null),
+        taxProfit: const Value(null),
+        taxPercentage: const Value(null),
       );
     } else if (state.taxPercentage == null) {
       companion = CrowdfundingEntriesCompanion(
@@ -64,6 +67,8 @@ class CrowdfundingFormController extends _$CrowdfundingFormController {
         receivedAt: Value(receivedAt),
         brutProfit: Value(brutProfit),
         netProfit: Value(brutProfit),
+        taxProfit: const Value(null),
+        taxPercentage: const Value(null),
       );
     } else {
       final taxPercentage = double.parse(state.taxPercentage!);
