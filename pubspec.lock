@@ -9,6 +9,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "107.0.0"
+  accessibility_tools:
+    dependency: transitive
+    description:
+      name: accessibility_tools
+      sha256: c29732e423175a51e0a6ace7df1255f5d77812c7c7b7101d8ba0186a43d533aa
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0"
+  alchemist:
+    dependency: "direct dev"
+    description:
+      name: alchemist
+      sha256: "6a43c6a973403abfc8f95f066e4c03f39db668c052dfcfc177a38bade7f6b68b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.1"
   analyzer:
     dependency: transitive
     description:
@@ -249,6 +265,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.15"
+  device_frame_plus:
+    dependency: transitive
+    description:
+      name: device_frame_plus
+      sha256: ccc94abccd4d9f0a9f19ef239001b3a59896e678ad42601371d7065889f2bf78
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   dio:
     dependency: "direct main"
     description:
@@ -297,6 +321,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: ea36e500cbf0ec18361deabca755434f73e42fe53c5130021c7e2d6b5ebe1702
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -541,6 +573,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  inspector:
+    dependency: transitive
+    description:
+      name: inspector
+      sha256: "60782d94c8851b0eee3ffdfea9fd43e7c37f919b54cb587e4de9da0e09d491b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   intl:
     dependency: transitive
     description:
@@ -693,6 +733,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.4"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   objective_c:
     dependency: transitive
     description:
@@ -861,6 +909,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  resizable_widget:
+    dependency: transitive
+    description:
+      name: resizable_widget
+      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   retrofit:
     dependency: "direct main"
     description:
@@ -1122,6 +1178,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  url_launcher:
+    dependency: transitive
+    description:
+      name: url_launcher
+      sha256: e8cc955c97e06df9879140a1fe301f3d493f01b7c62dec7f46834be31d7e9fda
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.3"
+  url_launcher_android:
+    dependency: transitive
+    description:
+      name: url_launcher_android
+      sha256: "611e87fb320b70d1dd721dc46af89c98aceccea9b31fde49e084591414e0c610"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.33"
+  url_launcher_ios:
+    dependency: transitive
+    description:
+      name: url_launcher_ios
+      sha256: "8faa1aab294f1ab4040b43660c887b0418d5fa4f0cffef76a484e6aa1092eb4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.4.2"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1130,6 +1210,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.3"
+  url_launcher_macos:
+    dependency: transitive
+    description:
+      name: url_launcher_macos
+      sha256: "5e835a3b869c2d70325349c81c5a45c28e20791265b67b2669da6b08c5cd5201"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.6"
   url_launcher_platform_interface:
     dependency: transitive
     description:
@@ -1242,6 +1330,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  widgetbook:
+    dependency: "direct dev"
+    description:
+      name: widgetbook
+      sha256: "88b10102d294d0bec64ca294c81f15b1a620ce66df950067ff8f89274f1c95e8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.25.0"
+  widgetbook_annotation:
+    dependency: transitive
+    description:
+      name: widgetbook_annotation
+      sha256: ec98130f23579f14e304b6b45516612676ae4e0b0e6bb1debe9dba4ea604ab42
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.11.0"
   win32:
     dependency: transitive
     description:

@@ -151,7 +151,18 @@ puro flutter test test/features/cryptocurrency/data/cryptocurrency_repository_te
 
 # Run tests with coverage
 puro flutter test --coverage
+
+# Regenerate golden images after an intended visual change
+puro flutter test test/widgetbook --update-goldens
 ```
+
+### Widgetbook
+```bash
+# Component catalog (use cases in widgetbook/directories.dart)
+puro flutter run -t widgetbook/main.dart
+```
+Every Widgetbook use case automatically gets a light/dark golden test
+(`test/widgetbook/widgetbook_golden_test.dart`, macOS goldens only).
 
 ### Linting
 ```bash

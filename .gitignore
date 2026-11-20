@@ -48,3 +48,6 @@ api_keys.json
 # Signing
 android/key.properties
 android/*.jks
+
+# Golden test diffs (Alchemist)
+test/**/failures/
